@@ -4,12 +4,8 @@ name: Desmos Bindings
 on:
   pull_request:
 
-defaults:
-  run:
-    shell: bash
-    working-directory: packages/desmos-std
-
 jobs:
+
   test:
     name: Test Suite
     runs-on: ubuntu-latest
@@ -19,7 +15,7 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.53.0
+          toolchain: 1.59.0
           target: wasm32-unknown-unknown
           profile: minimal
           override: true
@@ -32,6 +28,7 @@ jobs:
         run: cargo unit-test --locked
         env:
           RUST_BACKTRACE: 1
+
   coverage:
     name: Upload coverage
     runs-on: ubuntu-latest
@@ -55,6 +52,7 @@ jobs:
         uses: codecov/codecov-action@v1.0.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
@@ -66,7 +64,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.53.0
+          toolchain: 1.59.0
           override: true
           components: rustfmt, clippy
 
@@ -75,11 +73,11 @@ jobs:
 
       - name: Run cargo clippy
         run: cargo clippy
+
   build:
     name: Test features build
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./packages/desmos-std
+
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -88,57 +86,45 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.53.0
+          toolchain: 1.59.0
           override: true
           components: rustfmt, clippy
 
       - name: Build No features
         run: cargo build --no-default-features
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (query)
         run: cargo build --no-default-features --features query
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (profiles)
         run: cargo build --no-default-features --features profiles
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (profiles+query)
         run: cargo build --no-default-features --features profiles,query
 
       - name: Build feature (subspaces)
         run: cargo build --no-default-features --features subspaces
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (subspaces+query)
         run: cargo build --no-default-features --features subspaces,query
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (relationships)
         run: cargo build --no-default-features --features relationships
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (relationships+query)
         run: cargo build --no-default-features --features relationships,query
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (msg)
         run: cargo build --no-default-features --features msg
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (msg+profiles)
         run: cargo build --no-default-features --features msg,profiles
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (msg+relationships)
         run: cargo build --no-default-features --features msg,relationships
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (msg+subspaces)
         run: cargo build --no-default-features --features msg,subspaces
-        working-directory: ${{env.working-directory}}
 
       - name: Build feature (mocks)
         run: cargo build --no-default-features --features mocks
-        working-directory: ${{env.working-directory}}
