@@ -57,12 +57,7 @@ impl RelationshipsMsgBuilder {
         }
     }
 
-    pub fn unblock_user(
-        &self,
-        blocker: Addr,
-        blocked: Addr,
-        subspace_id: u64,
-    ) -> RelationshipsMsg {
+    pub fn unblock_user(&self, blocker: Addr, blocked: Addr, subspace_id: u64) -> RelationshipsMsg {
         RelationshipsMsg::UnblockUser {
             blocker,
             blocked,

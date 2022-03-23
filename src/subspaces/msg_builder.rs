@@ -106,12 +106,7 @@ impl SubspacesMsgBuilder {
         }
     }
 
-    pub fn delete_user_group(
-        &self,
-        subspace_id: u64,
-        group_id: u32,
-        signer: Addr,
-    ) -> SubspacesMsg {
+    pub fn delete_user_group(&self, subspace_id: u64, group_id: u32, signer: Addr) -> SubspacesMsg {
         SubspacesMsg::DeleteUserGroup {
             subspace_id: subspace_id.into(),
             group_id,
@@ -167,8 +162,8 @@ impl SubspacesMsgBuilder {
 
 #[cfg(test)]
 mod tests {
-    use cosmwasm_std::Uint64;
     use super::*;
+    use cosmwasm_std::Uint64;
 
     #[test]
     fn test_create_subspace() {
