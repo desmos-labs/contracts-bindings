@@ -3,9 +3,10 @@ name: Desmos Bindings
 
 on:
   pull_request:
-  push:
-    branches:
-      - "manuel/api-improvement"
+    types:
+      - opened
+      - edited
+      - synchronize
 
 jobs:
   test:
