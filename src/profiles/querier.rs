@@ -82,9 +82,11 @@ impl<'a> ProfilesQuerier<'a> {
 
     pub fn query_application_link_by_client_id(
         &self,
-        client_id: String,
+        client_id: &str,
     ) -> StdResult<QueryApplicationLinkByClientIDResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkByChainID { client_id });
+        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkByChainID {
+            client_id: client_id.to_owned()
+        });
 
         let res: QueryApplicationLinkByClientIDResponse = self.querier.query(&request.into())?;
         Ok(res)
@@ -190,7 +192,7 @@ mod tests {
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
         let response = profiles_querier
-            .query_application_link_by_client_id("".to_string())
+            .query_application_link_by_client_id("")
             .unwrap();
         let expected = QueryApplicationLinkByClientIDResponse {
             link: MockProfilesQueries::get_mock_application_link(),
