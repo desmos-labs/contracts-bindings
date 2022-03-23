@@ -85,7 +85,7 @@ impl<'a> ProfilesQuerier<'a> {
         client_id: &str,
     ) -> StdResult<QueryApplicationLinkByClientIDResponse> {
         let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkByChainID {
-            client_id: client_id.to_owned()
+            client_id: client_id.to_owned(),
         });
 
         let res: QueryApplicationLinkByClientIDResponse = self.querier.query(&request.into())?;
