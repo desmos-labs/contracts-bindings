@@ -15,7 +15,7 @@ jobs:
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.53.0
+          toolchain: 1.59.0
           target: wasm32-unknown-unknown
           profile: minimal
           override: true
@@ -64,7 +64,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.53.0
+          toolchain: 1.59.0
           override: true
           components: rustfmt, clippy
 
@@ -86,7 +86,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.53.0
+          toolchain: 1.59.0
           override: true
           components: rustfmt, clippy
 
