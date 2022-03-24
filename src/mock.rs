@@ -30,6 +30,9 @@ pub fn mock_dependencies_with_custom_querier(
             DesmosQuery::Relationships(query) => {
                 SystemResult::Ok(MockRelationshipsQuerier::query(query))
             }
+            // Hide this warning since when we compile the package without any module feature
+            // this pattern is reached.
+            #[allow(unreachable_patterns)]
             _ => SystemResult::Err(SystemError::Unknown {}),
         });
     OwnedDeps::<_, _, _, DesmosQuery> {
