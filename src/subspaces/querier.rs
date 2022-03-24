@@ -1,5 +1,7 @@
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
+use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
 
+use crate::iter::page_iterator::{Page, PageIterator};
+use crate::subspaces::models::{Subspace, UserGroup};
 use crate::{
     query::DesmosQuery,
     subspaces::{
@@ -34,6 +36,28 @@ impl<'a> SubspacesQuerier<'a> {
         Ok(res)
     }
 
+    /// Gives an iterator to scan over all the subspaces.
+    ///
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn iterate_subspaces(&self, page_size: u64) -> PageIterator<Subspace, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_subspaces(Some(PageRequest {
+                    key,
+                    limit: limit.into(),
+                    reverse: false,
+                    count_total: false,
+                    offset: None,
+                }))
+                .map(|response| Page {
+                    items: response.subspaces,
+                    next_page_key: response.pagination.next_key,
+                })
+            }),
+            page_size,
+        )
+    }
+
     pub fn query_subspace(&self, subspace_id: u64) -> StdResult<QuerySubspaceResponse> {
         let request = DesmosQuery::from(SubspacesQuery::Subspace {
             subspace_id: subspace_id.into(),
@@ -53,6 +77,36 @@ impl<'a> SubspacesQuerier<'a> {
         });
         let res: QueryUserGroupsResponse = self.querier.query(&request.into())?;
         Ok(res)
+    }
+
+    /// Gives an iterator to scan over all the user groups created in a subspace.
+    ///
+    /// * `subspace_id` - Subspace to query the user groups for.
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn iterate_user_groups(
+        &self,
+        subspace_id: u64,
+        page_size: u64,
+    ) -> PageIterator<UserGroup, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_user_groups(
+                    subspace_id,
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.groups,
+                    next_page_key: response.pagination.next_key,
+                })
+            }),
+            page_size,
+        )
     }
 
     pub fn query_user_group(
@@ -81,6 +135,39 @@ impl<'a> SubspacesQuerier<'a> {
         });
         let res: QueryUserGroupMembersResponse = self.querier.query(&request.into())?;
         Ok(res)
+    }
+
+    /// Gives an iterator to scan over all the members of a user group created in a subspace.
+    ///
+    /// * `subspace_id` - Subspace to query the user members for.
+    /// * `group_id` - Group to query the user members for.
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn iterate_user_group_members(
+        &self,
+        subspace_id: u64,
+        group_id: u32,
+        page_size: u64,
+    ) -> PageIterator<Addr, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_user_group_members(
+                    subspace_id,
+                    group_id,
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.members,
+                    next_page_key: response.pagination.next_key,
+                })
+            }),
+            page_size,
+        )
     }
 
     pub fn query_user_permissions(
@@ -119,6 +206,21 @@ mod tests {
     }
 
     #[test]
+    fn test_iterate_subspaces() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(deps.querier.deref());
+
+        let mut it = querier.iterate_subspaces(10);
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockSubspacesQueries::get_mock_subspace()
+        );
+        assert!(it.next().is_none());
+    }
+
+    #[test]
     fn test_query_subspace() {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
@@ -144,6 +246,21 @@ mod tests {
     }
 
     #[test]
+    fn test_iterate_user_groups() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(deps.querier.deref());
+
+        let mut it = querier.iterate_user_groups(1, 10);
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockSubspacesQueries::get_mock_user_group()
+        );
+        assert!(it.next().is_none());
+    }
+
+    #[test]
     fn test_query_user_group() {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
@@ -166,6 +283,21 @@ mod tests {
             pagination: Default::default(),
         };
         assert_eq!(response.ok(), Some(expected));
+    }
+
+    #[test]
+    fn test_iterate_user_group_members() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(deps.querier.deref());
+
+        let mut it = querier.iterate_user_group_members(1, 1, 10);
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockSubspacesQueries::get_mock_group_member()
+        );
+        assert!(it.next().is_none());
     }
 
     #[test]
