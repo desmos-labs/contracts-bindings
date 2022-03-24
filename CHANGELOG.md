@@ -2,8 +2,10 @@
 
 ## Unreleased
 
-- Added `PageIterator` to provide paginated chain data as a sequence of elements. 
-- Renamed package from `desmos-std` to `desmos-bindings`
+- Added `PageIterator` to provide paginated chain data as a sequence of elements;
+- Renamed package from `desmos-std` to `desmos-bindings`;
+- Added methods to queriers to fetch data using the `PageIterator`;
+- 
 
 ### Version 0.1.6
 
