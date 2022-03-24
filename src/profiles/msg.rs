@@ -4,50 +4,92 @@ use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
+/// Represents the messages to interact with the profile module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ProfilesMsg {
+    /// Saves a Desmos profile.
     SaveProfile {
+        /// Unique profile tag.
         dtag: String,
+        /// Human readable name of the profile.
         nickname: String,
+        /// Biography of the profile.
         bio: String,
+        /// URL to the profile picture.
         profile_picture: String,
+        /// URL to the cover cover picture.
         cover_picture: String,
+        /// Address of which is creating the profile.
         creator: Addr,
     },
+    /// Deletes a profile.
     DeleteProfile {
+        /// Address of the profile to delete.
         creator: Addr,
     },
+    /// Requests a dtag transfer between the sender and
+    /// the receiver.
     RequestDtagTransfer {
+        /// Address of who is going to receive the DTag.
         receiver: Addr,
+        /// Address of who is going to send the DTag.
         sender: Addr,
     },
+    /// Accepts an incoming DTag transfer.
     AcceptDtagTransferRequest {
+        /// The DTag to accept.
         new_dtag: String,
+        /// Address of who has sent the DTag.
         sender: Addr,
+        /// Address of who is receiving the DTag.
         receiver: Addr,
     },
+    /// Refuses a DTag transfer.
     RefuseDtagTransferRequest {
+        /// Address of who has started the DTag transfer.
         sender: Addr,
+        /// Address of who was supposed to receive the DTag.
         receiver: Addr,
     },
+    /// Cancel a pending DTag transfer request.
     CancelDtagTransferRequest {
+        /// Address of who has started the DTag transfer.
         receiver: Addr,
+        /// Address of who was supposed to receive the DTag.
         sender: Addr,
     },
+    /// Links an external chain address to a profile.
     LinkChainAccount {
+        /// data of the external chain address to be connected
+        /// with the Desmos profile.
         chain_address: ChainLinkAddr,
+        /// Contains the ownership proof of the external chain address.
         proof: Proof,
+        /// Contains the configuration of the external chain.
         chain_config: ChainConfig,
+        /// Address associated with the profile to which link the external account.
         signer: Addr,
     },
+    /// Connects a profile with a centralized application
+    /// account (eg. Twitter, GitHub, etc).
     LinkApplication {
+        /// Sender of the connection request.
         sender: Addr,
+        /// The data related to the application to which connect.
         link_data: Data,
+        /// Hex encoded call data that will be sent to the data source in order to
+        /// verify the link.
         call_data: String,
+        /// The port on which the packet will be sent.
         source_port: String,
+        /// The channel by which the packet will be sent.
         source_channel: String,
+        /// Timeout height relative to the current block height.
+        /// The timeout is disabled when set to 0.
         timeout_height: TimeoutHeight,
+        /// Timeout timestamp (in nanoseconds) relative to the current block timestamp.
+        /// The timeout is disabled when set to 0.
         timeout_timestamp: Uint64,
     },
 }

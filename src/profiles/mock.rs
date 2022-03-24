@@ -1,3 +1,4 @@
+use crate::profiles::models_app_links::ApplicationLinkState;
 use crate::profiles::{
     models_app_links::{AppLinkResult, ApplicationLink, CallData, Data, OracleRequest},
     models_chain_links::{ChainConfig, ChainLink, ChainLinkAddr, Proof, Signature},
@@ -83,7 +84,7 @@ impl MockProfilesQueries {
                 application: "twitter".to_string(),
                 username: "goldrake".to_string(),
             },
-            state: "APPLICATION_LINK_STATE_VERIFICATION_SUCCESS".to_string(),
+            state: ApplicationLinkState::VerificationSuccess,
             oracle_request: OracleRequest {
                 id: Uint64::new(537807),
                 oracle_script_id: Uint64::new(32),
@@ -94,11 +95,11 @@ impl MockProfilesQueries {
                 client_id: "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake"
                     .to_string(),
             },
-            result: AppLinkResult::Success {
+            result: Some(AppLinkResult::Success {
                 value: "4c756361675f5f2345423337".to_string(),
                 signature: "9690d734171298eb4cc9636c36d8507535264c1fdb136c9095a6a50c41ccffa"
                     .to_string(),
-            },
+            }),
             creation_time: "2022-02-21T13:18:57.800827Z".to_string(),
         }
     }

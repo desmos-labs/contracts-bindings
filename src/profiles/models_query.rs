@@ -8,14 +8,14 @@ use crate::{
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-/** Profile query models **/
+/// Response to a profile query.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct QueryProfileResponse {
     pub profile: Profile,
 }
 
-/** DtagTransferRequest query models **/
+/// Response to a query incoming dtag transfer request.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct QueryIncomingDtagTransferRequestResponse {
@@ -23,7 +23,7 @@ pub struct QueryIncomingDtagTransferRequestResponse {
     pub pagination: PageResponse,
 }
 
-/** AppLinks query models **/
+/// Response to query application link.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct QueryApplicationLinksResponse {
@@ -31,13 +31,14 @@ pub struct QueryApplicationLinksResponse {
     pub pagination: PageResponse,
 }
 
+/// Response to query application link by client id.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct QueryApplicationLinkByClientIDResponse {
     pub link: ApplicationLink,
 }
 
-/** ChainLinks query models **/
+/// Response to query chain link.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct QueryChainLinksResponse {
