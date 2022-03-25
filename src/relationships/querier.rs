@@ -92,7 +92,7 @@ impl<'a> RelationshipsQuerier<'a> {
         Ok(res)
     }
 
-    /// Gives an iterator to scan over the users blocked from a specif user in a subspace or
+    /// Gives an iterator to scan over the users blocked from a specific user in a subspace or
     /// all the blocks performed from the users in a subspace.
     ///
     /// * `subspace_id` - Subspace to query the blocks for.

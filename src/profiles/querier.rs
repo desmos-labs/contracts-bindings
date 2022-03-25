@@ -98,7 +98,7 @@ impl<'a> ProfilesQuerier<'a> {
 
     /// Gives an iterator to scan over a user's chain links or all the performed chain links.
     ///
-    /// * `user` - Optional Desmos address of the user to which search the link for, if is undefined
+    /// * `user` - Optional Desmos address of the user to which search the link for, if is None
     /// queries all the performed chain links.
     /// * `chain_name` - Optional name of the chain to which search the link for.
     /// Used only if user is also set.
@@ -155,7 +155,7 @@ impl<'a> ProfilesQuerier<'a> {
 
     /// Gives an iterator to scan over a user's app links or all the performed app links.
     ///
-    /// * `user` - Optional Desmos address of the user to which search the link for, if is undefined
+    /// * `user` - Optional Desmos address of the user to which search the link for, if is None
     /// queries all the performed app links.
     /// * `application` - Optional name of the application to which search the link for.
     /// Used only if user is also set.
