@@ -1,7 +1,11 @@
 [package]
 name = "desmos-bindings"
 version = "0.1.0"
-authors = ["Leonardo Bragagnolo <leonardo@forbole.com>", "Paul Chen <paul@forbole.com>", "Manuel Turetta <manuel@forbole.com>"]
+authors = [
+    "Leonardo Bragagnolo <leonardo@forbole.com>",
+    "Paul Chen <paul@forbole.com>",
+    "Manuel Turetta <manuel@forbole.com>",
+]
 edition = "2018"
 description = "CosmWasm bindings to custom Desmos features"
 license = "Apache-2.0"

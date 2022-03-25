@@ -6,7 +6,7 @@ use crate::{
     },
     types::PageRequest,
 };
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 
 pub struct RelationshipsQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
@@ -21,13 +21,13 @@ impl<'a> RelationshipsQuerier<'a> {
 
     pub fn query_relationships(
         &self,
-        subspace_id: Uint64,
+        subspace_id: u64,
         user: Option<Addr>,
         counterparty: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryRelationshipsResponse> {
         let request = DesmosQuery::Relationships(RelationshipsQuery::Relationships {
-            subspace_id,
+            subspace_id: subspace_id.into(),
             user,
             counterparty,
             pagination,
@@ -39,13 +39,13 @@ impl<'a> RelationshipsQuerier<'a> {
 
     pub fn query_blocks(
         &self,
-        subspace_id: Uint64,
+        subspace_id: u64,
         blocker: Option<Addr>,
         blocked: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryBlocksResponse> {
         let request = DesmosQuery::Relationships(RelationshipsQuery::Blocks {
-            subspace_id,
+            subspace_id: subspace_id.into(),
             blocker,
             blocked,
             pagination,
@@ -66,7 +66,7 @@ mod tests {
             querier::RelationshipsQuerier,
         },
     };
-    use cosmwasm_std::{Addr, Uint64};
+    use cosmwasm_std::Addr;
     use std::ops::Deref;
 
     #[test]
@@ -77,7 +77,7 @@ mod tests {
 
         let response = relationships_querier
             .query_relationships(
-                Uint64::new(0),
+                0,
                 Some(Addr::unchecked("")),
                 Some(Addr::unchecked("")),
                 None,
@@ -99,7 +99,7 @@ mod tests {
 
         let response = relationships_querier
             .query_blocks(
-                Uint64::new(0),
+                0,
                 Some(Addr::unchecked("")),
                 Some(Addr::unchecked("")),
                 None,

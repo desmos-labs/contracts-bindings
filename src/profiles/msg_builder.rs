@@ -1,7 +1,7 @@
 use crate::profiles::models_app_links::{Data, TimeoutHeight};
 use crate::profiles::models_chain_links::{ChainConfig, ChainLinkAddr, Proof};
 use crate::profiles::msg::ProfilesMsg;
-use cosmwasm_std::{Addr, Uint64};
+use cosmwasm_std::Addr;
 
 pub struct ProfilesMsgBuilder {}
 
@@ -20,19 +20,19 @@ impl Default for ProfilesMsgBuilder {
 impl ProfilesMsgBuilder {
     pub fn save_profile(
         &self,
-        dtag: String,
+        dtag: &str,
         creator: Addr,
-        nickname: String,
-        bio: String,
-        profile_picture: String,
-        cover_picture: String,
+        nickname: &str,
+        bio: &str,
+        profile_picture: &str,
+        cover_picture: &str,
     ) -> ProfilesMsg {
         ProfilesMsg::SaveProfile {
-            dtag,
-            nickname,
-            bio,
-            profile_picture,
-            cover_picture,
+            dtag: dtag.to_owned(),
+            nickname: nickname.to_owned(),
+            bio: bio.to_owned(),
+            profile_picture: profile_picture.to_owned(),
+            cover_picture: cover_picture.to_owned(),
             creator,
         }
     }
@@ -47,12 +47,12 @@ impl ProfilesMsgBuilder {
 
     pub fn accept_dtag_transfer_request(
         &self,
-        new_dtag: String,
+        new_dtag: &str,
         sender: Addr,
         receiver: Addr,
     ) -> ProfilesMsg {
         ProfilesMsg::AcceptDtagTransferRequest {
-            new_dtag,
+            new_dtag: new_dtag.to_owned(),
             sender,
             receiver,
         }
@@ -89,7 +89,7 @@ impl ProfilesMsgBuilder {
         source_port: String,
         source_channel: String,
         timeout_height: TimeoutHeight,
-        timeout_timestamp: Uint64,
+        timeout_timestamp: u64,
     ) -> ProfilesMsg {
         ProfilesMsg::LinkApplication {
             sender,
@@ -98,7 +98,7 @@ impl ProfilesMsgBuilder {
             source_port,
             source_channel,
             timeout_height,
-            timeout_timestamp,
+            timeout_timestamp: timeout_timestamp.into(),
         }
     }
 }
@@ -118,12 +118,12 @@ mod tests {
     fn test_save_profile() {
         let builder = ProfilesMsgBuilder::default();
         let msg = builder.save_profile(
-            "test".to_string(),
+            "test",
             Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
-            "".to_string(),
-            "".to_string(),
-            "".to_string(),
-            "".to_string(),
+            "",
+            "",
+            "",
+            "",
         );
         let expected = ProfilesMsg::SaveProfile {
             dtag: "test".to_string(),
@@ -166,7 +166,7 @@ mod tests {
     fn test_accept_dtag_transfer_request() {
         let builder = ProfilesMsgBuilder::default();
         let msg = builder.accept_dtag_transfer_request(
-            "test".to_string(),
+            "test",
             Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         );
@@ -273,7 +273,7 @@ mod tests {
             "123".to_string(),
             "123".to_string(),
             timeout_height.clone(),
-            Uint64::new(1),
+            1,
         );
         let expected = ProfilesMsg::LinkApplication {
             sender: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),

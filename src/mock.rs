@@ -56,7 +56,7 @@ mod tests {
             query_types::QuerySubspaceResponse,
         },
     };
-    use cosmwasm_std::{Addr, Uint64};
+    use cosmwasm_std::Addr;
     use std::ops::Deref;
 
     #[test]
@@ -76,7 +76,7 @@ mod tests {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_subspace(Uint64::new(1)).unwrap();
+        let response = querier.query_subspace(1).unwrap();
         let expected = QuerySubspaceResponse {
             subspace: MockSubspacesQueries::get_mock_subspace(),
         };
@@ -90,7 +90,7 @@ mod tests {
         let querier = RelationshipsQuerier::new(deps.querier.deref());
         let response = querier
             .query_relationships(
-                Uint64::new(1),
+                1,
                 Some(Addr::unchecked("")),
                 Some(Addr::unchecked("")),
                 None,
