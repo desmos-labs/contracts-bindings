@@ -5,7 +5,6 @@ pub mod models_dtag_requests;
 pub mod models_profile;
 pub mod models_query;
 pub mod msg;
-pub mod msg_builder;
 #[cfg(feature = "query")]
 pub mod querier;
 #[cfg(feature = "query")]
