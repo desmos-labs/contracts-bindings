@@ -1,3 +1,5 @@
+//! Contains structs and enums relative to the application links.
+
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -54,13 +56,6 @@ pub struct Data {
     pub application: String,
     /// Username on the application (eg. Twitter tag, GitHub profile, etc).
     pub username: String,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
-pub struct TimeoutHeight {
-    pub revision_number: Uint64,
-    pub revision_height: Uint64,
 }
 
 /// Represents a generic oracle request used to verify the ownership of

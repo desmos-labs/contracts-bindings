@@ -1,8 +1,11 @@
+//! Contains some useful mocks of the Desmos x/profiles module's types
+//! ready made to be used in any test.
+
 use crate::profiles::models_app_links::ApplicationLinkState;
+use crate::profiles::models_chain_links::{Address, AddressType};
 use crate::profiles::{
     models_app_links::{AppLinkResult, ApplicationLink, CallData, Data, OracleRequest},
-    models_chain_links::{ChainConfig, ChainLink, ChainLinkAddr, Proof, Signature},
-    models_common::PubKey,
+    models_chain_links::{ChainConfig, ChainLink, Proof, Signature},
     models_dtag_requests::DtagTransferRequest,
     models_profile::{Account, Pictures, Profile},
     models_query::{
@@ -11,16 +14,15 @@ use crate::profiles::{
     },
     query::ProfilesQuery,
 };
+use crate::types::PubKey;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
-/**
-This file contains some useful mocks of the Desmos x/profiles module's types ready made to be used
-in any test
- **/
-
+/// Struct that contains some utility methods to mock data of the Desmos
+/// x/profiles module.
 pub struct MockProfilesQueries {}
 
 impl MockProfilesQueries {
+    /// Gets a mocked instance of [`Profile`].
     pub fn get_mock_profile() -> Profile {
         Profile {
             account: Account {
@@ -44,6 +46,7 @@ impl MockProfilesQueries {
         }
     }
 
+    /// Gets a mocked instance of [`DtagTransferRequest`].
     pub fn get_mock_dtag_transfer_request() -> DtagTransferRequest {
         DtagTransferRequest {
             dtag_to_trade: "goldrake".to_string(),
@@ -52,13 +55,14 @@ impl MockProfilesQueries {
         }
     }
 
+    /// Gets a mocked instance of [`ChainLink`].
     pub fn get_mock_chain_link() -> ChainLink {
         ChainLink {
             user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            address: ChainLinkAddr {
-                proto_type: "/desmos.profiles.v1beta1.Bech32Address".to_string(),
+            address: Address {
+                proto_type: AddressType::Bech32,
                 value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
-                prefix: "cosmos".to_string(),
+                prefix: Some("cosmos".to_string()),
             },
             proof: Proof {
                 pub_key: PubKey {
@@ -77,6 +81,7 @@ impl MockProfilesQueries {
         }
     }
 
+    /// Gets a mocked instance of [`ApplicationLink`].
     pub fn get_mock_application_link() -> ApplicationLink {
         ApplicationLink {
             user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
@@ -105,43 +110,40 @@ impl MockProfilesQueries {
     }
 }
 
-pub struct MockProfilesQuerier {}
-
-impl MockProfilesQuerier {
-    pub fn query(query: &ProfilesQuery) -> ContractResult<Binary> {
-        let response = match query {
-            ProfilesQuery::Profile { .. } => {
-                let profile = MockProfilesQueries::get_mock_profile();
-                to_binary(&QueryProfileResponse { profile })
-            }
-            ProfilesQuery::IncomingDtagTransferRequests { .. } => {
-                let incoming_dtag_requests = MockProfilesQueries::get_mock_dtag_transfer_request();
-                to_binary(&QueryIncomingDtagTransferRequestResponse {
-                    requests: vec![incoming_dtag_requests],
-                    pagination: Default::default(),
-                })
-            }
-            ProfilesQuery::ChainLinks { .. } => {
-                let chain_link = MockProfilesQueries::get_mock_chain_link();
-                to_binary(&QueryChainLinksResponse {
-                    links: vec![chain_link],
-                    pagination: Default::default(),
-                })
-            }
-            ProfilesQuery::AppLinks { .. } => {
-                let app_link = MockProfilesQueries::get_mock_application_link();
-                to_binary(&QueryApplicationLinksResponse {
-                    links: vec![app_link],
-                    pagination: Default::default(),
-                })
-            }
-            ProfilesQuery::ApplicationLinkByChainID { .. } => {
-                let app_link = MockProfilesQueries::get_mock_application_link();
-                to_binary(&QueryApplicationLinkByClientIDResponse { link: app_link })
-            }
-        };
-        response.into()
-    }
+/// Functions that mocks the profile query responses.
+pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Binary> {
+    let response = match query {
+        ProfilesQuery::Profile { .. } => {
+            let profile = MockProfilesQueries::get_mock_profile();
+            to_binary(&QueryProfileResponse { profile })
+        }
+        ProfilesQuery::IncomingDtagTransferRequests { .. } => {
+            let incoming_dtag_requests = MockProfilesQueries::get_mock_dtag_transfer_request();
+            to_binary(&QueryIncomingDtagTransferRequestResponse {
+                requests: vec![incoming_dtag_requests],
+                pagination: Default::default(),
+            })
+        }
+        ProfilesQuery::ChainLinks { .. } => {
+            let chain_link = MockProfilesQueries::get_mock_chain_link();
+            to_binary(&QueryChainLinksResponse {
+                links: vec![chain_link],
+                pagination: Default::default(),
+            })
+        }
+        ProfilesQuery::AppLinks { .. } => {
+            let app_link = MockProfilesQueries::get_mock_application_link();
+            to_binary(&QueryApplicationLinksResponse {
+                links: vec![app_link],
+                pagination: Default::default(),
+            })
+        }
+        ProfilesQuery::ApplicationLinkByChainID { .. } => {
+            let app_link = MockProfilesQueries::get_mock_application_link();
+            to_binary(&QueryApplicationLinkByClientIDResponse { link: app_link })
+        }
+    };
+    response.into()
 }
 
 #[cfg(test)]
@@ -160,7 +162,7 @@ mod tests {
     #[test]
     fn test_query_profile() {
         let query = ProfilesQuery::Profile {
-            user: Addr::unchecked(""),
+            user: "".to_string(),
         };
         let response = MockProfilesQuerier::query(&query);
         let expected = to_binary(&QueryProfileResponse {

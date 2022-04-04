@@ -1,3 +1,5 @@
+//! Contains structs and enums relative to the dtag requests.
+
 use cosmwasm_std::Addr;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};

@@ -1,3 +1,6 @@
+//! Contains the querier that can be used to query data from the cain relative to the x/profiles
+//! module.
+
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::profiles::models_app_links::ApplicationLink;
 use crate::profiles::models_chain_links::ChainLink;
@@ -16,17 +19,32 @@ use crate::{
 };
 use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
 
+/// Querier able to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }
 
 impl<'a> ProfilesQuerier<'a> {
+    /// Creates a new instance of [`ProfilesQuerier`].
+    ///
+    /// # Example
+    /// ```
+    /// use cosmwasm_std::{DepsMut, MessageInfo};
+    /// use desmos_bindings::profiles::querier::ProfilesQuerier;
+    ///
+    /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
+    ///     let querier = ProfilesQuerier::new(&deps.querier);
+    /// }
+    /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {
         Self {
             querier: QuerierWrapper::<'a, DesmosQuery>::new(querier),
         }
     }
 
+    /// Gives the Desmos profile associated to an user.
+    ///
+    /// * `user` - Address of the user to query the profile for.
     pub fn query_profile(&self, user: Addr) -> StdResult<QueryProfileResponse> {
         let request = DesmosQuery::Profiles(ProfilesQuery::Profile { user });
 
@@ -34,6 +52,10 @@ impl<'a> ProfilesQuerier<'a> {
         Ok(res)
     }
 
+    /// Queries the user's dtag transfer requests.
+    ///
+    /// * `receiver` - Address of the user to which query the incoming requests for.
+    /// * `pagination` - Optional pagination configs.
     pub fn query_incoming_dtag_transfer_requests(
         &self,
         receiver: Addr,
@@ -78,6 +100,15 @@ impl<'a> ProfilesQuerier<'a> {
         )
     }
 
+    /// Queries a user's chain links or all the performed chain links.
+    ///
+    /// * `user` - Optional Desmos address of the user to which search the link for, if is None
+    /// queries all the performed chain links.
+    /// * `chain_name` - Optional name of the chain to which search the link for.
+    /// Used only if user is also set.
+    /// * `target` - Optional external address to which query the link for.
+    /// Used only if chain_name is also set.
+    /// * `pagination` - Optional pagination configs.
     pub fn query_chain_links(
         &self,
         user: Option<Addr>,
@@ -135,6 +166,15 @@ impl<'a> ProfilesQuerier<'a> {
         )
     }
 
+    /// Queries a user's app links or all the performed app links.
+    ///
+    /// * `user` - Optional Desmos address of the user to which search the link for, if is None
+    /// queries all the performed app links.
+    /// * `application` - Optional name of the application to which search the link for.
+    /// Used only if user is also set.
+    /// * `username` - Optional username inside the application associated with the link.
+    /// Used only if application is also set.
+    /// * `page_size` - Size of the page requested to the chain.
     pub fn query_application_links(
         &self,
         user: Option<Addr>,
@@ -192,6 +232,9 @@ impl<'a> ProfilesQuerier<'a> {
         )
     }
 
+    /// Queries the app link through the client id that has performed the call to the oracle.
+    ///
+    /// * `client_id` - id of the client to which search the link for.
     pub fn query_application_link_by_client_id(
         &self,
         client_id: &str,

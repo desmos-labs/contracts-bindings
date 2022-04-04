@@ -1,4 +1,6 @@
-use crate::profiles::models_common::PubKey;
+//! Contains structs and enums relative to the Desmos profile.
+
+use crate::types::PubKey;
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -25,6 +27,7 @@ pub struct Profile {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct Account {
+    /// Account type.
     #[serde(rename = "@type")]
     pub proto_type: String,
     /// Account address.

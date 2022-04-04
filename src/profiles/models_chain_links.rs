@@ -1,7 +1,36 @@
-use crate::profiles::models_common::PubKey;
+//! Contains structs and enums relative to the chain links.
+
+use crate::types::PubKey;
 use cosmwasm_std::Addr;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
+
+/// Types of address encoding format.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub enum AddressType {
+    /// Address bech32 encoded.
+    #[serde(rename = "desmos.profiles.v2.Bech32Address")]
+    Bech32,
+    /// Address bech58 encoded.
+    #[serde(rename = "desmos.profiles.v2.Base58Address")]
+    Bech58,
+    /// Address hex encoded.
+    #[serde(rename = "desmos.profiles.v2.HexAddress")]
+    Hex,
+}
+
+/// Contains the data of the external chain address to be connected with the Desmos profile.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct Address {
+    /// The address type.
+    #[serde(rename = "@type")]
+    pub proto_type: AddressType,
+    /// The encoded address.
+    pub value: String,
+    /// Optional address prefix when `prototype` is Bech32 or Hex.
+    pub prefix: Option<String>,
+}
 
 /// Contains the data representing either an inter- or cross- chain link.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -11,23 +40,13 @@ pub struct ChainLink {
     pub user: Addr,
     /// Contains the data of the external chain address to be connected
     /// with the Desmos profile.
-    pub address: ChainLinkAddr,
+    pub address: Address,
     /// Contains the ownership proof of the external chain address.
     pub proof: Proof,
     /// Contains the configuration of the external chain.
     pub chain_config: ChainConfig,
     /// Represents the time in which the link has been created.
     pub creation_time: String,
-}
-
-/// Contains the data of the external chain address to be connected with the Desmos profile.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
-pub struct ChainLinkAddr {
-    #[serde(rename = "@type")]
-    pub proto_type: String,
-    pub value: String,
-    pub prefix: String,
 }
 
 /// Contains all the data used to verify a signature when linking an account to a profile.
@@ -42,12 +61,16 @@ pub struct Proof {
     pub plain_text: String,
 }
 
+/// Represents a signature of a payload.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct Signature {
+    /// Signature type.
     #[serde(rename = "@type")]
     pub proto_type: String,
+    /// Sign mode.
     pub mode: String,
+    /// Signature data.
     pub signature: String,
 }
 
