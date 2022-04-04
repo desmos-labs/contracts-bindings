@@ -149,7 +149,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
 #[cfg(test)]
 mod tests {
     use crate::profiles::{
-        mock::{MockProfilesQuerier, MockProfilesQueries},
+        mock::{mock_profiles_query_response, MockProfilesQueries},
         models_query::{
             QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
             QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
@@ -164,7 +164,7 @@ mod tests {
         let query = ProfilesQuery::Profile {
             user: "".to_string(),
         };
-        let response = MockProfilesQuerier::query(&query);
+        let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryProfileResponse {
             profile: MockProfilesQueries::get_mock_profile(),
         });
@@ -177,7 +177,7 @@ mod tests {
             receiver: Addr::unchecked(""),
             pagination: Default::default(),
         };
-        let response = MockProfilesQuerier::query(&query);
+        let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryIncomingDtagTransferRequestResponse {
             requests: vec![MockProfilesQueries::get_mock_dtag_transfer_request()],
             pagination: Default::default(),
@@ -193,7 +193,7 @@ mod tests {
             target: Some("".to_string()),
             pagination: Default::default(),
         };
-        let response = MockProfilesQuerier::query(&query);
+        let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryChainLinksResponse {
             links: vec![MockProfilesQueries::get_mock_chain_link()],
             pagination: Default::default(),
@@ -209,7 +209,7 @@ mod tests {
             username: Some("".to_string()),
             pagination: Default::default(),
         };
-        let response = MockProfilesQuerier::query(&query);
+        let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryApplicationLinksResponse {
             links: vec![MockProfilesQueries::get_mock_application_link()],
             pagination: Default::default(),
@@ -222,7 +222,7 @@ mod tests {
         let query = ProfilesQuery::ApplicationLinkByChainID {
             client_id: "".to_string(),
         };
-        let response = MockProfilesQuerier::query(&query);
+        let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryApplicationLinkByClientIDResponse {
             link: MockProfilesQueries::get_mock_application_link(),
         });

@@ -72,7 +72,7 @@ mod tests {
     #[test]
     fn test_from_profiles_query() {
         let query = ProfilesQuery::Profile {
-            user: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+            user: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2").to_string(),
         };
         let expected = DesmosQuery::Profiles(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));

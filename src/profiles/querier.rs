@@ -46,7 +46,9 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// * `user` - Address of the user to query the profile for.
     pub fn query_profile(&self, user: Addr) -> StdResult<QueryProfileResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::Profile { user });
+        let request = DesmosQuery::Profiles(ProfilesQuery::Profile {
+            user: user.to_string(),
+        });
 
         let res: QueryProfileResponse = self.querier.query(&request.into())?;
         Ok(res)

@@ -57,7 +57,7 @@ pub fn mock_relationships_query_response(query: &RelationshipsQuery) -> Contract
 #[cfg(test)]
 mod tests {
     use crate::relationships::{
-        mock::{MockRelationshipsQuerier, MockRelationshipsQueries},
+        mock::{mock_relationships_query_response, MockRelationshipsQueries},
         models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
         query::RelationshipsQuery,
     };
@@ -71,7 +71,7 @@ mod tests {
             subspace_id: Uint64::new(1),
             pagination: Default::default(),
         };
-        let response = MockRelationshipsQuerier::mock_relationships_query_response(&query);
+        let response = mock_relationships_query_response(&query);
         let expected = to_binary(&QueryRelationshipsResponse {
             relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
             pagination: Default::default(),
@@ -87,7 +87,7 @@ mod tests {
             subspace_id: Uint64::new(1),
             pagination: Default::default(),
         };
-        let response = MockRelationshipsQuerier::mock_relationships_query_response(&query);
+        let response = mock_relationships_query_response(&query);
         let expected = to_binary(&QueryBlocksResponse {
             blocks: vec![MockRelationshipsQueries::get_mock_user_block()],
             pagination: Default::default(),
