@@ -1,3 +1,5 @@
+//! Implementations of [cosmwasm_std::CustomMsg] for [DesmosMsg].
+
 use cosmwasm_std::{CosmosMsg, CustomMsg};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -20,15 +22,20 @@ use crate::relationships::msg::RelationshipsMsg;
 //      }
 // }
 // Reference: https://serde.rs/enum-representations.html#adjacently-tagged
+
+/// Enum that defines how the messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case", tag = "route", content = "msg_data")]
 pub enum DesmosMsg {
+    /// Messages relative to the x/profiles module.
     #[cfg(feature = "profiles")]
     Profiles(ProfilesMsg),
 
+    /// Messages relative to the x/subspaces module.
     #[cfg(feature = "subspaces")]
     Subspaces(SubspacesMsg),
 
+    /// Messages relative to the x/relationships module.
     #[cfg(feature = "relationships")]
     Relationships(RelationshipsMsg),
 }
