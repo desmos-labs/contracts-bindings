@@ -222,7 +222,7 @@ mod tests {
         let query = ProfilesQuery::ApplicationLinkByChainID {
             client_id: "".to_string(),
         };
-        let response = MockProfilesQuerier::query(&query);
+        let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryApplicationLinkByClientIDResponse {
             link: MockProfilesQueries::get_mock_application_link(),
         });
