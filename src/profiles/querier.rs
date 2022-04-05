@@ -1,3 +1,7 @@
+use crate::iter::page_iterator::{Page, PageIterator};
+use crate::profiles::models_app_links::ApplicationLink;
+use crate::profiles::models_chain_links::ChainLink;
+use crate::profiles::models_dtag_requests::DtagTransferRequest;
 use crate::{
     profiles::{
         models_query::{
@@ -10,7 +14,7 @@ use crate::{
     query::DesmosQuery,
     types::PageRequest,
 };
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
+use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
 
 pub struct ProfilesQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
@@ -44,6 +48,36 @@ impl<'a> ProfilesQuerier<'a> {
         Ok(res)
     }
 
+    /// Gives an iterator to scan over a user's dtag transfer requests.
+    ///
+    /// * `receiver` - Address of the user to which query the incoming requests for.
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn iterate_incoming_dtag_transfer_requests(
+        &self,
+        receiver: Addr,
+        page_size: u64,
+    ) -> PageIterator<DtagTransferRequest, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_incoming_dtag_transfer_requests(
+                    receiver.clone(),
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.requests,
+                    next_page_key: response.pagination.next_key,
+                })
+            }),
+            page_size,
+        )
+    }
+
     pub fn query_chain_links(
         &self,
         user: Option<Addr>,
@@ -62,6 +96,45 @@ impl<'a> ProfilesQuerier<'a> {
         Ok(res)
     }
 
+    /// Gives an iterator to scan over a user's chain links or all the performed chain links.
+    ///
+    /// * `user` - Optional Desmos address of the user to which search the link for, if is None
+    /// queries all the performed chain links.
+    /// * `chain_name` - Optional name of the chain to which search the link for.
+    /// Used only if user is also set.
+    /// * `target` - Optional external address to which query the link for.
+    /// Used only if chain_name is also set.
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn iterate_chain_links(
+        &self,
+        user: Option<Addr>,
+        chain_name: Option<String>,
+        target: Option<String>,
+        page_size: u64,
+    ) -> PageIterator<ChainLink, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_chain_links(
+                    user.clone(),
+                    chain_name.clone(),
+                    target.clone(),
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.links,
+                    next_page_key: response.pagination.next_key,
+                })
+            }),
+            page_size,
+        )
+    }
+
     pub fn query_application_links(
         &self,
         user: Option<Addr>,
@@ -78,6 +151,45 @@ impl<'a> ProfilesQuerier<'a> {
 
         let res: QueryApplicationLinksResponse = self.querier.query(&request.into())?;
         Ok(res)
+    }
+
+    /// Gives an iterator to scan over a user's app links or all the performed app links.
+    ///
+    /// * `user` - Optional Desmos address of the user to which search the link for, if is None
+    /// queries all the performed app links.
+    /// * `application` - Optional name of the application to which search the link for.
+    /// Used only if user is also set.
+    /// * `username` - Optional username inside the application associated with the link.
+    /// Used only if application is also set.
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn iterate_application_links(
+        &self,
+        user: Option<Addr>,
+        application: Option<String>,
+        username: Option<String>,
+        page_size: u64,
+    ) -> PageIterator<ApplicationLink, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_application_links(
+                    user.clone(),
+                    application.clone(),
+                    username.clone(),
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.links,
+                    next_page_key: response.pagination.next_key,
+                })
+            }),
+            page_size,
+        )
     }
 
     pub fn query_application_link_by_client_id(
@@ -142,6 +254,22 @@ mod tests {
     }
 
     #[test]
+    fn test_iterate_incoming_dtag_transfer_requests() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let mut it =
+            profiles_querier.iterate_incoming_dtag_transfer_requests(Addr::unchecked(""), 10);
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockProfilesQueries::get_mock_dtag_transfer_request()
+        );
+        assert!(it.next().is_none());
+    }
+
+    #[test]
     fn test_query_chain_links() {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
@@ -164,6 +292,26 @@ mod tests {
     }
 
     #[test]
+    fn test_iterate_chain_links() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let mut it = profiles_querier.iterate_chain_links(
+            Some(Addr::unchecked("")),
+            Some("cosmos".to_string()),
+            Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+            10,
+        );
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockProfilesQueries::get_mock_chain_link()
+        );
+        assert!(it.next().is_none());
+    }
+
+    #[test]
     fn test_query_app_links() {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
@@ -183,6 +331,26 @@ mod tests {
         };
 
         assert_eq!(response, expected)
+    }
+
+    #[test]
+    fn test_iterate_app_links() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let mut it = profiles_querier.iterate_application_links(
+            Some(Addr::unchecked("")),
+            Some("twitter".to_string()),
+            Some("goldrake".to_string()),
+            10,
+        );
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockProfilesQueries::get_mock_application_link()
+        );
+        assert!(it.next().is_none());
     }
 
     #[test]
