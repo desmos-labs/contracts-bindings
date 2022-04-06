@@ -55,6 +55,13 @@ impl From<ProfilesMsg> for DesmosMsg {
     }
 }
 
+#[cfg(feature = "profiles")]
+impl Into<CosmosMsg<DesmosMsg>> for ProfilesMsg {
+    fn into(self) -> CosmosMsg<DesmosMsg> {
+        DesmosMsg::from(self).into()
+    }
+}
+
 #[cfg(feature = "subspaces")]
 impl From<SubspacesMsg> for DesmosMsg {
     fn from(msg: SubspacesMsg) -> Self {
@@ -62,10 +69,24 @@ impl From<SubspacesMsg> for DesmosMsg {
     }
 }
 
+#[cfg(feature = "subspaces")]
+impl Into<CosmosMsg<DesmosMsg>> for SubspacesMsg {
+    fn into(self) -> CosmosMsg<DesmosMsg> {
+        DesmosMsg::from(self).into()
+    }
+}
+
 #[cfg(feature = "relationships")]
 impl From<RelationshipsMsg> for DesmosMsg {
     fn from(msg: RelationshipsMsg) -> Self {
         Self::Relationships(msg)
+    }
+}
+
+#[cfg(feature = "relationships")]
+impl Into<CosmosMsg<DesmosMsg>> for RelationshipsMsg {
+    fn into(self) -> CosmosMsg<DesmosMsg> {
+        DesmosMsg::from(self).into()
     }
 }
 
