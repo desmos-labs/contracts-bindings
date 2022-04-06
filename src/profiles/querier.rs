@@ -28,11 +28,12 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// # Example
     /// ```
+    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::profiles::querier::ProfilesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = ProfilesQuerier::new(&deps.querier);
+    ///     let querier = ProfilesQuerier::new(deps.querier.deref());
     /// }
     /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {

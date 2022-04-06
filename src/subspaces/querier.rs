@@ -25,11 +25,12 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// # Example
     /// ```
+    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = SubspacesQuerier::new(&deps.querier);
+    ///     let querier = SubspacesQuerier::new(deps.querier.deref());
     ///     let subspaces_response = querier.query_subspaces(None)?;
     /// }
     /// ```

@@ -22,11 +22,12 @@ impl<'a> RelationshipsQuerier<'a> {
     ///
     /// # Example
     /// ```
+    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = RelationshipsQuerier::new(&deps.querier);
+    ///     let querier = RelationshipsQuerier::new(deps.querier.deref());
     /// }
     /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {
