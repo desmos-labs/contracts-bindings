@@ -1,4 +1,4 @@
-//! Contains structs and enums relative to the Desmos profile.
+//! Contains structs and enums related to the Desmos profile.
 
 use crate::types::PubKey;
 use cosmwasm_std::{Addr, Uint64};

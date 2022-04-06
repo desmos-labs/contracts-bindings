@@ -1,5 +1,4 @@
-//! Contains the querier that can be used to query data from the cain relative to the x/profiles
-//! module.
+//! Contains the querier that can be used to query data related to the x/profiles module.
 
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::profiles::models_app_links::ApplicationLink;

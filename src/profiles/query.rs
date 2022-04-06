@@ -1,4 +1,4 @@
-//! Contains the query actions that can be sent to the chain in order to query data relative
+//! Contains the query actions that can be sent to the chain in order to query data related
 //! to the x/profiles module.
 
 use crate::types::PageRequest;

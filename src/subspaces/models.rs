@@ -1,4 +1,4 @@
-//! Contains structs and enums relative to the x/subspaces module.
+//! Contains structs and enums related to the x/subspaces module.
 
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;

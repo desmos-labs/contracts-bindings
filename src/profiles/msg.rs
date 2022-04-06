@@ -1,4 +1,4 @@
-//! Contains the messages that can be sent to the chain to interact with the x/profiles module.
+//! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
 
 use crate::profiles::models_app_links::Data;
 use crate::profiles::models_chain_links::{Address, ChainConfig, Proof};
@@ -7,7 +7,7 @@ use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-/// Represents the messages to interact with the profile module.
+/// Represents the messages to interact with the profiles module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ProfilesMsg {

@@ -1,10 +1,10 @@
-//! Contains the messages that can be sent to the chain to interact with the x/subspace module.
+//! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-/// Represents the messages to interact with the x/subspace module.
+/// Represents the messages to interact with the x/subspaces module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum SubspacesMsg {

@@ -1,4 +1,4 @@
-//! Contains structs and enums relative to the chain links.
+//! Contains structs and enums related to the chain links.
 
 use crate::types::PubKey;
 use cosmwasm_std::Addr;
@@ -74,7 +74,7 @@ pub struct Signature {
     pub signature: String,
 }
 
-/// Contains the data of the chain with which the link is made.
+/// Contains the data of the linked chain.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct ChainConfig {

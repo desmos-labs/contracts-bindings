@@ -1,4 +1,4 @@
-//! Contains structs and enums relative to the application links.
+//! Contains structs and enums related to the application links.
 
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
@@ -43,7 +43,7 @@ pub struct ApplicationLink {
     /// Data coming from the result of the verification.
     /// Only available when the state is `VerificationSuccess`.
     pub result: Option<AppLinkResult>,
-    /// The time in which the link was created.
+    /// The time when the link was created.
     pub creation_time: String,
 }
 

@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/subspace module's types
+//! Contains some useful mocks of the Desmos x/subspaces module's types
 //! ready made to be used in any test.
 
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
@@ -13,7 +13,7 @@ use crate::subspaces::{
 };
 
 /// Struct that contains some utility methods to mock data of the Desmos
-/// x/subspace module.
+/// x/subspaces module.
 pub struct MockSubspacesQueries;
 
 impl MockSubspacesQueries {

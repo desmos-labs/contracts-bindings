@@ -1,4 +1,4 @@
-//! Contains the query messages that can be sent to the chain in order to query data relative
+//! Contains the query messages that can be sent to the chain in order to query data related
 //! to the x/relationships module.
 
 use crate::types::PageRequest;

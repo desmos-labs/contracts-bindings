@@ -1,4 +1,4 @@
-//! Contains structs and enums relative to the dtag requests.
+//! Contains structs and enums related to the dtag requests.
 
 use cosmwasm_std::Addr;
 use schemars::JsonSchema;
