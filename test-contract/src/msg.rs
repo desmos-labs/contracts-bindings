@@ -1,8 +1,6 @@
-use cosmwasm_std::{Addr, Coin};
 use desmos_bindings::profiles::models_profile::Profile;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct InstantiateMsg {}
@@ -16,11 +14,8 @@ pub enum ExecuteMsg {
         bio: String,
         profile_picture: String,
         cover_picture: String,
-        creator: String,
     },
-    DeleteProfile {
-        creator: String,
-    },
+    DeleteProfile {},
     RequestDtagTransfer {
         receiver: String,
         sender: String,

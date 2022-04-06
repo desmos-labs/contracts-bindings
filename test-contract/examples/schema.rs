@@ -1,9 +1,5 @@
 use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
-use desmos_tip::msg::{
-    AllClaimableTipsResponse, ClaimableTipsResponse, ExecuteMsg, InstantiateMsg, QueryMsg,
-    UnclaimedTipsResponse,
-};
-use desmos_tip::state::State;
+use desmos_test_contract::msg::{ExecuteMsg, InstantiateMsg, ProfileResponse, QueryMsg};
 use std::env::current_dir;
 use std::fs::create_dir_all;
 
@@ -16,5 +12,5 @@ fn main() {
     export_schema(&schema_for!(InstantiateMsg), &out_dir);
     export_schema(&schema_for!(ExecuteMsg), &out_dir);
     export_schema(&schema_for!(QueryMsg), &out_dir);
-    export_schema(&schema_for!(CountResponse), &out_dir);
+    export_schema(&schema_for!(ProfileResponse), &out_dir);
 }
