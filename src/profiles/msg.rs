@@ -234,7 +234,7 @@ mod tests {
         msg::ProfilesMsg,
     };
     use crate::types::{Height, PubKey};
-    use cosmwasm_std::{Addr, Uint64};
+    use cosmwasm_std::{Addr, Binary, Uint64};
 
     #[test]
     fn test_save_profile() {
@@ -332,7 +332,7 @@ mod tests {
         let proof = Proof {
             pub_key: PubKey {
                 proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                key: "AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM".to_string(),
+                key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y").unwrap(),
             },
             signature: Signature {
                 proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),

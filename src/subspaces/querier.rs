@@ -224,11 +224,10 @@ impl<'a> SubspacesQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use std::ops::Deref;
-
     use super::*;
     use crate::mock::mock_dependencies_with_custom_querier;
     use crate::subspaces::mock::MockSubspacesQueries;
+    use std::ops::Deref;
 
     #[test]
     fn test_query_subspaces() {

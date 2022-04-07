@@ -29,7 +29,8 @@ impl MockProfilesQueries {
                 address: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
                 pub_key: PubKey {
                     proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: "ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y".to_string(),
+                    key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y")
+                        .unwrap(),
                 },
                 account_number: Uint64::new(0),
                 sequence: Uint64::new(15),
@@ -66,7 +67,7 @@ impl MockProfilesQueries {
             proof: Proof {
                 pub_key: PubKey {
                     proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: "AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM".to_string(),
+                    key: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap(),
                 },
                 signature: Signature {
                     proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
