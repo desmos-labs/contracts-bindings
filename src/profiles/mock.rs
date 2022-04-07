@@ -1,5 +1,4 @@
-//! Contains some useful mocks of the Desmos x/profiles module's types
-//! ready made to be used in any test.
+//! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
 use crate::profiles::models_app_links::ApplicationLinkState;
 use crate::profiles::models_chain_links::{Address, AddressType};

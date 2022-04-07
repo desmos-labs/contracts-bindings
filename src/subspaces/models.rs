@@ -28,7 +28,7 @@ pub struct Subspace {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct UserGroup {
-    /// Subspace to which the group belong.
+    /// Subspace to which the group belongs.
     pub subspace_id: Uint64,
     /// User group id.
     pub id: u32,

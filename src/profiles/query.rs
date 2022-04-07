@@ -37,7 +37,7 @@ pub enum ProfilesQuery {
     },
     /// Message to query the application links.
     AppLinks {
-        /// Address associated for which the link should be searched for.
+        /// Address associated for which the link should be searched.
         /// If `None` queries all the performed application links.
         user: Option<Addr>,
         /// Application name associated with the link.

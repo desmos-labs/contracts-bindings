@@ -1,5 +1,4 @@
-//! Contains some useful mocks of the Desmos x/subspaces module's types
-//! ready made to be used in any test.
+//! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 

@@ -37,19 +37,19 @@ pub enum SubspacesMsg {
         treasury: Addr,
         /// New subspace owner.
         owner: Addr,
-        /// Address of who want edit the subspace.
+        /// Address of who wants to edit the subspace.
         signer: Addr,
     },
     /// Message to delete a subspace.
     DeleteSubspace {
         /// Id of the subspace to delete.
         subspace_id: Uint64,
-        /// Address of who want delete the subspace.
+        /// Address of who wants delete the subspace.
         signer: Addr,
     },
     /// Message to create a new user group.
     CreateUserGroup {
-        /// Subspace id to which the group will belongs.
+        /// Subspace id to which the group will belong.
         subspace_id: Uint64,
         /// Name of the user group.
         name: String,
@@ -57,12 +57,12 @@ pub enum SubspacesMsg {
         description: String,
         /// Permissions that all the members will inherit.
         default_permissions: u32,
-        /// Address of who want create the user group.
+        /// Address of who wants create the user group.
         creator: Addr,
     },
     /// Message to modify a user group.
     EditUserGroup {
-        /// Subspace id to which belong the user group.
+        /// Subspace id to which the user group belongs.
         subspace_id: Uint64,
         /// Id of the user group to edit.
         group_id: u32,
@@ -70,27 +70,27 @@ pub enum SubspacesMsg {
         name: String,
         /// New user group description.
         description: String,
-        /// Address of who want edit the user group.
+        /// Address of who wants edit the user group.
         signer: Addr,
     },
     /// Message to update the permissions that the group members will inherit.
     SetUserGroupPermissions {
-        /// Subspace id to which belong the user group.
+        /// Subspace id to which the user group belongs.
         subspace_id: Uint64,
         /// Id of the group of interest.
         group_id: u32,
         /// The permissions that will be set for the user group.
         permissions: u32,
-        /// Address of who want update the user group permissions.
+        /// Address of who wants update the user group permissions.
         signer: Addr,
     },
     /// Message to delete a user group.
     DeleteUserGroup {
-        /// Subspace id to which belong the group.
+        /// Subspace id to which the group belongs.
         subspace_id: Uint64,
         /// Id of the group to delete.
         group_id: u32,
-        /// Address of who want delete the user group.
+        /// Address of who wants delete the user group.
         signer: Addr,
     },
     /// Message to add a new user to a group.
@@ -101,29 +101,29 @@ pub enum SubspacesMsg {
         group_id: u32,
         /// Address of the user to add to the group.
         user: Addr,
-        /// Address of who want add a new user to the group.
+        /// Address of who wants add a new user to the group.
         signer: Addr,
     },
     /// Message to remove a user from a group.
     RemoveUserFromUserGroup {
-        /// Subspace id to which belong the group.
+        /// Subspace id to which the group belongs.
         subspace_id: Uint64,
         /// Id of the group from where will be removed the user.
         group_id: u32,
         /// Address of the user that will be removed.
         user: Addr,
-        /// Address of who want remove the user from the group.
+        /// Address of who wants remove the user from the group.
         signer: Addr,
     },
     /// Sets the permissions that an user have inside a subspace.
     SetUserPermissions {
-        /// Subspace id to which the user belong.
+        /// Subspace id to which the user belongs.
         subspace_id: Uint64,
         /// Address of the user.
         user: Addr,
         /// The new user's permissions.
         permissions: u32,
-        /// Address of who want update the user's permissions.
+        /// Address of who wants update the user's permissions.
         signer: Addr,
     },
 }
@@ -137,7 +137,7 @@ impl SubspacesMsg {
     /// Represents the address that will pay for the fees
     /// needed to performs application links.
     /// * `owner` - Address of who will be the subspace owner.
-    /// * `creator` - Address of who want to create the subspace.
+    /// * `creator` - Address of who wants to create the subspace.
     pub fn create_subspace(
         name: &str,
         description: &str,
@@ -162,7 +162,7 @@ impl SubspacesMsg {
     /// * `treasury` - New subspace treasury.
     /// Represents the address that will pay for the fees
     /// needed to performs application links.
-    /// * `signer` - Address of who want edit the subspace.
+    /// * `signer` - Address of who wants edit the subspace.
     pub fn edit_subspace(
         subspace_id: u64,
         name: &str,
@@ -184,7 +184,7 @@ impl SubspacesMsg {
     /// Creates a new instance of [`SubspacesMsg::DeleteSubspace`].
     ///
     /// * `subspace_id` - id of the subspace to delete.
-    /// * `signer` - Address of who want delete the subsapce.
+    /// * `signer` - Address of who wants delete the subsapce.
     pub fn delete_subspace(subspace_id: u64, signer: Addr) -> SubspacesMsg {
         SubspacesMsg::DeleteSubspace {
             subspace_id: subspace_id.into(),
@@ -194,11 +194,11 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::CreateUserGroup`].
     ///
-    /// * `subspace_id` - Subspace id to which the group will belongs.
+    /// * `subspace_id` - Subspace id to which the group will belong.
     /// * `name` - Group name.
     /// * `description` - Group description.
     /// * `default_permission` - Permissions that the members will inherit.
-    /// * `creator` - Address of who want to create the group.
+    /// * `creator` - Address of who wants to create the group.
     pub fn create_user_group(
         subspace_id: u64,
         name: String,
@@ -217,11 +217,11 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::EditUserGroup`].
     ///
-    /// * `subspace_id` - Subspace id to which the group belong.
+    /// * `subspace_id` - Subspace id to which the group belongs.
     /// * `group_id` - Id of the group to edit.
     /// * `name` - New group name.
     /// * `description` - New group description.
-    /// * `signer` - Address of who want edit the user group.
+    /// * `signer` - Address of who wants edit the user group.
     pub fn edit_user_group(
         subspace_id: u64,
         group_id: u32,
@@ -240,10 +240,10 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::SetUserGroupPermissions`].
     ///
-    /// * `subspace_id` - Subspace to which belong the user group.
+    /// * `subspace_id` - Subspace to which the user group belongs.
     /// * `group_id` - Id of user group of interest.
     /// * `permissions` - The new permissions that will be set to the group.
-    /// * `signer` - Address of who want set the group permissions.
+    /// * `signer` - Address of who wants set the group permissions.
     pub fn set_user_group_permissions(
         subspace_id: u64,
         group_id: u32,
@@ -260,9 +260,9 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::DeleteUserGroup`].
     ///
-    /// * `subspace_id` - Id of the subspace to which the group belong.
+    /// * `subspace_id` - Id of the subspace to which the group belongs.
     /// * `group_id` - Id of the group to delete.
-    /// * `signer` - Address of who want to delete the group.
+    /// * `signer` - Address of who wants to delete the group.
     pub fn delete_user_group(subspace_id: u64, group_id: u32, signer: Addr) -> SubspacesMsg {
         SubspacesMsg::DeleteUserGroup {
             subspace_id: subspace_id.into(),
@@ -273,10 +273,10 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::AddUserToUserGroup`].
     ///
-    /// * `subspace_id` - Subspace id to which belong the group.
+    /// * `subspace_id` - Subspace id to which the group belongs.
     /// * `group_id` - Id of the group to which will be added the user.
     /// * `user` - Address of the user to add to the group.
-    /// * `signer` - Address of who want to add the user to the group.
+    /// * `signer` - Address of who wants to add the user to the group.
     pub fn add_user_to_user_group(
         subspace_id: u64,
         group_id: u32,
@@ -293,10 +293,10 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::RemoveUserFromUserGroup`].
     ///
-    /// * `subspace_id` - Subspace id to which belong the group.
+    /// * `subspace_id` - Subspace id to which the group belongs.
     /// * `group_id` - Id of the group from which will be removed the user.
     /// * `user` - Address of the user to remove from the group.
-    /// * `signer` - Address of who want to remove the user from the group.
+    /// * `signer` - Address of who wants to remove the user from the group.
     pub fn remove_user_from_user_group(
         subspace_id: u64,
         group_id: u32,
@@ -313,10 +313,10 @@ impl SubspacesMsg {
 
     /// Creates a new instance of [`SubspacesMsg::SetUserPermissions`].
     ///
-    /// * `subspace_id` - Subspace id to which the user belong.
+    /// * `subspace_id` - Subspace id to which the user belongs.
     /// * `user` - User address.
     /// * `permissions` - New user's permissions.
-    /// * `signer` - Address of who want to update the user's permissions.
+    /// * `signer` - Address of who wants to update the user's permissions.
     pub fn set_user_permissions(
         subspace_id: u64,
         user: Addr,

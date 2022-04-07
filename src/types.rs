@@ -26,8 +26,8 @@ pub struct PubKey {
     /// Public key type.
     #[serde(rename = "@type")]
     pub proto_type: String,
-    /// Hex encoded public key.
-    pub key: String,
+    /// Base64 encoded public key.
+    pub key: Binary,
 }
 
 /// Represents the configurations that tell the application which page of data to fetch.

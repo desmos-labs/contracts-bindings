@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 pub enum RelationshipsMsg {
     /// Message to create a new relationship.
     CreateRelationship {
-        /// Address of who want to create the relationship.
+        /// Address of who wants to create the relationship.
         signer: Addr,
         /// Address of the counterparty.
         counterparty: Addr,
@@ -19,7 +19,7 @@ pub enum RelationshipsMsg {
     },
     /// Message to delete a relationship.
     DeleteRelationship {
-        /// Address of who want to delete the relationship.
+        /// Address of who wants to delete the relationship.
         signer: Addr,
         /// Address of the counterparty.
         counterparty: Addr,
@@ -39,7 +39,7 @@ pub enum RelationshipsMsg {
     },
     /// Message to delete a previously created block.
     UnblockUser {
-        /// Address of who want to remove the block.
+        /// Address of who wants to remove the block.
         blocker: Addr,
         /// Address of the user that will be unblocked from `blocker`.
         blocked: Addr,
@@ -51,7 +51,7 @@ pub enum RelationshipsMsg {
 impl RelationshipsMsg {
     /// Creates a new instance of [`RelationshipsMsg::CreateRelationship`].
     ///
-    /// * `signer` - Address of who want to create the relationship.
+    /// * `signer` - Address of who wants to create the relationship.
     /// * `counterparty` - Address of the counterparty.
     /// * `subspace_id` - Subspace in which will be created the relationship.
     pub fn create_relationship(
@@ -68,9 +68,9 @@ impl RelationshipsMsg {
 
     /// Creates a new instance of [`RelationshipsMsg::DeleteRelationship`].
     ///
-    /// * `user` - Address of who want to delete de relationship.
+    /// * `user` - Address of who wants to delete the relationship.
     /// * `counterparty` - Address of the counterparty.
-    /// * `subspace_id` - Subspace from which will be deleted the relationships.
+    /// * `subspace_id` - Subspace in which will be deleted the relationship.
     pub fn delete_relationship(
         user: Addr,
         counterparty: Addr,
@@ -85,7 +85,7 @@ impl RelationshipsMsg {
 
     /// Creates a new instance of [`RelationshipsMsg::BlockUser`].
     ///
-    /// * `blocker` - Address of want to create the block.
+    /// * `blocker` - Address of wants to create the block.
     /// * `blocked` - Address of the user that will be blocker from `blocker`.
     /// * `reason` - Reason of the block.
     /// * `subspace_id` - Subspace on which will be created the block.
@@ -103,9 +103,9 @@ impl RelationshipsMsg {
         }
     }
 
-    /// Creates a new instance ofn [`RelationshipsMsg::UnblockUser`].
+    /// Creates a new instance of [`RelationshipsMsg::UnblockUser`].
     ///
-    /// * `blocker` - Address of who want to delete the block.
+    /// * `blocker` - Address of who wants to delete the block.
     /// * `blocked` - Address of the user that will be unblocked from `blocker`.
     /// * `subspace_id` - Subspace in which will be deleted the block.
     pub fn unblock_user(blocker: Addr, blocked: Addr, subspace_id: u64) -> RelationshipsMsg {

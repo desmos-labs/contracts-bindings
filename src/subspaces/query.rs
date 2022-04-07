@@ -25,7 +25,7 @@ pub enum SubspacesQuery {
     /// Message to query the groups created inside a sub subspace.
     /// Response: [QueryUserGroupsResponse](crate::subspaces::query_types::QueryUserGroupsResponse).
     UserGroups {
-        /// Subspace id to which the groups belong.
+        /// Subspace id to which the groups belongs.
         subspace_id: Uint64,
         /// Pagination configs.
         pagination: Option<PageRequest>,
@@ -33,7 +33,7 @@ pub enum SubspacesQuery {
     /// Message to query the details of a group.
     /// Response: [QueryUserGroupResponse](crate::subspaces::query_types::QueryUserGroupResponse).
     UserGroup {
-        /// Subspace id to which the group belong.
+        /// Subspace id to which the group belongs.
         subspace_id: Uint64,
         /// Id of the group.
         group_id: u32,
@@ -41,7 +41,7 @@ pub enum SubspacesQuery {
     /// Message to query the member of a group.
     /// Response: [QueryUserGroupMembersResponse](crate::subspaces::query_types::QueryUserGroupMembersResponse).
     UserGroupMembers {
-        /// Subspace id to which the group belong.
+        /// Subspace id to which the group belongs.
         subspace_id: Uint64,
         /// Id of the group.
         group_id: u32,
@@ -52,7 +52,7 @@ pub enum SubspacesQuery {
     /// inside a subspace.
     /// Response: [QueryUserPermissionsResponse](crate::subspaces::query_types::QueryUserPermissionsResponse).
     UserPermissions {
-        /// Subspace id to which the user belong.
+        /// Subspace id to which the user belongs.
         subspace_id: Uint64,
         /// User address.
         user: Addr,
