@@ -1,16 +1,14 @@
 use crate::error::ContractError;
-use crate::msg::{ExecuteMsg, InstantiateMsg, ProfileResponse, QueryMsg};
-use crate::state::ADMIN;
+use crate::msg::{ChainResponse, ExecuteMsg, InstantiateMsg, QueryMsg};
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{
-    to_binary, Addr, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdError, StdResult,
+    to_binary, to_vec, ContractResult, Deps, DepsMut, Env, MessageInfo, QueryRequest,
+    QueryResponse, Response, StdError, StdResult, SystemResult,
 };
 use cw2::set_contract_version;
 use desmos_bindings::msg::DesmosMsg;
-use desmos_bindings::profiles::msg::ProfilesMsg;
-use desmos_bindings::profiles::querier::ProfilesQuerier;
-use std::ops::Deref;
+use desmos_bindings::query::DesmosQuery;
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:desmos-tip";
@@ -24,7 +22,6 @@ pub fn instantiate(
     _msg: InstantiateMsg,
 ) -> Result<Response, ContractError> {
     set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
-    ADMIN.set(deps, Some(info.sender.clone()))?;
 
     Ok(Response::new()
         .add_attribute("method", "instantiate")
@@ -33,45 +30,41 @@ pub fn instantiate(
 
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn execute(
-    _deps: DepsMut,
-    env: Env,
+    _deps: DepsMut<DesmosQuery>,
+    _env: Env,
     _info: MessageInfo,
     msg: ExecuteMsg,
 ) -> Result<Response<DesmosMsg>, ContractError> {
     match msg {
-        ExecuteMsg::SaveProfile {
-            dtag,
-            bio,
-            cover_picture,
-            nickname,
-            profile_picture,
-        } => Ok(Response::new().add_attribute("test", "test").add_message(
-            ProfilesMsg::SaveProfile {
-                dtag,
-                bio,
-                cover_picture,
-                nickname,
-                profile_picture,
-                creator: env.contract.address,
-            },
-        )),
-        ExecuteMsg::DeleteProfile {} => {
-            Ok(Response::new().add_message(ProfilesMsg::delete_profile(env.contract.address)))
-        }
-        _ => Err(ContractError::NotSupported {}),
+        ExecuteMsg::DesmosMessages { msgs } => Ok(Response::new()
+            .add_attribute("action", "execute_desmos_messages")
+            .add_messages(msgs)),
     }
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
-pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
+pub fn query(deps: Deps<DesmosQuery>, _env: Env, msg: QueryMsg) -> StdResult<QueryResponse> {
     match msg {
-        QueryMsg::Profile { user } => {
-            let profile_querier = ProfilesQuerier::new(deps.querier.deref());
-            let profile_response = profile_querier.query_profile(Addr::unchecked(user))?;
-            to_binary(&ProfileResponse {
-                profile: profile_response.profile,
-            })
-        }
-        _ => Err(StdError::generic_err("query request not supported")),
+        QueryMsg::DesmosChain { request } => to_binary(&query_desmos_chain(deps, &request)?),
+    }
+}
+
+fn query_desmos_chain(
+    deps: Deps<DesmosQuery>,
+    request: &QueryRequest<DesmosQuery>,
+) -> StdResult<ChainResponse> {
+    let raw = to_vec(request).map_err(|serialize_err| {
+        StdError::generic_err(format!("Serializing QueryRequest: {}", serialize_err))
+    })?;
+    match deps.querier.raw_query(&raw) {
+        SystemResult::Err(system_err) => Err(StdError::generic_err(format!(
+            "Querier system error: {}",
+            system_err
+        ))),
+        SystemResult::Ok(ContractResult::Err(contract_err)) => Err(StdError::generic_err(format!(
+            "Querier contract error: {}",
+            contract_err
+        ))),
+        SystemResult::Ok(ContractResult::Ok(value)) => Ok(ChainResponse { data: value }),
     }
 }

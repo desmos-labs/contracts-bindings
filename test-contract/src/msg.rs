@@ -1,4 +1,6 @@
-use desmos_bindings::profiles::models_profile::Profile;
+use cosmwasm_std::{Binary, CosmosMsg, QueryRequest};
+use desmos_bindings::msg::DesmosMsg;
+use desmos_bindings::query::DesmosQuery;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -8,60 +10,17 @@ pub struct InstantiateMsg {}
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ExecuteMsg {
-    SaveProfile {
-        dtag: String,
-        nickname: String,
-        bio: String,
-        profile_picture: String,
-        cover_picture: String,
-    },
-    DeleteProfile {},
-    RequestDtagTransfer {
-        receiver: String,
-        sender: String,
-    },
-    AcceptDtagTransferRequest {
-        new_dtag: String,
-        sender: String,
-        receiver: String,
-    },
-    RefuseDtagTransferRequest {
-        sender: String,
-        receiver: String,
-    },
-    CancelDtagTransferRequest {
-        receiver: String,
-        sender: String,
-    },
-    LinkChainAccount {},
-    LinkApplication {},
+    DesmosMessages { msgs: Vec<CosmosMsg<DesmosMsg>> },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum QueryMsg {
-    Profile {
-        user: String,
-    },
-    IncomingDtagTransferRequest {
-        receiver: String,
-    },
-    ChainLink {
-        user: Option<String>,
-        chain_name: Option<String>,
-        target: Option<String>,
-    },
-    AppLink {
-        user: Option<String>,
-        application: Option<String>,
-        username: Option<String>,
-    },
-    ApplicationLinkByChainID {
-        client_id: String,
-    },
+    DesmosChain { request: QueryRequest<DesmosQuery> },
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct ProfileResponse {
-    pub profile: Profile,
+#[serde(rename_all = "snake_case")]
+pub struct ChainResponse {
+    pub data: Binary,
 }
