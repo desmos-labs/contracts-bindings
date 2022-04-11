@@ -1,5 +1,5 @@
 [package]
-name = "desmos-test-contract"
+name = "test-contract"
 version = "0.1.0"
 authors = ["Manuel Turetta <manuel.turetta94@gmail.com>"]
 edition = "2018"
@@ -34,10 +34,10 @@ library = []
 
 [package.metadata.scripts]
 optimize = """docker run --rm \
-  -v "$(pwd)/..":/code \
+  -v "$(pwd)/../..":/code \
   --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
   --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-  cosmwasm/rust-optimizer:0.12.5 ./test-contract
+  cosmwasm/workspace-optimizer:0.12.5 ./contracts/test-contract
 """
 
 [dependencies]
@@ -49,7 +49,7 @@ cw2 = "0.13.1"
 schemars = "0.8.8"
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 thiserror = { version = "1.0" }
-desmos-bindings = { path = "..", version = "0.1.0" }
+desmos-bindings = { path = "../../packages/bindings", version = "0.1.0" }
 
 [dev-dependencies]
 cosmwasm-schema = { version = "1.0.0-beta8" }

@@ -6,7 +6,7 @@ KEYRING_PASS=pass1234
 TEST_USER=manu
 TEST_USER_MNEMONIC="math track fish reopen project latin radio spoon please table between install cheap smile deer glide desk license bench vapor chef sock list case"
 TEST_USER_ADDRESS=desmos1jnpfa06xhflyjh6klwlrq8mk55s53czh6ncdm3
-SMART_CONTRACT="$SCRIPT_DIR/../target/wasm32-unknown-unknown/release/desmos_test_contract.wasm"
+SMART_CONTRACT="$SCRIPT_DIR/../artifacts/test_contract.wasm"
 
 
 desmos() {
@@ -34,5 +34,5 @@ CONTRACT=$(desmos query wasm list-contract-by-code 1 --output json | jq -r '.con
 echo "Contract address $CONTRACT"
 
 # Call the save profile command
-SAVE_PROFILE="{\"save_profile\": {\"dtag\": \"test_dtag\", \"nickname\": \"test-nick\", \"bio\": \"test-bio\", \"cover_picture\": \"https://i.imgur.com/X2aK5Bq.jpeg\", \"profile_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\"}}"
-echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$SAVE_PROFILE" --from $TEST_USER --keyring-backend=file --chain-id=testchain
+#SAVE_PROFILE="{\"save_profile\": {\"dtag\": \"test_dtag\", \"nickname\": \"test-nick\", \"bio\": \"test-bio\", \"cover_picture\": \"https://i.imgur.com/X2aK5Bq.jpeg\", \"profile_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\"}}"
+#echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$SAVE_PROFILE" --from $TEST_USER --keyring-backend=file --chain-id=testchain

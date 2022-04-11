@@ -3,6 +3,8 @@
 //! Crate that provides the bindings to interact with the Desmos blockchain custom modules from a CosmWasm
 //! smart contract.
 
+extern crate core;
+
 #[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
 pub mod mock;
 
