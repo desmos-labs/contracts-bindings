@@ -33,4 +33,13 @@ impl TxResponse {
     pub fn is_success(&self) -> bool {
         return self.code == 0;
     }
+
+    pub fn assert_success(&self) {
+        if !self.is_success() {
+            panic!(
+                "Tx failed: {}\nCode: {}\n{}",
+                self.txhash, self.code, &self.raw_log
+            );
+        }
+    }
 }
