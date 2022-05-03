@@ -41,18 +41,23 @@ echo "Contract address $CONTRACT"
 # Create user1 profile
 echo "Create user1 profile"
 echo $KEYRING_PASS | desmos tx profiles save \
-  --from $USER1 --dtag user1 --home=$PWD/.desmos --chain-id=testchain --keyring-backend=file -b=block -y
+  --from $USER1 --dtag user1 --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Create user2 profile
 echo "Create user2 profile"
 echo $KEYRING_PASS | desmos tx profiles save \
-  --from $USER2 --dtag user2 --home=$PWD/.desmos --chain-id=testchain --keyring-backend=file -b=block -y
+  --from $USER2 --dtag user2 --chain-id=testchain --keyring-backend=file -b=block -y
 
-# Create test subspace
+# Create test subspace owned by the smart contract
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_subspace\":{\"name\":\"Test subspace\",\"description\":\"\",\"treasury\":\"$CONTRACT\",\"owner\":\"$CONTRACT\",\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create test subspace"
-echo $KEYRING_PASS | desmos tx subspaces create "test subspace" \
-  --description "Test subspace" \
-  --treasury $USER1_ADDRESS \
-  --owner $USER1_ADDRESS \
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a test user group
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_user_group\":{\"subspace_id\":\"1\",\"name\":\"Test user group\",\"description\":\"\",\"default_permissions\":0,\"creator\":\"$CONTRACT\"}}}}]}}"
+echo "Create test user group"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
