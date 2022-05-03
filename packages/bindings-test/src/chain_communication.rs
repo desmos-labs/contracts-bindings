@@ -1,5 +1,10 @@
 use crate::consts::USER1_KEY;
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
+use cosmwasm_std::Uint64;
+use desmos_bindings::subspaces::query_types::{
+    QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
+    QueryUserGroupResponse, QueryUserGroupsResponse,
+};
 use serde::Serialize;
 use serde_json;
 use std::env;
@@ -171,5 +176,100 @@ impl DesmosCli {
         ]));
 
         serde_json::from_str(&result).unwrap()
+    }
+
+    /// Queries all the subspaces created.
+    pub fn query_subspaces(&self, page_key: Option<String>) -> QuerySubspacesResponse {
+        let mut cmd = self.desmos();
+        cmd.args(["query", "subspaces", "subspaces", "-o=json"]);
+
+        if let Some(key) = page_key {
+            cmd.arg(format!("--page-key={}", key));
+        }
+
+        let result = DesmosCli::run_command(&mut cmd);
+
+        serde_json::from_str(&result).unwrap()
+    }
+
+    /// Queries the details of a subspace.
+    pub fn query_subspace(&self, subspace_id: Uint64) -> QuerySubspaceResponse {
+        let mut cmd = self.desmos();
+        cmd.args([
+            "query",
+            "subspaces",
+            "subspace",
+            &subspace_id.to_string(),
+            "-o=json",
+        ]);
+
+        let result = DesmosCli::run_command(&mut cmd);
+
+        serde_json::from_str(&result).unwrap()
+    }
+
+    /// Queries the user groups inside a subspace.
+    pub fn query_user_groups(
+        &self,
+        subspace_id: Uint64,
+        page_key: Option<String>,
+    ) -> QueryUserGroupsResponse {
+        let mut cmd = self.desmos();
+        cmd.args([
+            "query",
+            "subspaces",
+            "groups",
+            "list",
+            &subspace_id.to_string(),
+            "-o=json",
+        ]);
+
+        if let Some(key) = page_key {
+            cmd.arg(format!("--page-key={}", key));
+        }
+
+        serde_json::from_str(&DesmosCli::run_command(&mut cmd)).unwrap()
+    }
+
+    /// Queries the details of a user group inside a subspace.
+    pub fn query_user_group(&self, subspace_id: Uint64, group_id: u32) -> QueryUserGroupResponse {
+        let mut cmd = self.desmos();
+        cmd.args([
+            "query",
+            "subspaces",
+            "groups",
+            "group",
+            &subspace_id.to_string(),
+            &group_id.to_string(),
+            "-o=json",
+        ]);
+
+        serde_json::from_str(&DesmosCli::run_command(&mut cmd)).unwrap()
+    }
+
+    /// Queries the members of a group.
+    pub fn query_user_group_members(
+        &self,
+        subspace_id: Uint64,
+        group_id: u32,
+        page_key: Option<String>,
+    ) -> QueryUserGroupMembersResponse {
+        let mut cmd = self.desmos();
+
+        cmd.args([
+            "query",
+            "subspaces",
+            "groups",
+            "members",
+            &subspace_id.to_string(),
+            &group_id.to_string(),
+            "-o=json",
+        ]);
+
+        if let Some(key) = page_key {
+            cmd.arg(format!("--page-key={}", key));
+        }
+
+        serde_json::from_str(&DesmosCli::run_command(&mut cmd)).unwrap()
     }
 }
