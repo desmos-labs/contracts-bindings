@@ -13,6 +13,9 @@ USER1_ADDRESS=desmos1jnpfa06xhflyjh6klwlrq8mk55s53czh6ncdm3
 USER2=user2
 USER2_MNEMONIC="invite steak example stage immense glad lawsuit shrimp script tennis oval symptom finish ride cactus camp butter local river pledge unfold kiwi vintage sorry"
 USER2_ADDRESS=desmos1ptvq7l4jt7n9sc3fky22mfvc6waf2jd8nuc0jv
+# Chain link data files
+COSMOS_CHAIN_LINK_DATA="$SCRIPT_DIR/cosmos-chain-link-data.json"
+OSMOSIS_CHAIN_LINK_DATA="$SCRIPT_DIR/osmosis-chain-link-data.json"
 
 
 desmos() {
@@ -40,13 +43,29 @@ echo "Contract address $CONTRACT"
 
 # Create user1 profile
 echo "Create user1 profile"
-echo $KEYRING_PASS | desmos tx profiles save \
-  --from $USER1 --dtag user1 --chain-id=testchain --keyring-backend=file -b=block -y
+echo $KEYRING_PASS | desmos tx profiles save --from $USER1 \
+  --dtag user1 --nickname user1 --bio "user1 bio" \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Link a cosmos address
+echo "Link cosmos address"
+echo $KEYRING_PASS | desmos tx profiles link-chain "$COSMOS_CHAIN_LINK_DATA" --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Link a osmosis address
+echo "Link osmosis address"
+echo $KEYRING_PASS | desmos tx profiles link-chain "$OSMOSIS_CHAIN_LINK_DATA" --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Create user2 profile
 echo "Create user2 profile"
-echo $KEYRING_PASS | desmos tx profiles save \
-  --from $USER2 --dtag user2 --chain-id=testchain --keyring-backend=file -b=block -y
+echo $KEYRING_PASS | desmos tx profiles save --from $USER2 \
+  --dtag user2 --nickname user2 --bio "user2 bio" \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a dtag transfer request from user2 to user1
+echo $KEYRING_PASS | desmos tx profiles request-dtag-transfer $USER1_ADDRESS --from $USER2 \
+  --keyring-backend=file --chain-id=testchain -b=block -y
 
 # Create test subspace owned by the smart contract
 MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_subspace\":{\"name\":\"Test subspace\",\"description\":\"\",\"treasury\":\"$CONTRACT\",\"owner\":\"$CONTRACT\",\"creator\":\"$CONTRACT\"}}}}]}}"
