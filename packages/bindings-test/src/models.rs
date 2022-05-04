@@ -1,4 +1,5 @@
 use cosmwasm_std::Binary;
+use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -21,6 +22,20 @@ pub struct ListContractByCode {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct WasmQueryResponse {
     pub data: WasmData,
+}
+
+impl ToString for WasmQueryResponse {
+    fn to_string(&self) -> String {
+        let decode = base64::decode(self.data.data.to_base64()).unwrap();
+        String::from_utf8(decode).unwrap()
+    }
+}
+
+impl WasmQueryResponse {
+    pub fn to_object<T: DeserializeOwned>(&self) -> T {
+        let json_string = self.to_string();
+        serde_json::from_str(&json_string).unwrap()
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
