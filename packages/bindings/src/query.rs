@@ -1,6 +1,6 @@
 //! Implementations of [cosmwasm_std::CustomQuery] for [DesmosQuery].
 
-use cosmwasm_std::CustomQuery;
+use cosmwasm_std::{CustomQuery, QueryRequest};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -47,6 +47,13 @@ impl From<ProfilesQuery> for DesmosQuery {
     }
 }
 
+#[cfg(feature = "profiles")]
+impl Into<QueryRequest<DesmosQuery>> for ProfilesQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
 #[cfg(feature = "subspaces")]
 impl From<SubspacesQuery> for DesmosQuery {
     fn from(query: SubspacesQuery) -> Self {
@@ -54,10 +61,24 @@ impl From<SubspacesQuery> for DesmosQuery {
     }
 }
 
+#[cfg(feature = "subspaces")]
+impl Into<QueryRequest<DesmosQuery>> for SubspacesQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
 #[cfg(feature = "relationships")]
 impl From<RelationshipsQuery> for DesmosQuery {
     fn from(query: RelationshipsQuery) -> Self {
         Self::Relationships(query)
+    }
+}
+
+#[cfg(feature = "relationships")]
+impl Into<QueryRequest<DesmosQuery>> for RelationshipsQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
     }
 }
 
