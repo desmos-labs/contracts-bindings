@@ -22,7 +22,7 @@ pub enum SubspacesQuery {
         /// Subspace id.
         subspace_id: Uint64,
     },
-    /// Message to query the groups created inside a sub subspace.
+    /// Message to query the groups created inside a subspace.
     /// Response: [QueryUserGroupsResponse](crate::subspaces::query_types::QueryUserGroupsResponse).
     UserGroups {
         /// Subspace id to which the groups belongs.

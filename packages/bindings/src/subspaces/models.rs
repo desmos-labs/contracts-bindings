@@ -57,7 +57,7 @@ pub struct UserPermission {
     /// User for which the permission was set.
     pub user: String,
     /// Permissions set to the user.
-    pub permissions: u32,
+    pub permission: u32,
 }
 
 /// Struct that represents a permission given to a group.
@@ -67,5 +67,5 @@ pub struct GroupPermission {
     /// Group for which the permission was set.
     pub group_id: u32,
     /// Permission set to the group.
-    pub permissions: u32,
+    pub permission: u32,
 }

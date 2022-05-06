@@ -49,7 +49,7 @@ impl MockSubspacesQueries {
     pub fn get_mock_permission_detail() -> PermissionDetail {
         PermissionDetail::Group(GroupPermission {
             group_id: 1,
-            permissions: 1,
+            permission: 1,
         })
     }
 }
