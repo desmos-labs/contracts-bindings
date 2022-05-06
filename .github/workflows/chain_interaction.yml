@@ -28,3 +28,23 @@ jobs:
       - name: Build test contract
         run: cargo optimize
         working-directory: ./contracts/test-contract
+
+      - name: Checkout desmos source
+        uses: actions/checkout@v3
+        with:
+          repository: desmos-labs/desmos
+          ref: manuel/wasm-bindings-interaction
+          path: ./desmos-src
+
+      - name: Build desmos chain
+        run: make build-alpine && mv build/desmos ../desmos/desmos
+        working-directory: ./desmos-src
+
+      - name: Run tests
+        working-directory: ./packages/bindings-test
+        run: | 
+          ../../desmos/spawn_test_chain.sh &
+          sleep 10 
+          ../../desmos/setup_chain.sh
+          cargo test --all-features -- --test-threads=1
+
