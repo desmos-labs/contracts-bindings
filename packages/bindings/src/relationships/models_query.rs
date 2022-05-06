@@ -14,7 +14,7 @@ pub struct QueryRelationshipsResponse {
     /// The queried relationships.
     pub relationships: Vec<Relationship>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to the [`RelationshipsQuery::Blocks`](crate::relationships::query::RelationshipsQuery::Blocks).
@@ -24,5 +24,5 @@ pub struct QueryBlocksResponse {
     /// The queried blocks.
     pub blocks: Vec<UserBlock>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }

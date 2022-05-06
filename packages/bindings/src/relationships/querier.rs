@@ -89,7 +89,9 @@ impl<'a> RelationshipsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.relationships,
-                    next_page_key: response.pagination.next_key,
+                    next_page_key: response
+                        .pagination
+                        .map_or(None, |pagination| pagination.next_key),
                 })
             }),
             page_size,
@@ -149,7 +151,9 @@ impl<'a> RelationshipsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.blocks,
-                    next_page_key: response.pagination.next_key,
+                    next_page_key: response
+                        .pagination
+                        .map_or(None, |pagination| pagination.next_key),
                 })
             }),
             page_size,
