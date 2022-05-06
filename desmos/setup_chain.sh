@@ -12,6 +12,7 @@ USER1_ADDRESS=desmos1jnpfa06xhflyjh6klwlrq8mk55s53czh6ncdm3
 # User 2 informations
 USER2=user2
 USER2_MNEMONIC="invite steak example stage immense glad lawsuit shrimp script tennis oval symptom finish ride cactus camp butter local river pledge unfold kiwi vintage sorry"
+USER2_MNEMONIC="invite steak example stage immense glad lawsuit shrimp script tennis oval symptom finish ride cactus camp butter local river pledge unfold kiwi vintage sorry"
 USER2_ADDRESS=desmos1ptvq7l4jt7n9sc3fky22mfvc6waf2jd8nuc0jv
 # Chain link data files
 COSMOS_CHAIN_LINK_DATA="$SCRIPT_DIR/cosmos-chain-link-data.json"
@@ -74,9 +75,33 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
-# Create a test user group
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_user_group\":{\"subspace_id\":\"1\",\"name\":\"Test user group\",\"description\":\"\",\"default_permissions\":0,\"creator\":\"$CONTRACT\"}}}}]}}"
+# Create a test user group owned by the smart contract
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_user_group\":{\"subspace_id\":\"1\",\"name\":\"Test user group\",\"description\":\"\",\"default_permissions\":31,\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create test user group"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Add user1 to the user group owned by the smart contract
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"add_user_to_user_group\":{\"subspace_id\":\"1\",\"group_id\":1,\"user\":\"$USER1_ADDRESS\",\"signer\":\"$CONTRACT\"}}}}]}}"
+echo "Add user1 to the user group"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Set user1 permissions inside the test subspace
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"set_user_permissions\":{\"subspace_id\":\"1\",\"user\":\"$USER1_ADDRESS\",\"permissions\":27,\"signer\":\"$CONTRACT\"}}}}]}}"
+echo "Set user1 permissions inside the test subspace"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a relationships between user1 and user2
+echo "Create relationship between user1 and user2"
+echo $KEYRING_PASS | desmos tx relationships create-relationship $USER2_ADDRESS 1 --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a block from user2 to user1
+echo "Create block from user2 to user1"
+echo $KEYRING_PASS | desmos tx relationships block $USER1_ADDRESS 1 --from $USER2 \
   --chain-id=testchain --keyring-backend=file -b=block -y

@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::chain_communication::DesmosCli;
-    use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
+    use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER2_ADDRESS};
     use cosmwasm_std::Addr;
     use desmos_bindings::subspaces::msg::SubspacesMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
@@ -51,12 +51,12 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
         let subspace_id = TEST_SUBSPACE;
-        let new_subspace_name = "edited subspace";
+        let new_subspace_name = "Test subspace";
 
         let edit_subspace = SubspacesMsg::EditSubspace {
             subspace_id,
             name: new_subspace_name.to_string(),
-            description: "edited".to_string(),
+            description: "".to_string(),
             treasury: Addr::unchecked(&contract_address),
             owner: Addr::unchecked(&contract_address),
             signer: Addr::unchecked(&contract_address),
@@ -121,7 +121,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
         let subspace_id = TEST_SUBSPACE;
         let group_id = TEST_SUBSPACE_USER_GROUP;
-        let new_user_group_name = "edited user group";
+        let new_user_group_name = "Test user group";
 
         let edit_user_group = SubspacesMsg::EditUserGroup {
             subspace_id,
@@ -180,7 +180,7 @@ mod tests {
         let add_user_to_group = SubspacesMsg::AddUserToUserGroup {
             subspace_id,
             group_id,
-            user: Addr::unchecked(USER1_ADDRESS),
+            user: Addr::unchecked(USER2_ADDRESS),
             signer: Addr::unchecked(&contract_address),
         };
 
@@ -194,12 +194,12 @@ mod tests {
 
         let response = desmos_cli.query_user_group_members(subspace_id, group_id, None);
 
-        assert_eq!(USER1_ADDRESS, response.members.last().unwrap().as_str());
+        assert!(response.members.contains(&Addr::unchecked(USER2_ADDRESS)));
 
         let remove_user_from_group = SubspacesMsg::RemoveUserFromUserGroup {
             subspace_id,
             group_id,
-            user: Addr::unchecked(USER1_ADDRESS),
+            user: Addr::unchecked(USER2_ADDRESS),
             signer: Addr::unchecked(&contract_address),
         };
 
@@ -221,7 +221,7 @@ mod tests {
 
         let set_user_permissions = SubspacesMsg::SetUserPermissions {
             subspace_id,
-            user: Addr::unchecked(USER1_ADDRESS),
+            user: Addr::unchecked(USER2_ADDRESS),
             permissions: new_permissions,
             signer: Addr::unchecked(&contract_address),
         };

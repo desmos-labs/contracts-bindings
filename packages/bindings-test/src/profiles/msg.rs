@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::chain_communication::DesmosCli;
-    use crate::consts::{USER1_ADDRESS, USER1_KEY};
+    use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
     use desmos_bindings::profiles::models_chain_links::{
         Address, ChainConfig, Proof, SignMode, Signature,
@@ -50,7 +50,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let dtag_transfer_request = ProfilesMsg::RequestDtagTransfer {
-            receiver: Addr::unchecked(USER1_ADDRESS),
+            receiver: Addr::unchecked(USER2_ADDRESS),
             sender: Addr::unchecked(&contract_address),
         };
         let msg = ExecuteMsg::DesmosMessages {
@@ -62,7 +62,7 @@ mod tests {
             .assert_success();
 
         let cancel_dtag_transfer_request = ProfilesMsg::CancelDtagTransferRequest {
-            receiver: Addr::unchecked(USER1_ADDRESS),
+            receiver: Addr::unchecked(USER2_ADDRESS),
             sender: Addr::unchecked(&contract_address),
         };
         let msg = ExecuteMsg::DesmosMessages {
@@ -102,15 +102,15 @@ mod tests {
                 "profiles",
                 "request-dtag-transfer",
                 &contract_address,
-                &format!("--from={}", USER1_KEY),
+                &format!("--from={}", USER2_KEY),
             ])
             .assert_success();
 
         // Prepare the AcceptDtagTransferRequest msg for the smart contract
         let accept_dtag_transfer_request = ProfilesMsg::AcceptDtagTransferRequest {
-            new_dtag: "user1".to_string(),
+            new_dtag: "user2".to_string(),
             receiver: Addr::unchecked(&contract_address),
-            sender: Addr::unchecked(USER1_ADDRESS),
+            sender: Addr::unchecked(USER2_ADDRESS),
         };
 
         // Wrap the message into the smart contract message
