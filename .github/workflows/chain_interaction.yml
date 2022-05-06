@@ -1,0 +1,30 @@
+name: Chain interaction
+
+on:
+  push:
+    branches:
+      - manuel/test-chain-communication
+
+jobs:
+  chain_interaction:
+    name: Test interaction with chain
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.59.0
+          override: true
+          components: rustfmt, clippy
+
+      - name: Install cargo run script
+        run: cargo install cargo-run-script
+
+      - name: Build test contract
+        run: cargo optimize
+        working-directory: ./contracts/test-contract
