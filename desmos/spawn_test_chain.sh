@@ -12,6 +12,16 @@ USER2=user2
 USER2_ADDRESS=desmos1ptvq7l4jt7n9sc3fky22mfvc6waf2jd8nuc0jv
 USER2_MNEMONIC="invite steak example stage immense glad lawsuit shrimp script tennis oval symptom finish ride cactus camp butter local river pledge unfold kiwi vintage sorry"
 
+# Background flags, will be set to true if the user pass the -b argument.
+BACKGROUND=false
+
+while getopts "b" arg; do
+  case $arg in
+    b)
+      BACKGROUND=true
+      ;;
+  esac
+done
 
 desmos() {
 	"$SCRIPT_DIR/desmos" --home="$DESMOS_HOME" "$@"
@@ -27,4 +37,11 @@ echo $KEYRING_PASS | desmos add-genesis-account $USER1 200000000000000stake --ke
 echo $KEYRING_PASS | desmos add-genesis-account $USER2 200000000000000stake --keyring-backend=file
 echo $KEYRING_PASS | desmos gentx $USER1 100000000000stake --amount 100000000000stake --chain-id=testchain --keyring-backend=file
 desmos collect-gentxs
-desmos start
+
+
+if [ $BACKGROUND = true ] ; then
+  desmos start &> "$SCRIPT_DIR/desmos.log" &
+else
+  desmos start
+fi
+
