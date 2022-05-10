@@ -3,7 +3,7 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{USER1_ADDRESS, USER2_ADDRESS};
     use cosmwasm_std::Addr;
-    use desmos_bindings::profiles::models_chain_links::Address;
+    use desmos_bindings::profiles::models_chain_links::{Address, AddressType};
     use desmos_bindings::profiles::models_profile::Pictures;
     use desmos_bindings::profiles::models_query::{
         QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
@@ -83,28 +83,21 @@ mod tests {
             .to_object();
 
         assert_eq!(2, result.links.len());
-        assert!(match &result.links.first().unwrap().address {
-            Address::Bech32 { value, .. } => {
-                value.eq("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r")
-            }
-            Address::Base58 { .. } => {
-                false
-            }
-            Address::Hex { .. } => {
-                false
-            }
-        });
-        assert!(match &result.links.last().unwrap().address {
-            Address::Bech32 { value, .. } => {
-                value.eq("osmo1wrx0kayjzuf27gaaqult0z576y0xggq08qsgu3")
-            }
-            Address::Base58 { .. } => {
-                false
-            }
-            Address::Hex { .. } => {
-                false
-            }
-        });
+        let cosmos_address = result.links.first().unwrap();
+        assert_eq!(AddressType::Bech32, cosmos_address.address.proto_type);
+        assert_eq!(
+            "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r",
+            cosmos_address.address.value
+        );
+        assert_eq!("cosmos", cosmos_address.address.prefix.as_ref().unwrap());
+
+        let osmosis_address = result.links.last().unwrap();
+        assert_eq!(AddressType::Bech32, osmosis_address.address.proto_type);
+        assert_eq!(
+            "osmo1wrx0kayjzuf27gaaqult0z576y0xggq08qsgu3",
+            osmosis_address.address.value
+        );
+        assert_eq!("osmo", osmosis_address.address.prefix.as_ref().unwrap());
     }
 
     #[test]
@@ -126,17 +119,13 @@ mod tests {
             .wasm_query(&contract_address, &query_msg)
             .to_object();
 
-        assert!(match &result.links.first().unwrap().address {
-            Address::Bech32 { value, .. } => {
-                value.eq("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r")
-            }
-            Address::Base58 { .. } => {
-                false
-            }
-            Address::Hex { .. } => {
-                false
-            }
-        });
+        let cosmos_address = result.links.first().unwrap();
+        assert_eq!(AddressType::Bech32, cosmos_address.address.proto_type);
+        assert_eq!(
+            "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r",
+            cosmos_address.address.value
+        );
+        assert_eq!("cosmos", cosmos_address.address.prefix.as_ref().unwrap());
     }
 
     #[test]
@@ -158,16 +147,12 @@ mod tests {
             .wasm_query(&contract_address, &query_msg)
             .to_object();
 
-        assert!(match &result.links.first().unwrap().address {
-            Address::Bech32 { value, .. } => {
-                value.eq("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r")
-            }
-            Address::Base58 { .. } => {
-                false
-            }
-            Address::Hex { .. } => {
-                false
-            }
-        });
+        let cosmos_address = result.links.first().unwrap();
+        assert_eq!(AddressType::Bech32, cosmos_address.address.proto_type);
+        assert_eq!(
+            "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r",
+            cosmos_address.address.value
+        );
+        assert_eq!("cosmos", cosmos_address.address.prefix.as_ref().unwrap());
     }
 }

@@ -4,7 +4,7 @@ mod tests {
     use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
     use desmos_bindings::profiles::models_chain_links::{
-        Address, ChainConfig, Proof, SignMode, Signature,
+        Address, AddressType, ChainConfig, Proof, SignMode, Signature,
     };
     use desmos_bindings::profiles::msg::ProfilesMsg;
     use desmos_bindings::profiles::msg::ProfilesMsg::{DeleteProfile, SaveProfile};
@@ -190,20 +190,22 @@ mod tests {
 
         // Prepare the LinkChainAccount msg for the smart contract
         let link_chain_account = ProfilesMsg::LinkChainAccount {
-            chain_address: Address::Bech32 {
-                value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
-                prefix: "cosmos".to_string(),
+            chain_address: Address {
+                proto_type: AddressType::Bech32,
+                value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
+                prefix: Some("cosmos".to_string()),
             },
             proof: Proof {
                 pub_key: PubKey {
                     proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: "AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM".to_string(),
+                    key: "A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY".to_string(),
                 },
-                signature: Signature::SingleSignatureData {
+                signature: Signature {
+                    proto_type: "/desmos.profiles.v2.SingleSignatureData".to_string(),
                     mode: SignMode::Direct,
-                    signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
+                    signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap(),
                 },
-                plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
+                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".to_string(),
             },
             chain_config: ChainConfig { name: "cosmos".to_string() },
             signer: Addr::unchecked(&contract_address),
