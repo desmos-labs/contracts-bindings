@@ -1,5 +1,6 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
+#[cfg(feature = "iterators")]
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::subspaces::models::{Subspace, UserGroup};
 use crate::{
@@ -57,6 +58,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// Gives an iterator to scan over all the subspaces.
     ///
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_subspaces(&self, page_size: u64) -> PageIterator<Subspace, Binary> {
         PageIterator::new(
             Box::new(move |key, limit| {
@@ -108,6 +110,7 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// * `subspace_id` - Subspace to which the groups belong.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_user_groups(
         &self,
         subspace_id: u64,
@@ -176,6 +179,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// * `subspace_id` - Subspace to which the group belong.
     /// * `group_id` - Group to which the users belong.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_user_group_members(
         &self,
         subspace_id: u64,

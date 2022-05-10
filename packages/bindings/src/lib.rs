@@ -23,5 +23,6 @@ pub mod msg;
 #[cfg(feature = "query")]
 pub mod query;
 
+#[cfg(feature = "iterators")]
 pub mod iter;
 pub mod types;

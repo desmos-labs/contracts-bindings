@@ -1,5 +1,6 @@
 //! Contains a querier to query data from the Desmos x/relationships module.
 
+#[cfg(feature = "iterators")]
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::relationships::models::{Relationship, UserBlock};
 use crate::{
@@ -67,6 +68,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// * `subspace_id` - Subspace to query the relationships for.
     /// * `user` - Optional address of the user for which to query the relationships.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_relationships(
         &self,
         subspace_id: u64,
@@ -129,6 +131,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// * `subspace_id` - Subspace to query the blocks for.
     /// * `blocker` - Optional address of the blocker to query the blocks for.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_blocks(
         &self,
         subspace_id: u64,

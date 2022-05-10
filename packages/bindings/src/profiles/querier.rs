@@ -1,5 +1,6 @@
 //! Contains the querier that can be used to query data related to the x/profiles module.
 
+#[cfg(feature = "iterators")]
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::profiles::models_app_links::ApplicationLink;
 use crate::profiles::models_chain_links::ChainLink;
@@ -76,6 +77,7 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// * `receiver` - Address of the user to which query the incoming requests for.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_incoming_dtag_transfer_requests(
         &self,
         receiver: Addr,
@@ -138,6 +140,7 @@ impl<'a> ProfilesQuerier<'a> {
     /// * `target` - Optional external address to which query the link for.
     /// Used only if chain_name is also set.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_chain_links(
         &self,
         user: Option<Addr>,
@@ -204,6 +207,7 @@ impl<'a> ProfilesQuerier<'a> {
     /// * `username` - Optional username inside the application associated with the link.
     /// Used only if application is also set.
     /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
     pub fn iterate_application_links(
         &self,
         user: Option<Addr>,
