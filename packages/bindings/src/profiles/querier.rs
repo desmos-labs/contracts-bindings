@@ -1,10 +1,15 @@
 //! Contains the querier that can be used to query data related to the x/profiles module.
 
 #[cfg(feature = "iterators")]
-use crate::iter::page_iterator::{Page, PageIterator};
-use crate::profiles::models_app_links::ApplicationLink;
-use crate::profiles::models_chain_links::ChainLink;
-use crate::profiles::models_dtag_requests::DtagTransferRequest;
+use crate::{
+    iter::page_iterator::{Page, PageIterator},
+    profiles::models_app_links::ApplicationLink,
+    profiles::models_chain_links::ChainLink,
+    profiles::models_dtag_requests::DtagTransferRequest,
+};
+#[cfg(feature = "iterators")]
+use cosmwasm_std::Binary;
+
 use crate::{
     profiles::{
         models_query::{
@@ -17,7 +22,7 @@ use crate::{
     query::DesmosQuery,
     types::PageRequest,
 };
-use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {

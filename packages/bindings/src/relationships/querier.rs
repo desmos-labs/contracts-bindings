@@ -1,8 +1,13 @@
 //! Contains a querier to query data from the Desmos x/relationships module.
 
 #[cfg(feature = "iterators")]
-use crate::iter::page_iterator::{Page, PageIterator};
-use crate::relationships::models::{Relationship, UserBlock};
+use crate::{
+    iter::page_iterator::{Page, PageIterator},
+    relationships::models::{Relationship, UserBlock},
+};
+#[cfg(feature = "iterators")]
+use cosmwasm_std::Binary;
+
 use crate::{
     query::DesmosQuery,
     relationships::{
@@ -11,7 +16,7 @@ use crate::{
     },
     types::PageRequest,
 };
-use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {

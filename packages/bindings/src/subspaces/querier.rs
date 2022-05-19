@@ -1,8 +1,13 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
 #[cfg(feature = "iterators")]
-use crate::iter::page_iterator::{Page, PageIterator};
-use crate::subspaces::models::{Subspace, UserGroup};
+use crate::{
+    iter::page_iterator::{Page, PageIterator},
+    subspaces::models::{Subspace, UserGroup},
+};
+#[cfg(feature = "iterators")]
+use cosmwasm_std::Binary;
+
 use crate::{
     query::DesmosQuery,
     subspaces::{
@@ -14,7 +19,7 @@ use crate::{
     },
     types::PageRequest,
 };
-use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
