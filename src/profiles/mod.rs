@@ -1,6 +1,7 @@
+//! Contains utilities,structs and enum to interact with the Desmos x/profiles module.
+
 pub mod models_app_links;
 pub mod models_chain_links;
-pub mod models_common;
 pub mod models_dtag_requests;
 pub mod models_profile;
 pub mod models_query;

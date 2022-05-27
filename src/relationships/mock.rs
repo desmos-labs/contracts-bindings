@@ -1,3 +1,5 @@
+//! Contains some useful mocks of the Desmos x/relationships module's types made to be used in any test.
+
 use crate::relationships::{
     models::{Relationship, UserBlock},
     models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
@@ -5,14 +7,12 @@ use crate::relationships::{
 };
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
-/**
-This file contains some useful mocks of the Desmos x/relationships module's types ready made to be used
-in any test
- **/
-
+/// Struct that contains some utility methods to mock data of the Desmos
+/// x/relationships module.
 pub struct MockRelationshipsQueries {}
 
 impl MockRelationshipsQueries {
+    /// Get a mocked [`Relationship`].
     pub fn get_mock_relationship() -> Relationship {
         Relationship {
             creator: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
@@ -21,6 +21,7 @@ impl MockRelationshipsQueries {
         }
     }
 
+    /// Get a mocked [`UserBlock`].
     pub fn get_mock_user_block() -> UserBlock {
         UserBlock {
             blocker: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
@@ -31,34 +32,31 @@ impl MockRelationshipsQueries {
     }
 }
 
-pub struct MockRelationshipsQuerier {}
-
-impl MockRelationshipsQuerier {
-    pub fn query(query: &RelationshipsQuery) -> ContractResult<Binary> {
-        let response = match query {
-            RelationshipsQuery::Relationships { .. } => {
-                let relationship = MockRelationshipsQueries::get_mock_relationship();
-                to_binary(&QueryRelationshipsResponse {
-                    relationships: vec![relationship],
-                    pagination: Default::default(),
-                })
-            }
-            RelationshipsQuery::Blocks { .. } => {
-                let block = MockRelationshipsQueries::get_mock_user_block();
-                to_binary(&QueryBlocksResponse {
-                    blocks: vec![block],
-                    pagination: Default::default(),
-                })
-            }
-        };
-        response.into()
-    }
+/// Functions that mocks the relationships query responses.
+pub fn mock_relationships_query_response(query: &RelationshipsQuery) -> ContractResult<Binary> {
+    let response = match query {
+        RelationshipsQuery::Relationships { .. } => {
+            let relationship = MockRelationshipsQueries::get_mock_relationship();
+            to_binary(&QueryRelationshipsResponse {
+                relationships: vec![relationship],
+                pagination: Default::default(),
+            })
+        }
+        RelationshipsQuery::Blocks { .. } => {
+            let block = MockRelationshipsQueries::get_mock_user_block();
+            to_binary(&QueryBlocksResponse {
+                blocks: vec![block],
+                pagination: Default::default(),
+            })
+        }
+    };
+    response.into()
 }
 
 #[cfg(test)]
 mod tests {
     use crate::relationships::{
-        mock::{MockRelationshipsQuerier, MockRelationshipsQueries},
+        mock::{mock_relationships_query_response, MockRelationshipsQueries},
         models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
         query::RelationshipsQuery,
     };
@@ -72,7 +70,7 @@ mod tests {
             subspace_id: Uint64::new(1),
             pagination: Default::default(),
         };
-        let response = MockRelationshipsQuerier::query(&query);
+        let response = mock_relationships_query_response(&query);
         let expected = to_binary(&QueryRelationshipsResponse {
             relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
             pagination: Default::default(),
@@ -88,7 +86,7 @@ mod tests {
             subspace_id: Uint64::new(1),
             pagination: Default::default(),
         };
-        let response = MockRelationshipsQuerier::query(&query);
+        let response = mock_relationships_query_response(&query);
         let expected = to_binary(&QueryBlocksResponse {
             blocks: vec![MockRelationshipsQueries::get_mock_user_block()],
             pagination: Default::default(),

@@ -1,3 +1,5 @@
+//! Contains an iterator that lazily loads paginated data from the chain.
+
 use cosmwasm_std::StdResult;
 
 /// Type alias of a function that fetch a page given as first argument an optional key

@@ -1,11 +1,13 @@
+//! Contains some useful functions to perform unit testing of smart contracts.
+
 #[cfg(feature = "profiles")]
-use crate::profiles::mock::MockProfilesQuerier;
+use crate::profiles::mock::mock_profiles_query_response;
 
 #[cfg(feature = "relationships")]
-use crate::relationships::mock::MockRelationshipsQuerier;
+use crate::relationships::mock::mock_relationships_query_response;
 
 #[cfg(feature = "subspaces")]
-use crate::subspaces::mock::MockSubspacesQuerier;
+use crate::subspaces::mock::mock_subspaces_query_response;
 
 use crate::query::DesmosQuery;
 use cosmwasm_std::{
@@ -23,12 +25,12 @@ pub fn mock_dependencies_with_custom_querier(
     let custom_querier = MockQuerier::<DesmosQuery>::new(&[(contract_addr, contract_balance)])
         .with_custom_handler(|query| match query {
             #[cfg(feature = "profiles")]
-            DesmosQuery::Profiles(query) => SystemResult::Ok(MockProfilesQuerier::query(query)),
+            DesmosQuery::Profiles(query) => SystemResult::Ok(mock_profiles_query_response(query)),
             #[cfg(feature = "subspaces")]
-            DesmosQuery::Subspaces(query) => SystemResult::Ok(MockSubspacesQuerier::query(query)),
+            DesmosQuery::Subspaces(query) => SystemResult::Ok(mock_subspaces_query_response(query)),
             #[cfg(feature = "relationships")]
             DesmosQuery::Relationships(query) => {
-                SystemResult::Ok(MockRelationshipsQuerier::query(query))
+                SystemResult::Ok(mock_relationships_query_response(query))
             }
             // Hide this warning since when we compile the package without any module feature
             // this pattern is reached.

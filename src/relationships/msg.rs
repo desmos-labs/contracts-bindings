@@ -1,46 +1,76 @@
+//! Contains the messages that can be sent to the chain to interact with the x/relationships module.
+
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
+/// Represents the messages to interact with x/relatioships module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum RelationshipsMsg {
+    /// Message to create a new relationship.
     CreateRelationship {
+        /// Address of who wants to create the relationship.
         signer: Addr,
+        /// Address of the counterparty.
         counterparty: Addr,
+        /// Subspace in which will be created the relationship.
         subspace_id: Uint64,
     },
+    /// Message to delete a relationship.
     DeleteRelationship {
+        /// Address of who wants to delete the relationship.
         signer: Addr,
+        /// Address of the counterparty.
         counterparty: Addr,
+        /// Subspace in which will be deleted the relationship.
         subspace_id: Uint64,
     },
+    /// Message to block another user.
     BlockUser {
+        /// Address of who is creating the block.
         blocker: Addr,
+        /// Address of the user that will be blocked from `blocker`.
         blocked: Addr,
+        /// Block reason.
         reason: String,
+        /// Subspace in which will be created the block.
         subspace_id: Uint64,
     },
+    /// Message to delete a previously created block.
     UnblockUser {
+        /// Address of who wants to remove the block.
         blocker: Addr,
+        /// Address of the user that will be unblocked from `blocker`.
         blocked: Addr,
+        /// Subspace in which will be deleted the block.
         subspace_id: Uint64,
     },
 }
 
 impl RelationshipsMsg {
+    /// Creates a new instance of [`RelationshipsMsg::CreateRelationship`].
+    ///
+    /// * `signer` - Address of who wants to create the relationship.
+    /// * `counterparty` - Address of the counterparty.
+    /// * `subspace_id` - Subspace in which will be created the relationship.
     pub fn create_relationship(
-        sender: Addr,
+        signer: Addr,
         counterparty: Addr,
         subspace_id: u64,
     ) -> RelationshipsMsg {
         RelationshipsMsg::CreateRelationship {
-            signer: sender,
+            signer,
             counterparty,
             subspace_id: subspace_id.into(),
         }
     }
 
+    /// Creates a new instance of [`RelationshipsMsg::DeleteRelationship`].
+    ///
+    /// * `user` - Address of who wants to delete the relationship.
+    /// * `counterparty` - Address of the counterparty.
+    /// * `subspace_id` - Subspace in which will be deleted the relationship.
     pub fn delete_relationship(
         user: Addr,
         counterparty: Addr,
@@ -53,6 +83,12 @@ impl RelationshipsMsg {
         }
     }
 
+    /// Creates a new instance of [`RelationshipsMsg::BlockUser`].
+    ///
+    /// * `blocker` - Address of wants to create the block.
+    /// * `blocked` - Address of the user that will be blocker from `blocker`.
+    /// * `reason` - Reason of the block.
+    /// * `subspace_id` - Subspace on which will be created the block.
     pub fn block_user(
         blocker: Addr,
         blocked: Addr,
@@ -67,6 +103,11 @@ impl RelationshipsMsg {
         }
     }
 
+    /// Creates a new instance of [`RelationshipsMsg::UnblockUser`].
+    ///
+    /// * `blocker` - Address of who wants to delete the block.
+    /// * `blocked` - Address of the user that will be unblocked from `blocker`.
+    /// * `subspace_id` - Subspace in which will be deleted the block.
     pub fn unblock_user(blocker: Addr, blocked: Addr, subspace_id: u64) -> RelationshipsMsg {
         RelationshipsMsg::UnblockUser {
             blocker,

@@ -1,4 +1,4 @@
-use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
+//! Contains a querier to query data from the Desmos x/subspaces module.
 
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::subspaces::models::{Subspace, UserGroup};
@@ -13,12 +13,27 @@ use crate::{
     },
     types::PageRequest,
 };
+use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
 
+/// Querier able to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }
 
 impl<'a> SubspacesQuerier<'a> {
+    /// Create a new [SubspacesQuerier]
+    ///
+    /// # Example
+    /// ```
+    /// use std::ops::Deref;
+    /// use cosmwasm_std::{DepsMut, MessageInfo};
+    /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
+    ///
+    /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
+    ///     let querier = SubspacesQuerier::new(deps.querier.deref());
+    ///     let subspaces_response = querier.query_subspaces(None)?;
+    /// }
+    /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {
         Self {
             querier: QuerierWrapper::<'a, DesmosQuery>::new(querier),
@@ -27,6 +42,9 @@ impl<'a> SubspacesQuerier<'a> {
 }
 
 impl<'a> SubspacesQuerier<'a> {
+    /// Queries all the subspaces created.
+    ///
+    /// * `pagination` - Optional pagination configs.
     pub fn query_subspaces(
         &self,
         pagination: Option<PageRequest>,
@@ -58,6 +76,9 @@ impl<'a> SubspacesQuerier<'a> {
         )
     }
 
+    /// Queries the details of a subspace.
+    ///
+    /// * `subspace_id` - Subspace of interest.
     pub fn query_subspace(&self, subspace_id: u64) -> StdResult<QuerySubspaceResponse> {
         let request = DesmosQuery::from(SubspacesQuery::Subspace {
             subspace_id: subspace_id.into(),
@@ -66,6 +87,10 @@ impl<'a> SubspacesQuerier<'a> {
         Ok(res)
     }
 
+    /// Queries the user groups created in a subspace.
+    ///
+    /// * `subspace_id` - Subspace to which the groups belong.
+    /// * `pagination` - Optional pagination configs.
     pub fn query_user_groups(
         &self,
         subspace_id: u64,
@@ -81,7 +106,7 @@ impl<'a> SubspacesQuerier<'a> {
 
     /// Gives an iterator to scan over all the user groups created in a subspace.
     ///
-    /// * `subspace_id` - Subspace to query the user groups for.
+    /// * `subspace_id` - Subspace to which the groups belong.
     /// * `page_size` - Size of the page requested to the chain.
     pub fn iterate_user_groups(
         &self,
@@ -109,6 +134,10 @@ impl<'a> SubspacesQuerier<'a> {
         )
     }
 
+    /// Queries the details of a user group.
+    ///
+    /// * `subspace_id` - Subspace to which the group belong.
+    /// * `group_id` - Group of interest.
     pub fn query_user_group(
         &self,
         subspace_id: u64,
@@ -122,6 +151,11 @@ impl<'a> SubspacesQuerier<'a> {
         Ok(res)
     }
 
+    /// Queries the members of a group.
+    ///
+    /// * `subspace_id` - Subspace to which the group belong.
+    /// * `group_id` - Group to which the users belong.
+    /// * `pagination` - Optional pagination configs.
     pub fn query_user_group_members(
         &self,
         subspace_id: u64,
@@ -139,8 +173,8 @@ impl<'a> SubspacesQuerier<'a> {
 
     /// Gives an iterator to scan over all the members of a user group created in a subspace.
     ///
-    /// * `subspace_id` - Subspace to query the user members for.
-    /// * `group_id` - Group to query the user members for.
+    /// * `subspace_id` - Subspace to which the group belong.
+    /// * `group_id` - Group to which the users belong.
     /// * `page_size` - Size of the page requested to the chain.
     pub fn iterate_user_group_members(
         &self,
@@ -170,6 +204,10 @@ impl<'a> SubspacesQuerier<'a> {
         )
     }
 
+    /// Queries the permissions that an user have in a subspace.
+    ///
+    /// * `subspace_id` - Subspace to which the user belong.
+    /// * `user` - User address.
     pub fn query_user_permissions(
         &self,
         subspace_id: u64,
@@ -186,11 +224,10 @@ impl<'a> SubspacesQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use std::ops::Deref;
-
     use super::*;
     use crate::mock::mock_dependencies_with_custom_querier;
     use crate::subspaces::mock::MockSubspacesQueries;
+    use std::ops::Deref;
 
     #[test]
     fn test_query_subspaces() {

@@ -1,58 +1,110 @@
-use crate::profiles::models_app_links::{Data, TimeoutHeight};
-use crate::profiles::models_chain_links::{ChainConfig, ChainLinkAddr, Proof};
+//! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
+
+use crate::profiles::models_app_links::Data;
+use crate::profiles::models_chain_links::{Address, ChainConfig, Proof};
+use crate::types::Height;
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
+/// Represents the messages to interact with the profiles module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ProfilesMsg {
+    /// Saves a Desmos profile.
     SaveProfile {
+        /// Unique profile tag.
         dtag: String,
+        /// Human readable name of the profile.
         nickname: String,
+        /// Biography of the profile.
         bio: String,
+        /// URL to the profile picture.
         profile_picture: String,
+        /// URL to the cover cover picture.
         cover_picture: String,
+        /// Address of which is creating the profile.
         creator: Addr,
     },
+    /// Deletes a profile.
     DeleteProfile {
+        /// Address of the profile to delete.
         creator: Addr,
     },
+    /// Requests a dtag transfer between the sender and
+    /// the receiver.
     RequestDtagTransfer {
+        /// Address of who is going to receive the DTag.
         receiver: Addr,
+        /// Address of who is going to send the DTag.
         sender: Addr,
     },
+    /// Accepts an incoming DTag transfer.
     AcceptDtagTransferRequest {
+        /// The DTag to accept.
         new_dtag: String,
+        /// Address of who has sent the DTag.
         sender: Addr,
+        /// Address of who is receiving the DTag.
         receiver: Addr,
     },
+    /// Refuses a DTag transfer.
     RefuseDtagTransferRequest {
+        /// Address of who has started the DTag transfer.
         sender: Addr,
+        /// Address of who was supposed to receive the DTag.
         receiver: Addr,
     },
+    /// Cancel a pending DTag transfer request.
     CancelDtagTransferRequest {
+        /// Address of who has started the DTag transfer.
         receiver: Addr,
+        /// Address of who was supposed to receive the DTag.
         sender: Addr,
     },
+    /// Links an external chain address to a profile.
     LinkChainAccount {
-        chain_address: ChainLinkAddr,
+        /// Data of the external chain address to be connected
+        /// with the Desmos profile.
+        chain_address: Address,
+        /// Contains the ownership proof of the external chain address.
         proof: Proof,
+        /// Contains the configuration of the external chain.
         chain_config: ChainConfig,
+        /// Address associated with the profile to which link the external account.
         signer: Addr,
     },
+    /// Connects a profile with a centralized application
+    /// account (eg. Twitter, GitHub, etc).
     LinkApplication {
+        /// Sender of the connection request.
         sender: Addr,
+        /// The data related to the application to which connect.
         link_data: Data,
+        /// Hex encoded call data that will be sent to the data source in order to
+        /// verify the link.
         call_data: String,
+        /// The port on which the packet will be sent.
         source_port: String,
+        /// The channel by which the packet will be sent.
         source_channel: String,
-        timeout_height: TimeoutHeight,
+        /// Timeout height relative to the current block height.
+        /// The timeout is disabled when set to 0.
+        timeout_height: Height,
+        /// Timeout timestamp (in nanoseconds) relative to the current block timestamp.
+        /// The timeout is disabled when set to 0.
         timeout_timestamp: Uint64,
     },
 }
 
 impl ProfilesMsg {
+    /// Creates an instance of [`ProfilesMsg::SaveProfile`].
+    /// * `dtag` - Unique profile tag.
+    /// * `creator` - Address of which is creating the profile.
+    /// * `nickname` - Human readable name of the profile.
+    /// * `bio` - Biography of the profile.
+    /// * `profile_picture` - URL to the profile picture.
+    /// * `cover_picture` - URL to the cover cover picture.
     pub fn save_profile(
         dtag: &str,
         creator: Addr,
@@ -71,14 +123,26 @@ impl ProfilesMsg {
         }
     }
 
+    /// Creates an instance of [`ProfilesMsg::DeleteProfile`].
+    ///
+    /// * `creator` - Address of the profile to delete.
     pub fn delete_profile(creator: Addr) -> ProfilesMsg {
         ProfilesMsg::DeleteProfile { creator }
     }
 
+    /// Creates an instance of [`ProfilesMsg::RequestDtagTransfer`].
+    ///
+    /// * `sender` - Address of who is going to send the DTag.
+    /// * `receiver` - Address of who is going to receive the DTag
     pub fn request_dtag_transfer(sender: Addr, receiver: Addr) -> ProfilesMsg {
         ProfilesMsg::RequestDtagTransfer { receiver, sender }
     }
 
+    /// Creates an instance of [`ProfilesMsg::AcceptDtagTransferRequest`].
+    ///
+    /// * `new_dtag` - The DTag to accept.
+    /// * `sender` - Address of who has sent the DTag.
+    /// * `receiver` - Address of who is receiving the DTag.
     pub fn accept_dtag_transfer_request(
         new_dtag: &str,
         sender: Addr,
@@ -91,16 +155,31 @@ impl ProfilesMsg {
         }
     }
 
+    /// Creates an instance of [`ProfilesMsg::RefuseDtagTransferRequest`].
+    ///
+    /// * `sender` - Address of who has started the DTag transfer.
+    /// * `receiver` - Address of who was supposed to receive the DTag.
     pub fn refuse_dtag_transfer_request(sender: Addr, receiver: Addr) -> ProfilesMsg {
         ProfilesMsg::RefuseDtagTransferRequest { sender, receiver }
     }
 
+    /// Creates an instance of [`ProfilesMsg::CancelDtagTransferRequest`].
+    ///
+    /// * `receiver` - Address of who was supposed to receive the DTag.
+    /// * `sender` - Address of who has started the DTag transfer.
     pub fn cancel_dtag_transfer_request(receiver: Addr, sender: Addr) -> ProfilesMsg {
         ProfilesMsg::CancelDtagTransferRequest { receiver, sender }
     }
 
+    /// Creates an instance of [`ProfilesMsg::LinkChainAccount`].
+    ///
+    /// * `chain_address` - Data of the external chain address to be connected
+    /// with the Desmos profile.
+    /// * `proof` - The ownership proof of the external chain address.
+    /// * `chain_config` - The configuration of the external chain.
+    /// * `signer` - Address associated with the profile to which link the external account.
     pub fn link_chain_account(
-        chain_address: ChainLinkAddr,
+        chain_address: Address,
         proof: Proof,
         chain_config: ChainConfig,
         signer: Addr,
@@ -113,13 +192,25 @@ impl ProfilesMsg {
         }
     }
 
+    /// Creates an instance of [`ProfilesMsg::LinkApplication`].
+    ///
+    /// * `sender` - Sender of the connection request.
+    /// * `link_data` - The data related to the application to which connect.
+    /// * `call_data` - Hex encoded call data that will be sent to the data source in order to
+    /// verify the link.
+    /// * `source_port` - The port on which the packet will be sent.
+    /// * `source_channel` - The channel by which the packet will be sent.
+    /// * `timeout_height` - Timeout height relative to the current block height.
+    /// The timeout is disabled when set to 0.
+    /// * `timeout_timestamp` - Timeout timestamp (in nanoseconds) relative to the current block timestamp.
+    /// The timeout is disabled when set to 0.
     pub fn link_application(
         sender: Addr,
         link_data: Data,
         call_data: String,
         source_port: String,
         source_channel: String,
-        timeout_height: TimeoutHeight,
+        timeout_height: Height,
         timeout_timestamp: u64,
     ) -> ProfilesMsg {
         ProfilesMsg::LinkApplication {
@@ -136,13 +227,14 @@ impl ProfilesMsg {
 
 #[cfg(test)]
 mod tests {
+    use crate::profiles::models_chain_links::Address;
     use crate::profiles::{
-        models_app_links::{CallData, Data, OracleRequest, TimeoutHeight},
-        models_chain_links::{ChainConfig, ChainLinkAddr, Proof, Signature},
-        models_common::PubKey,
+        models_app_links::{CallData, Data, OracleRequest},
+        models_chain_links::{ChainConfig, Proof, Signature},
         msg::ProfilesMsg,
     };
-    use cosmwasm_std::{Addr, Uint64};
+    use crate::types::{Height, PubKey};
+    use cosmwasm_std::{Addr, Binary, Uint64};
 
     #[test]
     fn test_save_profile() {
@@ -232,15 +324,15 @@ mod tests {
 
     #[test]
     fn test_link_chain_account() {
-        let chain_addr = ChainLinkAddr {
-            proto_type: "/desmos.profiles.v1beta1.Bech32Address".to_string(),
+        let chain_addr = Address {
+            proto_type: "/desmos.profiles.v2.Bech32Addres".to_string(),
             value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
-            prefix: "cosmos".to_string(),
+            prefix: Some("cosmos".to_string()),
         };
         let proof = Proof {
             pub_key: PubKey {
                 proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                key: "AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM".to_string(),
+                key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y").unwrap(),
             },
             signature: Signature {
                 proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
@@ -283,7 +375,7 @@ mod tests {
             client_id: "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake".to_string(),
         };
 
-        let timeout_height = TimeoutHeight {
+        let timeout_height = Height {
             revision_number: Uint64::new(0),
             revision_height: Uint64::new(0),
         };

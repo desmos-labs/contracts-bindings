@@ -1,3 +1,5 @@
+//! Implementations of [cosmwasm_std::CustomQuery] for [DesmosQuery].
+
 use cosmwasm_std::CustomQuery;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -18,15 +20,20 @@ use crate::subspaces::query::SubspacesQuery;
 //      }
 // }
 // Reference: https://serde.rs/enum-representations.html#adjacently-tagged
+
+/// Enum that defines how the desmos query messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case", tag = "route", content = "query_data")]
 pub enum DesmosQuery {
+    /// Queries relative to the x/profiles module.
     #[cfg(feature = "profiles")]
     Profiles(ProfilesQuery),
 
+    /// Queries relative to the x/subspaces module.
     #[cfg(feature = "subspaces")]
     Subspaces(SubspacesQuery),
 
+    /// Queries relative to the x/relationships module.
     #[cfg(feature = "relationships")]
     Relationships(RelationshipsQuery),
 }
@@ -65,7 +72,7 @@ mod tests {
     #[test]
     fn test_from_profiles_query() {
         let query = ProfilesQuery::Profile {
-            user: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+            user: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2").to_string(),
         };
         let expected = DesmosQuery::Profiles(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));

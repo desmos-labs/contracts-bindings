@@ -1,3 +1,5 @@
+//! Contains a querier to query data from the Desmos x/relationships module.
+
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::relationships::models::{Relationship, UserBlock};
 use crate::{
@@ -10,17 +12,37 @@ use crate::{
 };
 use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult};
 
+/// Querier able to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }
 
 impl<'a> RelationshipsQuerier<'a> {
+    /// Creates a new instance of [`RelationshipsQuerier`].
+    ///
+    /// # Example
+    /// ```
+    /// use std::ops::Deref;
+    /// use cosmwasm_std::{DepsMut, MessageInfo};
+    /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
+    ///
+    /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
+    ///     let querier = RelationshipsQuerier::new(deps.querier.deref());
+    /// }
+    /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {
         Self {
             querier: QuerierWrapper::<'a, DesmosQuery>::new(querier),
         }
     }
 
+    /// Queries the relationships inside a subspaces.
+    ///
+    /// * `subspace_id` - Subspace to query the relationships for.
+    /// * `user` - Optional address of the user for which to query the relationships.
+    /// * `counterparty` - Optional address of the counterparty of the relationships (used only if the
+    /// `user` is provided).
+    /// * `pagination` - Optional pagination configs.
     pub fn query_relationships(
         &self,
         subspace_id: u64,
@@ -74,6 +96,13 @@ impl<'a> RelationshipsQuerier<'a> {
         )
     }
 
+    /// Queries the blocks created inside a subspace.
+    ///
+    /// * `subspace_id` - Subspace to query the blocks for.
+    /// * `blocker` - Optional address of the blocker to query the blocks for.
+    /// * `blocked` - Optional address of the blocked user to query the block for (used only if
+    /// the `blocker` is provided).
+    /// * `pagination` - Optional pagination configs.
     pub fn query_blocks(
         &self,
         subspace_id: u64,
