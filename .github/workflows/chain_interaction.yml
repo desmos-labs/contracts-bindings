@@ -1,9 +1,7 @@
 name: Chain interaction
 
 on:
-  push:
-    branches:
-      - manuel/test-chain-communication
+  pull_request:
 
 jobs:
   chain_interaction:
