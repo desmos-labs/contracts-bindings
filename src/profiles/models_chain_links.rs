@@ -5,27 +5,13 @@ use cosmwasm_std::Addr;
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-/// Types of address encoding format.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub enum AddressType {
-    /// Address bech32 encoded.
-    #[serde(rename = "desmos.profiles.v2.Bech32Address")]
-    Bech32,
-    /// Address bech58 encoded.
-    #[serde(rename = "desmos.profiles.v2.Base58Address")]
-    Bech58,
-    /// Address hex encoded.
-    #[serde(rename = "desmos.profiles.v2.HexAddress")]
-    Hex,
-}
-
 /// Contains the data of the external chain address to be connected with the Desmos profile.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct Address {
-    /// The address type.
+    /// The address proto type.
     #[serde(rename = "@type")]
-    pub proto_type: AddressType,
+    pub proto_type: String,
     /// The encoded address.
     pub value: String,
     /// Optional address prefix when `prototype` is Bech32 or Hex.

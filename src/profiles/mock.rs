@@ -1,7 +1,7 @@
 //! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
 use crate::profiles::models_app_links::ApplicationLinkState;
-use crate::profiles::models_chain_links::{Address, AddressType};
+use crate::profiles::models_chain_links::Address;
 use crate::profiles::{
     models_app_links::{AppLinkResult, ApplicationLink, CallData, Data, OracleRequest},
     models_chain_links::{ChainConfig, ChainLink, Proof, Signature},
@@ -60,7 +60,7 @@ impl MockProfilesQueries {
         ChainLink {
             user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
             address: Address {
-                proto_type: AddressType::Bech32,
+                proto_type: "/desmos.profiles.v2.Bech32Addres".to_string(),
                 value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
                 prefix: Some("cosmos".to_string()),
             },

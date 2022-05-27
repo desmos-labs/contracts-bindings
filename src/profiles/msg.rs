@@ -227,7 +227,7 @@ impl ProfilesMsg {
 
 #[cfg(test)]
 mod tests {
-    use crate::profiles::models_chain_links::{Address, AddressType};
+    use crate::profiles::models_chain_links::Address;
     use crate::profiles::{
         models_app_links::{CallData, Data, OracleRequest},
         models_chain_links::{ChainConfig, Proof, Signature},
@@ -325,7 +325,7 @@ mod tests {
     #[test]
     fn test_link_chain_account() {
         let chain_addr = Address {
-            proto_type: AddressType::Bech32,
+            proto_type: "/desmos.profiles.v2.Bech32Addres".to_string(),
             value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
             prefix: Some("cosmos".to_string()),
         };
