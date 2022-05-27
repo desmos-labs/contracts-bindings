@@ -38,19 +38,20 @@ jobs:
           toolchain: 1.61.0
           override: true
 
-      - name: Install ccargo-tarpaulin
+      - name: Install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
 
       - name: Run cargo-tarpaulin
         working-directory: ./packages/bindings
-        run: cargo tarpaulin --avoid-cfg-tarpaulin --all-features
+        run: cargo tarpaulin --avoid-cfg-tarpaulin --all-features --out xml
         env:
           RUST_BACKTRACE: 1
 
       - name: Upload to codecov.io
-        uses: codecov/codecov-action@v1.0.2
+        uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./packages/bindings/cobertura.xml
 
   lints:
     name: Lints
