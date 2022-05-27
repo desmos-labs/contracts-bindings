@@ -4,7 +4,7 @@ mod tests {
     use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
     use desmos_bindings::profiles::models_chain_links::{
-        Address, AddressType, ChainConfig, Proof, SignMode, Signature,
+        Address, ChainConfig, Proof, SignMode, Signature,
     };
     use desmos_bindings::profiles::msg::ProfilesMsg;
     use desmos_bindings::profiles::msg::ProfilesMsg::{DeleteProfile, SaveProfile};
@@ -191,14 +191,14 @@ mod tests {
         // Prepare the LinkChainAccount msg for the smart contract
         let link_chain_account = ProfilesMsg::LinkChainAccount {
             chain_address: Address {
-                proto_type: AddressType::Bech32,
+                proto_type: "/desmos.profiles.v2.Bech32Address".to_string(),
                 value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
                 prefix: Some("cosmos".to_string()),
             },
             proof: Proof {
                 pub_key: PubKey {
                     proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: "A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY".to_string(),
+                    key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap(),
                 },
                 signature: Signature {
                     proto_type: "/desmos.profiles.v2.SingleSignatureData".to_string(),

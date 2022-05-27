@@ -1,7 +1,7 @@
 //! Contains structs and enums related to the chain links.
 
 use crate::types::PubKey;
-use cosmwasm_std::Addr;
+use cosmwasm_std::{Addr, Binary};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
@@ -47,6 +47,34 @@ pub struct Proof {
     pub plain_text: String,
 }
 
+/// Represents a signing mode with its own security guarantees.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub enum SignMode {
+    /// Signing mode which uses SignDoc and is erified with raw bytes from Tx.
+    #[serde(rename = "SIGN_MODE_DIRECT")]
+    Direct,
+    /// Future signing mode that will verify some human-readable textual representation
+    /// on top of the binary representation from SIGN_MODE_DIRECT.
+    /// It is currently not supported.
+    #[serde(rename = "SIGN_MODE_TEXTUAL")]
+    Textual,
+    /// Specifies a signing mode which uses SignDocDirectAux.
+    /// As opposed to SIGN_MODE_DIRECT, this sign mode does not
+    /// require signers signing over other signers' `signer_info`.
+    /// It also allows for adding Tips in transactions.
+    ///
+    /// Since: cosmos-sdk 0.46
+    #[serde(rename = "SIGN_MODE_DIRECT_AUX")]
+    DirectAux,
+    /// Backwards compatibility mode which uses Amino JSON and will be removed in the future.
+    #[serde(rename = "SIGN_MODE_LEGACY_AMINO_JSON")]
+    AminoJson,
+    /// Specifies the sign mode for EIP 191 signing on the Cosmos SDK.
+    /// Ref: https://eips.ethereum.org/EIPS/eip-191
+    #[serde(rename = "SIGN_MODE_EIP_191")]
+    Eip191,
+}
+
 /// Represents a signature of a payload.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
@@ -55,9 +83,9 @@ pub struct Signature {
     #[serde(rename = "@type")]
     pub proto_type: String,
     /// Sign mode.
-    pub mode: String,
+    pub mode: SignMode,
     /// Signature data.
-    pub signature: String,
+    pub signature: Binary,
 }
 
 /// Contains the data of the linked chain.

@@ -41,7 +41,7 @@ impl<'a, T: Clone, K: Clone> PageIterator<'a, T, K> {
     /// # Examples
     ///
     /// ```
-    /// use desmos_std::iter::page_iterator::{PageIterator, Page};
+    /// use desmos_bindings::iter::page_iterator::{Page, PageIterator};
     ///
     /// // Creates an iterator that return the numbers from 0 to 19.
     /// let it: PageIterator<u64, u64> = PageIterator::new(

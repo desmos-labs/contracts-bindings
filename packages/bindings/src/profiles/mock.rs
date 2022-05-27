@@ -1,7 +1,7 @@
 //! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
 use crate::profiles::models_app_links::ApplicationLinkState;
-use crate::profiles::models_chain_links::Address;
+use crate::profiles::models_chain_links::{Address, SignMode};
 use crate::profiles::{
     models_app_links::{AppLinkResult, ApplicationLink, CallData, Data, OracleRequest},
     models_chain_links::{ChainConfig, ChainLink, Proof, Signature},
@@ -71,8 +71,8 @@ impl MockProfilesQueries {
                 },
                 signature: Signature {
                     proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
-                    mode: "SIGN_MODE_DIRECT".to_string(),
-                    signature: "C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg".to_string(),
+                    mode: SignMode::Direct,
+                    signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
                 },
                 plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
             },

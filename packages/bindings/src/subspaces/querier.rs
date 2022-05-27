@@ -37,7 +37,7 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = SubspacesQuerier::new(deps.querier.deref());
-    ///     let subspaces_response = querier.query_subspaces(None)?;
+    ///     let subspaces_response = querier.query_subspaces(None);
     /// }
     /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {
