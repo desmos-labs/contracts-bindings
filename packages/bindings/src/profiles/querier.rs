@@ -102,7 +102,9 @@ impl<'a> ProfilesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.requests,
-                    next_page_key: response.pagination.next_key,
+                    next_page_key: response
+                        .pagination
+                        .map_or(None, |response| response.next_key),
                 })
             }),
             page_size,
@@ -169,7 +171,9 @@ impl<'a> ProfilesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response.pagination.next_key,
+                    next_page_key: response
+                        .pagination
+                        .map_or(None, |response| response.next_key),
                 })
             }),
             page_size,
@@ -236,7 +240,9 @@ impl<'a> ProfilesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response.pagination.next_key,
+                    next_page_key: response
+                        .pagination
+                        .map_or(None, |response| response.next_key),
                 })
             }),
             page_size,
