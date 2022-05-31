@@ -16,7 +16,7 @@ pub struct QuerySubspacesResponse {
     /// Queried subspaces.
     pub subspaces: Vec<Subspace>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to [`Subspace`](crate::subspaces::query::SubspacesQuery::Subspace).
@@ -34,7 +34,7 @@ pub struct QueryUserGroupsResponse {
     /// Queried user groups.
     pub groups: Vec<UserGroup>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to [`UserGroup`](crate::subspaces::query::SubspacesQuery::UserGroup).
@@ -52,7 +52,7 @@ pub struct QueryUserGroupMembersResponse {
     /// Members of the queried group.
     pub members: Vec<Addr>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to [`UserPermissions`](crate::subspaces::query::SubspacesQuery::UserPermissions).

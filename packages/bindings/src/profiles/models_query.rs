@@ -25,7 +25,7 @@ pub struct QueryIncomingDtagTransferRequestResponse {
     /// Queried dtag transfer requests.
     pub requests: Vec<DtagTransferRequest>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to [`ProfilesQuery::ChainLinks`](crate::profiles::query::ProfilesQuery::ChainLinks).
@@ -35,7 +35,7 @@ pub struct QueryChainLinksResponse {
     /// Queried chain links.
     pub links: Vec<ChainLink>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to [`ProfilesQuery::AppLinks`](crate::profiles::query::ProfilesQuery::AppLinks).
@@ -45,7 +45,7 @@ pub struct QueryApplicationLinksResponse {
     /// Queried application links.
     pub links: Vec<ApplicationLink>,
     /// Details of the current fetched page.
-    pub pagination: PageResponse,
+    pub pagination: Option<PageResponse>,
 }
 
 /// Response to [`ProfilesQuery::ApplicationLinkByChainID`](crate::profiles::query::ProfilesQuery::ApplicationLinkByChainID).
