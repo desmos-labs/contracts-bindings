@@ -1,0 +1,51 @@
+name: Chain interaction
+
+on:
+  pull_request:
+
+jobs:
+  chain_interaction:
+    name: Test interaction with chain
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.61.0
+          override: true
+          components: rustfmt, clippy
+
+      - name: Install cargo run script
+        run: cargo install cargo-run-script
+
+      - name: Precreate build dir
+        run: mkdir -p ./target/debug
+
+      - name: Build test contract
+        working-directory: ./contracts/test-contract
+        run: cargo optimize
+
+      - name: Checkout desmos source
+        uses: actions/checkout@v3
+        with:
+          repository: desmos-labs/desmos
+          ref: manuel/wasm-bindings-interaction
+          path: ./desmos-src
+
+      - name: Build desmos chain
+        run: make build-alpine && mv build/desmos ../desmos/desmos
+        working-directory: ./desmos-src
+
+      - name: Run tests
+        working-directory: ./packages/bindings-test
+        run: | 
+          ../../desmos/spawn_test_chain.sh -b
+          sleep 10 
+          ../../desmos/setup_chain.sh
+          cargo test --all-features -- --test-threads=1
+

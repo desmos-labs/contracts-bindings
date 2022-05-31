@@ -14,3 +14,6 @@ artifacts
 # IDEs
 *.iml
 .idea
+
+# Desmos chain temp directory
+desmos/.desmos

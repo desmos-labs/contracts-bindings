@@ -1,0 +1,22 @@
+{
+  "address": {
+    "@type": "/desmos.profiles.v2.Bech32Address",
+    "value": "osmo1wrx0kayjzuf27gaaqult0z576y0xggq08qsgu3",
+    "prefix": "osmo"
+  },
+  "proof": {
+    "pub_key": {
+      "@type": "/cosmos.crypto.secp256k1.PubKey",
+      "key": "A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY"
+    },
+    "signature": {
+      "@type": "/desmos.profiles.v2.SingleSignatureData",
+      "mode": "SIGN_MODE_DIRECT",
+      "signature": "dhTNhVqap+JDGTu1GshTkSfzE7p3yb6Z5+f/lqGUzSUSlfFZM/NZG4UsBwR3DyJF28nmS66jsarPXOTlLnfTBw=="
+    },
+    "plain_text": "6465736d6f73316a6e70666130367868666c796a68366b6c776c7271386d6b3535733533637a68366e63646d33"
+  },
+  "chain_config": {
+    "name": "osmosis"
+  }
+}

@@ -11,22 +11,20 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.59.0
-          target: wasm32-unknown-unknown
+          toolchain: 1.61.0
           profile: minimal
           override: true
-      - name: Compile WASM contract
-        run: cargo wasm --locked
 
-        env:
-          RUSTFLAGS: "-C link-arg=-s"
       - name: Unit tests
+        working-directory: ./packages/bindings
         run: cargo unit-test --locked
         env:
           RUST_BACKTRACE: 1
+
   coverage:
     name: Upload coverage
     runs-on: ubuntu-latest
@@ -37,19 +35,24 @@ jobs:
       - name: Install stable toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: 1.61.0
           override: true
 
+      - name: Install cargo-tarpaulin
+        run: cargo install cargo-tarpaulin
+
       - name: Run cargo-tarpaulin
-        uses: actions-rs/tarpaulin@v0.1.3
-        with:
-          version: '0.18.0-alpha3'
-          args: '--avoid-cfg-tarpaulin --all-features'
+        working-directory: ./packages/bindings
+        run: cargo tarpaulin --avoid-cfg-tarpaulin --all-features --out xml
+        env:
+          RUST_BACKTRACE: 1
 
       - name: Upload to codecov.io
-        uses: codecov/codecov-action@v1.0.2
+        uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./packages/bindings/cobertura.xml
+
   lints:
     name: Lints
     runs-on: ubuntu-latest
@@ -61,15 +64,18 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.59.0
+          toolchain: 1.61.0
           override: true
           components: rustfmt, clippy
 
       - name: Run cargo fmt
+        working-directory: ./packages/bindings
         run: cargo fmt --all -- --check
 
       - name: Run cargo clippy
+        working-directory: ./packages/bindings
         run: cargo clippy
+
   build:
     name: Test features build
     runs-on: ubuntu-latest
@@ -82,45 +88,58 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.59.0
+          toolchain: 1.61.0
           override: true
           components: rustfmt, clippy
 
       - name: Build No features
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features
 
       - name: Build feature (query)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features query
 
       - name: Build feature (profiles)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features profiles
 
       - name: Build feature (profiles+query)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features profiles,query
 
       - name: Build feature (subspaces)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features subspaces
 
       - name: Build feature (subspaces+query)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features subspaces,query
 
       - name: Build feature (relationships)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features relationships
 
       - name: Build feature (relationships+query)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features relationships,query
 
       - name: Build feature (msg)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg
 
       - name: Build feature (msg+profiles)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,profiles
 
       - name: Build feature (msg+relationships)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,relationships
 
       - name: Build feature (msg+subspaces)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,subspaces
 
       - name: Build feature (mocks)
+        working-directory: ./packages/bindings
         run: cargo build --no-default-features --features mocks
