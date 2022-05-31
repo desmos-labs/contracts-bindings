@@ -22,9 +22,6 @@ mod tests {
         let response: QuerySubspacesResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        // Should be only the test subspace
-        assert_eq!(1, response.subspaces.len());
-
         let test_subspace = response.subspaces.first().unwrap();
         assert_eq!("Test subspace", test_subspace.name.as_str());
         assert_eq!("", test_subspace.description.as_str());
@@ -72,10 +69,7 @@ mod tests {
         let response: QueryUserGroupsResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        // Should be the default user group plus the test user group
-        assert_eq!(2, response.groups.len());
-
-        let test_user_group = response.groups.last().unwrap();
+        let test_user_group = response.groups.get(1).unwrap();
         assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
         assert_eq!("Test user group", test_user_group.name.as_str());
         assert_eq!("", test_user_group.description.as_str());
