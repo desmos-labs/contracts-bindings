@@ -11,25 +11,41 @@ mod tests {
     use desmos_bindings::types::PubKey;
     use test_contract::msg::ExecuteMsg;
 
+    fn build_save_profile_msg(contract_address: &str) -> ExecuteMsg {
+        ExecuteMsg::DesmosMessages {
+            msgs: vec![SaveProfile {
+                dtag: "test_profile".to_string(),
+                nickname: "contract_nick".to_string(),
+                bio: "test_bio".to_string(),
+                profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
+                cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
+                creator: Addr::unchecked(contract_address),
+            }
+            .into()],
+        }
+    }
+
     #[test]
-    fn test_create_delete_profile() {
+    fn test_create_profile() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let save_profile = SaveProfile {
-            dtag: "test_create_delete_profile".to_string(),
-            nickname: "contract_nick".to_string(),
-            bio: "test_bio".to_string(),
-            profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            creator: Addr::unchecked(contract_address.clone()),
-        };
-        let msg = ExecuteMsg::DesmosMessages {
-            msgs: vec![save_profile.into()],
-        };
+        let save_profile_msg = build_save_profile_msg(&contract_address);
 
         desmos_cli
-            .wasm_execute(&contract_address, &msg)
+            .wasm_execute(&contract_address, &save_profile_msg)
+            .assert_success();
+    }
+
+    #[test]
+    fn test_delete_profile() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        let save_profile_msg = build_save_profile_msg(&contract_address);
+
+        desmos_cli
+            .wasm_execute(&contract_address, &save_profile_msg)
             .assert_success();
 
         let delete_profile = DeleteProfile {
