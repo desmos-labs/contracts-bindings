@@ -7,25 +7,40 @@ mod tests {
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
+    fn build_create_subspace_msg(contract_address: &str) -> ExecuteMsg {
+        DesmosMessages {
+            msgs: vec![SubspacesMsg::CreateSubspace {
+                creator: Addr::unchecked(contract_address),
+                name: "test_subspace_create_delete".to_string(),
+                description: "".to_string(),
+                owner: Addr::unchecked(contract_address),
+                treasury: Addr::unchecked(contract_address),
+            }
+            .into()],
+        }
+    }
+
     #[test]
-    fn test_subspace_create_delete() {
+    fn test_create_subspace() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let create_subspace = SubspacesMsg::CreateSubspace {
-            creator: Addr::unchecked(&contract_address),
-            name: "test_subspace_create_delete".to_string(),
-            description: "".to_string(),
-            owner: Addr::unchecked(&contract_address),
-            treasury: Addr::unchecked(&contract_address),
-        };
-
-        let msg = DesmosMessages {
-            msgs: vec![create_subspace.into()],
-        };
+        let create_subspace_msg = build_create_subspace_msg(&contract_address);
 
         desmos_cli
-            .wasm_execute(&contract_address, &msg)
+            .wasm_execute(&contract_address, &create_subspace_msg)
+            .assert_success();
+    }
+
+    #[test]
+    fn test_delete_subspace() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        let create_subspace_msg = build_create_subspace_msg(&contract_address);
+
+        desmos_cli
+            .wasm_execute(&contract_address, &create_subspace_msg)
             .assert_success();
 
         // Get the id of the last created subspace.
