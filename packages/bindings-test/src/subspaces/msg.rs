@@ -2,8 +2,9 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER2_ADDRESS};
-    use cosmwasm_std::Addr;
+    use cosmwasm_std::{Addr, Uint64};
     use desmos_bindings::subspaces::msg::SubspacesMsg;
+    use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
     #[test]
@@ -74,25 +75,42 @@ mod tests {
         assert_eq!(new_subspace_name, subspace.name);
     }
 
+    fn build_create_user_group_msg(subspace_id: Uint64, contract_address: &str) -> ExecuteMsg {
+        DesmosMessages {
+            msgs: vec![SubspacesMsg::CreateUserGroup {
+                subspace_id,
+                name: "test_user_group".to_string(),
+                description: "".to_string(),
+                default_permissions: 0,
+                creator: Addr::unchecked(contract_address),
+            }
+            .into()],
+        }
+    }
+
     #[test]
-    pub fn test_create_delete_user_group() {
+    pub fn test_create_user_group() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        let create_user_group_msg = build_create_user_group_msg(TEST_SUBSPACE, &contract_address);
+
+        desmos_cli
+            .wasm_execute(&contract_address, &create_user_group_msg)
+            .assert_success();
+    }
+
+    #[test]
+    pub fn test_delete_user_group() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
         let subspace_id = TEST_SUBSPACE;
 
-        // Create the user group
-        let create_user_group = SubspacesMsg::CreateUserGroup {
-            subspace_id,
-            name: "test_create_delete_user_group".to_string(),
-            description: "".to_string(),
-            default_permissions: 0,
-            creator: Addr::unchecked(&contract_address),
-        };
-        let msg = DesmosMessages {
-            msgs: vec![create_user_group.into()],
-        };
+        // Create the user group to delete.
+        let create_user_group_msg = build_create_user_group_msg(TEST_SUBSPACE, &contract_address);
+
         desmos_cli
-            .wasm_execute(&contract_address, &msg)
+            .wasm_execute(&contract_address, &create_user_group_msg)
             .assert_success();
 
         // Get the id of the created user group.
