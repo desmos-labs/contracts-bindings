@@ -76,9 +76,7 @@ impl<'a> SubspacesQuerier<'a> {
                 }))
                 .map(|response| Page {
                     items: response.subspaces,
-                    next_page_key: response
-                        .pagination
-                        .map_or(None, |response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
                 })
             }),
             page_size,
@@ -210,9 +208,7 @@ impl<'a> SubspacesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.groups,
-                    next_page_key: response
-                        .pagination
-                        .map_or(None, |response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
                 })
             }),
             page_size,
@@ -283,9 +279,7 @@ impl<'a> SubspacesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.members,
-                    next_page_key: response
-                        .pagination
-                        .map_or(None, |response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
                 })
             }),
             page_size,
