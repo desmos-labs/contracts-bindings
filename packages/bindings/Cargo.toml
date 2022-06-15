@@ -22,9 +22,10 @@ serde = { version = "1.0.103", default-features = false, features = ["derive"] }
 cosmwasm-schema = { version = "1.0.0-beta8" }
 
 [features]
-default = ["profiles", "subspaces", "relationships", "query", "msg"]
+default = ["profiles", "subspaces", "posts", "relationships", "query", "msg"]
 profiles = []
 subspaces = []
+posts = []
 relationships = []
 query = []
 msg = []

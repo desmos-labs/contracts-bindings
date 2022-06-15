@@ -17,6 +17,9 @@ pub mod relationships;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
 
+#[cfg(feature = "posts")]
+pub mod posts;
+
 #[cfg(feature = "msg")]
 pub mod msg;
 
