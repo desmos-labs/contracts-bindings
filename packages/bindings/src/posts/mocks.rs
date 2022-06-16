@@ -1,3 +1,5 @@
+//! Contains some useful mocks of the Desmos x/posts module's types made to be used in any test.
+
 use crate::posts::models::{Attachment, Post, ReplySetting, UserAnswer};
 use crate::posts::models_query::{
     QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
