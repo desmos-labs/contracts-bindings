@@ -36,7 +36,7 @@ pub enum ProfilesQuery {
         pagination: Option<PageRequest>,
     },
     /// Message to query the application links.
-    AppLinks {
+    ApplicationLinks {
         /// Address associated for which the link should be searched.
         /// If `None` queries all the performed application links.
         user: Option<Addr>,
