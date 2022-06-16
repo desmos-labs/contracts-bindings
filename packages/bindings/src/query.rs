@@ -1,15 +1,16 @@
 //! Implementations of [cosmwasm_std::CustomQuery] for [DesmosQuery].
 
-use cosmwasm_std::{CustomQuery, QueryRequest};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
-
+#[cfg(feature = "posts")]
+use crate::posts::query::PostsQuery;
 #[cfg(feature = "profiles")]
 use crate::profiles::query::ProfilesQuery;
 #[cfg(feature = "relationships")]
 use crate::relationships::query::RelationshipsQuery;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::query::SubspacesQuery;
+use cosmwasm_std::{CustomQuery, QueryRequest};
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
@@ -36,6 +37,10 @@ pub enum DesmosQuery {
     /// Queries relative to the x/relationships module.
     #[cfg(feature = "relationships")]
     Relationships(RelationshipsQuery),
+
+    /// Queries relative to the x/relationships module.
+    #[cfg(feature = "posts")]
+    Posts(PostsQuery),
 }
 
 impl CustomQuery for DesmosQuery {}
@@ -82,8 +87,23 @@ impl Into<QueryRequest<DesmosQuery>> for RelationshipsQuery {
     }
 }
 
+#[cfg(feature = "posts")]
+impl From<PostsQuery> for DesmosQuery {
+    fn from(query: PostsQuery) -> Self {
+        Self::Posts(query)
+    }
+}
+
+#[cfg(feature = "posts")]
+impl Into<QueryRequest<DesmosQuery>> for PostsQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
 #[cfg(test)]
 mod tests {
+    use crate::posts::query::PostsQuery;
     use crate::{
         profiles::query::ProfilesQuery, query::DesmosQuery,
         relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
@@ -122,5 +142,15 @@ mod tests {
         };
         let expected = DesmosQuery::Relationships(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
+    }
+
+    #[test]
+    fn test_from_posts_query() {
+        let query = PostsQuery::Post {
+            subspace_id: Uint64::new(0),
+            post_id: Uint64::new(0),
+        };
+        let expected = DesmosQuery::Posts(query.clone());
+        assert_eq!(expected, DesmosQuery::from(query));
     }
 }
