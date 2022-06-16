@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /// Response to [`PostsQuery::SubspacePosts`](crate::posts::query::PostsQuery::SubspacePosts).
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub struct QuerySubspacePostsRequest {
+pub struct QuerySubspacePostsResponse {
     /// Queried posts.
     pub posts: Vec<Post>,
     /// Details of the current fetched page.
