@@ -273,3 +273,185 @@ impl<'a> PostsQuerier<'a> {
         )
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use crate::mock::mock_dependencies_with_custom_querier;
+    use crate::posts::mocks::{
+        get_mocked_poll_answers, get_mocked_post, get_mocked_post_attachments,
+        get_mocked_section_posts, get_mocked_subspace_posts,
+    };
+    use crate::posts::querier::PostsQuerier;
+    use cosmwasm_std::Uint64;
+    use std::ops::Deref;
+
+    #[test]
+    fn test_query_subspace_posts() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let result = querier.query_subspace_posts(0, None);
+        let response = result.unwrap();
+
+        assert!(response.pagination.is_none());
+        assert_eq!(2, response.posts.len());
+
+        let posts = response.posts;
+        assert_eq!(get_mocked_subspace_posts(&Uint64::zero()), posts);
+    }
+
+    #[test]
+    fn test_iterate_subspace_posts() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let mut iterator = querier.iterate_subspace_posts(0, 32);
+        let expected_posts = get_mocked_subspace_posts(&Uint64::zero());
+
+        // The first item returned from the iterators should be the first item returned from the mock function.
+        assert_eq!(
+            expected_posts.get(0).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The second item returned from the iterators should be the second item returned from the mock function.
+        assert_eq!(
+            expected_posts.get(1).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The third item should be none since the mock function provides only 2 posts.
+        assert!(iterator.next().is_none());
+    }
+
+    #[test]
+    fn test_query_section_posts() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let result = querier.query_section_posts(0, 0, None);
+        let response = result.unwrap();
+
+        assert!(response.pagination.is_none());
+        assert_eq!(2, response.posts.len());
+
+        let posts = response.posts;
+        assert_eq!(get_mocked_section_posts(&Uint64::zero(), &0), posts);
+    }
+
+    #[test]
+    fn test_iterate_section_posts() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let mut iterator = querier.iterate_section_posts(0, 0, 32);
+        let expected_posts = get_mocked_section_posts(&Uint64::zero(), &0);
+
+        // The first item returned from the iterators should be the first item returned from the mock function.
+        assert_eq!(
+            expected_posts.get(0).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The second item returned from the iterators should be the second item returned from the mock function.
+        assert_eq!(
+            expected_posts.get(1).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The third item should be none since the mock function provides only 2 posts.
+        assert!(iterator.next().is_none());
+    }
+
+    #[test]
+    fn test_query_post() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let result = querier.query_post(0, 42);
+        let expected_post = get_mocked_post(Uint64::zero(), Uint64::new(42));
+
+        assert_eq!(expected_post, result.unwrap().post);
+    }
+
+    #[test]
+    fn test_query_post_attachments() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let result = querier.query_post_attachments(0, 0, None);
+        let response = result.unwrap();
+
+        assert!(response.pagination.is_none());
+        assert_eq!(2, response.attachments.len());
+
+        let attachments = response.attachments;
+        assert_eq!(
+            get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero()),
+            attachments
+        );
+    }
+
+    #[test]
+    fn test_iterate_post_attachments() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let mut iterator = querier.iterate_post_attachments(0, 0, 32);
+        let expected_attachments = get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero());
+
+        // The first item returned from the iterators should be the first item returned from the mock function.
+        assert_eq!(
+            expected_attachments.get(0).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The second item returned from the iterators should be the second item returned from the mock function.
+        assert_eq!(
+            expected_attachments.get(1).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The third item should be none since the mock function provides only 2 attachments.
+        assert!(iterator.next().is_none());
+    }
+
+    #[test]
+    fn test_query_poll_answers() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let result = querier.query_poll_answers(0, 0, 0, None, None);
+        let response = result.unwrap();
+
+        assert!(response.pagination.is_none());
+        assert_eq!(1, response.answers.len());
+
+        let answers = response.answers;
+        assert_eq!(
+            get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None),
+            answers
+        );
+    }
+
+    #[test]
+    fn test_iterate_poll_answers() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(deps.querier.deref());
+
+        let mut iterator = querier.iterate_poll_answers(0, 0, 0, None, 32);
+        let expected_answers = get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None);
+
+        // The first item returned from the iterators should be the first item returned from the mock function.
+        assert_eq!(
+            expected_answers.get(0).unwrap(),
+            &iterator.next().unwrap().unwrap()
+        );
+
+        // The second item should be none since the mock function provides only 1 response.
+        assert!(iterator.next().is_none());
+    }
+}

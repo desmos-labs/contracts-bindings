@@ -22,7 +22,7 @@ pub struct Post {
     /// Entities connected to this post.
     pub entities: Option<Vec<Entities>>,
     /// Author of the post.
-    pub author: String,
+    pub author: Addr,
     /// Id of the original post of the conversation.
     pub conversation_id: Option<Uint64>,
     /// A list this posts references (either as a reply, repost or quote).
