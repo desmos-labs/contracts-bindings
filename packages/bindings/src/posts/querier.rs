@@ -276,7 +276,7 @@ impl<'a> PostsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mock::mock_dependencies_with_custom_querier;
+    use crate::mocks::mock_dependencies_with_custom_querier;
     use crate::posts::mocks::{
         get_mocked_poll_answers, get_mocked_post, get_mocked_post_attachments,
         get_mocked_section_posts, get_mocked_subspace_posts,

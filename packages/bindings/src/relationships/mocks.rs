@@ -56,7 +56,7 @@ pub fn mock_relationships_query_response(query: &RelationshipsQuery) -> Contract
 #[cfg(test)]
 mod tests {
     use crate::relationships::{
-        mock::{mock_relationships_query_response, MockRelationshipsQueries},
+        mocks::{mock_relationships_query_response, MockRelationshipsQueries},
         models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
         query::RelationshipsQuery,
     };

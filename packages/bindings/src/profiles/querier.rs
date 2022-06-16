@@ -262,9 +262,9 @@ impl<'a> ProfilesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        mock::mock_dependencies_with_custom_querier,
+        mocks::mock_dependencies_with_custom_querier,
         profiles::{
-            mock::MockProfilesQueries,
+            mocks::MockProfilesQueries,
             models_query::{
                 QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
                 QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,

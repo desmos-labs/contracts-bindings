@@ -12,4 +12,4 @@ pub mod querier;
 pub mod query;
 
 #[cfg(all(not(target_arch = "wasm32"), feature = "query"))]
-pub mod mock;
+pub mod mocks;

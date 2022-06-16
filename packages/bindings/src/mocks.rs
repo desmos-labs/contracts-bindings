@@ -3,12 +3,12 @@
 #[cfg(feature = "posts")]
 use crate::posts::mocks::mock_posts_query_response;
 #[cfg(feature = "profiles")]
-use crate::profiles::mock::mock_profiles_query_response;
+use crate::profiles::mocks::mock_profiles_query_response;
 use crate::query::DesmosQuery;
 #[cfg(feature = "relationships")]
-use crate::relationships::mock::mock_relationships_query_response;
+use crate::relationships::mocks::mock_relationships_query_response;
 #[cfg(feature = "subspaces")]
-use crate::subspaces::mock::mock_subspaces_query_response;
+use crate::subspaces::mocks::mock_subspaces_query_response;
 use cosmwasm_std::{
     testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR},
     Coin, CustomQuery, OwnedDeps, SystemError, SystemResult,
@@ -49,16 +49,17 @@ pub fn mock_dependencies_with_custom_querier(
 #[cfg(test)]
 mod tests {
     use crate::{
-        mock::mock_dependencies_with_custom_querier,
+        mocks::mock_dependencies_with_custom_querier,
         profiles::{
-            mock::MockProfilesQueries, models_query::QueryProfileResponse, querier::ProfilesQuerier,
+            mocks::MockProfilesQueries, models_query::QueryProfileResponse,
+            querier::ProfilesQuerier,
         },
         relationships::{
-            mock::MockRelationshipsQueries, models_query::QueryRelationshipsResponse,
+            mocks::MockRelationshipsQueries, models_query::QueryRelationshipsResponse,
             querier::RelationshipsQuerier,
         },
         subspaces::{
-            mock::MockSubspacesQueries, querier::SubspacesQuerier,
+            mocks::MockSubspacesQueries, querier::SubspacesQuerier,
             query_types::QuerySubspaceResponse,
         },
     };
