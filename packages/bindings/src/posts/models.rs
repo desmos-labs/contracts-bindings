@@ -106,14 +106,19 @@ pub enum PostReferenceType {
 #[serde(rename_all = "snake_case")]
 pub enum ReplySetting {
     /// No reply setting specified.
+    #[serde(rename = "REPLY_SETTING_UNSPECIFIED")]
     Unspecified,
     /// Everyone will be able to reply to this post.
+    #[serde(rename = "REPLY_SETTING_EVERYONE")]
     Everyone,
     /// Only followers of the author will be able to reply to this post.
+    #[serde(rename = "REPLY_SETTING_FOLLOWERS")]
     Followers,
     /// Only the author mutual followers will be able to reply to this post.
+    #[serde(rename = "REPLY_SETTING_MUTUAL")]
     Mutual,
     /// Only people mentioned inside this post will be able to reply.
+    #[serde(rename = "REPLY_SETTING_MENTIONS")]
     Mentions,
 }
 

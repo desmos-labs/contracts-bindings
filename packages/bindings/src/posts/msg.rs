@@ -29,7 +29,7 @@ pub enum PostsMsg {
         /// Id of the original post of the conversation.
         conversation_id: Option<Uint64>,
         /// Reply settings of this post.
-        replay_settings: ReplySetting,
+        reply_settings: ReplySetting,
         /// A list this posts references (either as a reply, repost or quote).
         referenced_posts: Vec<PostReference>,
     },
