@@ -196,7 +196,7 @@ impl<'a> ProfilesQuerier<'a> {
         username: Option<String>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinksResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::AppLinks {
+        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinks {
             user,
             application,
             username,

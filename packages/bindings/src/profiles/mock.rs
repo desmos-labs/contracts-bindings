@@ -131,7 +131,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
                 pagination: Default::default(),
             })
         }
-        ProfilesQuery::AppLinks { .. } => {
+        ProfilesQuery::ApplicationLinks { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinksResponse {
                 links: vec![app_link],
@@ -203,7 +203,7 @@ mod tests {
 
     #[test]
     fn test_query_app_links() {
-        let query = ProfilesQuery::AppLinks {
+        let query = ProfilesQuery::ApplicationLinks {
             user: Some(Addr::unchecked("")),
             application: Some("".to_string()),
             username: Some("".to_string()),
