@@ -67,6 +67,13 @@ echo $KEYRING_PASS | desmos tx profiles save --from $USER2 \
 echo $KEYRING_PASS | desmos tx profiles request-dtag-transfer $USER1_ADDRESS --from $USER2 \
   --keyring-backend=file --chain-id=testchain -b=block -y
 
+# Create a profile for the smart contract to allow the creation of posts
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"profiles\",\"msg_data\":{\"save_profile\":{\"dtag\":\"test_profile_posts\",\"nickname\":\"contract_nick\",\"bio\":\"test_bio\",\"profile_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\",\"cover_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\",\"creator\":\"desmos14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9slmfflv\"}}}}]}}"
+echo "Create smart contract profile"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
 # Create test subspace owned by the smart contract
 MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_subspace\":{\"name\":\"Test subspace\",\"description\":\"\",\"treasury\":\"$CONTRACT\",\"owner\":\"$CONTRACT\",\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create test subspace"
