@@ -1,3 +1,5 @@
+//! Contains structures returned from the [PostsQuerier<'a>](crate::posts::querier::PostsQuerier).
+
 use crate::posts::models::{Attachment, Post, UserAnswer};
 use crate::types::PageResponse;
 use schemars::JsonSchema;
