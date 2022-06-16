@@ -1,8 +1,5 @@
 //! Contains the querier that can be used to query data related to the x/posts module.
 
-#[cfg(feature = "iterators")]
-use crate::iter::page_iterator::{Page, PageIterator};
-use crate::posts::models::{Attachment, Post, UserAnswer};
 use crate::posts::models_query::{
     QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
     QuerySectionPostsResponse, QuerySubspacePostsResponse,
@@ -10,7 +7,13 @@ use crate::posts::models_query::{
 use crate::posts::query::PostsQuery;
 use crate::query::DesmosQuery;
 use crate::types::PageRequest;
-use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult, Uint64};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
+#[cfg(feature = "iterators")]
+use {
+    crate::iter::page_iterator::{Page, PageIterator},
+    crate::posts::models::{Attachment, Post, UserAnswer},
+    cosmwasm_std::Binary,
+};
 
 /// Querier able to query data from the Desmos x/profiles module.
 pub struct PostsQuerier<'a> {
