@@ -44,7 +44,7 @@ pub enum PostsMsg {
         text: String,
         /// New entities connected to this post. These will always replace the current
         /// post's entities.
-        entities: Entities,
+        entities: Option<Entities>,
         /// Editor of the post.
         editor: Addr,
     },

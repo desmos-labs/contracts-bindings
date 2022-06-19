@@ -68,7 +68,7 @@ echo $KEYRING_PASS | desmos tx profiles request-dtag-transfer $USER1_ADDRESS --f
   --keyring-backend=file --chain-id=testchain -b=block -y
 
 # Create a profile for the smart contract to allow the creation of posts
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"profiles\",\"msg_data\":{\"save_profile\":{\"dtag\":\"test_profile_posts\",\"nickname\":\"contract_nick\",\"bio\":\"test_bio\",\"profile_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\",\"cover_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\",\"creator\":\"desmos14hj2tavq8fpesdwxxcu44rty3hh90vhujrvcmstl4zr3txmfvw9slmfflv\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"profiles\",\"msg_data\":{\"save_profile\":{\"dtag\":\"test_profile_posts\",\"nickname\":\"contract_nick\",\"bio\":\"test_bio\",\"profile_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\",\"cover_picture\":\"https://i.imgur.com/X2aK5Bq.jpeg\",\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create smart contract profile"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
@@ -110,4 +110,18 @@ echo $KEYRING_PASS | desmos tx relationships create-relationship $USER2_ADDRESS 
 # Create a block from user2 to user1
 echo "Create block from user2 to user1"
 echo $KEYRING_PASS | desmos tx relationships block $USER1_ADDRESS 1 --from $USER2 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a test post that can be edited
+echo "Create editable post"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"posts\",\"msg_data\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Editable post\",\"entities\":null,\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a test post that can be deleted
+echo "Create a deletable post"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"posts\",\"msg_data\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Deletable post\",\"entities\":null,\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
