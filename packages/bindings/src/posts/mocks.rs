@@ -1,12 +1,12 @@
 //! Contains some useful mocks of the Desmos x/posts module's types made to be used in any test.
 
-use crate::posts::models::{Attachment, Post, ReplySetting, UserAnswer};
+use crate::posts::models::{Attachment, Post, PostAttachment, ReplySetting, UserAnswer};
 use crate::posts::models_query::{
     QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
     QuerySectionPostsResponse, QuerySubspacePostsResponse,
 };
 use crate::posts::query::PostsQuery;
-use crate::types::Any;
+use crate::posts::query::PostsQuery::PostAttachments;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
 /// Functions that mocks the posts inside a subspace.
@@ -103,20 +103,22 @@ pub fn get_mocked_post_attachments(subspace_id: &Uint64, post_id: &Uint64) -> Ve
             section_id: 0,
             post_id: post_id.clone(),
             id: 0,
-            content: Any {
-                type_url: "/custom/type".to_string(),
-                data: vec![],
-            },
+            content: PostAttachment::Media {
+                uri: "ftp://domain.io/image.png".to_string(),
+                mime_type: "image/png".to_string(),
+            }
+            .into(),
         },
         Attachment {
             subspace_id: subspace_id.clone(),
             section_id: 0,
             post_id: post_id.clone(),
             id: 1,
-            content: Any {
-                type_url: "/custom/type".to_string(),
-                data: vec![],
-            },
+            content: PostAttachment::Media {
+                uri: "ftp://domain.io/image2.png".to_string(),
+                mime_type: "image/png".to_string(),
+            }
+            .into(),
         },
     ]
 }
