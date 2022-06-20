@@ -5,7 +5,7 @@ mod test {
         TEST_SUBSPACE, TEST_SUBSPACE_DELETABLE_POST_ID, TEST_SUBSPACE_EDITABLE_POST_ID,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::posts::models::ReplySetting;
+    use desmos_bindings::posts::models::{PostAttachment, ReplySetting};
     use desmos_bindings::posts::msg::PostsMsg;
     use test_contract::msg::ExecuteMsg;
 
@@ -69,6 +69,32 @@ mod test {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_SUBSPACE_DELETABLE_POST_ID,
             signer: Addr::unchecked(&contract_address),
+        };
+
+        desmos_cli
+            .wasm_execute(
+                &contract_address,
+                &ExecuteMsg::DesmosMessages {
+                    msgs: vec![msg.into()],
+                },
+            )
+            .assert_success();
+    }
+
+    #[test]
+    fn test_add_media_post_attachment() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        let msg = PostsMsg::AddPostAttachment {
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
+            content: PostAttachment::Media {
+                mime_type: "test-mime".to_string(),
+                uri: "https://test.com/image.png".to_string(),
+            }
+            .into(),
+            editor: Addr::unchecked(&contract_address),
         };
 
         desmos_cli
