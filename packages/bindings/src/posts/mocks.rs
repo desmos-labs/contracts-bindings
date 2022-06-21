@@ -6,7 +6,6 @@ use crate::posts::models_query::{
     QuerySectionPostsResponse, QuerySubspacePostsResponse,
 };
 use crate::posts::query::PostsQuery;
-use crate::posts::query::PostsQuery::PostAttachments;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
 /// Functions that mocks the posts inside a subspace.
