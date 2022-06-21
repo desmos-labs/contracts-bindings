@@ -230,6 +230,7 @@ pub struct UserAnswer {
 }
 
 /// Supported attachment that can be attached to a post.
+#[derive(Clone, Debug, PartialEq)]
 pub enum PostAttachment {
     /// Represents a media attachment.
     Media {

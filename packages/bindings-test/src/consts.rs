@@ -8,5 +8,5 @@ pub const TEST_SUBSPACE: Uint64 = Uint64::new(1);
 pub const TEST_SUBSPACE_USER_GROUP: u32 = 1;
 pub const TEST_SUBSPACE_EDITABLE_POST_ID: Uint64 = Uint64::new(1);
 pub const TEST_SUBSPACE_DELETABLE_POST_ID: Uint64 = Uint64::new(2);
-pub const TEST_DELETABLE_ATTACHMENT_ID: u32 = 1;
-pub const TEST_POLL_ID: u32 = 2;
+pub const TEST_DELETABLE_ATTACHMENT_ID: u32 = 2;
+pub const TEST_POLL_ID: u32 = 1;
