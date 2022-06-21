@@ -119,6 +119,13 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
+# Add a post attachment that can be removed and a poll that can be answered from the tests.
+echo "Adding a media attachment and a poll that can be answered to the post"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"posts\",\"msg_data\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v1.Media\",\"mime_type\":\"test-mime\",\"uri\":\"https://test.com/image.png\"},\"editor\":\"$CONTRACT\"}}}},{\"custom\":{\"route\":\"posts\",\"msg_data\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v1.Poll\",\"question\":\"Test question?\",\"provided_answers\":[{\"text\":\"Answer 1\",\"attachments\":[]},{\"text\":\"Answer 2\",\"attachments\":[]}],\"end_date\":\"2140-01-01T10:00:20.021Z\",\"allows_multiple_answers\":false,\"allows_answer_edits\":false},\"editor\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
 # Create a test post that can be deleted
 echo "Create a deletable post"
 MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"posts\",\"msg_data\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Deletable post\",\"entities\":null,\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
