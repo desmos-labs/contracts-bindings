@@ -31,9 +31,11 @@ pub struct Post {
     pub referenced_posts: Vec<PostReference>,
     /// Reply settings of this post.
     pub reply_settings: ReplySetting,
-    /// Creation date of the post.
+    /// Creation date of the post in RFC 3339 format.
+    /// example: 1972-01-01T10:00:20.
     pub creation_date: String,
-    /// Last edited time of the post.
+    /// Last edited time of the post in RFC 3339 format.
+    /// example: 1972-01-01T10:00:20.
     pub last_edit_date: Option<String>,
 }
 
@@ -166,7 +168,8 @@ pub struct RawPostAttachment {
     /// Answers the users can choose from.
     #[serde(skip_serializing_if = "Option::is_none")]
     provided_answers: Option<Vec<ProvidedAnswer>>,
-    /// Date at which the poll will close.
+    /// Date at which the poll will close in RFC 3339 format.
+    /// example: 1972-01-01T10:00:20.
     #[serde(skip_serializing_if = "Option::is_none")]
     end_date: Option<String>,
     /// Whether the poll allows multiple choices from the same user or not.
@@ -241,7 +244,8 @@ pub enum PostAttachment {
         question: String,
         /// Answers the users can choose from.
         provided_answers: Vec<ProvidedAnswer>,
-        /// Date at which the poll will close.
+        /// Date at which the poll will close in RFC 3339 format.
+        /// example: 1972-01-01T10:00:20.
         end_date: String,
         /// Whether the poll allows multiple choices from the same user or not.
         allows_multiple_answers: bool,
