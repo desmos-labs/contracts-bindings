@@ -39,7 +39,7 @@ pub enum DesmosMsg {
     Relationships(RelationshipsMsg),
 
     /// Messages relative to the x/posts module.
-    #[cfg(feature = "relationships")]
+    #[cfg(feature = "posts")]
     Posts(PostsMsg),
 }
 
