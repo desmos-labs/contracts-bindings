@@ -1,0 +1,1 @@
+//! Contains a querier to query data from the Desmos x/reactions module.

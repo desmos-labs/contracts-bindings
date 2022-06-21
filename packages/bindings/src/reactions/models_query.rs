@@ -1,0 +1,1 @@
+//! Contains the types definitions of all the responses to the x/reactions query messages.
