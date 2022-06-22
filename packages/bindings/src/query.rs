@@ -38,7 +38,7 @@ pub enum DesmosQuery {
     #[cfg(feature = "relationships")]
     Relationships(RelationshipsQuery),
 
-    /// Queries relative to the x/relationships module.
+    /// Queries relative to the x/posts module.
     #[cfg(feature = "posts")]
     Posts(PostsQuery),
 }
