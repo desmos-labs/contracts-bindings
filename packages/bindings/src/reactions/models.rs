@@ -78,28 +78,28 @@ pub struct RegisteredReaction{
 pub struct SubspaceReactionsParams {
     /// Id of the subspace for which these params are valid
     pub subspace_id: Uint64,
-    /// Params related to [`RegisteredReactionValue`](crate::reactions::models::RegisteredReactionValue) reactions
+    /// Params related to [`RegisteredReactionValue`] reactions
     pub registered_reaction: RegisteredReactionValueParams,
-    /// Params related to [`FreeTextValue`](crate::reactions::models::FreeTextValue) reactions
+    /// Params related to [`FreeTextValue`] reactions
     pub free_text: FreeTextValueParams,
 }
 
-/// Contains the params for [`FreeTextValue`](crate::reactions::models::FreeTextValue) based reactions
+/// Contains the params for [`FreeTextValue`] based reactions
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct FreeTextValueParams {
-    /// Whether [`FreeTextValue`](crate::reactions::models::FreeTextValue) reactions should be enabled
+    /// Whether [`FreeTextValue`] reactions should be enabled
     pub enabled: bool,
-    /// The max length that [`FreeTextValue`](crate::reactions::models::FreeTextValue) reactions should have
+    /// The max length that [`FreeTextValue`] reactions should have
     pub max_length: u32,
-    /// RegEx that each [`FreeTextValue`](crate::reactions::models::FreeTextValue) should respect.
+    /// RegEx that each [`FreeTextValue`] should respect.
     /// This is useful to limit what characters can be used as a reaction.
     pub reg_ex: String,
 }
 
-/// Contains the params for [`RegisteredReactionValue`](crate::reactions::models::RegisteredReactionValue) based reactions.
+/// Contains the params for [`RegisteredReactionValue`] based reactions.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct RegisteredReactionValueParams {
-    /// Whether [`RegisteredReactionValue`](crate::reactions::models::RegisteredReactionValue) reactions should be enabled
+    /// Whether [`RegisteredReactionValue`] reactions should be enabled
     pub enabled: bool,
 }
 
