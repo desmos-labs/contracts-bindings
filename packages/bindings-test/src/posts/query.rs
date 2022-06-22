@@ -94,7 +94,7 @@ mod test {
     }
 
     #[test]
-    fn test_query_posts() {
+    fn test_query_post() {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
