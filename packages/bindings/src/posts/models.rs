@@ -96,12 +96,16 @@ pub struct PostReference {
 #[serde(rename_all = "snake_case")]
 pub enum PostReferenceType {
     /// No reference specified.
+    #[serde(rename = "TYPE_UNSPECIFIED")]
     Unspecified,
     /// Represents a reply to the specified post.
+    #[serde(rename = "TYPE_REPLY_TO")]
     ReplayTo,
     /// Represents a quote of the specified post.
+    #[serde(rename = "TYPE_QUOTE")]
     Quote,
     /// Represents a repost of the specified post.
+    #[serde(rename = "TYPE_REPOST")]
     Repost,
 }
 
