@@ -1,13 +1,13 @@
 //! Contains the types definitions of all the responses to the x/subspaces query messages.
 
-use cosmwasm_std::Addr;
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
-
+use crate::subspaces::models::{Permission, Section};
 use crate::{
     subspaces::models::{PermissionDetail, Subspace, UserGroup},
     types::PageResponse,
 };
+use cosmwasm_std::Addr;
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 
 /// Response to [`Subspaces`](crate::subspaces::query::SubspacesQuery::Subspaces).
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -25,6 +25,24 @@ pub struct QuerySubspacesResponse {
 pub struct QuerySubspaceResponse {
     /// Queried subspace.
     pub subspace: Subspace,
+}
+
+/// Response to [`Sections`](crate::subspaces::query::SubspacesQuery::Sections).
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySectionsResponse {
+    /// Queried sections.
+    pub sections: Vec<Section>,
+    /// Details of the current fetched page.
+    pub pagination: Option<PageResponse>,
+}
+
+/// Response to [`Section`](crate::subspaces::query::SubspacesQuery::Section).
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySectionResponse {
+    /// Queried section.
+    pub section: Section,
 }
 
 /// Response to [`UserGroups`](crate::subspaces::query::SubspacesQuery::UserGroups).
@@ -60,7 +78,7 @@ pub struct QueryUserGroupMembersResponse {
 #[serde(rename_all = "snake_case")]
 pub struct QueryUserPermissionsResponse {
     /// The user's permissions that is the combination of [details](QueryUserPermissionsResponse::details).
-    pub permissions: u32,
+    pub permissions: Vec<Permission>,
     /// List of the user's permissions.
     pub details: Vec<PermissionDetail>,
 }

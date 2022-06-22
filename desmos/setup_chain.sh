@@ -75,7 +75,7 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Create a test user group owned by the smart contract
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_user_group\":{\"subspace_id\":\"1\",\"name\":\"Test user group\",\"description\":\"\",\"default_permissions\":31,\"creator\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"create_user_group\":{\"subspace_id\":\"1\",\"section_id\":null,\"name\":\"Test user group\",\"description\":null,\"default_permissions\":[\"EDIT_SUBSPACE\"],\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create test user group"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
@@ -89,7 +89,7 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Set user1 permissions inside the test subspace
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"set_user_permissions\":{\"subspace_id\":\"1\",\"user\":\"$USER1_ADDRESS\",\"permissions\":27,\"signer\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"subspaces\",\"msg_data\":{\"set_user_permissions\":{\"subspace_id\":\"1\",\"section_id\":0,\"user\":\"$USER1_ADDRESS\",\"permissions\":[\"EDIT_SUBSPACE\",\"DELETE_SUBSPACE\",\"MANAGE_GROUPS\"],\"signer\":\"$CONTRACT\"}}}}]}}"
 echo "Set user1 permissions inside the test subspace"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \

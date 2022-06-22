@@ -1,5 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
+use crate::subspaces::models::Permission;
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -47,16 +48,64 @@ pub enum SubspacesMsg {
         /// Address of who wants delete the subspace.
         signer: Addr,
     },
+    /// Message to create a subspace section.
+    CreateSection {
+        /// Id of the subspace inside which the section will be placed.
+        subspace_id: Uint64,
+        /// Name of the section to be created.
+        name: String,
+        /// Description of the section.
+        description: Option<String>,
+        /// Id of the parent section.
+        parent_id: Option<u32>,
+        /// User creating the section.
+        creator: Addr,
+    },
+    /// Message to edit a subspace section.
+    EditSection {
+        /// Id of the subspace inside which the section to be edited is.
+        subspace_id: Uint64,
+        /// Id of the section to be edited.
+        section_id: u32,
+        /// New name of the section.
+        name: Option<String>,
+        /// New description of the section.
+        description: Option<String>,
+        /// User editing the section.
+        editor: Addr,
+    },
+    /// Message to move a subspace section.
+    MoveSection {
+        /// Id of the subspace inside which the section lies.
+        subspace_id: Uint64,
+        /// Id of the section to be moved.
+        section_id: u32,
+        /// Id of the new parent.
+        new_parent_id: u32,
+        /// User moving the section.
+        signer: Addr,
+    },
+    /// Message to delete a subspace section.
+    DeleteSection {
+        /// Id of the subspace inside which the section to be deleted is.
+        subspace_id: Uint64,
+        /// Id of the section to delete.
+        section_id: u32,
+        /// User deleting the section.
+        signer: Addr,
+    },
     /// Message to create a new user group.
     CreateUserGroup {
         /// Subspace id to which the group will belong.
         subspace_id: Uint64,
+        /// Id of the section inside which the group will be created.
+        section_id: Option<u32>,
         /// Name of the user group.
         name: String,
         /// Description of the user group.
-        description: String,
+        description: Option<String>,
         /// Permissions that all the members will inherit.
-        default_permissions: u32,
+        default_permissions: Vec<Permission>,
         /// Address of who wants create the user group.
         creator: Addr,
     },
@@ -67,10 +116,21 @@ pub enum SubspacesMsg {
         /// Id of the user group to edit.
         group_id: u32,
         /// New user group name.
-        name: String,
+        name: Option<String>,
         /// New user group description.
-        description: String,
+        description: Option<String>,
         /// Address of who wants edit the user group.
+        signer: Addr,
+    },
+    /// Message to move a user group to from a section to another.
+    MoveUserGroup {
+        /// Id of the subspace inside which the group to move is.
+        subspace_id: Uint64,
+        /// Id of the group to be moved.
+        group_id: u32,
+        /// d of the new section where to move the group.
+        new_section_id: u32,
+        /// Address of who wants move the user group.
         signer: Addr,
     },
     /// Message to update the permissions that the group members will inherit.
@@ -80,7 +140,7 @@ pub enum SubspacesMsg {
         /// Id of the group of interest.
         group_id: u32,
         /// The permissions that will be set for the user group.
-        permissions: u32,
+        permissions: Vec<Permission>,
         /// Address of who wants update the user group permissions.
         signer: Addr,
     },
@@ -119,10 +179,12 @@ pub enum SubspacesMsg {
     SetUserPermissions {
         /// Subspace id to which the user belongs.
         subspace_id: Uint64,
+        /// Id of the section for which to set the permissions.
+        section_id: u32,
         /// Address of the user.
         user: Addr,
         /// The new user's permissions.
-        permissions: u32,
+        permissions: Vec<Permission>,
         /// Address of who wants update the user's permissions.
         signer: Addr,
     },
@@ -192,22 +254,104 @@ impl SubspacesMsg {
         }
     }
 
+    /// Creates a new instance of [`SubspacesMsg::CreateSection`].
+    ///
+    /// * `subspace_id` - Id of the subspace inside which the section will be placed.
+    /// * `name` - Name of the section to be created.
+    /// * `description` - Description of the section.
+    /// * `parent_id` - Id of the parent section.
+    /// * `creator` - User creating the section.
+    pub fn create_section(
+        subspace_id: u64,
+        name: impl Into<String>,
+        description: Option<String>,
+        parent_id: Option<u32>,
+        creator: Addr,
+    ) -> SubspacesMsg {
+        SubspacesMsg::CreateSection {
+            subspace_id: Uint64::new(subspace_id),
+            name: name.into(),
+            description,
+            parent_id,
+            creator,
+        }
+    }
+
+    /// Creates a new instance of [`SubspacesMsg::EditSection`].
+    ///
+    /// `subspace_id` - Id of the subspace inside which the section to be edited is.
+    /// `section_id` - Id of the section to be edited.
+    /// `name` - New name of the section.
+    /// `description` - New description of the section.
+    /// `editor` - User editing the section.
+    pub fn edit_section(
+        subspace_id: u64,
+        section_id: u32,
+        name: Option<String>,
+        description: Option<String>,
+        editor: Addr,
+    ) -> SubspacesMsg {
+        SubspacesMsg::EditSection {
+            subspace_id: Uint64::new(subspace_id),
+            section_id,
+            name,
+            description,
+            editor,
+        }
+    }
+
+    /// Creates a new instance of [`SubspacesMsg::MoveSection`].
+    ///
+    /// `subspace_id` - Id of the subspace inside which the section lies.
+    /// `section_id` - Id of the section to be moved.
+    /// `new_parent_id` - Id of the new parent.
+    /// `signer` - User moving the section.
+    pub fn move_section(
+        subspace_id: u64,
+        section_id: u32,
+        new_parent_id: u32,
+        signer: Addr,
+    ) -> SubspacesMsg {
+        SubspacesMsg::MoveSection {
+            subspace_id: Uint64::new(subspace_id),
+            section_id,
+            new_parent_id,
+            signer,
+        }
+    }
+
+    /// Creates a new instance of [`SubspacesMsg::DeleteSection`].
+    ///
+    /// `subspace_id` - Id of the subspace inside which the section to be deleted is.
+    /// `section_id` - Id of the section to delete.
+    /// `signer` - User deleting the section.
+    pub fn delete_section(subspace_id: u64, section_id: u32, signer: Addr) -> SubspacesMsg {
+        SubspacesMsg::DeleteSection {
+            subspace_id: Uint64::new(subspace_id),
+            section_id,
+            signer,
+        }
+    }
+
     /// Creates a new instance of [`SubspacesMsg::CreateUserGroup`].
     ///
     /// * `subspace_id` - Subspace id to which the group will belong.
+    /// * `section_id` - Id of the section inside which the group will be created.
     /// * `name` - Group name.
     /// * `description` - Group description.
     /// * `default_permission` - Permissions that the members will inherit.
     /// * `creator` - Address of who wants to create the group.
     pub fn create_user_group(
         subspace_id: u64,
+        section_id: Option<u32>,
         name: String,
-        description: String,
-        default_permissions: u32,
+        description: Option<String>,
+        default_permissions: Vec<Permission>,
         creator: Addr,
     ) -> SubspacesMsg {
         SubspacesMsg::CreateUserGroup {
             subspace_id: subspace_id.into(),
+            section_id,
             name,
             description,
             default_permissions,
@@ -225,8 +369,8 @@ impl SubspacesMsg {
     pub fn edit_user_group(
         subspace_id: u64,
         group_id: u32,
-        name: String,
-        description: String,
+        name: Option<String>,
+        description: Option<String>,
         signer: Addr,
     ) -> SubspacesMsg {
         SubspacesMsg::EditUserGroup {
@@ -234,6 +378,26 @@ impl SubspacesMsg {
             group_id,
             name,
             description,
+            signer,
+        }
+    }
+
+    /// Creates a new instance of [`SubspacesMsg::MoveUserGroup`].
+    ///
+    /// * `subspace_id` - Id of the subspace inside which the group to move is.
+    /// * `group_id` - Id of the group to be moved.
+    /// * `new_section_id` - d of the new section where to move the group.
+    /// * `signer` - Address of who wants move the user group.
+    pub fn move_user_group(
+        subspace_id: u64,
+        group_id: u32,
+        new_section_id: u32,
+        signer: Addr,
+    ) -> SubspacesMsg {
+        SubspacesMsg::MoveUserGroup {
+            subspace_id: Uint64::new(subspace_id),
+            group_id,
+            new_section_id,
             signer,
         }
     }
@@ -247,7 +411,7 @@ impl SubspacesMsg {
     pub fn set_user_group_permissions(
         subspace_id: u64,
         group_id: u32,
-        permissions: u32,
+        permissions: Vec<Permission>,
         signer: Addr,
     ) -> SubspacesMsg {
         SubspacesMsg::SetUserGroupPermissions {
@@ -314,17 +478,20 @@ impl SubspacesMsg {
     /// Creates a new instance of [`SubspacesMsg::SetUserPermissions`].
     ///
     /// * `subspace_id` - Subspace id to which the user belongs.
+    /// * `section_id` - Id of the section for which to set the permissions.
     /// * `user` - User address.
     /// * `permissions` - New user's permissions.
     /// * `signer` - Address of who wants to update the user's permissions.
     pub fn set_user_permissions(
         subspace_id: u64,
+        section_id: u32,
         user: Addr,
-        permissions: u32,
+        permissions: Vec<Permission>,
         signer: Addr,
     ) -> SubspacesMsg {
         SubspacesMsg::SetUserPermissions {
             subspace_id: subspace_id.into(),
+            section_id,
             user,
             permissions,
             signer,
@@ -391,19 +558,91 @@ mod tests {
     }
 
     #[test]
+    fn test_create_section() {
+        let msg = SubspacesMsg::create_section(
+            1,
+            "test_section",
+            Some("test description".to_string()),
+            Some(1),
+            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        );
+        let expected = SubspacesMsg::CreateSection {
+            subspace_id: Uint64::new(1),
+            name: "test_section".to_string(),
+            description: Some("test description".to_string()),
+            parent_id: Some(1),
+            creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        };
+        assert_eq!(msg, expected)
+    }
+
+    #[test]
+    fn test_edit_section() {
+        let msg = SubspacesMsg::edit_section(
+            1,
+            1,
+            Some("test_section".to_string()),
+            Some("test description".to_string()),
+            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        );
+        let expected = SubspacesMsg::EditSection {
+            subspace_id: Uint64::new(1),
+            section_id: 1,
+            name: Some("test_section".to_string()),
+            description: Some("test description".to_string()),
+            editor: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        };
+        assert_eq!(msg, expected)
+    }
+
+    #[test]
+    fn test_move_section() {
+        let msg = SubspacesMsg::move_section(
+            1,
+            1,
+            2,
+            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        );
+        let expected = SubspacesMsg::MoveSection {
+            subspace_id: Uint64::new(1),
+            section_id: 1,
+            new_parent_id: 2,
+            signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        };
+        assert_eq!(msg, expected)
+    }
+
+    #[test]
+    fn test_delete_section() {
+        let msg = SubspacesMsg::delete_section(
+            1,
+            1,
+            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        );
+        let expected = SubspacesMsg::DeleteSection {
+            subspace_id: Uint64::new(1),
+            section_id: 1,
+            signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        };
+        assert_eq!(msg, expected)
+    }
+
+    #[test]
     fn test_create_user_group() {
         let msg = SubspacesMsg::create_user_group(
             1,
+            Some(1),
             "test".to_string(),
-            "test".to_string(),
-            1,
+            Some("test".to_string()),
+            vec![],
             Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         );
         let expected = SubspacesMsg::CreateUserGroup {
             subspace_id: Uint64::new(1),
+            section_id: Some(1),
             name: "test".to_string(),
-            description: "test".to_string(),
-            default_permissions: 1,
+            description: Some("test".to_string()),
+            default_permissions: vec![],
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
         assert_eq!(msg, expected)
@@ -414,15 +653,32 @@ mod tests {
         let msg = SubspacesMsg::edit_user_group(
             1,
             1,
-            "test".to_string(),
-            "test".to_string(),
+            Some("test".to_string()),
+            Some("test".to_string()),
             Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         );
         let expected = SubspacesMsg::EditUserGroup {
             subspace_id: Uint64::new(1),
             group_id: 1,
-            name: "test".to_string(),
-            description: "test".to_string(),
+            name: Some("test".to_string()),
+            description: Some("test".to_string()),
+            signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        };
+        assert_eq!(msg, expected)
+    }
+
+    #[test]
+    fn test_move_user_group() {
+        let msg = SubspacesMsg::move_user_group(
+            1,
+            1,
+            2,
+            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        );
+        let expected = SubspacesMsg::MoveUserGroup {
+            subspace_id: Uint64::new(1),
+            group_id: 1,
+            new_section_id: 2,
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
         assert_eq!(msg, expected)
@@ -433,13 +689,13 @@ mod tests {
         let msg = SubspacesMsg::set_user_group_permissions(
             1,
             1,
-            1,
+            vec![],
             Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         );
         let expected = SubspacesMsg::SetUserGroupPermissions {
             subspace_id: Uint64::new(1),
             group_id: 1,
-            permissions: 1,
+            permissions: vec![],
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
         assert_eq!(msg, expected)
@@ -498,14 +754,16 @@ mod tests {
     fn test_set_user_permissions() {
         let msg = SubspacesMsg::set_user_permissions(
             1,
-            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
             1,
+            Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+            vec![],
             Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
         );
         let expected = SubspacesMsg::SetUserPermissions {
             subspace_id: Uint64::new(1),
+            section_id: 1,
             user: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
-            permissions: 1,
+            permissions: vec![],
             signer: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
         };
         assert_eq!(msg, expected)
