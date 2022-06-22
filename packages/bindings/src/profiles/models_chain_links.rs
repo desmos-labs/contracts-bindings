@@ -70,7 +70,7 @@ pub enum SignMode {
     #[serde(rename = "SIGN_MODE_LEGACY_AMINO_JSON")]
     AminoJson,
     /// Specifies the sign mode for EIP 191 signing on the Cosmos SDK.
-    /// Ref: https://eips.ethereum.org/EIPS/eip-191
+    /// Ref: <https://eips.ethereum.org/EIPS/eip-191>
     #[serde(rename = "SIGN_MODE_EIP_191")]
     Eip191,
 }

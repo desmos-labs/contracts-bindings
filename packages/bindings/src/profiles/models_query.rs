@@ -38,7 +38,7 @@ pub struct QueryChainLinksResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`ProfilesQuery::AppLinks`](crate::profiles::query::ProfilesQuery::AppLinks).
+/// Response to [`ProfilesQuery::ApplicationLinks`](crate::profiles::query::ProfilesQuery::ApplicationLinks).
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct QueryApplicationLinksResponse {
