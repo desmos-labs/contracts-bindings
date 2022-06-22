@@ -5,10 +5,12 @@ mod test {
     use cosmwasm_std::{Addr, Uint64};
     use desmos_bindings::posts::models::{Post, PostAttachment, ProvidedAnswer, ReplySetting};
     use desmos_bindings::posts::models_query::{
-        QueryPostAttachmentsResponse, QueryPostResponse, QuerySectionPostsResponse,
-        QuerySubspacePostsResponse,
+        QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
+        QuerySectionPostsResponse, QuerySubspacePostsResponse,
     };
+    use desmos_bindings::posts::msg::PostsMsg;
     use desmos_bindings::posts::query::PostsQuery;
+    use test_contract::msg::ExecuteMsg;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     fn get_editable_post(contract_address: &str) -> Post {
@@ -159,5 +161,47 @@ mod test {
                 final_tally_results: None
             }
         )
+    }
+
+    #[test]
+    fn test_query_poll_answers() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        let msg = PostsMsg::AnswerPoll {
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
+            poll_id: TEST_POLL_ID,
+            answers_indexes: vec![0],
+            signer: Addr::unchecked(&contract_address),
+        };
+
+        desmos_cli
+            .wasm_execute(
+                &contract_address,
+                &ExecuteMsg::DesmosMessages {
+                    msgs: vec![msg.into()],
+                },
+            )
+            .assert_success();
+
+        let query_msg = DesmosChain {
+            request: PostsQuery::PollAnswers {
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
+                poll_id: 1,
+                user: None,
+                pagination: None,
+            }
+            .into(),
+        };
+
+        let result: QueryPollAnswersResponse = desmos_cli
+            .wasm_query(&contract_address, &query_msg)
+            .to_object();
+
+        let answer = result.answers.first().unwrap();
+        assert_eq!(Addr::unchecked(&contract_address), answer.user);
+        assert_eq!(vec![0], answer.answers_indexes)
     }
 }
