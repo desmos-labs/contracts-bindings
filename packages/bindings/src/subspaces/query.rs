@@ -70,9 +70,9 @@ pub enum SubspacesQuery {
     /// inside a subspace.
     /// Response: [QueryUserPermissionsResponse](crate::subspaces::query_types::QueryUserPermissionsResponse).
     UserPermissions {
-        /// Subspace id to which the user belongs.
+        /// Subspace id to which the permissions belongs.
         subspace_id: Uint64,
-        /// Section id to which the user belongs.
+        /// Section id to which the permissions belongs.
         section_id: Option<u32>,
         /// User address.
         user: Addr,
