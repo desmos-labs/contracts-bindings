@@ -12,7 +12,7 @@ use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 pub fn get_mocked_subspace_posts(subspace_id: &Uint64) -> Vec<Post> {
     vec![
         Post {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             section_id: 0,
             eternal_id: None,
             text: None,
@@ -26,7 +26,7 @@ pub fn get_mocked_subspace_posts(subspace_id: &Uint64) -> Vec<Post> {
             last_edit_date: None,
         },
         Post {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             section_id: 0,
             eternal_id: None,
             text: None,
@@ -46,8 +46,8 @@ pub fn get_mocked_subspace_posts(subspace_id: &Uint64) -> Vec<Post> {
 pub fn get_mocked_section_posts(subspace_id: &Uint64, section_id: &u32) -> Vec<Post> {
     vec![
         Post {
-            subspace_id: subspace_id.clone(),
-            section_id: section_id.clone(),
+            subspace_id: *subspace_id,
+            section_id: *section_id,
             eternal_id: None,
             text: None,
             entities: None,
@@ -60,8 +60,8 @@ pub fn get_mocked_section_posts(subspace_id: &Uint64, section_id: &u32) -> Vec<P
             last_edit_date: None,
         },
         Post {
-            subspace_id: subspace_id.clone(),
-            section_id: section_id.clone(),
+            subspace_id: *subspace_id,
+            section_id: *section_id,
             eternal_id: None,
             text: None,
             entities: None,
@@ -98,9 +98,9 @@ pub fn get_mocked_post(post_id: Uint64, subspace_id: Uint64) -> Post {
 pub fn get_mocked_post_attachments(subspace_id: &Uint64, post_id: &Uint64) -> Vec<Attachment> {
     vec![
         Attachment {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             section_id: 0,
-            post_id: post_id.clone(),
+            post_id: *post_id,
             id: 0,
             content: PostAttachment::Media {
                 uri: "ftp://domain.io/image.png".to_string(),
@@ -109,9 +109,9 @@ pub fn get_mocked_post_attachments(subspace_id: &Uint64, post_id: &Uint64) -> Ve
             .into(),
         },
         Attachment {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             section_id: 0,
-            post_id: post_id.clone(),
+            post_id: *post_id,
             id: 1,
             content: PostAttachment::Media {
                 uri: "ftp://domain.io/image2.png".to_string(),
@@ -130,10 +130,10 @@ pub fn get_mocked_poll_answers(
     user: &Option<Addr>,
 ) -> Vec<UserAnswer> {
     vec![UserAnswer {
-        subspace_id: subspace_id.clone(),
+        subspace_id: *subspace_id,
         section_id: 0,
-        post_id: post_id.clone(),
-        poll_id: poll_id.clone(),
+        post_id: *post_id,
+        poll_id: *poll_id,
         answers_indexes: vec![0],
         user: user.as_ref().map_or(
             Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
@@ -162,7 +162,7 @@ pub fn mock_posts_query_response(query: &PostsQuery) -> ContractResult<Binary> {
             post_id,
             ..
         } => to_binary(&QueryPostResponse {
-            post: get_mocked_post(subspace_id.clone(), post_id.clone()),
+            post: get_mocked_post(*subspace_id, *post_id),
         }),
         PostsQuery::PostAttachments {
             subspace_id,
