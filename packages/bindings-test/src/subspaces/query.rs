@@ -77,7 +77,7 @@ mod tests {
         assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
         assert_eq!("Test user group", test_user_group.name.as_str());
         assert_eq!("", test_user_group.description.as_str());
-        assert_eq!(vec![Permission::Everything], test_user_group.permissions)
+        assert_eq!(vec![Permission::EditSubspace], test_user_group.permissions)
     }
 
     #[test]
@@ -100,7 +100,7 @@ mod tests {
         assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
         assert_eq!("Test user group", test_user_group.name.as_str());
         assert_eq!("", test_user_group.description.as_str());
-        assert_eq!(vec![Permission::Everything], test_user_group.permissions)
+        assert_eq!(vec![Permission::EditSubspace], test_user_group.permissions)
     }
 
     #[test]
@@ -144,7 +144,14 @@ mod tests {
         let response: QueryUserPermissionsResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        assert_eq!(vec![Permission::Everything], response.permissions);
+        assert_eq!(
+            vec![
+                Permission::EditSubspace,
+                Permission::DeleteSubspace,
+                Permission::ManageGroups
+            ],
+            response.permissions
+        );
         assert_eq!(
             vec![
                 PermissionDetail {
@@ -175,7 +182,7 @@ mod tests {
                     user: None,
                     group: Some(GroupPermissions {
                         group_id: 1,
-                        permission: vec![Permission::Everything]
+                        permission: vec![Permission::EditSubspace]
                     })
                 }
             ],

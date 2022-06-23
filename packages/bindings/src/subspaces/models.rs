@@ -116,4 +116,16 @@ pub enum Permission {
     /// This should usually be reserved only to the owner (which has it by default).
     #[serde(rename = "EVERYTHING")]
     Everything,
+    /// Identifies users that can create content inside the subspace.
+    #[serde(rename = "WRITE_CONTENT")]
+    Write,
+    /// Allows users to interact with content inside the subspace (eg. polls).
+    #[serde(rename = "INTERACT_WITH_CONTENT")]
+    InteractWithContent,
+    /// Allows users to edit their own content inside the subspace.
+    #[serde(rename = "EDIT_OWN_CONTENT")]
+    EditOwnContent,
+    /// Allows users to moderate other user's content.
+    #[serde(rename = "MODERATE_CONTENT")]
+    ModerateContent,
 }
