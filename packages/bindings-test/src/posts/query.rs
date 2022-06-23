@@ -157,7 +157,7 @@ mod test {
                 ],
                 end_date: "2140-01-01T10:00:20.021Z".to_string(),
                 allows_multiple_answers: false,
-                allows_answer_edits: false,
+                allows_answer_edits: true,
                 final_tally_results: None
             }
         )
