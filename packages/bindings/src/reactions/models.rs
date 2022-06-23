@@ -46,6 +46,14 @@ pub enum ReactionValueJSON {
     }
 }
 
+/// Represents the errors that can occur when converting a [`RegisteredReaction`] or [`FreeTextValue`] into a [`ReactionValueJSON`].
+#[derive(Error, Debug, Clone)]
+pub enum UnwrapReactionValueJSONError {
+    /// Error that occur if [`ReactionValueJSON`] is an invalid reaction value.
+    #[error("invalid reaction value")]
+    InvalidReactionValue,
+}
+
 /// Contains the details of a reaction value that
 /// references a reaction registered within the subspace.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -71,14 +79,6 @@ impl Into<ReactionValueJSON> for RegisteredReactionValue {
             registered_reaction_id: self.registered_reaction_id,
         }
     }
-}
-
-/// Represents the errors that can occur when converting a [`RegisteredReaction`] or [`FreeTextValue`] into a [`ReactionValueJSON`].
-#[derive(Error, Debug, Clone)]
-pub enum UnwrapReactionValueJSONError {
-    /// Error that occur if [`ReactionValueJSON`] is an invalid reaction value.
-    #[error("invalid reaction value")]
-    InvalidReactionValue,
 }
 
 /// Contains the details of a reaction value that is made of free text.
