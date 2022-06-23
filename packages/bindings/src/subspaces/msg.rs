@@ -128,7 +128,7 @@ pub enum SubspacesMsg {
         subspace_id: Uint64,
         /// Id of the group to be moved.
         group_id: u32,
-        /// d of the new section where to move the group.
+        /// Id of the new section where to move the group.
         new_section_id: u32,
         /// Address of who wants move the user group.
         signer: Addr,
