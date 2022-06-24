@@ -6,7 +6,9 @@ mod test {
         TEST_SUBSPACE_EDITABLE_POST_ID,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::posts::models::{PostAttachment, ProvidedAnswer, ReplySetting};
+    use desmos_bindings::posts::models::{
+        PostAttachment, PostReference, PostReferenceType, ProvidedAnswer, ReplySetting,
+    };
     use desmos_bindings::posts::msg::PostsMsg;
     use test_contract::msg::ExecuteMsg;
 
@@ -25,7 +27,11 @@ mod test {
             author: Addr::unchecked(&contract_address),
             conversation_id: None,
             reply_settings: ReplySetting::Everyone,
-            referenced_posts: vec![],
+            referenced_posts: vec![PostReference {
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
+                ref_type: PostReferenceType::Replay,
+                position: None,
+            }],
         };
 
         desmos_cli
