@@ -7,6 +7,11 @@ use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use thiserror::Error;
 
+/// Proto type uri of [`PostAttachment::Media`].
+pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v1.Media";
+/// Proto type uri of [`PostAttachment::Poll`].
+pub const POLL_TYPE_URI: &str = "/desmos.posts.v1.Poll";
+
 /// Contains all the information about a single post.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
@@ -265,7 +270,7 @@ impl From<PostAttachment> for RawPostAttachment {
     fn from(post_attachment: PostAttachment) -> Self {
         match post_attachment {
             PostAttachment::Media { mime_type, uri } => RawPostAttachment {
-                type_uri: "/desmos.posts.v1.Media".to_string(),
+                type_uri: MEDIA_TYPE_URI.to_string(),
                 mime_type: Some(mime_type),
                 uri: Some(uri),
                 question: None,
@@ -283,7 +288,7 @@ impl From<PostAttachment> for RawPostAttachment {
                 allows_answer_edits,
                 final_tally_results,
             } => RawPostAttachment {
-                type_uri: "/desmos.posts.v1.Poll".to_string(),
+                type_uri: POLL_TYPE_URI.to_string(),
                 mime_type: None,
                 uri: None,
                 question: Some(question),
@@ -317,14 +322,14 @@ impl TryFrom<RawPostAttachment> for PostAttachment {
     type Error = UnwrapPostAttachmentError;
 
     fn try_from(value: RawPostAttachment) -> Result<Self, Self::Error> {
-        if value.type_uri == "/desmos.posts.v1.Media" {
+        if value.type_uri == MEDIA_TYPE_URI {
             Ok(PostAttachment::Media {
                 mime_type: value
                     .mime_type
                     .ok_or(InvalidMedia("mime_type".to_string()))?,
                 uri: value.uri.ok_or(InvalidMedia("uri".to_string()))?,
             })
-        } else if value.type_uri == "/desmos.posts.v1.Poll" {
+        } else if value.type_uri == POLL_TYPE_URI {
             Ok(PostAttachment::Poll {
                 question: value.question.ok_or(InvalidPoll("question".to_string()))?,
                 provided_answers: value
