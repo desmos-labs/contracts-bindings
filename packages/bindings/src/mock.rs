@@ -9,6 +9,9 @@ use crate::relationships::mock::mock_relationships_query_response;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::mock::mock_subspaces_query_response;
 
+#[cfg(feature = "reactions")]
+use crate::reactions::mocks::mock_reactions_query_response;
+
 use crate::query::DesmosQuery;
 use cosmwasm_std::{
     testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR},
@@ -29,9 +32,9 @@ pub fn mock_dependencies_with_custom_querier(
             #[cfg(feature = "subspaces")]
             DesmosQuery::Subspaces(query) => SystemResult::Ok(mock_subspaces_query_response(query)),
             #[cfg(feature = "relationships")]
-            DesmosQuery::Relationships(query) => {
-                SystemResult::Ok(mock_relationships_query_response(query))
-            }
+            DesmosQuery::Relationships(query) => SystemResult::Ok(mock_relationships_query_response(query)),
+            #[cfg(feature = "reactions")]
+            DesmosQuery::Reactions(query) => SystemResult::Ok(mock_reactions_query_response(query)),
             // Hide this warning since when we compile the package without any module feature
             // this pattern is reached.
             #[allow(unreachable_patterns)]
@@ -59,6 +62,10 @@ mod tests {
         subspaces::{
             mock::MockSubspacesQueries, querier::SubspacesQuerier,
             query_types::QuerySubspaceResponse,
+        },
+        reactions::{
+            mocks::MockReactionsQueries, models_query::QueryReactionsResponse,
+            querier::ReactionsQuerier,
         },
     };
     use cosmwasm_std::Addr;
@@ -103,6 +110,26 @@ mod tests {
             .unwrap();
         let expected = QueryRelationshipsResponse {
             relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
+            pagination: Default::default(),
+        };
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_reactions_querier() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let response = querier
+            .query_reactions(
+                1,
+                1,
+                None,
+                None,
+            )
+            .unwrap();
+        let expected = QueryReactionsResponse {
+            reactions: vec![MockReactionsQueries::get_mock_reaction()],
             pagination: Default::default(),
         };
         assert_eq!(expected, response)

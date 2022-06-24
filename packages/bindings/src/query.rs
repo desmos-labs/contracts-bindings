@@ -10,6 +10,8 @@ use crate::profiles::query::ProfilesQuery;
 use crate::relationships::query::RelationshipsQuery;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::query::SubspacesQuery;
+#[cfg(feature = "reactions")]
+use crate::reactions::query::ReactionsQuery;
 
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
@@ -36,6 +38,10 @@ pub enum DesmosQuery {
     /// Queries relative to the x/relationships module.
     #[cfg(feature = "relationships")]
     Relationships(RelationshipsQuery),
+
+    /// Queries relative to the x/reactions module.
+    #[cfg(feature = "reactions")]
+    Reactions(ReactionsQuery),
 }
 
 impl CustomQuery for DesmosQuery {}
@@ -82,11 +88,26 @@ impl Into<QueryRequest<DesmosQuery>> for RelationshipsQuery {
     }
 }
 
+#[cfg(feature = "reactions")]
+impl From<ReactionsQuery> for DesmosQuery {
+    fn from(query: ReactionsQuery) -> Self {
+        Self::Reactions(query)
+    }
+}
+
+#[cfg(feature = "reactions")]
+impl Into<QueryRequest<DesmosQuery>> for ReactionsQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::{
         profiles::query::ProfilesQuery, query::DesmosQuery,
         relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
+        reactions::query::ReactionsQuery,
     };
     use cosmwasm_std::{Addr, Uint64};
 
@@ -121,6 +142,18 @@ mod tests {
             pagination: None,
         };
         let expected = DesmosQuery::Relationships(query.clone());
+        assert_eq!(expected, DesmosQuery::from(query))
+    }
+
+    #[test]
+    fn test_from_reactions_query() {
+        let query = ReactionsQuery::Reactions {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            user: None,
+            pagination: None,
+        };
+        let expected = DesmosQuery::Reactions(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
 }

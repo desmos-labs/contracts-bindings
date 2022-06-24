@@ -21,12 +21,28 @@ pub enum ReactionsQuery {
         /// Optional pagination configs.
         pagination: Option<PageRequest>,
     },
+    /// Message to query the reaction with the given id.
+    Reaction {
+        /// Id of the subspace that contains the post to query the reactions for.
+        subspace_id: Uint64,
+        /// Post id to query the reactions for.
+        post_id: Uint64,
+        /// Id of the reaction to query.
+        reaction_id: u32,
+    },
     /// Message to query the regiestered reactions inside the subspace.
     RegisteredReactions {
-        /// Id of the subspace to query the registered reactions for
+        /// Id of the subspace to query the registered reactions for.
         subspace_id: Uint64,
        /// Optional pagination configs.
         pagination: Option<PageRequest>,
+    },
+    /// Message to query the registered reactions
+    RegisteredReaction {
+        /// Id of the subspace to query the registered reactions for.
+        subspace_id: Uint64,
+        /// Id of the registered reaction to query for.
+        reaction_id: u32,
     },
     /// Message to query the reactions parameters inside the subspace.
     ReactionsParams {

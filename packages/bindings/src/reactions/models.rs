@@ -54,8 +54,7 @@ pub enum UnwrapReactionValueJSONError {
     InvalidReactionValue,
 }
 
-/// Contains the details of a reaction value that
-/// references a reaction registered within the subspace.
+/// Contains the details of a reaction value that references a reaction registered within the subspace.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct RegisteredReactionValue {
     /// Id of the registered reaction.
@@ -66,7 +65,7 @@ impl TryFrom<ReactionValueJSON> for RegisteredReactionValue {
     type Error = UnwrapReactionValueJSONError;
     fn try_from(value: ReactionValueJSON) ->  Result<Self, Self::Error> {
         match value {
-            ReactionValueJSON::Registered { type_uri, registered_reaction_id } => { Ok(Self { registered_reaction_id: registered_reaction_id }) }
+            ReactionValueJSON::Registered { type_uri: _, registered_reaction_id } => { Ok(Self { registered_reaction_id: registered_reaction_id }) }
             _ => { Err(UnwrapReactionValueJSONError::InvalidReactionValue) }
         }
     }
@@ -92,7 +91,7 @@ impl TryFrom<ReactionValueJSON> for FreeTextValue {
     type Error = UnwrapReactionValueJSONError;
     fn try_from(value: ReactionValueJSON) ->  Result<Self, Self::Error> {
         match value {
-            ReactionValueJSON::FreeText { type_uri, text } => { Ok(Self { text: text }) }
+            ReactionValueJSON::FreeText { type_uri: _, text } => { Ok(Self { text: text }) }
             _ => { Err(UnwrapReactionValueJSONError::InvalidReactionValue) }
         }
     }
