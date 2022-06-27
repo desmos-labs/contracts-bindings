@@ -139,7 +139,7 @@ MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"reactions\",\"msg_
 
 # Register a deletable reaction
 echo "Register a deletable reaction to subspace"
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"reactions\",\"msg_data\":{\"add_registered_reaction\":{\"subspace_id\":\"1\",\"shorthand_code\":\"test_code\",\"display_value\":\"test_value\",\"user\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"route\":\"reactions\",\"msg_data\":{\"add_registered_reaction\":{\"subspace_id\":\"1\",\"shorthand_code\":\"deletable_code\",\"display_value\":\"deletable_value\",\"user\":\"$CONTRACT\"}}}}]}}"
 
 # Create a test post that can be the target for reactions
 echo "Create a post for reaction"
