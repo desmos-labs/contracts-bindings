@@ -22,11 +22,29 @@ pub enum SubspacesQuery {
         /// Subspace id.
         subspace_id: Uint64,
     },
+    /// Message to query the created section inside a subspace.
+    /// Response: [QuerySectionsResponse](crate::subspaces::query_types::QuerySectionsResponse).
+    Sections {
+        /// Id of the subspace to query the sections for.
+        subspace_id: Uint64,
+        /// Pagination configs.
+        pagination: Option<PageRequest>,
+    },
+    /// Message to query the details of a section.
+    /// Response: [QuerySectionResponse](crate::subspaces::query_types::QuerySectionResponse).
+    Section {
+        /// Id of the subspace to query the sections for.
+        subspace_id: Uint64,
+        /// Id of the searched section.
+        section_id: u32,
+    },
     /// Message to query the groups created inside a subspace.
     /// Response: [QueryUserGroupsResponse](crate::subspaces::query_types::QueryUserGroupsResponse).
     UserGroups {
         /// Subspace id to which the groups belongs.
         subspace_id: Uint64,
+        /// Section id to query the groups for.
+        section_id: Option<u32>,
         /// Pagination configs.
         pagination: Option<PageRequest>,
     },
@@ -52,8 +70,10 @@ pub enum SubspacesQuery {
     /// inside a subspace.
     /// Response: [QueryUserPermissionsResponse](crate::subspaces::query_types::QueryUserPermissionsResponse).
     UserPermissions {
-        /// Subspace id to which the user belongs.
+        /// Subspace id to which the permissions belongs.
         subspace_id: Uint64,
+        /// Section id to which the permissions belongs.
+        section_id: Option<u32>,
         /// User address.
         user: Addr,
     },

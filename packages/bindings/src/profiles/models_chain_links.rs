@@ -14,7 +14,7 @@ pub struct Address {
     pub proto_type: String,
     /// The encoded address.
     pub value: String,
-    /// Optional address prefix when `prototype` is Bech32 or Hex.
+    /// Optional address prefix when `proto_type` is Bech32 or Hex.
     pub prefix: Option<String>,
 }
 
@@ -70,7 +70,7 @@ pub enum SignMode {
     #[serde(rename = "SIGN_MODE_LEGACY_AMINO_JSON")]
     AminoJson,
     /// Specifies the sign mode for EIP 191 signing on the Cosmos SDK.
-    /// Ref: <https://eips.ethereum.org/EIPS/eip-191>
+    /// Ref: `<https://eips.ethereum.org/EIPS/eip-191>`
     #[serde(rename = "SIGN_MODE_EIP_191")]
     Eip191,
 }

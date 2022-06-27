@@ -1,15 +1,16 @@
 //! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
-use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
-
+use crate::subspaces::models::{Permission, Section, UserPermissions};
+use crate::subspaces::query_types::{QuerySectionResponse, QuerySectionsResponse};
 use crate::subspaces::{
-    models::{GroupPermission, PermissionDetail, Subspace, UserGroup},
+    models::{PermissionDetail, Subspace, UserGroup},
     query::SubspacesQuery,
     query_types::{
         QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
         QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
     },
 };
+use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/subspaces module.
@@ -29,14 +30,26 @@ impl MockSubspacesQueries {
         }
     }
 
+    /// Gets a mocked instance of [`Section`].
+    pub fn get_mock_section() -> Section {
+        Section {
+            subspace_id: Uint64::new(1),
+            id: 1,
+            parent_id: None,
+            name: "Section name".to_string(),
+            description: "Section description".to_string(),
+        }
+    }
+
     /// Get a mocked instance of [`UserGroup`].
     pub fn get_mock_user_group() -> UserGroup {
         UserGroup {
             id: 1,
+            section_id: None,
             subspace_id: Uint64::new(1),
             name: String::from("Test group"),
             description: String::from("Test group"),
-            permissions: 1,
+            permissions: vec![Permission::EditSubspace],
         }
     }
 
@@ -47,10 +60,15 @@ impl MockSubspacesQueries {
 
     /// Gets a mocked instance of [`PermissionDetail`].
     pub fn get_mock_permission_detail() -> PermissionDetail {
-        PermissionDetail::Group(GroupPermission {
-            group_id: 1,
-            permission: 1,
-        })
+        PermissionDetail {
+            subspace_id: Uint64::new(1),
+            section_id: 0,
+            user: Some(UserPermissions {
+                user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+                permission: vec![Permission::EditSubspace],
+            }),
+            group: None,
+        }
     }
 }
 
@@ -68,6 +86,13 @@ pub fn mock_subspaces_query_response(query: &SubspacesQuery) -> ContractResult<B
             let subspace = MockSubspacesQueries::get_mock_subspace();
             to_binary(&QuerySubspaceResponse { subspace })
         }
+        SubspacesQuery::Sections { .. } => to_binary(&QuerySectionsResponse {
+            sections: vec![MockSubspacesQueries::get_mock_section()],
+            pagination: None,
+        }),
+        SubspacesQuery::Section { .. } => to_binary(&QuerySectionResponse {
+            section: MockSubspacesQueries::get_mock_section(),
+        }),
         SubspacesQuery::UserGroups { .. } => {
             let group = MockSubspacesQueries::get_mock_user_group();
             to_binary(&QueryUserGroupsResponse {
@@ -130,6 +155,7 @@ mod tests {
     fn test_query_user_groups() {
         let query = SubspacesQuery::UserGroups {
             subspace_id: Uint64::new(1),
+            section_id: None,
             pagination: Default::default(),
         };
         let response = mock_subspaces_query_response(&query);
@@ -172,6 +198,7 @@ mod tests {
     fn test_query_user_permissions() {
         let query = SubspacesQuery::UserPermissions {
             subspace_id: Uint64::new(1),
+            section_id: None,
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
         let response = mock_subspaces_query_response(&query);

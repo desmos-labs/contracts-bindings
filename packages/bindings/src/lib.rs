@@ -6,7 +6,7 @@
 extern crate core;
 
 #[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
-pub mod mock;
+pub mod mocks;
 
 #[cfg(feature = "profiles")]
 pub mod profiles;
@@ -16,6 +16,9 @@ pub mod relationships;
 
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
+
+#[cfg(feature = "posts")]
+pub mod posts;
 
 #[cfg(feature = "reactions")]
 pub mod reactions;

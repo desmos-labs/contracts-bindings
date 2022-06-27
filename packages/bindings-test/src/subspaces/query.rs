@@ -2,7 +2,10 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
-    use cosmwasm_std::Addr;
+    use cosmwasm_std::{Addr, Uint64};
+    use desmos_bindings::subspaces::models::{
+        GroupPermissions, Permission, PermissionDetail, UserPermissions,
+    };
     use desmos_bindings::subspaces::query::SubspacesQuery;
     use desmos_bindings::subspaces::query_types::{
         QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
@@ -61,6 +64,7 @@ mod tests {
         let query = DesmosChain {
             request: SubspacesQuery::UserGroups {
                 subspace_id: TEST_SUBSPACE,
+                section_id: None,
                 pagination: None,
             }
             .into(),
@@ -73,7 +77,7 @@ mod tests {
         assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
         assert_eq!("Test user group", test_user_group.name.as_str());
         assert_eq!("", test_user_group.description.as_str());
-        assert_eq!(31, test_user_group.permissions);
+        assert_eq!(vec![Permission::EditSubspace], test_user_group.permissions)
     }
 
     #[test]
@@ -96,7 +100,7 @@ mod tests {
         assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
         assert_eq!("Test user group", test_user_group.name.as_str());
         assert_eq!("", test_user_group.description.as_str());
-        assert_eq!(31, test_user_group.permissions);
+        assert_eq!(vec![Permission::EditSubspace], test_user_group.permissions)
     }
 
     #[test]
@@ -131,6 +135,7 @@ mod tests {
         let query = DesmosChain {
             request: SubspacesQuery::UserPermissions {
                 subspace_id: TEST_SUBSPACE,
+                section_id: None,
                 user: Addr::unchecked(USER1_ADDRESS),
             }
             .into(),
@@ -139,7 +144,49 @@ mod tests {
         let response: QueryUserPermissionsResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        // Should be only the user1
-        assert_eq!(31, response.permissions);
+        assert_eq!(
+            vec![
+                Permission::EditSubspace,
+                Permission::DeleteSubspace,
+                Permission::ManageGroups
+            ],
+            response.permissions
+        );
+        assert_eq!(
+            vec![
+                PermissionDetail {
+                    subspace_id: Uint64::new(1),
+                    section_id: 0,
+                    user: Some(UserPermissions {
+                        user: Addr::unchecked(USER1_ADDRESS),
+                        permission: vec![
+                            Permission::EditSubspace,
+                            Permission::DeleteSubspace,
+                            Permission::ManageGroups
+                        ]
+                    }),
+                    group: None
+                },
+                PermissionDetail {
+                    subspace_id: Uint64::new(1),
+                    section_id: 0,
+                    user: None,
+                    group: Some(GroupPermissions {
+                        group_id: 0,
+                        permission: vec![]
+                    })
+                },
+                PermissionDetail {
+                    subspace_id: Uint64::new(1),
+                    section_id: 0,
+                    user: None,
+                    group: Some(GroupPermissions {
+                        group_id: 1,
+                        permission: vec![Permission::EditSubspace]
+                    })
+                }
+            ],
+            response.details
+        );
     }
 }
