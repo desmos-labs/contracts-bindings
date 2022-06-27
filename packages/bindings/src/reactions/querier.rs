@@ -217,7 +217,7 @@ impl<'a> ReactionsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mock::mock_dependencies_with_custom_querier;
+    use crate::mocks::mock_dependencies_with_custom_querier;
     use crate::reactions::mocks::MockReactionsQueries;
     use std::ops::Deref;
 
