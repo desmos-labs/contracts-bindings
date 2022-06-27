@@ -185,7 +185,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
         let subspace_id = TEST_SUBSPACE;
         let group_id = TEST_SUBSPACE_USER_GROUP;
-        let new_permissions = vec![Permission::Everything];
+        let new_permissions = vec![Permission::EditSubspace];
 
         let set_user_group_permissions = SubspacesMsg::SetUserGroupPermissions {
             subspace_id,
@@ -257,6 +257,10 @@ mod tests {
             Permission::EditSubspace,
             Permission::DeleteSubspace,
             Permission::ManageGroups,
+            Permission::Write,
+            Permission::InteractWithContent,
+            Permission::EditOwnContent,
+            Permission::ModerateContent,
         ];
 
         let set_user_permissions = SubspacesMsg::SetUserPermissions {

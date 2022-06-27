@@ -102,9 +102,7 @@ impl<'a> ProfilesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.requests,
-                    next_page_key: response
-                        .pagination
-                        .map_or(None, |response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
                 })
             }),
             page_size,
@@ -171,9 +169,7 @@ impl<'a> ProfilesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response
-                        .pagination
-                        .map_or(None, |response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
                 })
             }),
             page_size,
@@ -240,9 +236,7 @@ impl<'a> ProfilesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response
-                        .pagination
-                        .map_or(None, |response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
                 })
             }),
             page_size,
@@ -268,9 +262,9 @@ impl<'a> ProfilesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        mock::mock_dependencies_with_custom_querier,
+        mocks::mock_dependencies_with_custom_querier,
         profiles::{
-            mock::MockProfilesQueries,
+            mocks::MockProfilesQueries,
             models_query::{
                 QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
                 QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,

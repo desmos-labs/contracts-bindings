@@ -149,7 +149,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
 #[cfg(test)]
 mod tests {
     use crate::profiles::{
-        mock::{mock_profiles_query_response, MockProfilesQueries},
+        mocks::{mock_profiles_query_response, MockProfilesQueries},
         models_query::{
             QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
             QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,

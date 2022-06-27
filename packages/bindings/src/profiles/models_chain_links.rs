@@ -14,7 +14,7 @@ pub struct Address {
     pub proto_type: String,
     /// The encoded address.
     pub value: String,
-    /// Optional address prefix when `prototype` is Bech32 or Hex.
+    /// Optional address prefix when `proto_type` is Bech32 or Hex.
     pub prefix: Option<String>,
 }
 

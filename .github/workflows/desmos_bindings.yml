@@ -124,6 +124,14 @@ jobs:
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features relationships,query
 
+      - name: Build feature (posts)
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features posts
+
+      - name: Build feature (posts+query)
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features posts,query
+
       - name: Build feature (msg)
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg
@@ -139,6 +147,10 @@ jobs:
       - name: Build feature (msg+subspaces)
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,subspaces
+
+      - name: Build feature (msg+posts)
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features msg,posts
 
       - name: Build feature (mocks)
         working-directory: ./packages/bindings
