@@ -38,7 +38,7 @@ impl<'a> ReactionsQuerier<'a> {
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ReactionsQuerier::new(deps.querier.deref());
-    ///     let reactions_response = querier.query_reactions(1, 1, None);
+    ///     let reactions_response = querier.query_reactions(1, 1, None, None);
     /// }
     /// ```
     pub fn new(querier: &'a dyn Querier) -> Self {
@@ -230,6 +230,55 @@ mod tests {
         let expected = QueryReactionsResponse {
             reactions: vec![MockReactionsQueries::get_mock_reaction()],
             pagination: Default::default(),
+        };
+        assert_eq!(response.ok(), Some(expected));
+    }
+
+    #[test]
+    fn test_query_reaction() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let response = querier.query_reaction(1, 1, 1);
+        let expected = QueryReactionResponse {
+            reaction: MockReactionsQueries::get_mock_reaction(),
+        };
+        assert_eq!(response.ok(), Some(expected));
+    }
+
+    #[test]
+    fn test_query_registered_reactions() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let response = querier.query_registered_reactions(1, Default::default());
+        let expected = QueryRegisteredReactionsResponse {
+            registered_reactions: vec![MockReactionsQueries::get_mock_registered_reaction()],
+            pagination: Default::default(),
+        };
+        assert_eq!(response.ok(), Some(expected));
+    }
+
+    #[test]
+    fn test_query_registered_reaction() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let response = querier.query_registered_reaction(1, 1);
+        let expected = QueryRegisteredReactionResponse {
+            registered_reaction: MockReactionsQueries::get_mock_registered_reaction(),
+        };
+        assert_eq!(response.ok(), Some(expected));
+    }
+
+    #[test]
+    fn test_query_reactions_params() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let response = querier.query_reactions_params(1);
+        let expected = QueryReactionsParamsResponse {
+            params: MockReactionsQueries::get_mock_reactions_parameters(),
         };
         assert_eq!(response.ok(), Some(expected));
     }

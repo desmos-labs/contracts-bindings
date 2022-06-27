@@ -1,7 +1,7 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
 use crate::{
-    reactions::models::{ReactionValueJSON, RegisteredReactionValueParams, FreeTextValueParams},
+    reactions::models::{ReactionValue, RegisteredReactionValueParams, FreeTextValueParams},
 };
 
 use cosmwasm_std::{Addr, Uint64};
@@ -11,7 +11,7 @@ use serde::{Deserialize, Serialize};
 /// Represents the messages to interact with the reactions module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub enum RectionsMsg {
+pub enum ReactionsMsg {
     /// Add a reaction to a post.
     AddReaction {
         /// Id of the subspace inside which the post to react to is
@@ -19,7 +19,7 @@ pub enum RectionsMsg {
         /// Id of the post to react to
         post_id: Uint64,
         /// Value of the reaction
-        value: ReactionValueJSON,
+        value: ReactionValue,
         /// User reacting to the post
         user: Addr,
     },

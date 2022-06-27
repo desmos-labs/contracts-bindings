@@ -13,6 +13,9 @@ use crate::subspaces::msg::SubspacesMsg;
 #[cfg(feature = "relationships")]
 use crate::relationships::msg::RelationshipsMsg;
 
+#[cfg(feature = "reactions")]
+use crate::reactions::msg::ReactionsMsg;
+
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
 // {
@@ -38,6 +41,10 @@ pub enum DesmosMsg {
     /// Messages relative to the x/relationships module.
     #[cfg(feature = "relationships")]
     Relationships(RelationshipsMsg),
+
+    /// Messages relative to the x/reactions module.
+    #[cfg(feature = "reactions")]
+    Reactions(ReactionsMsg),
 }
 
 impl Into<CosmosMsg<DesmosMsg>> for DesmosMsg {
@@ -90,11 +97,26 @@ impl Into<CosmosMsg<DesmosMsg>> for RelationshipsMsg {
     }
 }
 
+#[cfg(feature = "reactions")]
+impl From<ReactionsMsg> for DesmosMsg {
+    fn from(msg: ReactionsMsg) -> Self {
+        Self::Reactions(msg)
+    }
+}
+
+#[cfg(feature = "reactions")]
+impl Into<CosmosMsg<DesmosMsg>> for ReactionsMsg {
+    fn into(self) -> CosmosMsg<DesmosMsg> {
+        DesmosMsg::from(self).into()
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use crate::{
         msg::DesmosMsg, profiles::msg::ProfilesMsg, relationships::msg::RelationshipsMsg,
-        subspaces::msg::SubspacesMsg,
+        subspaces::msg::SubspacesMsg, reactions::{msg::ReactionsMsg, models::ReactionValue},
     };
     use cosmwasm_std::{Addr, Uint64};
 
@@ -129,6 +151,18 @@ mod tests {
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
         let expected = DesmosMsg::Subspaces(msg.clone());
+        assert_eq!(expected, DesmosMsg::from(msg));
+    }
+
+    #[test]
+    fn test_from_reactions_msg() {
+        let msg = ReactionsMsg::AddReaction {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            value: ReactionValue::FreeText{ text: "test".to_string() },
+            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        let expected = DesmosMsg::Reactions(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
 }

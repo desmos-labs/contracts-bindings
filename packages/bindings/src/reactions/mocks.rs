@@ -2,7 +2,7 @@
 
 use crate::reactions::{
     models::{
-        Reaction, FreeTextValue, RegisteredReaction, 
+        Reaction, ReactionValue, RegisteredReaction, 
         SubspaceReactionsParams, FreeTextValueParams, RegisteredReactionValueParams,
     },
     models_query::{
@@ -25,7 +25,7 @@ impl MockReactionsQueries {
             subspace_id: Uint64::new(1),
             post_id: Uint64::new(1),
             id: 1,
-            value: FreeTextValue{ text: "test".to_string() }.into(),
+            value: ReactionValue::FreeText{ text: "test".to_string() },
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
         }
     }
@@ -122,6 +122,7 @@ mod tests {
             reactions: vec![MockReactionsQueries::get_mock_reaction()],
             pagination: Default::default(),
         });
+        println!("{:?}", response.clone().into_result().ok());
         assert_eq!(response.into_result().ok(), expected.ok())
     }
 
