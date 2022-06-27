@@ -25,7 +25,7 @@ pub struct Reaction {
 #[serde(tag = "@tag")]
 pub enum ReactionValue {
     /// Represents the registered reaction.
-    #[serde(rename = "/desmos.reactions.v1.RegisteredReactionVlaue")]
+    #[serde(rename = "/desmos.reactions.v1.RegisteredReactionValue")]
     Registered {
         /// Id of the registered reaction.
         registered_reaction_id: u32,

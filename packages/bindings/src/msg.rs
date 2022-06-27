@@ -8,12 +8,11 @@ use crate::profiles::msg::ProfilesMsg;
 use crate::relationships::msg::RelationshipsMsg;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::msg::SubspacesMsg;
+#[cfg(feature = "reactions")]
+use crate::reactions::msg::ReactionsMsg;
 use cosmwasm_std::{CosmosMsg, CustomMsg};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-
-#[cfg(feature = "reactions")]
-use crate::reactions::msg::ReactionsMsg;
 
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
@@ -127,7 +126,6 @@ impl Into<CosmosMsg<DesmosMsg>> for ReactionsMsg {
         DesmosMsg::from(self).into()
     }
 }
-
 
 #[cfg(test)]
 mod tests {
