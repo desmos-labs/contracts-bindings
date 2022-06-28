@@ -8,6 +8,8 @@ use crate::profiles::query::ProfilesQuery;
 use crate::reactions::query::ReactionsQuery;
 #[cfg(feature = "relationships")]
 use crate::relationships::query::RelationshipsQuery;
+#[cfg(feature = "reports")]
+use crate::reports::query::ReportsQuery;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::query::SubspacesQuery;
 use cosmwasm_std::{CustomQuery, QueryRequest};
@@ -45,6 +47,9 @@ pub enum DesmosQuery {
     /// Queries relative to the x/reactions module.
     #[cfg(feature = "reactions")]
     Reactions(ReactionsQuery),
+
+    #[cfg(feature = "reports")]
+    Reports(ReportsQuery),
 }
 
 impl CustomQuery for DesmosQuery {}
@@ -114,6 +119,20 @@ impl From<ReactionsQuery> for DesmosQuery {
 
 #[cfg(feature = "reactions")]
 impl Into<QueryRequest<DesmosQuery>> for ReactionsQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
+#[cfg(feature = "reports")]
+impl From<ReportsQuery> for DesmosQuery {
+    fn from(query: ReportsQuery) -> Self {
+        Self::Reports(query)
+    }
+}
+
+#[cfg(feature = "reports")]
+impl Into<QueryRequest<DesmosQuery>> for ReportsQuery {
     fn into(self) -> QueryRequest<DesmosQuery> {
         QueryRequest::Custom(self.into())
     }
