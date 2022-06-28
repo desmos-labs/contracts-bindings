@@ -9,6 +9,8 @@ use crate::query::DesmosQuery;
 use crate::reactions::mocks::mock_reactions_query_response;
 #[cfg(feature = "relationships")]
 use crate::relationships::mocks::mock_relationships_query_response;
+#[cfg(feature = "reports")]
+use crate::reports::mocks::mock_reports_query_response;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::mocks::mock_subspaces_query_response;
 use cosmwasm_std::{
@@ -37,6 +39,8 @@ pub fn mock_dependencies_with_custom_querier(
             DesmosQuery::Posts(query) => SystemResult::Ok(mock_posts_query_response(query)),
             #[cfg(feature = "reactions")]
             DesmosQuery::Reactions(query) => SystemResult::Ok(mock_reactions_query_response(query)),
+            #[cfg(feature = "reports")]
+            DesmosQuery::Reports(query) => SystemResult::Ok(mock_reports_query_response(query)),
             // Hide this warning since when we compile the package without any module feature
             // this pattern is reached.
             #[allow(unreachable_patterns)]
