@@ -13,7 +13,8 @@ pub mod profiles;
 
 #[cfg(feature = "relationships")]
 pub mod relationships;
-
+#[cfg(feature = "reports")]
+pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
 
