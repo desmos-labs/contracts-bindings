@@ -8,19 +8,13 @@ use crate::profiles::msg::ProfilesMsg;
 use crate::reactions::msg::ReactionsMsg;
 #[cfg(feature = "relationships")]
 use crate::relationships::msg::RelationshipsMsg;
+#[cfg(feature = "reports")]
+use crate::reports::msg::ReportsMsg;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::msg::SubspacesMsg;
 use cosmwasm_std::{CosmosMsg, CustomMsg};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-
-// Use the serde `rename_all` tag in order to produce the following json file structure
-// ## Example
-// {
-//     "profiles": {
-//          "method": {}
-//      }
-// }
 
 /// Enum that defines how the messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -45,6 +39,10 @@ pub enum DesmosMsg {
     /// Messages relative to the x/reactions module.
     #[cfg(feature = "reactions")]
     Reactions(ReactionsMsg),
+
+    /// Messages relative to the x/posts module.
+    #[cfg(feature = "reports")]
+    Reports(ReportsMsg),
 }
 
 impl Into<CosmosMsg<DesmosMsg>> for DesmosMsg {
@@ -125,9 +123,24 @@ impl Into<CosmosMsg<DesmosMsg>> for ReactionsMsg {
     }
 }
 
+#[cfg(feature = "reports")]
+impl From<ReportsMsg> for DesmosMsg {
+    fn from(msg: ReportsMsg) -> Self {
+        Self::Reports(msg)
+    }
+}
+
+#[cfg(feature = "reports")]
+impl Into<CosmosMsg<DesmosMsg>> for ReportsMsg {
+    fn into(self) -> CosmosMsg<DesmosMsg> {
+        DesmosMsg::from(self).into()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::posts::msg::PostsMsg;
+    use crate::reports::msg::ReportsMsg;
     use crate::{
         msg::DesmosMsg,
         profiles::msg::ProfilesMsg,
@@ -194,6 +207,17 @@ mod tests {
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
         let expected = DesmosMsg::Reactions(msg.clone());
+        assert_eq!(expected, DesmosMsg::from(msg));
+    }
+
+    #[test]
+    fn test_from_reports_msg() {
+        let msg = ReportsMsg::DeleteReport {
+            subspace_id: Uint64::new(0),
+            report_id: Uint64::new(1),
+            signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
+        };
+        let expected = DesmosMsg::Reports(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
 }
