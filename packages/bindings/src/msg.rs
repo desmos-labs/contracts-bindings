@@ -184,7 +184,7 @@ mod tests {
         let msg = ReactionsMsg::AddReaction {
             subspace_id: Uint64::new(1),
             post_id: Uint64::new(1),
-            value: ReactionValue::FreeText{ text: "test".to_string() },
+            value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
         let expected = DesmosMsg::Reactions(msg.clone());

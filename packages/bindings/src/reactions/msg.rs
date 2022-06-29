@@ -63,7 +63,7 @@ pub enum ReactionsMsg {
         /// Id of the subspace from which to remove the registered reaction
         subspace_id: Uint64,
         /// Id of the registered reaction to be removed
-        registered_reaction_id: Uint64,
+        registered_reaction_id: u32,
         /// User removing the registered reaction
         user: Addr,
     },
@@ -75,5 +75,7 @@ pub enum ReactionsMsg {
         registered_reaction: RegisteredReactionValueParams,
         /// Params related to [`FreeTextValue`](crate::reactions::models::FreeTextValue) reactions
         free_text: FreeTextValueParams,
+        /// User setting the params
+        user: Addr,
     },
 }
