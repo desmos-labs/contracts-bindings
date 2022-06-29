@@ -150,6 +150,7 @@ impl<'a> ReactionsQuerier<'a> {
 
     /// Gives an iterator to scan over reactions registered in a subspace
     ///
+    /// * `subspace_id` - Id of the subspace to query the registered reactions for.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
     pub fn iterate_registered_reactions(
