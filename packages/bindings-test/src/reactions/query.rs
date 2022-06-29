@@ -2,8 +2,8 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{
-        TEST_SUBSPACE, USER1_ADDRESS, TEST_REACTIONS_POST_ID, TEST_EDITABLE_REGISTERED_REACTION_ID,
-        TEST_POST_REGISTERED_REACTION_ID, TEST_POST_FREE_TEXT_REACTION_ID, TEST_POST_DELETABLE_REACTION_ID
+        TEST_SUBSPACE, TEST_REACTIONS_POST_ID, TEST_EDITABLE_REGISTERED_REACTION_ID,
+        TEST_POST_REGISTERED_REACTION_ID, TEST_POST_FREE_TEXT_REACTION_ID
     };
     use cosmwasm_std::Addr;
     use desmos_bindings::reactions::{
@@ -52,7 +52,7 @@ mod tests {
     }
 
     #[test]
-    fn test_query_post_reaction() {
+    fn test_query_post_registered_reaction() {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
@@ -75,6 +75,35 @@ mod tests {
                 post_id: TEST_REACTIONS_POST_ID,
                 id: TEST_POST_REGISTERED_REACTION_ID,
                 value: ReactionValue::Registered{ registered_reaction_id:  TEST_EDITABLE_REGISTERED_REACTION_ID }.into(),
+                author: Addr::unchecked(contract_address),
+            };
+        assert_eq!(expected, result.reaction);
+    }
+
+    #[test]
+    fn test_query_post_free_text_reaction() {
+        let desmos_cli = DesmosCli::default();
+
+        let query_msg = DesmosChain {
+            request: ReactionsQuery::Reaction {
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_REACTIONS_POST_ID,
+                reaction_id: TEST_POST_FREE_TEXT_REACTION_ID,
+            }
+            .into(),
+        };
+
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        let result: QueryReactionResponse = desmos_cli
+            .wasm_query(&contract_address, &query_msg)
+            .to_object();
+
+        let expected = Reaction {
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_REACTIONS_POST_ID,
+                id: TEST_POST_FREE_TEXT_REACTION_ID,
+                value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
                 author: Addr::unchecked(contract_address),
             };
         assert_eq!(expected, result.reaction);
