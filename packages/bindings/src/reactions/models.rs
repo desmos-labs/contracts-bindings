@@ -111,7 +111,7 @@ impl TryFrom<RawReactionValue> for ReactionValue {
             Ok(ReactionValue::FreeText {
                 text: value
                     .text
-                    .ok_or(InvalidFreeTextValue("free_text".to_string()))?,
+                    .ok_or(InvalidFreeTextValue("text".to_string()))?,
             })
         } else {
             Err(UnwrapReactionValueError::UnknownReactionValue(
