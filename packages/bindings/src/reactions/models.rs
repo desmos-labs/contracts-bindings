@@ -45,7 +45,7 @@ pub struct RawReactionValue {
     text: Option<String>,
 }
 
-/// Struct representing a generic reaction value that can be serialized and sent to the chain.
+/// Supported reaction value that can be added to a post.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum ReactionValue {
     /// Represents the registered reaction.
