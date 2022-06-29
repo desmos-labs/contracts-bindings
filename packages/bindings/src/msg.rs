@@ -17,12 +17,10 @@ use serde::{Deserialize, Serialize};
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
 // {
-//      "route": "profiles",
-//      "msg_data": {
+//     "profiles": {
 //          "method": {}
 //      }
 // }
-// Reference: https://serde.rs/enum-representations.html#adjacently-tagged
 
 /// Enum that defines how the messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

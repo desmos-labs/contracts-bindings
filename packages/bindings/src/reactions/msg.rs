@@ -1,7 +1,7 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
 use crate::{
-    reactions::models::{ReactionValue, RegisteredReactionValueParams, FreeTextValueParams},
+    reactions::models::{RawReactionValue, RegisteredReactionValueParams, FreeTextValueParams},
 };
 
 use cosmwasm_std::{Addr, Uint64};
@@ -19,7 +19,7 @@ pub enum ReactionsMsg {
         /// Id of the post to react to
         post_id: Uint64,
         /// Value of the reaction
-        value: ReactionValue,
+        value: RawReactionValue,
         /// User reacting to the post
         user: Addr,
     },
