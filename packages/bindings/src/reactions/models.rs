@@ -109,9 +109,7 @@ impl TryFrom<RawReactionValue> for ReactionValue {
             })
         } else if value.type_uri == FREE_TEXT_VALUE_TYPE_URI {
             Ok(ReactionValue::FreeText {
-                text: value
-                    .text
-                    .ok_or(InvalidFreeTextValue("text".to_string()))?,
+                text: value.text.ok_or(InvalidFreeTextValue("text".to_string()))?,
             })
         } else {
             Err(UnwrapReactionValueError::UnknownReactionValue(
