@@ -185,7 +185,6 @@ impl<'a> ReactionsQuerier<'a> {
     ///
     /// * `subspace_id` - Id of the subspace to query the registered reaction for.
     /// * `reaction_id` - Id of the registered reaction to query.
-    /// * `pagination` - Optional pagination configs.
     pub fn query_registered_reaction(
         &self,
         subspace_id: u64,
