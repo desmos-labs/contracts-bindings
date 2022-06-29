@@ -8,9 +8,9 @@ use std::convert::TryFrom;
 use thiserror::Error;
 
 /// Proto type uri of [`PostAttachment::Media`].
-pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v1.Media";
+pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v2.Media";
 /// Proto type uri of [`PostAttachment::Poll`].
-pub const POLL_TYPE_URI: &str = "/desmos.posts.v1.Poll";
+pub const POLL_TYPE_URI: &str = "/desmos.posts.v2.Poll";
 
 /// Contains all the information about a single post.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
