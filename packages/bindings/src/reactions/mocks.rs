@@ -162,7 +162,7 @@ mod tests {
     }
 
     #[test]
-    fn test_query_reactions_parameters() {
+    fn test_query_reactions_params() {
         let query = ReactionsQuery::ReactionsParams {
             subspace_id: Uint64::new(1),
         };
