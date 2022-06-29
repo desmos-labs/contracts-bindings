@@ -24,7 +24,7 @@ use serde::{Deserialize, Serialize};
 
 /// Enum that defines how the messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case", tag = "route", content = "msg_data")]
+#[serde(rename_all = "snake_case")]
 pub enum DesmosMsg {
     /// Messages relative to the x/profiles module.
     #[cfg(feature = "profiles")]

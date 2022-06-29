@@ -24,7 +24,7 @@ use serde::{Deserialize, Serialize};
 
 /// Enum that defines how the desmos query messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case", tag = "route", content = "query_data")]
+#[serde(rename_all = "snake_case")]
 pub enum DesmosQuery {
     /// Queries relative to the x/profiles module.
     #[cfg(feature = "profiles")]
