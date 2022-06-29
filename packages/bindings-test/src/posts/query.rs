@@ -21,6 +21,7 @@ mod test {
             eternal_id: None,
             text: Some("Editable post".to_string()),
             entities: None,
+            tags: vec![],
             author: Addr::unchecked(contract_address),
             conversation_id: Some(Uint64::new(0)),
             referenced_posts: vec![],

@@ -28,6 +28,8 @@ pub struct Post {
     pub text: Option<String>,
     /// Entities connected to this post.
     pub entities: Option<Vec<Entities>>,
+    /// Tags related to this post.
+    pub tags: Vec<String>,
     /// Author of the post.
     pub author: Addr,
     /// Id of the original post of the conversation.
@@ -47,7 +49,7 @@ pub struct Post {
 /// Represents a generic tag.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub struct TagEntity {
+pub struct TextTagEntity {
     /// Index of the character inside the text at which the tag starts.
     pub start: Uint64,
     /// Index of the character inside the text at which the tag ends.
@@ -75,9 +77,9 @@ pub struct UrlEntity {
 #[serde(rename_all = "snake_case")]
 pub struct Entities {
     /// Hashtag entities.
-    pub hashtags: Vec<TagEntity>,
+    pub hashtags: Vec<TextTagEntity>,
     /// Mention entities.
-    pub mentions: Vec<TagEntity>,
+    pub mentions: Vec<TextTagEntity>,
     /// Url entities.
     pub urls: Vec<UrlEntity>,
 }
