@@ -25,7 +25,7 @@ impl MockReactionsQueries {
             subspace_id: Uint64::new(1),
             post_id: Uint64::new(1),
             id: 1,
-            value: ReactionValue::FreeText{ text: "test".to_string() },
+            value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
         }
     }
