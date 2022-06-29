@@ -104,7 +104,7 @@ impl TryFrom<RawReactionValue> for ReactionValue {
         if value.type_uri == REGISTERED_REACTION_VALUE_TYPE_URI {
             Ok(ReactionValue::Registered {
                 registered_reaction_id: value.registered_reaction_id.ok_or(
-                    InvalidRegisteredReactionValue("registered_reaction".to_string()),
+                    InvalidRegisteredReactionValue("registered_reaction_id".to_string()),
                 )?,
             })
         } else if value.type_uri == FREE_TEXT_VALUE_TYPE_URI {
