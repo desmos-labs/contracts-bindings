@@ -34,7 +34,7 @@ pub enum ReactionsQuery {
     RegisteredReactions {
         /// Id of the subspace to query the registered reactions for.
         subspace_id: Uint64,
-       /// Optional pagination configs.
+        /// Optional pagination configs.
         pagination: Option<PageRequest>,
     },
     /// Message to query the registered reactions

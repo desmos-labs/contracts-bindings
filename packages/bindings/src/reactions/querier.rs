@@ -11,12 +11,11 @@ use cosmwasm_std::Binary;
 use crate::{
     query::DesmosQuery,
     reactions::{
-        query::ReactionsQuery,
         models_query::{
-            QueryReactionsResponse, QueryReactionResponse,
-            QueryRegisteredReactionsResponse, QueryRegisteredReactionResponse,
-            QueryReactionsParamsResponse,
+            QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
+            QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
         },
+        query::ReactionsQuery,
     },
     types::PageRequest,
 };
@@ -62,10 +61,10 @@ impl<'a> ReactionsQuerier<'a> {
         user: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReactionsResponse> {
-        let request = DesmosQuery::from(ReactionsQuery::Reactions { 
-            subspace_id: subspace_id.into(), 
-            post_id: post_id.into(), 
-            user: user, 
+        let request = DesmosQuery::from(ReactionsQuery::Reactions {
+            subspace_id: subspace_id.into(),
+            post_id: post_id.into(),
+            user: user,
             pagination: pagination,
         });
         let res: QueryReactionsResponse = self.querier.query(&request.into())?;
@@ -123,10 +122,10 @@ impl<'a> ReactionsQuerier<'a> {
         post_id: u64,
         reaction_id: u32,
     ) -> StdResult<QueryReactionResponse> {
-        let request = DesmosQuery::from(ReactionsQuery::Reaction { 
-            subspace_id: subspace_id.into(), 
-            post_id: post_id.into(), 
-            reaction_id: reaction_id, 
+        let request = DesmosQuery::from(ReactionsQuery::Reaction {
+            subspace_id: subspace_id.into(),
+            post_id: post_id.into(),
+            reaction_id: reaction_id,
         });
         let res: QueryReactionResponse = self.querier.query(&request.into())?;
         Ok(res)
@@ -189,7 +188,7 @@ impl<'a> ReactionsQuerier<'a> {
     pub fn query_registered_reaction(
         &self,
         subspace_id: u64,
-        reaction_id: u32
+        reaction_id: u32,
     ) -> StdResult<QueryRegisteredReactionResponse> {
         let request = DesmosQuery::from(ReactionsQuery::RegisteredReaction {
             subspace_id: subspace_id.into(),

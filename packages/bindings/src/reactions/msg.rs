@@ -1,7 +1,7 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
-use crate::{
-    reactions::models::{RawReactionValue, RegisteredReactionValueParams, FreeTextValueParams},
+use crate::reactions::models::{
+    FreeTextValueParams, RawReactionValue, RegisteredReactionValueParams,
 };
 
 use cosmwasm_std::{Addr, Uint64};

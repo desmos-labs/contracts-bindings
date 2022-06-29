@@ -4,12 +4,12 @@
 use crate::posts::msg::PostsMsg;
 #[cfg(feature = "profiles")]
 use crate::profiles::msg::ProfilesMsg;
+#[cfg(feature = "reactions")]
+use crate::reactions::msg::ReactionsMsg;
 #[cfg(feature = "relationships")]
 use crate::relationships::msg::RelationshipsMsg;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::msg::SubspacesMsg;
-#[cfg(feature = "reactions")]
-use crate::reactions::msg::ReactionsMsg;
 use cosmwasm_std::{CosmosMsg, CustomMsg};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -129,8 +129,11 @@ impl Into<CosmosMsg<DesmosMsg>> for ReactionsMsg {
 mod tests {
     use crate::posts::msg::PostsMsg;
     use crate::{
-        msg::DesmosMsg, profiles::msg::ProfilesMsg, relationships::msg::RelationshipsMsg,
-        subspaces::msg::SubspacesMsg, reactions::{msg::ReactionsMsg, models::ReactionValue},
+        msg::DesmosMsg,
+        profiles::msg::ProfilesMsg,
+        reactions::{models::ReactionValue, msg::ReactionsMsg},
+        relationships::msg::RelationshipsMsg,
+        subspaces::msg::SubspacesMsg,
     };
     use cosmwasm_std::{Addr, Uint64};
 
@@ -184,7 +187,10 @@ mod tests {
         let msg = ReactionsMsg::AddReaction {
             subspace_id: Uint64::new(1),
             post_id: Uint64::new(1),
-            value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
+            value: ReactionValue::FreeText {
+                text: "test".to_string(),
+            }
+            .into(),
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
         let expected = DesmosMsg::Reactions(msg.clone());

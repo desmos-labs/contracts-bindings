@@ -1,6 +1,8 @@
 //! Contains structs and enums related to the x/reactions module.
 
-use crate::reactions::models::UnwrapReactionValueError::{InvalidRegisteredReactionValue, InvalidFreeTextValue};
+use crate::reactions::models::UnwrapReactionValueError::{
+    InvalidFreeTextValue, InvalidRegisteredReactionValue,
+};
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -57,13 +59,15 @@ pub enum ReactionValue {
     FreeText {
         /// Text of the reaction value.
         text: String,
-    }
+    },
 }
 
 impl From<ReactionValue> for RawReactionValue {
     fn from(reaction: ReactionValue) -> Self {
         match reaction {
-            ReactionValue::Registered { registered_reaction_id } => RawReactionValue {
+            ReactionValue::Registered {
+                registered_reaction_id,
+            } => RawReactionValue {
                 type_uri: REGISTERED_REACTION_VALUE_TYPE_URI.to_string(),
                 registered_reaction_id: Some(registered_reaction_id),
                 text: None,
@@ -99,24 +103,27 @@ impl TryFrom<RawReactionValue> for ReactionValue {
     fn try_from(value: RawReactionValue) -> Result<Self, Self::Error> {
         if value.type_uri == REGISTERED_REACTION_VALUE_TYPE_URI {
             Ok(ReactionValue::Registered {
-                registered_reaction_id: value
-                    .registered_reaction_id
-                    .ok_or(InvalidRegisteredReactionValue("registered_reaction".to_string()))?,
+                registered_reaction_id: value.registered_reaction_id.ok_or(
+                    InvalidRegisteredReactionValue("registered_reaction".to_string()),
+                )?,
             })
         } else if value.type_uri == FREE_TEXT_VALUE_TYPE_URI {
             Ok(ReactionValue::FreeText {
-                text: value.text.ok_or(InvalidFreeTextValue("free_text".to_string()))?,
+                text: value
+                    .text
+                    .ok_or(InvalidFreeTextValue("free_text".to_string()))?,
             })
         } else {
-            Err(UnwrapReactionValueError::UnknownReactionValue(value.type_uri))
+            Err(UnwrapReactionValueError::UnknownReactionValue(
+                value.type_uri,
+            ))
         }
     }
 }
 
-
 /// Contains the details of a registered reaction within a subspace.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct RegisteredReaction{
+pub struct RegisteredReaction {
     /// Id of the subspace for which this reaction has been registered.
     pub subspace_id: Uint64,
     /// Id of the registered reaction.
@@ -156,4 +163,3 @@ pub struct RegisteredReactionValueParams {
     /// Whether [`RegisteredReactionValue`] reactions should be enabled.
     pub enabled: bool,
 }
-

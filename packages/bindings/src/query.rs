@@ -4,12 +4,12 @@
 use crate::posts::query::PostsQuery;
 #[cfg(feature = "profiles")]
 use crate::profiles::query::ProfilesQuery;
+#[cfg(feature = "reactions")]
+use crate::reactions::query::ReactionsQuery;
 #[cfg(feature = "relationships")]
 use crate::relationships::query::RelationshipsQuery;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::query::SubspacesQuery;
-#[cfg(feature = "reactions")]
-use crate::reactions::query::ReactionsQuery;
 use cosmwasm_std::{CustomQuery, QueryRequest};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -123,9 +123,8 @@ impl Into<QueryRequest<DesmosQuery>> for ReactionsQuery {
 mod tests {
     use crate::posts::query::PostsQuery;
     use crate::{
-        profiles::query::ProfilesQuery, query::DesmosQuery,
+        profiles::query::ProfilesQuery, query::DesmosQuery, reactions::query::ReactionsQuery,
         relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
-        reactions::query::ReactionsQuery,
     };
     use cosmwasm_std::{Addr, Uint64};
 

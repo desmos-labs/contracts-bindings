@@ -2,13 +2,12 @@
 
 use crate::reactions::{
     models::{
-        Reaction, ReactionValue, RegisteredReaction, 
-        SubspaceReactionsParams, FreeTextValueParams, RegisteredReactionValueParams,
+        FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
+        RegisteredReactionValueParams, SubspaceReactionsParams,
     },
     models_query::{
-        QueryReactionsResponse, QueryReactionResponse,
-        QueryRegisteredReactionsResponse, QueryRegisteredReactionResponse,
-        QueryReactionsParamsResponse,
+        QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
+        QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
     },
     query::ReactionsQuery,
 };
@@ -25,7 +24,10 @@ impl MockReactionsQueries {
             subspace_id: Uint64::new(1),
             post_id: Uint64::new(1),
             id: 1,
-            value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
+            value: ReactionValue::FreeText {
+                text: "test".to_string(),
+            }
+            .into(),
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
         }
     }
@@ -44,14 +46,12 @@ impl MockReactionsQueries {
     pub fn get_mock_reactions_parameters() -> SubspaceReactionsParams {
         SubspaceReactionsParams {
             subspace_id: Uint64::new(1),
-            registered_reaction: RegisteredReactionValueParams{
-                enabled: true,
-            },
+            registered_reaction: RegisteredReactionValueParams { enabled: true },
             free_text: FreeTextValueParams {
                 enabled: true,
                 max_length: 100,
                 reg_ex: "".to_string(),
-            }
+            },
         }
     }
 }
@@ -65,45 +65,39 @@ pub fn mock_reactions_query_response(query: &ReactionsQuery) -> ContractResult<B
                 reactions: vec![reaction],
                 pagination: Default::default(),
             })
-        },
+        }
         ReactionsQuery::Reaction { .. } => {
             let reaction = MockReactionsQueries::get_mock_reaction();
-            to_binary(&QueryReactionResponse {
-                reaction: reaction,
-            })
-        },
+            to_binary(&QueryReactionResponse { reaction: reaction })
+        }
         ReactionsQuery::RegisteredReactions { .. } => {
             let registered_reaction = MockReactionsQueries::get_mock_registered_reaction();
             to_binary(&QueryRegisteredReactionsResponse {
                 registered_reactions: vec![registered_reaction],
                 pagination: Default::default(),
             })
-        },
+        }
         ReactionsQuery::RegisteredReaction { .. } => {
-            let registered_reaction =  MockReactionsQueries::get_mock_registered_reaction();
+            let registered_reaction = MockReactionsQueries::get_mock_registered_reaction();
             to_binary(&QueryRegisteredReactionResponse {
                 registered_reaction: registered_reaction,
             })
-        },
+        }
         ReactionsQuery::ReactionsParams { .. } => {
             let params = MockReactionsQueries::get_mock_reactions_parameters();
-            to_binary(&QueryReactionsParamsResponse {
-                params: params,
-            })
+            to_binary(&QueryReactionsParamsResponse { params: params })
         }
     };
     response.into()
 }
-
 
 #[cfg(test)]
 mod tests {
     use crate::reactions::{
         mocks::{mock_reactions_query_response, MockReactionsQueries},
         models_query::{
-            QueryReactionsResponse, QueryReactionResponse,
-            QueryRegisteredReactionsResponse, QueryRegisteredReactionResponse,
-            QueryReactionsParamsResponse,
+            QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
+            QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
         },
         query::ReactionsQuery,
     };
@@ -112,10 +106,10 @@ mod tests {
     #[test]
     fn test_query_reactions() {
         let query = ReactionsQuery::Reactions {
-           subspace_id: Uint64::new(1),
-           post_id: Uint64::new(1),
-           user: None,
-           pagination: Default::default(),
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            user: None,
+            pagination: Default::default(),
         };
         let response = mock_reactions_query_response(&query);
         let expected = to_binary(&QueryReactionsResponse {
@@ -129,9 +123,9 @@ mod tests {
     #[test]
     fn test_query_reaction() {
         let query = ReactionsQuery::Reaction {
-           subspace_id: Uint64::new(1),
-           post_id: Uint64::new(1),
-           reaction_id: 1
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            reaction_id: 1,
         };
         let response = mock_reactions_query_response(&query);
         let expected = to_binary(&QueryReactionResponse {
@@ -143,8 +137,8 @@ mod tests {
     #[test]
     fn test_query_registered_reactions() {
         let query = ReactionsQuery::RegisteredReactions {
-           subspace_id: Uint64::new(1),
-           pagination: Default::default(),
+            subspace_id: Uint64::new(1),
+            pagination: Default::default(),
         };
         let response = mock_reactions_query_response(&query);
         let expected = to_binary(&QueryRegisteredReactionsResponse {
@@ -157,8 +151,8 @@ mod tests {
     #[test]
     fn test_query_registered_reaction() {
         let query = ReactionsQuery::RegisteredReaction {
-           subspace_id: Uint64::new(1),
-           reaction_id: 1
+            subspace_id: Uint64::new(1),
+            reaction_id: 1,
         };
         let response = mock_reactions_query_response(&query);
         let expected = to_binary(&QueryRegisteredReactionResponse {
@@ -170,7 +164,7 @@ mod tests {
     #[test]
     fn test_query_reactions_parameters() {
         let query = ReactionsQuery::ReactionsParams {
-           subspace_id: Uint64::new(1),
+            subspace_id: Uint64::new(1),
         };
         let response = mock_reactions_query_response(&query);
         let expected = to_binary(&QueryReactionsParamsResponse {

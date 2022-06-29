@@ -5,12 +5,12 @@ use crate::posts::mocks::mock_posts_query_response;
 #[cfg(feature = "profiles")]
 use crate::profiles::mocks::mock_profiles_query_response;
 use crate::query::DesmosQuery;
+#[cfg(feature = "reactions")]
+use crate::reactions::mocks::mock_reactions_query_response;
 #[cfg(feature = "relationships")]
 use crate::relationships::mocks::mock_relationships_query_response;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::mocks::mock_subspaces_query_response;
-#[cfg(feature = "reactions")]
-use crate::reactions::mocks::mock_reactions_query_response;
 use cosmwasm_std::{
     testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR},
     Coin, CustomQuery, OwnedDeps, SystemError, SystemResult,
@@ -30,7 +30,9 @@ pub fn mock_dependencies_with_custom_querier(
             #[cfg(feature = "subspaces")]
             DesmosQuery::Subspaces(query) => SystemResult::Ok(mock_subspaces_query_response(query)),
             #[cfg(feature = "relationships")]
-            DesmosQuery::Relationships(query) => SystemResult::Ok(mock_relationships_query_response(query)),
+            DesmosQuery::Relationships(query) => {
+                SystemResult::Ok(mock_relationships_query_response(query))
+            }
             #[cfg(feature = "posts")]
             DesmosQuery::Posts(query) => SystemResult::Ok(mock_posts_query_response(query)),
             #[cfg(feature = "reactions")]
@@ -56,6 +58,10 @@ mod tests {
             mocks::MockProfilesQueries, models_query::QueryProfileResponse,
             querier::ProfilesQuerier,
         },
+        reactions::{
+            mocks::MockReactionsQueries, models_query::QueryReactionsResponse,
+            querier::ReactionsQuerier,
+        },
         relationships::{
             mocks::MockRelationshipsQueries, models_query::QueryRelationshipsResponse,
             querier::RelationshipsQuerier,
@@ -63,10 +69,6 @@ mod tests {
         subspaces::{
             mocks::MockSubspacesQueries, querier::SubspacesQuerier,
             query_types::QuerySubspaceResponse,
-        },
-        reactions::{
-            mocks::MockReactionsQueries, models_query::QueryReactionsResponse,
-            querier::ReactionsQuerier,
         },
     };
     use cosmwasm_std::Addr;
@@ -121,14 +123,7 @@ mod tests {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
-        let response = querier
-            .query_reactions(
-                1,
-                1,
-                None,
-                None,
-            )
-            .unwrap();
+        let response = querier.query_reactions(1, 1, None, None).unwrap();
         let expected = QueryReactionsResponse {
             reactions: vec![MockReactionsQueries::get_mock_reaction()],
             pagination: Default::default(),

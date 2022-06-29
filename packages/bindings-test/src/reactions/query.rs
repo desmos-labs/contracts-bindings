@@ -2,22 +2,21 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{
-        TEST_SUBSPACE, TEST_REACTIONS_POST_ID, TEST_EDITABLE_REGISTERED_REACTION_ID,
-        TEST_POST_REGISTERED_REACTION_ID, TEST_POST_FREE_TEXT_REACTION_ID
+        TEST_EDITABLE_REGISTERED_REACTION_ID, TEST_POST_FREE_TEXT_REACTION_ID,
+        TEST_POST_REGISTERED_REACTION_ID, TEST_REACTIONS_POST_ID, TEST_SUBSPACE,
     };
     use cosmwasm_std::Addr;
+    use desmos_bindings::reactions::query::ReactionsQuery;
     use desmos_bindings::reactions::{
-        models_query::{
-            QueryReactionsResponse, QueryReactionResponse,
-            QueryRegisteredReactionsResponse, QueryRegisteredReactionResponse,
-            QueryReactionsParamsResponse,
-        },
         models::{
-            Reaction, ReactionValue, RegisteredReaction, 
-            SubspaceReactionsParams, RegisteredReactionValueParams, FreeTextValueParams,
+            FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
+            RegisteredReactionValueParams, SubspaceReactionsParams,
+        },
+        models_query::{
+            QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
+            QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
         },
     };
-    use desmos_bindings::reactions::query::ReactionsQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
@@ -45,7 +44,10 @@ mod tests {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_REGISTERED_REACTION_ID,
-            value: ReactionValue::Registered{ registered_reaction_id:  TEST_EDITABLE_REGISTERED_REACTION_ID }.into(),
+            value: ReactionValue::Registered {
+                registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
+            }
+            .into(),
             author: Addr::unchecked(contract_address),
         };
         assert_eq!(&expected, reaction);
@@ -71,12 +73,15 @@ mod tests {
             .to_object();
 
         let expected = Reaction {
-                subspace_id: TEST_SUBSPACE,
-                post_id: TEST_REACTIONS_POST_ID,
-                id: TEST_POST_REGISTERED_REACTION_ID,
-                value: ReactionValue::Registered{ registered_reaction_id:  TEST_EDITABLE_REGISTERED_REACTION_ID }.into(),
-                author: Addr::unchecked(contract_address),
-            };
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_REACTIONS_POST_ID,
+            id: TEST_POST_REGISTERED_REACTION_ID,
+            value: ReactionValue::Registered {
+                registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
+            }
+            .into(),
+            author: Addr::unchecked(contract_address),
+        };
         assert_eq!(expected, result.reaction);
     }
 
@@ -100,12 +105,15 @@ mod tests {
             .to_object();
 
         let expected = Reaction {
-                subspace_id: TEST_SUBSPACE,
-                post_id: TEST_REACTIONS_POST_ID,
-                id: TEST_POST_FREE_TEXT_REACTION_ID,
-                value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
-                author: Addr::unchecked(contract_address),
-            };
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_REACTIONS_POST_ID,
+            id: TEST_POST_FREE_TEXT_REACTION_ID,
+            value: ReactionValue::FreeText {
+                text: "test".to_string(),
+            }
+            .into(),
+            author: Addr::unchecked(contract_address),
+        };
         assert_eq!(expected, result.reaction);
     }
 
@@ -122,7 +130,7 @@ mod tests {
         };
 
         let contract_address = desmos_cli.get_contract_by_code(1);
-        
+
         let result: QueryRegisteredReactionsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
@@ -181,10 +189,14 @@ mod tests {
             .wasm_query(&contract_address, &query_msg)
             .to_object();
 
-        let expected = SubspaceReactionsParams{
+        let expected = SubspaceReactionsParams {
             subspace_id: TEST_SUBSPACE,
             registered_reaction: RegisteredReactionValueParams { enabled: true },
-            free_text: FreeTextValueParams {enabled: true, max_length: 5, reg_ex: "".to_string() },
+            free_text: FreeTextValueParams {
+                enabled: true,
+                max_length: 5,
+                reg_ex: "".to_string(),
+            },
         };
         assert_eq!(expected, result.params);
     }

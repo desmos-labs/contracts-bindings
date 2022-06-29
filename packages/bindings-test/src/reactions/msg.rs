@@ -2,12 +2,14 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{
-        TEST_SUBSPACE, TEST_REACTIONS_POST_ID, TEST_POST_DELETABLE_REACTION_ID,
-        TEST_EDITABLE_REGISTERED_REACTION_ID, TEST_DELETABLE_REGISTERED_REACTION_ID,
+        TEST_DELETABLE_REGISTERED_REACTION_ID, TEST_EDITABLE_REGISTERED_REACTION_ID,
+        TEST_POST_DELETABLE_REACTION_ID, TEST_REACTIONS_POST_ID, TEST_SUBSPACE,
     };
     use cosmwasm_std::Addr;
+    use desmos_bindings::reactions::models::{
+        FreeTextValueParams, ReactionValue, RegisteredReactionValueParams,
+    };
     use desmos_bindings::reactions::msg::ReactionsMsg;
-    use desmos_bindings::reactions::models::{ReactionValue, RegisteredReactionValueParams, FreeTextValueParams};
     use test_contract::msg::ExecuteMsg;
 
     #[test]
@@ -15,10 +17,13 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = ReactionsMsg::AddReaction { 
+        let msg = ReactionsMsg::AddReaction {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_REACTIONS_POST_ID,
-            value: ReactionValue::FreeText{ text: "test".to_string() }.into(),
+            value: ReactionValue::FreeText {
+                text: "test".to_string(),
+            }
+            .into(),
             user: Addr::unchecked(&contract_address),
         };
 
@@ -37,7 +42,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = ReactionsMsg::RemoveReaction { 
+        let msg = ReactionsMsg::RemoveReaction {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_REACTIONS_POST_ID,
             reaction_id: TEST_POST_DELETABLE_REACTION_ID,
@@ -59,7 +64,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = ReactionsMsg::AddRegisteredReaction { 
+        let msg = ReactionsMsg::AddRegisteredReaction {
             subspace_id: TEST_SUBSPACE,
             shorthand_code: "test".to_string(),
             display_value: "test".to_string(),
@@ -81,7 +86,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = ReactionsMsg::EditRegisteredReaction { 
+        let msg = ReactionsMsg::EditRegisteredReaction {
             subspace_id: TEST_SUBSPACE,
             registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
             shorthand_code: "editable_code".to_string(),
@@ -104,7 +109,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = ReactionsMsg::RemoveRegisteredReaction { 
+        let msg = ReactionsMsg::RemoveRegisteredReaction {
             subspace_id: TEST_SUBSPACE,
             registered_reaction_id: TEST_DELETABLE_REGISTERED_REACTION_ID,
             user: Addr::unchecked(&contract_address),
@@ -125,10 +130,14 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = ReactionsMsg::SetReactionsParams { 
+        let msg = ReactionsMsg::SetReactionsParams {
             subspace_id: TEST_SUBSPACE,
-            registered_reaction: RegisteredReactionValueParams{ enabled: true },
-            free_text: FreeTextValueParams{ enabled: true, max_length: 5, reg_ex: "".to_string() },
+            registered_reaction: RegisteredReactionValueParams { enabled: true },
+            free_text: FreeTextValueParams {
+                enabled: true,
+                max_length: 5,
+                reg_ex: "".to_string(),
+            },
             user: Addr::unchecked(&contract_address),
         };
 

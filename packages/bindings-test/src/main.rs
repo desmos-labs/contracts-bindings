@@ -5,9 +5,9 @@ mod consts;
 mod models;
 mod posts;
 mod profiles;
+mod reactions;
 mod relationships;
 mod subspaces;
-mod reactions;
 
 fn main() {
     println!("Hello, world!");
