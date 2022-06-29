@@ -7,6 +7,7 @@ mod posts;
 mod profiles;
 mod relationships;
 mod subspaces;
+mod reactions;
 
 fn main() {
     println!("Hello, world!");
