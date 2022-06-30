@@ -3,8 +3,8 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    profiles::models_app_links::ApplicationLink,
-    profiles::models_chain_links::ChainLink,
+    profiles::models_app_links::{ApplicationLink, ApplicationLinkOwnerDetails},
+    profiles::models_chain_links::{ChainLink, ChainLinkOwnerDetails},
     profiles::models_dtag_requests::DtagTransferRequest,
 };
 #[cfg(feature = "iterators")]
@@ -15,7 +15,7 @@ use crate::{
         models_query::{
             QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
             QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
-            QueryProfileResponse,
+            QueryProfileResponse, QueryChainLinkOwnersResponse, QueryApplicationLinkOwnersResponse,
         },
         query::ProfilesQuery,
     },
@@ -176,6 +176,63 @@ impl<'a> ProfilesQuerier<'a> {
         )
     }
 
+    /// Queries chain link owners.
+    ///
+    /// * `chain_name` - Optional name of the chain to which search the link owner for.
+    /// * `target` - Optional external address to which search the link owner for.
+    /// Used only if chain_name is also set.
+    /// * `pagination` - Optional pagination configs.
+    pub fn query_chain_link_owners(
+        &self,
+        chain_name: Option<String>,
+        target: Option<String>,
+        pagination: Option<PageRequest>,
+    ) -> StdResult<QueryChainLinkOwnersResponse> {
+        let request = DesmosQuery::Profiles(ProfilesQuery::ChainLinkOwners {
+            chain_name,
+            target,
+            pagination,
+        });
+
+        let res: QueryChainLinkOwnersResponse = self.querier.query(&request.into())?;
+        Ok(res)
+    }
+
+    /// Gives an iterator to scan over chain link owners.
+    ///
+    /// * `chain_name` - Optional name of the chain to which search the link owner for.
+    /// * `target` - Optional external address to which search the link owner for.
+    /// Used only if chain_name is also set.
+    /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
+    pub fn iterate_chain_link_owners(
+        &self,
+        chain_name: Option<String>,
+        target: Option<String>,
+        page_size: u64,
+    ) -> PageIterator<ChainLinkOwnerDetails, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_chain_link_owners(
+                    chain_name.clone(),
+                    target.clone(),
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.owners,
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                })
+            }),
+            page_size,
+        )
+    }
+
     /// Queries a user's app links or all the performed app links.
     ///
     /// * `user` - Optional Desmos address of the user to which search the link for, if it's None
@@ -257,6 +314,64 @@ impl<'a> ProfilesQuerier<'a> {
         let res: QueryApplicationLinkByClientIDResponse = self.querier.query(&request.into())?;
         Ok(res)
     }
+
+    /// Queries app link owners.
+    ///
+    /// * `application` - Optional name of the application to which search the link owner for.
+    /// * `username` - Optional username to which the link owner search for.
+    /// Used only if application is also set.
+    /// * `page_size` - Size of the page requested to the chain.
+    pub fn query_application_link_owners(
+        &self,
+        application: Option<String>,
+        username: Option<String>,
+        pagination: Option<PageRequest>,
+    ) -> StdResult<QueryApplicationLinkOwnersResponse> {
+        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkOwners {
+            application,
+            username,
+            pagination,
+        });
+
+        let res: QueryApplicationLinkOwnersResponse = self.querier.query(&request.into())?;
+        Ok(res)
+    }
+
+    /// Gives an iterator to scan over app link owners.
+    ///
+    /// * `application` - Optional name of the application to which search the link owner for.
+    /// Used only if user is also set.
+    /// * `username` - Optional username inside the application associated with the link.
+    /// Used only if application is also set.
+    /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
+    pub fn iterate_application_link_owners(
+        &self,
+        application: Option<String>,
+        username: Option<String>,
+        page_size: u64,
+    ) -> PageIterator<ApplicationLinkOwnerDetails, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_application_link_owners(
+                    application.clone(),
+                    username.clone(),
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.owners,
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                })
+            }),
+            page_size,
+        )
+    }
 }
 
 #[cfg(test)]
@@ -268,7 +383,7 @@ mod tests {
             models_query::{
                 QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
                 QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
-                QueryProfileResponse,
+                QueryProfileResponse, QueryChainLinkOwnersResponse, QueryApplicationLinkOwnersResponse
             },
             querier::ProfilesQuerier,
         },
@@ -366,6 +481,46 @@ mod tests {
     }
 
     #[test]
+    fn test_query_chain_link_owners() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let response = profiles_querier
+            .query_chain_link_owners(
+                Some("cosmos".to_string()),
+                Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+                None,
+            )
+            .unwrap();
+        let expected = QueryChainLinkOwnersResponse {
+            owners: vec![MockProfilesQueries::get_mock_chain_link_owner()],
+            pagination: Default::default(),
+        };
+
+        assert_eq!(response, expected)
+    }
+
+    #[test]
+    fn test_iterate_chain_link_owners() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let mut it = profiles_querier.iterate_chain_link_owners(
+            Some("cosmos".to_string()),
+            Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+            10,
+        );
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockProfilesQueries::get_mock_chain_link_owner()
+        );
+        assert!(it.next().is_none());
+    }
+
+    #[test]
     fn test_query_app_links() {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
@@ -421,5 +576,45 @@ mod tests {
         };
 
         assert_eq!(response, expected)
+    }
+
+    #[test]
+    fn test_query_app_link_owners() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let response = profiles_querier
+            .query_application_link_owners(
+                Some("twitter".to_string()),
+                Some("goldrake".to_string()),
+                None,
+            )
+            .unwrap();
+        let expected = QueryApplicationLinkOwnersResponse {
+            owners: vec![MockProfilesQueries::get_mock_application_link_owner()],
+            pagination: Default::default(),
+        };
+
+        assert_eq!(response, expected)
+    }
+
+    #[test]
+    fn test_iterate_app_link_owners() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+
+        let mut it = profiles_querier.iterate_application_link_owners(
+            Some("twitter".to_string()),
+            Some("goldrake".to_string()),
+            10,
+        );
+
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockProfilesQueries::get_mock_application_link_owner()
+        );
+        assert!(it.next().is_none());
     }
 }

@@ -102,3 +102,15 @@ pub enum AppLinkResult {
         error: String,
     },
 }
+
+/// Contains the details of a single chain link owner.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct ApplicationLinkOwnerDetails {
+    /// Address of the link owner.
+    pub user: Addr,
+    /// Name of the application.
+    pub application: String,
+    /// Unique name of the application target.
+    pub username: String,
+}
