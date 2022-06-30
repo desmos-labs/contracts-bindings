@@ -4,7 +4,8 @@ use crate::{
     profiles::{
         models_app_links::{ApplicationLink, ApplicationLinkOwnerDetails},
         models_chain_links::{ChainLink, ChainLinkOwnerDetails},
-        models_dtag_requests::DtagTransferRequest, models_profile::Profile,
+        models_dtag_requests::DtagTransferRequest,
+        models_profile::Profile,
     },
     types::PageResponse,
 };

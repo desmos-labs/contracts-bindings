@@ -3,14 +3,16 @@
 use crate::profiles::models_app_links::ApplicationLinkState;
 use crate::profiles::models_chain_links::{Address, SignMode};
 use crate::profiles::{
-    models_app_links::{AppLinkResult, ApplicationLink, CallData, Data, OracleRequest, ApplicationLinkOwnerDetails},
-    models_chain_links::{ChainConfig, ChainLink, Proof, Signature, ChainLinkOwnerDetails},
+    models_app_links::{
+        AppLinkResult, ApplicationLink, ApplicationLinkOwnerDetails, CallData, Data, OracleRequest,
+    },
+    models_chain_links::{ChainConfig, ChainLink, ChainLinkOwnerDetails, Proof, Signature},
     models_dtag_requests::DtagTransferRequest,
     models_profile::{Account, Pictures, Profile},
     models_query::{
-        QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
-        QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
-        QueryChainLinkOwnersResponse, QueryApplicationLinkOwnersResponse,
+        QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
+        QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
+        QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
     },
     query::ProfilesQuery,
 };
@@ -149,14 +151,14 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
                 links: vec![chain_link],
                 pagination: Default::default(),
             })
-        },
+        }
         ProfilesQuery::ChainLinkOwners { .. } => {
             let owner = MockProfilesQueries::get_mock_chain_link_owner();
             to_binary(&QueryChainLinkOwnersResponse {
                 owners: vec![owner],
                 pagination: Default::default(),
             })
-        },
+        }
         ProfilesQuery::ApplicationLinks { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinksResponse {
@@ -167,14 +169,14 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
         ProfilesQuery::ApplicationLinkByChainID { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinkByClientIDResponse { link: app_link })
-        },
+        }
         ProfilesQuery::ApplicationLinkOwners { .. } => {
             let owner = MockProfilesQueries::get_mock_application_link_owner();
             to_binary(&QueryApplicationLinkOwnersResponse {
                 owners: vec![owner],
                 pagination: Default::default(),
             })
-        },
+        }
     };
     response.into()
 }
@@ -184,9 +186,9 @@ mod tests {
     use crate::profiles::{
         mocks::{mock_profiles_query_response, MockProfilesQueries},
         models_query::{
-            QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
-            QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
-            QueryProfileResponse, QueryChainLinkOwnersResponse, QueryApplicationLinkOwnersResponse
+            QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
+            QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
+            QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
         },
         query::ProfilesQuery,
     };

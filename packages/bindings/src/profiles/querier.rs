@@ -13,9 +13,9 @@ use cosmwasm_std::Binary;
 use crate::{
     profiles::{
         models_query::{
-            QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
-            QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
-            QueryProfileResponse, QueryChainLinkOwnersResponse, QueryApplicationLinkOwnersResponse,
+            QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
+            QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
+            QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
         },
         query::ProfilesQuery,
     },
@@ -381,9 +381,10 @@ mod tests {
         profiles::{
             mocks::MockProfilesQueries,
             models_query::{
-                QueryApplicationLinkByClientIDResponse, QueryApplicationLinksResponse,
+                QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
+                QueryApplicationLinksResponse, QueryChainLinkOwnersResponse,
                 QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
-                QueryProfileResponse, QueryChainLinkOwnersResponse, QueryApplicationLinkOwnersResponse
+                QueryProfileResponse,
             },
             querier::ProfilesQuerier,
         },
