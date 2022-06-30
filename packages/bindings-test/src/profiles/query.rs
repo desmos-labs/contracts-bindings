@@ -193,6 +193,6 @@ mod tests {
             chain_name: "cosmos".to_string(),
             target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
         };
-        assert_eq!(expected, owner);
+        assert_eq!(&expected, owner);
     }
 }
