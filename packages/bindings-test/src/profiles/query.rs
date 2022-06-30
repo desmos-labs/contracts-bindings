@@ -4,8 +4,9 @@ mod tests {
     use crate::consts::{USER1_ADDRESS, USER2_ADDRESS};
     use cosmwasm_std::Addr;
     use desmos_bindings::profiles::models_profile::Pictures;
+    use desmos_bindings::profiles::models_chain_links::ChainLinkOwnerDetails;
     use desmos_bindings::profiles::models_query::{
-        QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
+        QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse, QueryProfileResponse, QueryChainLinkOwnersResponse,
     };
     use desmos_bindings::profiles::query::ProfilesQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
@@ -165,5 +166,32 @@ mod tests {
             cosmos_address.address.value
         );
         assert_eq!("cosmos", cosmos_address.address.prefix.as_ref().unwrap());
+    }
+
+    #[test]
+    fn test_query_chain_link_owners() {
+        let desmos_cli = DesmosCli::default();
+
+        let query_msg = DesmosChain {
+            request: ProfilesQuery::ChainLinkOwners {
+                chain_name: Some("cosmos".to_string()),
+                target: Some("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string()),
+                pagination: None,
+            }
+            .into(),
+        };
+
+        let contract_address = desmos_cli.get_contract_by_code(1);
+        let result: QueryChainLinkOwnersResponse = desmos_cli
+            .wasm_query(&contract_address, &query_msg)
+            .to_object();
+        
+        let owner = result.owners.first().unwrap();
+        let expected = ChainLinkOwnerDetails {
+            user: Some(Addr::unchecked(USER1_ADDRESS)),
+            chain_name: Some("cosmos".to_string()),
+            target: Some("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string()), 
+        };
+        assert_eq!(expected, owner);
     }
 }
