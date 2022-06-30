@@ -33,6 +33,7 @@ pub const FREE_TEXT_VALUE_TYPE_URI: &str = "/desmos.reactions.v1.FreeTextValue";
 /// Struct representing a generic reaction value that can be serialized and sent to the chain.
 /// This struct can be created converting a [`ReactionValue`] using the [`core::convert::Into`] trait.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub struct RawReactionValue {
     /// ReactionValue uri type, can be:
     /// * `/desmos.reactions.v1.RegisteredReactionValue` if representing a registered reaction.
@@ -49,6 +50,7 @@ pub struct RawReactionValue {
 
 /// Supported reaction value that can be added to a post.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum ReactionValue {
     /// Represents the registered reaction.
     Registered {
@@ -121,6 +123,7 @@ impl TryFrom<RawReactionValue> for ReactionValue {
 
 /// Contains the details of a registered reaction within a subspace.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub struct RegisteredReaction {
     /// Id of the subspace for which this reaction has been registered.
     pub subspace_id: Uint64,
@@ -134,6 +137,7 @@ pub struct RegisteredReaction {
 
 /// Contains the parameters related to a single subspace reactions.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub struct SubspaceReactionsParams {
     /// Id of the subspace for which these params are valid.
     pub subspace_id: Uint64,
@@ -145,6 +149,7 @@ pub struct SubspaceReactionsParams {
 
 /// Contains the params for [`FreeTextValue`] based reactions.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub struct FreeTextValueParams {
     /// Whether [`FreeTextValue`] reactions should be enabled.
     pub enabled: bool,
@@ -157,6 +162,7 @@ pub struct FreeTextValueParams {
 
 /// Contains the params for [`RegisteredReactionValue`] based reactions.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub struct RegisteredReactionValueParams {
     /// Whether [`RegisteredReactionValue`] reactions should be enabled.
     pub enabled: bool,
