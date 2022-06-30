@@ -93,15 +93,7 @@ pub fn mock_reactions_query_response(query: &ReactionsQuery) -> ContractResult<B
 
 #[cfg(test)]
 mod tests {
-    use crate::reactions::{
-        mocks::{mock_reactions_query_response, MockReactionsQueries},
-        models_query::{
-            QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
-            QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
-        },
-        query::ReactionsQuery,
-    };
-    use cosmwasm_std::{to_binary, Uint64};
+    use super::*;
 
     #[test]
     fn test_query_reactions() {
