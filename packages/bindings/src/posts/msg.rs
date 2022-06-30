@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/posts module.
 
-use crate::posts::models::{Entities, PostReference, RawPostAttachment, ReplySetting};
+use crate::posts::models::{Entities, PostReference, PostAttachment, RawPostAttachment, ReplySetting};
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -112,7 +112,7 @@ impl PostsMsg {
          external_id: Option<&str>,
          text: Option<&str>,
          entities: Option<Entities>,
-         attachments: Option<Vec<RawPostAttachment>>,
+         attachments: Option<Vec<PostAttachment>>,
          author: Addr,
          conversation_id: Option<u64>,
          reply_settings: ReplySetting,
@@ -124,7 +124,7 @@ impl PostsMsg {
             external_id: external_id.map(str::to_string),
             text: text.map(str::to_string),
             entities: entities,
-            attachments: attachments,
+            attachments: attachments.map(|attachments| attachments.into_iter().map(|content| content.into()).collect()),
             author: author,
             conversation_id: conversation_id.map(Uint64::from),
             reply_settings: reply_settings,
@@ -230,7 +230,187 @@ impl PostsMsg {
             post_id: post_id.into(),
             poll_id: poll_id,
             answers_indexes: answers_indexes,
-            editor: editor,
+            signer: signer,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::posts::models::ProvidedAnswer;
+
+    #[test]
+    fn test_create_post() {
+        let msg = PostsMsg::create_post(
+            1,
+            1,
+            Some("1"),
+            Some("test"),
+            None,
+            Some(vec![
+                PostAttachment::Media {
+                    uri: "ftp://domain.io/image.png".to_string(),
+                    mime_type: "image/png".to_string(),
+                },
+                PostAttachment::Poll{
+                    question: "questions?".to_string(),
+                    provided_answers: vec![ProvidedAnswer {
+                            text: Some("Answer 1".to_string()),
+                            attachments: vec![],
+                    }],
+                    end_date: "2140-01-01T10:00:20.021Z".to_string(),
+                    allows_multiple_answers: false,
+                    allows_answer_edits: false,
+                    final_tally_results: None,
+                },
+            ]),
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            Some(1),
+            ReplySetting::Everyone,
+            vec![],
+        );
+        let expected = PostsMsg::CreatePost {
+            subspace_id: Uint64::new(1),
+            section_id: 1,
+            external_id: Some("1".to_string()),
+            text: Some("test".to_string()),
+            entities: None,
+            attachments: Some(vec![
+                PostAttachment::Media {
+                    uri: "ftp://domain.io/image.png".to_string(),
+                    mime_type: "image/png".to_string(),
+                }.into(),
+                PostAttachment::Poll{
+                    question: "questions?".to_string(),
+                    provided_answers: vec![ProvidedAnswer {
+                            text: Some("Answer 1".to_string()),
+                            attachments: vec![],
+                    }],
+                    end_date: "2140-01-01T10:00:20.021Z".to_string(),
+                    allows_multiple_answers: false,
+                    allows_answer_edits: false,
+                    final_tally_results: None,
+                }.into(),
+            ]),
+            author: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            conversation_id: Some(Uint64::new(1)),
+            reply_settings: ReplySetting::Everyone,
+            referenced_posts: vec![],
+        };
+        assert_eq!(expected, msg)
+    }
+    
+    #[test]
+    fn test_edit_post_with_new_text() {
+        let msg = PostsMsg::edit_post(
+            1,
+            1,
+            Some("new text"),
+            None,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = PostsMsg::EditPost {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            text: "new text".to_string(),
+            entities: None,
+            editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_edit_post_without_new_text() {
+        let msg = PostsMsg::edit_post(
+            1,
+            1,
+            None,
+            None,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = PostsMsg::EditPost {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            text: "[do-not-modify]".to_string(),
+            entities: None,
+            editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_delete_post() {
+        let msg = PostsMsg::delete_post(
+            1,
+            1,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = PostsMsg::DeletePost {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        assert_eq!(expected, msg);
+    }
+
+    #[test]
+    fn test_add_post_attachment() {
+        let msg = PostsMsg::add_post_attachment(
+            1,
+            1,
+            PostAttachment::Media {
+                uri: "ftp://domain.io/image.png".to_string(),
+                mime_type: "image/png".to_string(),
+            },
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = PostsMsg::AddPostAttachment {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            content: PostAttachment::Media {
+                uri: "ftp://domain.io/image.png".to_string(),
+                mime_type: "image/png".to_string(),
+            }.into(),
+            editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        assert_eq!(expected, msg);
+    }
+
+    
+    #[test]
+    fn test_remove_post_attachment() {
+        let msg = PostsMsg::remove_post_attachment(
+            1,
+            1,
+            1,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = PostsMsg::RemovePostAttachment {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            attachment_id: 1,
+            editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        assert_eq!(expected, msg);
+    }
+
+    #[test]
+    fn test_answer_poll() {
+        let msg = PostsMsg::answer_poll(
+            1,
+            1,
+            1,
+            vec![1],
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = PostsMsg::AnswerPoll {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            poll_id: 1,
+            answers_indexes: vec![1],
+            signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        assert_eq!(expected, msg);
     }
 }
