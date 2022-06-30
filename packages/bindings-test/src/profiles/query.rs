@@ -175,8 +175,8 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: ProfilesQuery::ChainLinkOwners {
-                chain_name: Some("cosmos".to_string()),
-                target: Some("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string()),
+                chain_name: Some("osmosis".to_string()),
+                target: Some("osmo1wrx0kayjzuf27gaaqult0z576y0xggq08qsgu3".to_string()),
                 pagination: None,
             }
             .into(),
@@ -190,8 +190,8 @@ mod tests {
         let owner = result.owners.first().unwrap();
         let expected = ChainLinkOwnerDetails {
             user: Addr::unchecked(USER1_ADDRESS),
-            chain_name: "cosmos".to_string(),
-            target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
+            chain_name: "osmosis".to_string(),
+            target: "osmo1wrx0kayjzuf27gaaqult0z576y0xggq08qsgu3".to_string(),
         };
         assert_eq!(&expected, owner);
     }
