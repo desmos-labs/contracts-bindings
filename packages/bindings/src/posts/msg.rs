@@ -1,6 +1,8 @@
 //! Contains the messages that can be sent to the chain to interact with the x/posts module.
 
-use crate::posts::models::{Entities, PostReference, PostAttachment, RawPostAttachment, ReplySetting};
+use crate::posts::models::{
+    Entities, PostAttachment, PostReference, RawPostAttachment, ReplySetting,
+};
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -95,7 +97,7 @@ pub enum PostsMsg {
 
 impl PostsMsg {
     /// Creates an instance of [`PostsMsg::CreatePost`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace inside which the post must be created.
     /// * `section_id` - Id of the section inside which the post must be created.
     /// * `external_id` - External id for this post.
@@ -107,33 +109,38 @@ impl PostsMsg {
     /// * `reply_settings` - Reply settings of this post.
     /// * `reference_posts` - A list this posts references (either as a reply, repost or quote).
     pub fn create_post(
-         subspace_id: u64,
-         section_id: u32,
-         external_id: Option<&str>,
-         text: Option<&str>,
-         entities: Option<Entities>,
-         attachments: Option<Vec<PostAttachment>>,
-         author: Addr,
-         conversation_id: Option<u64>,
-         reply_settings: ReplySetting,
-         referenced_posts: Vec<PostReference>,
+        subspace_id: u64,
+        section_id: u32,
+        external_id: Option<&str>,
+        text: Option<&str>,
+        entities: Option<Entities>,
+        attachments: Option<Vec<PostAttachment>>,
+        author: Addr,
+        conversation_id: Option<u64>,
+        reply_settings: ReplySetting,
+        referenced_posts: Vec<PostReference>,
     ) -> Self {
-        Self::CreatePost{
+        Self::CreatePost {
             subspace_id: subspace_id.into(),
             section_id: section_id,
             external_id: external_id.map(str::to_string),
             text: text.map(str::to_string),
             entities: entities,
-            attachments: attachments.map(|attachments| attachments.into_iter().map(|content| content.into()).collect()),
+            attachments: attachments.map(|attachments| {
+                attachments
+                    .into_iter()
+                    .map(|content| content.into())
+                    .collect()
+            }),
             author: author,
             conversation_id: conversation_id.map(Uint64::from),
             reply_settings: reply_settings,
-            referenced_posts: referenced_posts
+            referenced_posts: referenced_posts,
         }
     }
 
     /// Creates an instance of [`PostsMsg::EditPost`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace inside which the post is.
     /// * `post_id` - Id of the post to edit.
     /// * `text` - New text of the post. If set to `[do-not-modify]` it will not change the current post's text.
@@ -156,15 +163,11 @@ impl PostsMsg {
     }
 
     /// Creates an instance of [`PostsMsg::DeletePost`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post to be deleted.
     /// * `signer` - User that is deleting the post.
-    pub fn delete_post(
-        subspace_id: u64,
-        post_id: u64,
-        signer: Addr
-    ) -> Self {
+    pub fn delete_post(subspace_id: u64, post_id: u64, signer: Addr) -> Self {
         Self::DeletePost {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
@@ -173,7 +176,7 @@ impl PostsMsg {
     }
 
     /// Creates an instance of [`PostsMsg::AddPostAttachment`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post from which to remove the attachment.
     /// * `attachment_id` - Id of the attachment to be removed.
@@ -193,7 +196,7 @@ impl PostsMsg {
     }
 
     /// Creates an instance of [`PostsMsg::RemovePostAttachment`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post from which to remove the attachment.
     /// * `attachment_id` - Id of the attachment to be removed.
@@ -253,11 +256,11 @@ mod tests {
                     uri: "ftp://domain.io/image.png".to_string(),
                     mime_type: "image/png".to_string(),
                 },
-                PostAttachment::Poll{
+                PostAttachment::Poll {
                     question: "questions?".to_string(),
                     provided_answers: vec![ProvidedAnswer {
-                            text: Some("Answer 1".to_string()),
-                            attachments: vec![],
+                        text: Some("Answer 1".to_string()),
+                        attachments: vec![],
                     }],
                     end_date: "2140-01-01T10:00:20.021Z".to_string(),
                     allows_multiple_answers: false,
@@ -280,18 +283,20 @@ mod tests {
                 PostAttachment::Media {
                     uri: "ftp://domain.io/image.png".to_string(),
                     mime_type: "image/png".to_string(),
-                }.into(),
-                PostAttachment::Poll{
+                }
+                .into(),
+                PostAttachment::Poll {
                     question: "questions?".to_string(),
                     provided_answers: vec![ProvidedAnswer {
-                            text: Some("Answer 1".to_string()),
-                            attachments: vec![],
+                        text: Some("Answer 1".to_string()),
+                        attachments: vec![],
                     }],
                     end_date: "2140-01-01T10:00:20.021Z".to_string(),
                     allows_multiple_answers: false,
                     allows_answer_edits: false,
                     final_tally_results: None,
-                }.into(),
+                }
+                .into(),
             ]),
             author: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             conversation_id: Some(Uint64::new(1)),
@@ -300,7 +305,7 @@ mod tests {
         };
         assert_eq!(expected, msg)
     }
-    
+
     #[test]
     fn test_edit_post_with_new_text() {
         let msg = PostsMsg::edit_post(
@@ -371,13 +376,13 @@ mod tests {
             content: PostAttachment::Media {
                 uri: "ftp://domain.io/image.png".to_string(),
                 mime_type: "image/png".to_string(),
-            }.into(),
+            }
+            .into(),
             editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
         assert_eq!(expected, msg);
     }
 
-    
     #[test]
     fn test_remove_post_attachment() {
         let msg = PostsMsg::remove_post_attachment(
