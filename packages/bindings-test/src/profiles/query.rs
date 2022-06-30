@@ -189,9 +189,9 @@ mod tests {
 
         let owner = result.owners.first().unwrap();
         let expected = ChainLinkOwnerDetails {
-            user: Some(Addr::unchecked(USER1_ADDRESS)),
-            chain_name: Some("cosmos".to_string()),
-            target: Some("cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string()),
+            user: Addr::unchecked(USER1_ADDRESS),
+            chain_name: "cosmos".to_string(),
+            target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
         };
         assert_eq!(expected, owner);
     }
