@@ -248,10 +248,4 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
     }
-
-    #[test]
-    fn test_unlink_chain_account() {
-        let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
-    }
 }
