@@ -236,7 +236,11 @@ mod tests {
 
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
-            msgs: vec![save_profile.into(), link_chain_account.into(), unlink_chain_account.into()],
+            msgs: vec![
+                save_profile.into(),
+                link_chain_account.into(),
+                unlink_chain_account.into(),
+            ],
         };
 
         // Execute the tx
@@ -249,7 +253,5 @@ mod tests {
     fn test_unlink_chain_account() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
-
-        
     }
 }

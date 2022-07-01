@@ -211,16 +211,12 @@ impl ProfilesMsg {
     }
 
     /// Creates an instance of [`ProfilesMsg::UnlinkChainAccount`].
-    /// 
+    ///
     /// * `owner` - The profile address from which to remove the link.
     /// * `chain_name` - The name of the chain to which the link to remove is associated.
     /// * `target` - The external address to be removed.
-    pub fn unlink_chain_account(
-        owner: Addr,
-        chain_name: &str,
-        target: &str,
-    ) -> ProfilesMsg {
-        ProfilesMsg::UnlinkChainAccount{
+    pub fn unlink_chain_account(owner: Addr, chain_name: &str, target: &str) -> ProfilesMsg {
+        ProfilesMsg::UnlinkChainAccount {
             owner,
             chain_name: chain_name.to_owned(),
             target: target.to_owned(),
@@ -260,15 +256,11 @@ impl ProfilesMsg {
     }
 
     /// Creates an instance of [`ProfilesMsg::UnlinkApplication`].
-    /// 
+    ///
     /// * `application` - The name of the application to unlink.
     /// * `username` - The username inside the application to unlink.
     /// * `signer` - The Desmos account to which the application should be unlinked.
-    pub fn unlink_application(
-        application: &str,
-        username: &str,
-        signer: Addr,
-    ) -> ProfilesMsg {
+    pub fn unlink_application(application: &str, username: &str, signer: Addr) -> ProfilesMsg {
         ProfilesMsg::UnlinkApplication {
             application: application.to_owned(),
             username: username.to_owned(),
