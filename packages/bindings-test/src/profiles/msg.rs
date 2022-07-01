@@ -190,7 +190,7 @@ mod tests {
     }
 
     #[test]
-    fn test_link_chain_account() {
+    fn test_link_unlink_chain_account() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
@@ -227,14 +227,29 @@ mod tests {
             signer: Addr::unchecked(&contract_address),
         };
 
+        // Prepare the UnlinkChainAccount msg for the smart contract
+        let unlink_chain_account = ProfilesMsg::UnlinkChainAccount {
+            owner: Addr::unchecked(&contract_address),
+            chain_name: "cosmos".to_string(),
+            target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
+        };
+
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
-            msgs: vec![save_profile.into(), link_chain_account.into()],
+            msgs: vec![save_profile.into(), link_chain_account.into(), unlink_chain_account.into()],
         };
 
         // Execute the tx
         desmos_cli
             .wasm_execute(&contract_address, &msg)
             .assert_success();
+    }
+
+    #[test]
+    fn test_unlink_chain_account() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        
     }
 }
