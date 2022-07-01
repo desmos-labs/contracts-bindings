@@ -92,7 +92,7 @@ impl ReactionsMsg {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
             value: value.into(),
-            user: user,
+            user,
         }
     }
     /// Creates a new instance of [`ReactionsMsg::RemoveReaction`].
@@ -105,8 +105,8 @@ impl ReactionsMsg {
         Self::RemoveReaction {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
-            reaction_id: reaction_id,
-            user: user,
+            reaction_id,
+            user,
         }
     }
     /// Creates a new instance of [`ReactionsMsg::AddRegisteredReaction`].
@@ -125,7 +125,7 @@ impl ReactionsMsg {
             subspace_id: subspace_id.into(),
             shorthand_code: shorthand_code.to_string(),
             display_value: display_value.to_string(),
-            user: user,
+            user,
         }
     }
     /// Creates a new instance of [`ReactionsMsg::EditRegisteredReaction`].
@@ -144,10 +144,10 @@ impl ReactionsMsg {
     ) -> Self {
         Self::EditRegisteredReaction {
             subspace_id: subspace_id.into(),
-            registered_reaction_id: registered_reaction_id,
+            registered_reaction_id,
             shorthand_code: shorthand_code.to_string(),
             display_value: display_value.to_string(),
-            user: user,
+            user,
         }
     }
     /// Creates a new instance of [`ReactionsMsg::RemoveRegisteredReaction`].
@@ -162,8 +162,8 @@ impl ReactionsMsg {
     ) -> Self {
         Self::RemoveRegisteredReaction {
             subspace_id: subspace_id.into(),
-            registered_reaction_id: registered_reaction_id,
-            user: user,
+            registered_reaction_id,
+            user,
         }
     }
     /// Creates a new instance of [`ReactionsMsg::SetReactionsParams`].
@@ -180,9 +180,9 @@ impl ReactionsMsg {
     ) -> Self {
         Self::SetReactionsParams {
             subspace_id: subspace_id.into(),
-            registered_reaction: registered_reaction,
-            free_text: free_text,
-            user: user,
+            registered_reaction,
+            free_text,
+            user,
         }
     }
 }

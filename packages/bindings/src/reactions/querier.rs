@@ -65,7 +65,7 @@ impl<'a> ReactionsQuerier<'a> {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
             user: user,
-            pagination: pagination,
+            pagination,
         });
         let res: QueryReactionsResponse = self.querier.query(&request.into())?;
         Ok(res)
@@ -125,7 +125,7 @@ impl<'a> ReactionsQuerier<'a> {
         let request = DesmosQuery::from(ReactionsQuery::Reaction {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
-            reaction_id: reaction_id,
+            reaction_id,
         });
         let res: QueryReactionResponse = self.querier.query(&request.into())?;
         Ok(res)
@@ -142,7 +142,7 @@ impl<'a> ReactionsQuerier<'a> {
     ) -> StdResult<QueryRegisteredReactionsResponse> {
         let request = DesmosQuery::from(ReactionsQuery::RegisteredReactions {
             subspace_id: subspace_id.into(),
-            pagination: pagination,
+            pagination,
         });
         let res: QueryRegisteredReactionsResponse = self.querier.query(&request.into())?;
         Ok(res)
@@ -192,7 +192,7 @@ impl<'a> ReactionsQuerier<'a> {
     ) -> StdResult<QueryRegisteredReactionResponse> {
         let request = DesmosQuery::from(ReactionsQuery::RegisteredReaction {
             subspace_id: subspace_id.into(),
-            reaction_id: reaction_id,
+            reaction_id,
         });
         let res: QueryRegisteredReactionResponse = self.querier.query(&request.into())?;
         Ok(res)

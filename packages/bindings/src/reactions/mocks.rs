@@ -68,7 +68,7 @@ pub fn mock_reactions_query_response(query: &ReactionsQuery) -> ContractResult<B
         }
         ReactionsQuery::Reaction { .. } => {
             let reaction = MockReactionsQueries::get_mock_reaction();
-            to_binary(&QueryReactionResponse { reaction: reaction })
+            to_binary(&QueryReactionResponse { reaction })
         }
         ReactionsQuery::RegisteredReactions { .. } => {
             let registered_reaction = MockReactionsQueries::get_mock_registered_reaction();
@@ -80,12 +80,12 @@ pub fn mock_reactions_query_response(query: &ReactionsQuery) -> ContractResult<B
         ReactionsQuery::RegisteredReaction { .. } => {
             let registered_reaction = MockReactionsQueries::get_mock_registered_reaction();
             to_binary(&QueryRegisteredReactionResponse {
-                registered_reaction: registered_reaction,
+                registered_reaction,
             })
         }
         ReactionsQuery::ReactionsParams { .. } => {
             let params = MockReactionsQueries::get_mock_reactions_parameters();
-            to_binary(&QueryReactionsParamsResponse { params: params })
+            to_binary(&QueryReactionsParamsResponse { params })
         }
     };
     response.into()
