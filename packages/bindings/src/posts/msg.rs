@@ -122,20 +122,20 @@ impl PostsMsg {
     ) -> Self {
         Self::CreatePost {
             subspace_id: subspace_id.into(),
-            section_id: section_id,
+            section_id,
             external_id: external_id.map(str::to_string),
             text: text.map(str::to_string),
-            entities: entities,
+            entities,
             attachments: attachments.map(|attachments| {
                 attachments
                     .into_iter()
                     .map(|content| content.into())
                     .collect()
             }),
-            author: author,
+            author,
             conversation_id: conversation_id.map(Uint64::from),
-            reply_settings: reply_settings,
-            referenced_posts: referenced_posts,
+            reply_settings,
+            referenced_posts,
         }
     }
 
@@ -157,8 +157,8 @@ impl PostsMsg {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
             text: text.unwrap_or("[do-not-modify]").to_string(),
-            entities: entities,
-            editor: editor,
+            entities,
+            editor,
         }
     }
 
@@ -171,7 +171,7 @@ impl PostsMsg {
         Self::DeletePost {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
-            signer: signer,
+            signer,
         }
     }
 
@@ -191,7 +191,7 @@ impl PostsMsg {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
             content: content.into(),
-            editor: editor,
+            editor,
         }
     }
 
@@ -210,8 +210,8 @@ impl PostsMsg {
         Self::RemovePostAttachment {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
-            attachment_id: attachment_id,
-            editor: editor,
+            attachment_id,
+            editor,
         }
     }
 
@@ -231,9 +231,9 @@ impl PostsMsg {
         Self::AnswerPoll {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
-            poll_id: poll_id,
-            answers_indexes: answers_indexes,
-            signer: signer,
+            poll_id,
+            answers_indexes,
+            signer,
         }
     }
 }
@@ -356,7 +356,7 @@ mod tests {
             post_id: Uint64::new(1),
             signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(expected, msg);
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -380,7 +380,7 @@ mod tests {
             .into(),
             editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(expected, msg);
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -397,7 +397,7 @@ mod tests {
             attachment_id: 1,
             editor: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(expected, msg);
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -416,6 +416,6 @@ mod tests {
             answers_indexes: vec![1],
             signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(expected, msg);
+        assert_eq!(expected, msg)
     }
 }
