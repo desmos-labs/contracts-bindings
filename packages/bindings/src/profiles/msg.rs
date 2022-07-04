@@ -78,7 +78,7 @@ pub enum ProfilesMsg {
     UnlinkChainAccount {
         /// The profile address from which to remove the link.
         owner: Addr,
-        /// The name of the chain to which the link to remove is associated.
+        /// The chain name associated with the link to be removed
         chain_name: String,
         /// The external address to be removed.
         target: String,
@@ -110,7 +110,7 @@ pub enum ProfilesMsg {
         application: String,
         /// The username inside the application to unlink.
         username: String,
-        /// The Desmos account to which the application should be unlinked.
+        /// The Desmos account from which the application should be unlinked.
         signer: Addr,
     },
 }
@@ -213,7 +213,7 @@ impl ProfilesMsg {
     /// Creates an instance of [`ProfilesMsg::UnlinkChainAccount`].
     ///
     /// * `owner` - The profile address from which to remove the link.
-    /// * `chain_name` - The name of the chain to which the link to remove is associated.
+    /// * `chain_name` - The chain name associated with the link to be removed.
     /// * `target` - The external address to be removed.
     pub fn unlink_chain_account(owner: Addr, chain_name: &str, target: &str) -> ProfilesMsg {
         ProfilesMsg::UnlinkChainAccount {
@@ -259,7 +259,7 @@ impl ProfilesMsg {
     ///
     /// * `application` - The name of the application to unlink.
     /// * `username` - The username inside the application to unlink.
-    /// * `signer` - The Desmos account to which the application should be unlinked.
+    /// * `signer` - The Desmos account from which the application should be unlinked.
     pub fn unlink_application(application: &str, username: &str, signer: Addr) -> ProfilesMsg {
         ProfilesMsg::UnlinkApplication {
             application: application.to_owned(),
