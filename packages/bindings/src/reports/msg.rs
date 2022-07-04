@@ -149,3 +149,101 @@ impl ReportsMsg {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use crate::reports::models::ReportTarget;
+    use crate::reports::msg::ReportsMsg;
+    use cosmwasm_std::{Addr, Uint64};
+
+    #[test]
+    fn test_create_report() {
+        let reports_msg = ReportsMsg::create_report(
+            1,
+            vec![0],
+            Some("test".to_string()),
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            ReportTarget::Post {
+                post_id: Uint64::new(1),
+            },
+        );
+        let expected = ReportsMsg::CreateReport {
+            subspace_id: Uint64::new(1),
+            reasons_id: vec![0],
+            message: Some("test".to_string()),
+            reporter: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            target: ReportTarget::Post {
+                post_id: Uint64::new(1),
+            }
+            .into(),
+        };
+
+        assert_eq!(expected, reports_msg);
+    }
+
+    #[test]
+    fn test_delete_report() {
+        let reports_msg = ReportsMsg::delete_report(
+            1,
+            2,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = ReportsMsg::DeleteReport {
+            subspace_id: Uint64::new(1),
+            report_id: Uint64::new(2),
+            signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+
+        assert_eq!(expected, reports_msg);
+    }
+
+    #[test]
+    fn support_standard_reason() {
+        let reports_msg = ReportsMsg::support_standard_reason(
+            1,
+            2,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = ReportsMsg::SupportStandardReason {
+            subspace_id: Uint64::new(1),
+            standard_reason_id: 2,
+            signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+
+        assert_eq!(expected, reports_msg);
+    }
+
+    #[test]
+    fn test_add_reason() {
+        let reports_msg = ReportsMsg::add_reason(
+            1,
+            "test reason",
+            Some("Test description".to_string()),
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = ReportsMsg::AddReason {
+            subspace_id: Uint64::new(1),
+            title: "test reason".to_string(),
+            description: Some("Test description".to_string()),
+            signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+
+        assert_eq!(expected, reports_msg);
+    }
+
+    #[test]
+    fn test_remove_reason() {
+        let reports_msg = ReportsMsg::remove_reason(
+            1,
+            2,
+            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        );
+        let expected = ReportsMsg::RemoveReason {
+            subspace_id: Uint64::new(1),
+            reason_id: 2,
+            signer: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+
+        assert_eq!(expected, reports_msg);
+    }
+}
