@@ -74,6 +74,15 @@ pub enum ProfilesMsg {
         /// Address associated with the profile to which link the external account.
         signer: Addr,
     },
+    /// Unlink an external account from a profile.
+    UnlinkChainAccount {
+        /// The profile address from which to remove the link.
+        owner: Addr,
+        /// The chain name associated with the link to be removed
+        chain_name: String,
+        /// The external address to be removed.
+        target: String,
+    },
     /// Connects a profile with a centralized application
     /// account (eg. Twitter, GitHub, etc).
     LinkApplication {
@@ -94,6 +103,15 @@ pub enum ProfilesMsg {
         /// Timeout timestamp (in nanoseconds) relative to the current block timestamp.
         /// The timeout is disabled when set to 0.
         timeout_timestamp: Uint64,
+    },
+    /// Unlink a centralized application account from the profile.
+    UnlinkApplication {
+        /// The name of the application to unlink.
+        application: String,
+        /// The username inside the application to unlink.
+        username: String,
+        /// The Desmos account from which the application should be unlinked.
+        signer: Addr,
     },
 }
 
@@ -192,6 +210,19 @@ impl ProfilesMsg {
         }
     }
 
+    /// Creates an instance of [`ProfilesMsg::UnlinkChainAccount`].
+    ///
+    /// * `owner` - The profile address from which to remove the link.
+    /// * `chain_name` - The chain name associated with the link to be removed.
+    /// * `target` - The external address to be removed.
+    pub fn unlink_chain_account(owner: Addr, chain_name: &str, target: &str) -> ProfilesMsg {
+        ProfilesMsg::UnlinkChainAccount {
+            owner,
+            chain_name: chain_name.to_owned(),
+            target: target.to_owned(),
+        }
+    }
+
     /// Creates an instance of [`ProfilesMsg::LinkApplication`].
     ///
     /// * `sender` - Sender of the connection request.
@@ -221,6 +252,19 @@ impl ProfilesMsg {
             source_channel,
             timeout_height,
             timeout_timestamp: timeout_timestamp.into(),
+        }
+    }
+
+    /// Creates an instance of [`ProfilesMsg::UnlinkApplication`].
+    ///
+    /// * `application` - The name of the application to unlink.
+    /// * `username` - The username inside the application to unlink.
+    /// * `signer` - The Desmos account from which the application should be unlinked.
+    pub fn unlink_application(application: &str, username: &str, signer: Addr) -> ProfilesMsg {
+        ProfilesMsg::UnlinkApplication {
+            application: application.to_owned(),
+            username: username.to_owned(),
+            signer,
         }
     }
 }
@@ -360,6 +404,21 @@ mod tests {
     }
 
     #[test]
+    fn test_unlink_chain_account() {
+        let msg = ProfilesMsg::unlink_chain_account(
+            Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+            "cosmos",
+            "cosmos1cjf97gpzwmaf30pzvaargfgr884mpp5ak8f7ns",
+        );
+        let expected = ProfilesMsg::UnlinkChainAccount {
+            owner: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+            chain_name: "cosmos".to_owned(),
+            target: "cosmos1cjf97gpzwmaf30pzvaargfgr884mpp5ak8f7ns".to_owned(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
     fn test_link_application() {
         let data = Data {
             application: "twitter".to_string(),
@@ -397,6 +456,21 @@ mod tests {
             source_channel: "123".to_string(),
             timeout_height,
             timeout_timestamp: Uint64::new(1),
+        };
+        assert_eq!(expected, msg);
+    }
+
+    #[test]
+    fn test_unlink_application() {
+        let msg = ProfilesMsg::unlink_application(
+            "twitter",
+            "gawrgura",
+            Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+        );
+        let expected = ProfilesMsg::UnlinkApplication {
+            application: "twitter".to_string(),
+            username: "gawrgura".to_string(),
+            signer: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
         };
         assert_eq!(expected, msg)
     }
