@@ -1,14 +1,19 @@
 //! Contains the querier that can be used to query data related to the x/reports module.
 
-use crate::iter::page_iterator::{Page, PageIterator};
 use crate::query::DesmosQuery;
-use crate::reports::models::{RawReportTarget, Reason, Report, ReportTarget};
+use crate::reports::models::{RawReportTarget, ReportTarget};
 use crate::reports::models_query::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
 };
 use crate::reports::query::ReportsQuery;
 use crate::types::PageRequest;
-use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult, Uint64};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
+#[cfg(feature = "iterators")]
+use {
+    crate::iter::page_iterator::{Page, PageIterator},
+    crate::reports::models::{Reason, Report},
+    cosmwasm_std::Binary,
+};
 
 /// Querier able to query data from the Desmos x/reports module.
 pub struct ReportsQuerier<'a> {
