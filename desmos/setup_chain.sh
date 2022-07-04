@@ -174,3 +174,22 @@ MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reactions\":{\"add_reaction\
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
+
+echo "Create a test reason"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reports\":{\"add_reason\":{\"subspace_id\":\"1\",\"title\":\"Test reason\",\"description\":\"Test reason description\",\"signer\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+echo "Create a deletable reason"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reports\":{\"add_reason\":{\"subspace_id\":\"1\",\"title\":\"Deletable reason\",\"description\":\"Deletable reason description\",\"signer\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+
+echo "Create a deletable report"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reports\":{\"create_report\":{\"subspace_id\":\"1\",\"reasons_ids\":[1],\"message\":null,\"reporter\":\"$CONTRACT\",\"target\":{\"@type\":\"/desmos.reports.v1.UserTarget\",\"user\":\"desmos1jnpfa06xhflyjh6klwlrq8mk55s53czh6ncdm3\"}}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
