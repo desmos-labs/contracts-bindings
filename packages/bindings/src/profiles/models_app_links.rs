@@ -103,7 +103,7 @@ pub enum AppLinkResult {
     },
 }
 
-/// Contains the details of a single chain link owner.
+/// Contains the details of a single app link owner.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct ApplicationLinkOwnerDetails {
