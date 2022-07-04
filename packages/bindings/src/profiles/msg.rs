@@ -259,7 +259,7 @@ impl ProfilesMsg {
     ///
     /// * `application` - The name of the application to unlink.
     /// * `username` - The username inside the application to unlink.
-    /// * `signer` - The Desmos account to which the application should be unlinked.
+    /// * `signer` - The Desmos account from which the application should be unlinked.
     pub fn unlink_application(application: &str, username: &str, signer: Addr) -> ProfilesMsg {
         ProfilesMsg::UnlinkApplication {
             application: application.to_owned(),
