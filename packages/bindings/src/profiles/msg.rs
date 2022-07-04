@@ -213,7 +213,7 @@ impl ProfilesMsg {
     /// Creates an instance of [`ProfilesMsg::UnlinkChainAccount`].
     ///
     /// * `owner` - The profile address from which to remove the link.
-    /// * `chain_name` - The name of the chain to which the link to remove is associated.
+    /// * `chain_name` - The chain name associated with the link to be removed.
     /// * `target` - The external address to be removed.
     pub fn unlink_chain_account(owner: Addr, chain_name: &str, target: &str) -> ProfilesMsg {
         ProfilesMsg::UnlinkChainAccount {
