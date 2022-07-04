@@ -95,3 +95,15 @@ pub struct ChainConfig {
     /// Name of the chain.
     pub name: String,
 }
+
+/// Contains the details of a single chain link owner.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct ChainLinkOwnerDetails {
+    /// Address of the link owner.
+    pub user: Addr,
+    /// Name of the chain.
+    pub chain_name: String,
+    /// Address of the link target
+    pub target: String,
+}

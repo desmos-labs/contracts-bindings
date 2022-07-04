@@ -2,8 +2,10 @@
 
 use crate::{
     profiles::{
-        models_app_links::ApplicationLink, models_chain_links::ChainLink,
-        models_dtag_requests::DtagTransferRequest, models_profile::Profile,
+        models_app_links::{ApplicationLink, ApplicationLinkOwnerDetails},
+        models_chain_links::{ChainLink, ChainLinkOwnerDetails},
+        models_dtag_requests::DtagTransferRequest,
+        models_profile::Profile,
     },
     types::PageResponse,
 };
@@ -38,6 +40,16 @@ pub struct QueryChainLinksResponse {
     pub pagination: Option<PageResponse>,
 }
 
+/// Response to [`ProfilesQuery::ChainLinkOwners`](crate::profiles::query::ProfilesQuery::ChainLinkOwners).
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct QueryChainLinkOwnersResponse {
+    /// Queried owners with details.
+    pub owners: Vec<ChainLinkOwnerDetails>,
+    /// Details of the current fetched page.
+    pub pagination: Option<PageResponse>,
+}
+
 /// Response to [`ProfilesQuery::ApplicationLinks`](crate::profiles::query::ProfilesQuery::ApplicationLinks).
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
@@ -54,4 +66,14 @@ pub struct QueryApplicationLinksResponse {
 pub struct QueryApplicationLinkByClientIDResponse {
     /// Queried application link.
     pub link: ApplicationLink,
+}
+
+/// Response to [`ProfilesQuery::ApplicationLinkOwners`](crate::profiles::query::ProfilesQuery::ApplicationLinkOwners).
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct QueryApplicationLinkOwnersResponse {
+    /// Queried owners with details
+    pub owners: Vec<ApplicationLinkOwnerDetails>,
+    /// Details of the current fetched page.
+    pub pagination: Option<PageResponse>,
 }
