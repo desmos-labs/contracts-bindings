@@ -110,7 +110,7 @@ pub enum ProfilesMsg {
         application: String,
         /// The username inside the application to unlink.
         username: String,
-        /// The Desmos account to which the application should be unlinked.
+        /// The Desmos account from which the application should be unlinked.
         signer: Addr,
     },
 }
