@@ -116,22 +116,18 @@ impl TryFrom<RawReportTarget> for ReportTarget {
     type Error = UnwrapReportTargetError;
 
     fn try_from(value: RawReportTarget) -> Result<Self, Self::Error> {
-        if value.type_uri == USER_REPORT_TARGET_TYPE_URI {
-            Ok(ReportTarget::User {
-                user: Addr::unchecked(value.user.ok_or(
-                    UnwrapReportTargetError::InvalidUserTarget("user".to_string()),
-                )?),
-            })
-        } else if value.type_uri == POST_REPORT_TARGET_TYPE_URI {
-            Ok(ReportTarget::Post {
-                post_id: value
-                    .post_id
-                    .ok_or(UnwrapReportTargetError::InvalidPostTarget(
-                        "post_id".to_string(),
-                    ))?,
-            })
-        } else {
-            Err(UnwrapReportTargetError::UnknownType(value.type_uri))
+        match value.type_uri.as_str() {
+            USER_REPORT_TARGET_TYPE_URI => Ok(ReportTarget::User {
+                user: Addr::unchecked(value.user.ok_or_else(|| {
+                    UnwrapReportTargetError::InvalidUserTarget("user".to_string())
+                })?),
+            }),
+            POST_REPORT_TARGET_TYPE_URI => Ok(ReportTarget::Post {
+                post_id: value.post_id.ok_or_else(|| {
+                    UnwrapReportTargetError::InvalidPostTarget("post_id".to_string())
+                })?,
+            }),
+            _ => Err(UnwrapReportTargetError::UnknownType(value.type_uri)),
         }
     }
 }
