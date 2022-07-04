@@ -78,7 +78,7 @@ pub enum ProfilesMsg {
     UnlinkChainAccount {
         /// The profile address from which to remove the link.
         owner: Addr,
-        /// The name of the chain to which the link to remove is associated.
+        /// The chain name associated with the link to be removed
         chain_name: String,
         /// The external address to be removed.
         target: String,
