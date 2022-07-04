@@ -1,3 +1,5 @@
+//! Contains utilities,structs and enum to interact with the Desmos x/reports module.
+
 #[cfg(feature = "mocks")]
 pub mod mocks;
 pub mod models;

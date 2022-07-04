@@ -1,37 +1,63 @@
-use crate::reports::models::RawReportTarget;
+//! Contains the messages that can be sent to the chain to interact with the x/reports module.
+
+use crate::reports::models::{RawReportTarget, ReportTarget};
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
+/// Represents the messages to interact with the reports module.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ReportsMsg {
+    /// Represents the message to be used to create a report.
     CreateReport {
+        /// Id of the subspace for which the report should be stored.
         subspace_id: Uint64,
+        /// Id of the reason this report has been created for.
         reasons_id: Vec<u32>,
+        /// Message attached to this report.
         message: Option<String>,
+        /// Address of the reporter.
         reporter: Addr,
+        /// Target of the report.
         target: RawReportTarget,
     },
+    /// Represents the message to be used when deleting a report.
     DeleteReport {
+        /// Id of the subspace that contains the report to be deleted.
         subspace_id: Uint64,
+        /// Id of the report to be deleted.
         report_id: Uint64,
+        /// Address of the user deleting the report.
         signer: Addr,
     },
+    /// Represents the message to be used when wanting to support one reason from the module params.
     SupportStandardReason {
+        /// Id of the subspace for which to support the reason.
         subspace_id: Uint64,
+        /// Id of the reason that should be supported.
         standard_reason_id: u32,
+        /// Address of the user signing the message.
         signer: Addr,
     },
+    /// Represents the message to be used when adding a new supported reason.
     AddReason {
+        /// Id of the subspace for which to add the reason.
         subspace_id: Uint64,
+        /// Title of the reason.
         title: String,
+        /// Extended description of the reason and the cases it applies to.
         description: Option<String>,
+        /// Address of the user adding the supported reason.
         signer: Addr,
     },
+    /// Represents the message to be used when removing an exiting reporting reason.
     RemoveReason {
+        /// Id of the subspace from which to remove the reason.
         subspace_id: Uint64,
+        /// Id of the reason to be deleted.
         reason_id: u32,
+        /// Address of the user removing the supported reason.
         signer: Addr,
     },
 }

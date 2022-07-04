@@ -1,3 +1,5 @@
+//! Contains structs and enums related to the x/reports module.
+
 use cosmwasm_std::{Addr, Uint64};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -7,18 +9,29 @@ use thiserror::Error;
 const USER_REPORT_TARGET_TYPE_URI: &str = "/desmos.reports.v1.UserTarget";
 const POST_REPORT_TARGET_TYPE_URI: &str = "/desmos.reports.v1.PostTarget";
 
+/// Represents a generic report.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct Report {
+    /// Id of the subspace for which the report has been created.
     pub subspace_id: Uint64,
+    /// Id of the report.
     pub id: Uint64,
+    /// Id of the reason this report has been created for.
     pub reasons_ids: Vec<u32>,
+    /// Message attached to this report.
     pub message: Option<String>,
+    /// Address of the reporter.
     pub reporter: Addr,
+    /// Target of the report.
     pub target: RawReportTarget,
+    /// Time in which the report was created in RFC 3339 format.
+    /// example: 1972-01-01T10:00:20..
     pub creation_date: String,
 }
 
+/// Serializable representation of [`ReportTarget`].  
+/// To create an instance of this struct use the `into()` method of [`ReportTarget`]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct RawReportTarget {
@@ -30,23 +43,38 @@ pub struct RawReportTarget {
     post_id: Option<Uint64>,
 }
 
+/// Types of target for which a report can be made.
 #[derive(Clone, Debug)]
 pub enum ReportTarget {
-    User { user: Addr },
-    Post { post_id: Uint64 },
+    /// Represents a report about a user.
+    User {
+        /// Address of the reported user.
+        user: Addr,
+    },
+    /// Represents a report about a post.
+    Post {
+        /// Id of the reported post.
+        post_id: Uint64,
+    },
 }
 
+/// Contains the data about a reporting reason.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct Reason {
+    /// Id of the subspace for which this reason is valid.
     pub subspace_id: Uint64,
+    /// Id of the reason inside the subspace.
     pub id: u32,
+    /// Title of the reason.
     pub title: String,
+    /// Extended description of the reason and the cases it applies to.
     pub description: Option<String>,
 }
 
 impl RawReportTarget {
-    pub fn unwrap_raw(self) -> Result<ReportTarget, UnwrapReportTargetError> {
+    /// Tries to convert a [`UnwrapReportTargetError`] into a [`ReportTarget`].
+    pub fn try_unwrap_raw(self) -> Result<ReportTarget, UnwrapReportTargetError> {
         ReportTarget::try_from(self)
     }
 }
@@ -75,11 +103,11 @@ pub enum UnwrapReportTargetError {
     #[error("unknown attachment type: {0}")]
     UnknownType(String),
     /// Error that occur if [`RawReportTarget`] have type `/desmos.reports.v1.UserTarget` but
-    /// some fields are undefined.
+    /// one one field is undefined.
     #[error("invalid user target report field {0} is none")]
     InvalidUserTarget(String),
     /// Error that occur if [`RawReportTarget`] have type `/desmos.reports.v1.PostTarget` but
-    /// some fields are undefined.
+    /// one field is undefined.
     #[error("invalid post target report field {0} is none")]
     InvalidPostTarget(String),
 }

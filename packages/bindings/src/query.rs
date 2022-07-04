@@ -48,6 +48,7 @@ pub enum DesmosQuery {
     #[cfg(feature = "reactions")]
     Reactions(ReactionsQuery),
 
+    /// Queries relative to the x/reports module.
     #[cfg(feature = "reports")]
     Reports(ReportsQuery),
 }

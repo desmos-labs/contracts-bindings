@@ -1,3 +1,5 @@
+//! Contains the querier that can be used to query data related to the x/reports module.
+
 use crate::iter::page_iterator::{Page, PageIterator};
 use crate::query::DesmosQuery;
 use crate::reports::models::{RawReportTarget, Reason, Report, ReportTarget};
@@ -8,6 +10,7 @@ use crate::reports::query::ReportsQuery;
 use crate::types::PageRequest;
 use cosmwasm_std::{Addr, Binary, Querier, QuerierWrapper, StdResult, Uint64};
 
+/// Querier able to query data from the Desmos x/reports module.
 pub struct ReportsQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }
@@ -31,6 +34,13 @@ impl<'a> ReportsQuerier<'a> {
         }
     }
 
+    /// Queries the reports for a specific target.
+    ///
+    /// * `subspace_id` - Id of the subspace to query the reports for.
+    /// * `target` - Target to query the reports for.
+    /// * `reporter` - User that reported the target.
+    /// This is going to be used only if `target` is not `None`.
+    /// * `pagination` - Pagination configs.
     pub fn query_reports(
         &self,
         subspace_id: u64,
@@ -48,6 +58,13 @@ impl<'a> ReportsQuerier<'a> {
         self.querier.query(&request.into())
     }
 
+    /// Gives an iterator to scan over the reports for a specific target.
+    ///
+    /// * `subspace_id` - Id of the subspace to query the reports for.
+    /// * `target` - Target to query the reports for.
+    /// * `reporter` - User that reported the target.
+    /// This is going to be used only if `target` is not `None`.
+    /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
     pub fn iterate_reports(
         &self,
@@ -81,6 +98,10 @@ impl<'a> ReportsQuerier<'a> {
         )
     }
 
+    /// Queries the report having the provided id.
+    ///
+    /// * `subspace_id` - Id of the subspace that holds the report to query for.
+    /// * `report_id` - Id of the report to query for.
     pub fn query_report(&self, subspace_id: u64, report_id: u64) -> StdResult<QueryReportResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Report {
             subspace_id: Uint64::new(subspace_id),
@@ -90,6 +111,10 @@ impl<'a> ReportsQuerier<'a> {
         self.querier.query(&request.into())
     }
 
+    /// Queries the supported reporting reasons for a subspace.
+    ///
+    /// * `subspace_id` - Id of the subspace to query the supported reporting reasons for.
+    /// * `pagination` - Pagination configs.
     pub fn query_reasons(
         &self,
         subspace_id: u64,
@@ -103,6 +128,10 @@ impl<'a> ReportsQuerier<'a> {
         self.querier.query(&request.into())
     }
 
+    /// Gives an iterator to scan over the supported reporting reasons for a subspace.
+    ///
+    /// * `subspace_id` - Id of the subspace to query the supported reporting reasons for.
+    /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
     pub fn iterate_reasons(
         &self,
@@ -132,6 +161,10 @@ impl<'a> ReportsQuerier<'a> {
         )
     }
 
+    /// Queries the reason having the given id.
+    ///
+    /// * `subspace_id` - Id of the subspace that holds the reason to query for.
+    /// * `reason_id` - Id of the reason to query for.
     pub fn query_reason(&self, subspace_id: u64, reason_id: u32) -> StdResult<QueryReasonResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Reason {
             subspace_id: Uint64::new(subspace_id),

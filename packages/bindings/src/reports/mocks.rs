@@ -1,3 +1,5 @@
+//! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
+
 use crate::reports::models::{Reason, Report, ReportTarget};
 use crate::reports::models_query::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
@@ -5,6 +7,7 @@ use crate::reports::models_query::{
 use crate::reports::query::ReportsQuery;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
+/// Functions that generate a mocked list of reports present in a subspace.
 pub fn get_mocked_reports(subspace_id: &Uint64) -> Vec<Report> {
     vec![
         Report {
@@ -34,6 +37,7 @@ pub fn get_mocked_reports(subspace_id: &Uint64) -> Vec<Report> {
     ]
 }
 
+/// Functions that generate a mocked report present in a subspace.
 pub fn get_mocked_report(subspace_id: &Uint64) -> Report {
     Report {
         subspace_id: subspace_id.clone(),
@@ -49,6 +53,7 @@ pub fn get_mocked_report(subspace_id: &Uint64) -> Report {
     }
 }
 
+/// Functions that generate a mocked list of report reasons present in a subspace.
 pub fn get_mocked_reasons(subspace_id: &Uint64) -> Vec<Reason> {
     vec![
         Reason {
@@ -66,6 +71,7 @@ pub fn get_mocked_reasons(subspace_id: &Uint64) -> Vec<Reason> {
     ]
 }
 
+/// Functions that generate a mocked report reason present in a subspace.
 pub fn get_mocked_reason(subspace_id: &Uint64) -> Reason {
     Reason {
         subspace_id: subspace_id.clone(),
