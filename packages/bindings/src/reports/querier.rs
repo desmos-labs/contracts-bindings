@@ -50,7 +50,7 @@ impl<'a> ReportsQuerier<'a> {
     ) -> StdResult<QueryReportsResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Reports {
             subspace_id: Uint64::new(subspace_id),
-            target: target.map(|raw| RawReportTarget::from(raw)),
+            target: target.map(RawReportTarget::from),
             reporter,
             pagination,
         });

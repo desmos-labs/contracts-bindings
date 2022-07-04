@@ -11,7 +11,7 @@ use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 pub fn get_mocked_reports(subspace_id: &Uint64) -> Vec<Report> {
     vec![
         Report {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             id: Uint64::new(0),
             reasons_ids: vec![0, 2],
             message: None,
@@ -23,7 +23,7 @@ pub fn get_mocked_reports(subspace_id: &Uint64) -> Vec<Report> {
             creation_date: "".to_string(),
         },
         Report {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             id: Uint64::new(0),
             reasons_ids: vec![],
             message: Some("Report text".to_string()),
@@ -40,7 +40,7 @@ pub fn get_mocked_reports(subspace_id: &Uint64) -> Vec<Report> {
 /// Functions that generate a mocked report present in a subspace.
 pub fn get_mocked_report(subspace_id: &Uint64) -> Report {
     Report {
-        subspace_id: subspace_id.clone(),
+        subspace_id: *subspace_id,
         id: Uint64::new(0),
         reasons_ids: vec![0, 2],
         message: None,
@@ -57,13 +57,13 @@ pub fn get_mocked_report(subspace_id: &Uint64) -> Report {
 pub fn get_mocked_reasons(subspace_id: &Uint64) -> Vec<Reason> {
     vec![
         Reason {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             id: 1,
             title: "Mock reason 1".to_string(),
             description: None,
         },
         Reason {
-            subspace_id: subspace_id.clone(),
+            subspace_id: *subspace_id,
             id: 2,
             title: "Mock reason 2".to_string(),
             description: Some("Reason description".to_string()),
@@ -74,7 +74,7 @@ pub fn get_mocked_reasons(subspace_id: &Uint64) -> Vec<Reason> {
 /// Functions that generate a mocked report reason present in a subspace.
 pub fn get_mocked_reason(subspace_id: &Uint64) -> Reason {
     Reason {
-        subspace_id: subspace_id.clone(),
+        subspace_id: *subspace_id,
         id: 1,
         title: "Mock reason 1".to_string(),
         description: None,
