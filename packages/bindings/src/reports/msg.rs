@@ -14,7 +14,7 @@ pub enum ReportsMsg {
         /// Id of the subspace for which the report should be stored.
         subspace_id: Uint64,
         /// Id of the reason this report has been created for.
-        reasons_id: Vec<u32>,
+        reasons_ids: Vec<u32>,
         /// Message attached to this report.
         message: Option<String>,
         /// Address of the reporter.
@@ -66,20 +66,20 @@ impl ReportsMsg {
     /// Creates an instance of [`ReportsMsg::CreateReport`].
     ///
     /// * `subspace_id` - Id of the subspace for which the report should be stored.
-    /// * `reasons_id` - Id of the reason this report has been created for.
+    /// * `reasons_ids` - Id of the reason this report has been created for.
     /// * `message` - Message attached to this report.
     /// * `reporter` - Address of the reporter.
     /// * `target` - Target of the report.
-    fn create_report(
+    pub fn create_report(
         subspace_id: u64,
-        reasons_id: Vec<u32>,
+        reasons_ids: Vec<u32>,
         message: Option<String>,
         reporter: Addr,
         target: ReportTarget,
     ) -> ReportsMsg {
         ReportsMsg::CreateReport {
             subspace_id: Uint64::new(subspace_id),
-            reasons_id,
+            reasons_ids,
             message,
             reporter,
             target: target.into(),
@@ -91,7 +91,7 @@ impl ReportsMsg {
     /// * `subspace_id` - Id of the subspace that contains the report to be deleted.
     /// * `report_id` - Id of the report to be deleted.
     /// * `signer` - Address of the user deleting the report.
-    fn delete_report(subspace_id: u64, report_id: u64, signer: Addr) -> ReportsMsg {
+    pub fn delete_report(subspace_id: u64, report_id: u64, signer: Addr) -> ReportsMsg {
         ReportsMsg::DeleteReport {
             subspace_id: Uint64::new(subspace_id),
             report_id: Uint64::new(report_id),
@@ -104,7 +104,7 @@ impl ReportsMsg {
     /// * `subspace_id` - Id of the subspace for which to support the reason
     /// * `standard_reason_id` - Id of the reason that should be supported
     /// * `signer` - Address of the user signing the message.
-    fn support_standard_reason(
+    pub fn support_standard_reason(
         subspace_id: u64,
         standard_reason_id: u32,
         signer: Addr,
@@ -122,7 +122,7 @@ impl ReportsMsg {
     /// * `title` - Title of the reason.
     /// * `description` - Extended description of the reason and the cases it applies to.
     /// * `signer` - Address of the user adding the supported reason.
-    fn add_reason(
+    pub fn add_reason(
         subspace_id: u64,
         title: impl Into<String>,
         description: Option<String>,
@@ -141,7 +141,7 @@ impl ReportsMsg {
     /// * `subspace_id` - Id of the subspace from which to remove the reason.
     /// * `reason_id` - Id of the reason to be deleted.
     /// * `signer` - Address of the user removing the supported reason.
-    fn remove_reason(subspace_id: u64, reason_id: u32, signer: Addr) -> ReportsMsg {
+    pub fn remove_reason(subspace_id: u64, reason_id: u32, signer: Addr) -> ReportsMsg {
         ReportsMsg::RemoveReason {
             subspace_id: Uint64::new(subspace_id),
             reason_id,
@@ -169,7 +169,7 @@ mod test {
         );
         let expected = ReportsMsg::CreateReport {
             subspace_id: Uint64::new(1),
-            reasons_id: vec![0],
+            reasons_ids: vec![0],
             message: Some("test".to_string()),
             reporter: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             target: ReportTarget::Post {
