@@ -144,9 +144,6 @@ pub struct Attachment {
     /// Id of the subspace inside which the post to which this attachment should be
     /// connected is.
     pub subspace_id: Uint64,
-    /// Id of the subspace section inside which the post to which this attachment
-    /// should be connected is.
-    pub section_id: u32,
     /// Id of the post to which this attachment should be connected.
     pub post_id: Uint64,
     /// Id of this attachment.
@@ -228,8 +225,6 @@ pub struct ProvidedAnswer {
 pub struct UserAnswer {
     /// Subspace id inside which the post related to this attachment is located.
     pub subspace_id: Uint64,
-    /// Section id inside which the post related to this attachment is located.
-    pub section_id: u32,
     /// Id of the post associated to this attachment.
     pub post_id: Uint64,
     /// Id of the poll to which this answer is associated.

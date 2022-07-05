@@ -36,7 +36,7 @@ jobs:
           repository: desmos-labs/desmos
           ref: refs/tags/v4.1.0
           path: ./desmos-src
-
+  
       - name: Build desmos chain
         run: make build-alpine && mv build/desmos ../desmos/desmos
         working-directory: ./desmos-src
