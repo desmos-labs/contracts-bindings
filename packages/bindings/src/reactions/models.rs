@@ -105,7 +105,7 @@ impl TryFrom<RawReactionValue> for ReactionValue {
     fn try_from(value: RawReactionValue) -> Result<Self, Self::Error> {
         if value.type_uri == REGISTERED_REACTION_VALUE_TYPE_URI {
             Ok(ReactionValue::Registered {
-                registered_reaction_id: value.registered_reaction_id.ok_or(
+                registered_reaction_id: value.registered_reaction_id.ok_or_else(||
                     InvalidRegisteredReactionValue("registered_reaction_id".to_string()),
                 )?,
             })
