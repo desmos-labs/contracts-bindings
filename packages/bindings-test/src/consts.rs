@@ -12,7 +12,9 @@ pub const TEST_DELETABLE_ATTACHMENT_ID: u32 = 2;
 pub const TEST_POLL_ID: u32 = 1;
 pub const TEST_REASON_ID: u32 = 1;
 pub const TEST_DELETABLE_REASON_ID: u32 = 2;
-pub const TEST_DELETABLE_REPORT_ID: Uint64 = Uint64::new(1);
+pub const TEST_REPORT_ID_WITH_USER_TARGET: Uint64 = Uint64::new(1);
+pub const TEST_REPORT_ID_WITH_POST_TARGET: Uint64 = Uint64::new(2);
+pub const TEST_DELETABLE_REPORT_ID: Uint64 = Uint64::new(3);
 
 pub const TEST_EDITABLE_REGISTERED_REACTION_ID: u32 = 1;
 pub const TEST_DELETABLE_REGISTERED_REACTION_ID: u32 = 2;

@@ -1,1 +1,2 @@
 mod msg;
+mod query;
