@@ -103,7 +103,7 @@ impl<'a> ReactionsQuerier<'a> {
                     items: response.reactions,
                     next_page_key: response
                         .pagination
-                        .map_or(None, |pagination| pagination.next_key),
+                        .and_then(|pagination| pagination.next_key),
                 })
             }),
             page_size,
