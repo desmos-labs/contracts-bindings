@@ -105,13 +105,15 @@ impl TryFrom<RawReactionValue> for ReactionValue {
     fn try_from(value: RawReactionValue) -> Result<Self, Self::Error> {
         if value.type_uri == REGISTERED_REACTION_VALUE_TYPE_URI {
             Ok(ReactionValue::Registered {
-                registered_reaction_id: value.registered_reaction_id.ok_or_else(||
-                    InvalidRegisteredReactionValue("registered_reaction_id".to_string()),
-                )?,
+                registered_reaction_id: value.registered_reaction_id.ok_or_else(|| {
+                    InvalidRegisteredReactionValue("registered_reaction_id".to_string())
+                })?,
             })
         } else if value.type_uri == FREE_TEXT_VALUE_TYPE_URI {
             Ok(ReactionValue::FreeText {
-                text: value.text.ok_or_else(|| InvalidFreeTextValue("text".to_string()))?,
+                text: value
+                    .text
+                    .ok_or_else(|| InvalidFreeTextValue("text".to_string()))?,
             })
         } else {
             Err(UnwrapReactionValueError::UnknownReactionValue(
