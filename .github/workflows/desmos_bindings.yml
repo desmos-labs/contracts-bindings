@@ -140,6 +140,14 @@ jobs:
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features reactions,query
 
+      - name: Build feature (reports)
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features reports
+
+      - name: Build feature (reports+query)
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features reports,query
+
       - name: Build feature (msg)
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg
@@ -163,6 +171,10 @@ jobs:
       - name: Build feature (msg+reactions)
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,reactions
+
+      - name: Build feature (msg+reports)
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features msg,reports
 
       - name: Build feature (mocks)
         working-directory: ./packages/bindings
