@@ -3,7 +3,6 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{
         TEST_DELETABLE_REASON_ID, TEST_DELETABLE_REPORT_ID, TEST_REASON_ID, TEST_SUBSPACE,
-        USER1_ADDRESS,
     };
     use cosmwasm_std::Addr;
     use desmos_bindings::reports::models::ReportTarget;
@@ -21,7 +20,7 @@ mod tests {
             message: None,
             reporter: Addr::unchecked(&contract_address),
             target: ReportTarget::User {
-                user: Addr::unchecked(USER1_ADDRESS),
+                user: Addr::unchecked("desmos1ppvcentlcj2qzhzuu0zp2k492ef24asxmta5g5"),
             }
             .into(),
         };
