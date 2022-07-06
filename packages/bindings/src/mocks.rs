@@ -56,6 +56,9 @@ pub fn mock_dependencies_with_custom_querier(
 
 #[cfg(test)]
 mod tests {
+    use crate::reports::mocks::get_mocked_report;
+    use crate::reports::models_query::QueryReportResponse;
+    use crate::reports::querier::ReportsQuerier;
     use crate::{
         mocks::mock_dependencies_with_custom_querier,
         profiles::{
@@ -75,7 +78,7 @@ mod tests {
             query_types::QuerySubspaceResponse,
         },
     };
-    use cosmwasm_std::Addr;
+    use cosmwasm_std::{Addr, Uint64};
     use std::ops::Deref;
 
     #[test]
@@ -131,6 +134,18 @@ mod tests {
         let expected = QueryReactionsResponse {
             reactions: vec![MockReactionsQueries::get_mock_reaction()],
             pagination: Default::default(),
+        };
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_reports_querier() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReportsQuerier::new(deps.querier.deref());
+        let response = querier.query_report(1, 1).unwrap();
+        let expected = QueryReportResponse {
+            report: get_mocked_report(&Uint64::new(1)),
         };
         assert_eq!(expected, response)
     }

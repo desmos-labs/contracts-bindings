@@ -142,6 +142,7 @@ impl Into<QueryRequest<DesmosQuery>> for ReportsQuery {
 #[cfg(test)]
 mod tests {
     use crate::posts::query::PostsQuery;
+    use crate::reports::query::ReportsQuery;
     use crate::{
         profiles::query::ProfilesQuery, query::DesmosQuery, reactions::query::ReactionsQuery,
         relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
@@ -201,6 +202,16 @@ mod tests {
             pagination: None,
         };
         let expected = DesmosQuery::Reactions(query.clone());
+        assert_eq!(expected, DesmosQuery::from(query))
+    }
+
+    #[test]
+    fn test_from_reports_query() {
+        let query = ReportsQuery::Report {
+            subspace_id: Uint64::new(1),
+            report_id: Uint64::new(2),
+        };
+        let expected = DesmosQuery::Reports(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
 }
