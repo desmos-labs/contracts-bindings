@@ -72,13 +72,6 @@ pub struct Reason {
     pub description: Option<String>,
 }
 
-impl RawReportTarget {
-    /// Tries to convert a [`UnwrapReportTargetError`] into a [`ReportTarget`].
-    pub fn try_unwrap_raw(self) -> Result<ReportTarget, UnwrapReportTargetError> {
-        ReportTarget::try_from(self)
-    }
-}
-
 impl From<ReportTarget> for RawReportTarget {
     fn from(target: ReportTarget) -> Self {
         match target {
