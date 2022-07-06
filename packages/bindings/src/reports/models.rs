@@ -26,7 +26,7 @@ pub struct Report {
     /// Target of the report.
     pub target: RawReportTarget,
     /// Time in which the report was created in RFC 3339 format.
-    /// example: 1972-01-01T10:00:20..
+    /// example: 1972-01-01T10:00:20.
     pub creation_date: String,
 }
 
