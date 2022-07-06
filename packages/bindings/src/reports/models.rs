@@ -95,7 +95,7 @@ pub enum UnwrapReportTargetError {
     /// Error that occur if [`RawReportTarget`] has an unknown type.
     #[error("unknown attachment type: {0}")]
     UnknownType(String),
-    /// Error that occur if [`RawReportTarget`] have type `/desmos.reports.v1.UserTarget` but
+    /// Error that occur if [`RawReportTarget`] has type `/desmos.reports.v1.UserTarget` but
     /// one one field is undefined.
     #[error("invalid user target report field {0} is none")]
     InvalidUserTarget(String),
