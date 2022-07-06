@@ -7,7 +7,7 @@ use crate::reports::models_query::{
 };
 use crate::reports::query::ReportsQuery;
 use crate::types::PageRequest;
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
+use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
@@ -87,7 +87,7 @@ impl<'a> ReportsQuerier<'a> {
                     Some(PageRequest {
                         key,
                         offset: None,
-                        limit: Uint64::from(limit),
+                        limit: limit.into(),
                         count_total: false,
                         reverse: false,
                     }),
@@ -150,7 +150,7 @@ impl<'a> ReportsQuerier<'a> {
                     Some(PageRequest {
                         key,
                         offset: None,
-                        limit: Uint64::from(limit),
+                        limit: limit.into(),
                         count_total: false,
                         reverse: false,
                     }),
