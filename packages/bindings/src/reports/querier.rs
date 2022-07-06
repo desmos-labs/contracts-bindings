@@ -54,7 +54,7 @@ impl<'a> ReportsQuerier<'a> {
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReportsResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Reports {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             target: target.map(RawReportTarget::from),
             reporter,
             pagination,
@@ -109,8 +109,8 @@ impl<'a> ReportsQuerier<'a> {
     /// * `report_id` - Id of the report to query for.
     pub fn query_report(&self, subspace_id: u64, report_id: u64) -> StdResult<QueryReportResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Report {
-            subspace_id: Uint64::new(subspace_id),
-            report_id: Uint64::new(report_id),
+            subspace_id: subspace_id.into(),
+            report_id: report_id.into(),
         });
 
         self.querier.query(&request.into())
@@ -126,7 +126,7 @@ impl<'a> ReportsQuerier<'a> {
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReasonsResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Reasons {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             pagination,
         });
 
@@ -172,7 +172,7 @@ impl<'a> ReportsQuerier<'a> {
     /// * `reason_id` - Id of the reason to query for.
     pub fn query_reason(&self, subspace_id: u64, reason_id: u32) -> StdResult<QueryReasonResponse> {
         let request = DesmosQuery::Reports(ReportsQuery::Reason {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             reason_id,
         });
 

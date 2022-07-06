@@ -78,7 +78,7 @@ impl ReportsMsg {
         target: ReportTarget,
     ) -> ReportsMsg {
         ReportsMsg::CreateReport {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             reasons_ids,
             message,
             reporter,
@@ -93,8 +93,8 @@ impl ReportsMsg {
     /// * `signer` - Address of the user deleting the report.
     pub fn delete_report(subspace_id: u64, report_id: u64, signer: Addr) -> ReportsMsg {
         ReportsMsg::DeleteReport {
-            subspace_id: Uint64::new(subspace_id),
-            report_id: Uint64::new(report_id),
+            subspace_id: subspace_id.into(),
+            report_id: report_id.into(),
             signer,
         }
     }
@@ -110,7 +110,7 @@ impl ReportsMsg {
         signer: Addr,
     ) -> ReportsMsg {
         ReportsMsg::SupportStandardReason {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             standard_reason_id,
             signer,
         }
@@ -129,7 +129,7 @@ impl ReportsMsg {
         signer: Addr,
     ) -> ReportsMsg {
         ReportsMsg::AddReason {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             title: title.into(),
             description,
             signer,
@@ -143,7 +143,7 @@ impl ReportsMsg {
     /// * `signer` - Address of the user removing the supported reason.
     pub fn remove_reason(subspace_id: u64, reason_id: u32, signer: Addr) -> ReportsMsg {
         ReportsMsg::RemoveReason {
-            subspace_id: Uint64::new(subspace_id),
+            subspace_id: subspace_id.into(),
             reason_id,
             signer,
         }
