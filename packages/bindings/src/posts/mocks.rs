@@ -17,6 +17,7 @@ pub fn get_mocked_subspace_posts(subspace_id: &Uint64) -> Vec<Post> {
             eternal_id: None,
             text: None,
             entities: None,
+            tags: vec![],
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
             id: Uint64::new(0),
             referenced_posts: vec![],
@@ -31,6 +32,7 @@ pub fn get_mocked_subspace_posts(subspace_id: &Uint64) -> Vec<Post> {
             eternal_id: None,
             text: None,
             entities: None,
+            tags: vec![],
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
             id: Uint64::new(1),
             referenced_posts: vec![],
@@ -51,6 +53,7 @@ pub fn get_mocked_section_posts(subspace_id: &Uint64, section_id: &u32) -> Vec<P
             eternal_id: None,
             text: None,
             entities: None,
+            tags: vec![],
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
             id: Uint64::new(0),
             referenced_posts: vec![],
@@ -65,6 +68,7 @@ pub fn get_mocked_section_posts(subspace_id: &Uint64, section_id: &u32) -> Vec<P
             eternal_id: None,
             text: None,
             entities: None,
+            tags: vec![],
             author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
             id: Uint64::new(1),
             referenced_posts: vec![],
@@ -85,6 +89,7 @@ pub fn get_mocked_post(post_id: Uint64, subspace_id: Uint64) -> Post {
         eternal_id: None,
         text: None,
         entities: None,
+        tags: vec![],
         author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
         conversation_id: None,
         referenced_posts: vec![],
@@ -99,7 +104,6 @@ pub fn get_mocked_post_attachments(subspace_id: &Uint64, post_id: &Uint64) -> Ve
     vec![
         Attachment {
             subspace_id: *subspace_id,
-            section_id: 0,
             post_id: *post_id,
             id: 0,
             content: PostAttachment::Media {
@@ -110,7 +114,6 @@ pub fn get_mocked_post_attachments(subspace_id: &Uint64, post_id: &Uint64) -> Ve
         },
         Attachment {
             subspace_id: *subspace_id,
-            section_id: 0,
             post_id: *post_id,
             id: 1,
             content: PostAttachment::Media {
@@ -131,7 +134,6 @@ pub fn get_mocked_poll_answers(
 ) -> Vec<UserAnswer> {
     vec![UserAnswer {
         subspace_id: *subspace_id,
-        section_id: 0,
         post_id: *post_id,
         poll_id: *poll_id,
         answers_indexes: vec![0],

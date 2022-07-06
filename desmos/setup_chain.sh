@@ -114,21 +114,21 @@ echo $KEYRING_PASS | desmos tx relationships block $USER1_ADDRESS 1 --from $USER
 
 # Create a test post that can be edited
 echo "Create editable post"
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Editable post\",\"entities\":null,\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Editable post\",\"entities\":null,\"tags\":[],\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Add a post attachment that can be removed and a poll that can be answered from the tests.
 echo "Adding a media attachment and a poll that can be answered to the post"
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v1.Poll\",\"question\":\"Test question?\",\"provided_answers\":[{\"text\":\"Answer 1\",\"attachments\":[]},{\"text\":\"Answer 2\",\"attachments\":[]}],\"end_date\":\"2140-01-01T10:00:20.021Z\",\"allows_multiple_answers\":false,\"allows_answer_edits\":true},\"editor\":\"$CONTRACT\"}}}}, {\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v1.Media\",\"mime_type\":\"test-mime\",\"uri\":\"https://test.com/image.png\"},\"editor\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v2.Poll\",\"question\":\"Test question?\",\"provided_answers\":[{\"text\":\"Answer 1\",\"attachments\":[]},{\"text\":\"Answer 2\",\"attachments\":[]}],\"end_date\":\"2140-01-01T10:00:20.021Z\",\"allows_multiple_answers\":false,\"allows_answer_edits\":true},\"editor\":\"$CONTRACT\"}}}}, {\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v2.Media\",\"mime_type\":\"test-mime\",\"uri\":\"https://test.com/image.png\"},\"editor\":\"$CONTRACT\"}}}}]}}"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Create a test post that can be deleted
 echo "Create a deletable post"
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Deletable post\",\"entities\":null,\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Deletable post\",\"entities\":null,\"tags\":[],\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y

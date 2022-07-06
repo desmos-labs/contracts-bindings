@@ -8,9 +8,9 @@ use std::convert::TryFrom;
 use thiserror::Error;
 
 /// Proto type uri of [`PostAttachment::Media`].
-pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v1.Media";
+pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v2.Media";
 /// Proto type uri of [`PostAttachment::Poll`].
-pub const POLL_TYPE_URI: &str = "/desmos.posts.v1.Poll";
+pub const POLL_TYPE_URI: &str = "/desmos.posts.v2.Poll";
 
 /// Contains all the information about a single post.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -28,6 +28,8 @@ pub struct Post {
     pub text: Option<String>,
     /// Entities connected to this post.
     pub entities: Option<Vec<Entities>>,
+    /// Tags related to this post.
+    pub tags: Vec<String>,
     /// Author of the post.
     pub author: Addr,
     /// Id of the original post of the conversation.
@@ -47,7 +49,7 @@ pub struct Post {
 /// Represents a generic tag.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub struct TagEntity {
+pub struct TextTagEntity {
     /// Index of the character inside the text at which the tag starts.
     pub start: Uint64,
     /// Index of the character inside the text at which the tag ends.
@@ -75,9 +77,9 @@ pub struct UrlEntity {
 #[serde(rename_all = "snake_case")]
 pub struct Entities {
     /// Hashtag entities.
-    pub hashtags: Vec<TagEntity>,
+    pub hashtags: Vec<TextTagEntity>,
     /// Mention entities.
-    pub mentions: Vec<TagEntity>,
+    pub mentions: Vec<TextTagEntity>,
     /// Url entities.
     pub urls: Vec<UrlEntity>,
 }
@@ -142,9 +144,6 @@ pub struct Attachment {
     /// Id of the subspace inside which the post to which this attachment should be
     /// connected is.
     pub subspace_id: Uint64,
-    /// Id of the subspace section inside which the post to which this attachment
-    /// should be connected is.
-    pub section_id: u32,
     /// Id of the post to which this attachment should be connected.
     pub post_id: Uint64,
     /// Id of this attachment.
@@ -226,8 +225,6 @@ pub struct ProvidedAnswer {
 pub struct UserAnswer {
     /// Subspace id inside which the post related to this attachment is located.
     pub subspace_id: Uint64,
-    /// Section id inside which the post related to this attachment is located.
-    pub section_id: u32,
     /// Id of the post associated to this attachment.
     pub post_id: Uint64,
     /// Id of the poll to which this answer is associated.
