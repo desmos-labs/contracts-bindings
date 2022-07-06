@@ -99,7 +99,7 @@ pub enum UnwrapReportTargetError {
     /// one one field is undefined.
     #[error("invalid user target report field {0} is none")]
     InvalidUserTarget(String),
-    /// Error that occur if [`RawReportTarget`] have type `/desmos.reports.v1.PostTarget` but
+    /// Error that occur if [`RawReportTarget`] has type `/desmos.reports.v1.PostTarget` but
     /// one field is undefined.
     #[error("invalid post target report field {0} is none")]
     InvalidPostTarget(String),
