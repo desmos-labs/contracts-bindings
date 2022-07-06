@@ -8,6 +8,8 @@ use crate::profiles::query::ProfilesQuery;
 use crate::reactions::query::ReactionsQuery;
 #[cfg(feature = "relationships")]
 use crate::relationships::query::RelationshipsQuery;
+#[cfg(feature = "reports")]
+use crate::reports::query::ReportsQuery;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::query::SubspacesQuery;
 use cosmwasm_std::{CustomQuery, QueryRequest};
@@ -45,6 +47,10 @@ pub enum DesmosQuery {
     /// Queries relative to the x/reactions module.
     #[cfg(feature = "reactions")]
     Reactions(ReactionsQuery),
+
+    /// Queries relative to the x/reports module.
+    #[cfg(feature = "reports")]
+    Reports(ReportsQuery),
 }
 
 impl CustomQuery for DesmosQuery {}
@@ -119,9 +125,24 @@ impl Into<QueryRequest<DesmosQuery>> for ReactionsQuery {
     }
 }
 
+#[cfg(feature = "reports")]
+impl From<ReportsQuery> for DesmosQuery {
+    fn from(query: ReportsQuery) -> Self {
+        Self::Reports(query)
+    }
+}
+
+#[cfg(feature = "reports")]
+impl Into<QueryRequest<DesmosQuery>> for ReportsQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::posts::query::PostsQuery;
+    use crate::reports::query::ReportsQuery;
     use crate::{
         profiles::query::ProfilesQuery, query::DesmosQuery, reactions::query::ReactionsQuery,
         relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
@@ -181,6 +202,16 @@ mod tests {
             pagination: None,
         };
         let expected = DesmosQuery::Reactions(query.clone());
+        assert_eq!(expected, DesmosQuery::from(query))
+    }
+
+    #[test]
+    fn test_from_reports_query() {
+        let query = ReportsQuery::Report {
+            subspace_id: Uint64::new(1),
+            report_id: Uint64::new(2),
+        };
+        let expected = DesmosQuery::Reports(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
 }

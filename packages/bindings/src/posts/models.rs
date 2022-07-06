@@ -323,22 +323,26 @@ impl TryFrom<RawPostAttachment> for PostAttachment {
             Ok(PostAttachment::Media {
                 mime_type: value
                     .mime_type
-                    .ok_or(InvalidMedia("mime_type".to_string()))?,
-                uri: value.uri.ok_or(InvalidMedia("uri".to_string()))?,
+                    .ok_or_else(|| InvalidMedia("mime_type".to_string()))?,
+                uri: value.uri.ok_or_else(|| InvalidMedia("uri".to_string()))?,
             })
         } else if value.type_uri == POLL_TYPE_URI {
             Ok(PostAttachment::Poll {
-                question: value.question.ok_or(InvalidPoll("question".to_string()))?,
+                question: value
+                    .question
+                    .ok_or_else(|| InvalidPoll("question".to_string()))?,
                 provided_answers: value
                     .provided_answers
-                    .ok_or(InvalidPoll("provided_answers".to_string()))?,
-                end_date: value.end_date.ok_or(InvalidPoll("end_date".to_string()))?,
+                    .ok_or_else(|| InvalidPoll("provided_answers".to_string()))?,
+                end_date: value
+                    .end_date
+                    .ok_or_else(|| InvalidPoll("end_date".to_string()))?,
                 allows_multiple_answers: value
                     .allows_multiple_answers
-                    .ok_or(InvalidPoll("allows_multiple_answers".to_string()))?,
+                    .ok_or_else(|| InvalidPoll("allows_multiple_answers".to_string()))?,
                 allows_answer_edits: value
                     .allows_answer_edits
-                    .ok_or(InvalidPoll("allows_answer_edits".to_string()))?,
+                    .ok_or_else(|| InvalidPoll("allows_answer_edits".to_string()))?,
                 final_tally_results: value.final_tally_results,
             })
         } else {

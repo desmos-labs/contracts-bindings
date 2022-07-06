@@ -23,11 +23,12 @@ thiserror = "1.0.31"
 cosmwasm-schema = { version = "1.0.0" }
 
 [features]
-default = ["profiles", "subspaces", "posts", "relationships", "reactions", "query", "msg"]
+default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "query", "msg"]
 profiles = []
 subspaces = []
 posts = []
 relationships = []
+reports = []
 reactions = []
 query = []
 msg = []
