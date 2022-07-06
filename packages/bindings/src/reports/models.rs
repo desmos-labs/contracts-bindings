@@ -92,7 +92,7 @@ impl From<ReportTarget> for RawReportTarget {
 /// Represents the errors that can occur when converting a [`RawReportTarget`] into a [`ReportTarget`].
 #[derive(Error, Debug, Clone)]
 pub enum UnwrapReportTargetError {
-    /// Error that occur if [`RawReportTarget`] have an unknown type.
+    /// Error that occur if [`RawReportTarget`] has an unknown type.
     #[error("unknown attachment type: {0}")]
     UnknownType(String),
     /// Error that occur if [`RawReportTarget`] have type `/desmos.reports.v1.UserTarget` but
