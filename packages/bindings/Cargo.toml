@@ -9,7 +9,7 @@ authors = [
 edition = "2018"
 description = "CosmWasm bindings to custom Desmos features"
 license = "Apache-2.0"
-repository = "https://github.com/desmos-labs/desmos-contracts"
+repository = "https://github.com/desmos-labs/desmos-bindings"
 homepage = "https://www.desmos.network"
 keywords = ["social-networks", "blockchain", "smart-contracts", "desmos", "cryptocurrency"]
 
