@@ -20,6 +20,9 @@ pub mod subspaces;
 #[cfg(feature = "posts")]
 pub mod posts;
 
+#[cfg(feature = "reactions")]
+pub mod reactions;
+
 #[cfg(feature = "msg")]
 pub mod msg;
 

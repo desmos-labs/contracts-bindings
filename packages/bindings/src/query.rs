@@ -4,6 +4,8 @@
 use crate::posts::query::PostsQuery;
 #[cfg(feature = "profiles")]
 use crate::profiles::query::ProfilesQuery;
+#[cfg(feature = "reactions")]
+use crate::reactions::query::ReactionsQuery;
 #[cfg(feature = "relationships")]
 use crate::relationships::query::RelationshipsQuery;
 #[cfg(feature = "subspaces")]
@@ -15,12 +17,10 @@ use serde::{Deserialize, Serialize};
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
 // {
-//      "route": "profiles",
-//      "query_data": {
+//      "profiles": {
 //          "method": {}
 //      }
 // }
-// Reference: https://serde.rs/enum-representations.html#adjacently-tagged
 
 /// Enum that defines how the desmos query messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -41,6 +41,10 @@ pub enum DesmosQuery {
     /// Queries relative to the x/posts module.
     #[cfg(feature = "posts")]
     Posts(PostsQuery),
+
+    /// Queries relative to the x/reactions module.
+    #[cfg(feature = "reactions")]
+    Reactions(ReactionsQuery),
 }
 
 impl CustomQuery for DesmosQuery {}
@@ -101,11 +105,25 @@ impl Into<QueryRequest<DesmosQuery>> for PostsQuery {
     }
 }
 
+#[cfg(feature = "reactions")]
+impl From<ReactionsQuery> for DesmosQuery {
+    fn from(query: ReactionsQuery) -> Self {
+        Self::Reactions(query)
+    }
+}
+
+#[cfg(feature = "reactions")]
+impl Into<QueryRequest<DesmosQuery>> for ReactionsQuery {
+    fn into(self) -> QueryRequest<DesmosQuery> {
+        QueryRequest::Custom(self.into())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::posts::query::PostsQuery;
     use crate::{
-        profiles::query::ProfilesQuery, query::DesmosQuery,
+        profiles::query::ProfilesQuery, query::DesmosQuery, reactions::query::ReactionsQuery,
         relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
     };
     use cosmwasm_std::{Addr, Uint64};
@@ -152,5 +170,17 @@ mod tests {
         };
         let expected = DesmosQuery::Posts(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
+    }
+
+    #[test]
+    fn test_from_reactions_query() {
+        let query = ReactionsQuery::Reactions {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            user: None,
+            pagination: None,
+        };
+        let expected = DesmosQuery::Reactions(query.clone());
+        assert_eq!(expected, DesmosQuery::from(query))
     }
 }

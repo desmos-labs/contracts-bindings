@@ -132,3 +132,45 @@ MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Register a editable reaction
+echo "Register an editable reaction to subspace"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reactions\":{\"add_registered_reaction\":{\"subspace_id\":\"1\",\"shorthand_code\":\"editable_code\",\"display_value\":\"editable_value\",\"user\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Register a deletable reaction
+echo "Register a deletable reaction to subspace"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reactions\":{\"add_registered_reaction\":{\"subspace_id\":\"1\",\"shorthand_code\":\"deletable_code\",\"display_value\":\"deletable_value\",\"user\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Create a test post that can be the target for reactions
+echo "Create a post for reaction"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Reactions post\",\"entities\":null,\"tags\":[],\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Add a registered reaction to the post
+echo "Add a registered reaction to the post"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reactions\":{\"add_reaction\":{\"subspace_id\":\"1\",\"post_id\":\"3\",\"value\":{\"@type\":\"/desmos.reactions.v1.RegisteredReactionValue\", \"registered_reaction_id\":1},\"user\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Add a free text reaction to the post
+echo "Add a free text reaction to the post"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reactions\":{\"add_reaction\":{\"subspace_id\":\"1\",\"post_id\":\"3\",\"value\":{\"@type\":\"/desmos.reactions.v1.FreeTextValue\", \"text\":\"test\"},\"user\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y
+
+# Add a deletable reaction to the post
+echo "Add a deletable reaction to the post"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"reactions\":{\"add_reaction\":{\"subspace_id\":\"1\",\"post_id\":\"3\",\"value\":{\"@type\":\"/desmos.reactions.v1.FreeTextValue\", \"text\":\"del\"},\"user\":\"$CONTRACT\"}}}}]}}"
+echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
+  --from $USER1 \
+  --chain-id=testchain --keyring-backend=file -b=block -y

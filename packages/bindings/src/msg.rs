@@ -4,6 +4,8 @@
 use crate::posts::msg::PostsMsg;
 #[cfg(feature = "profiles")]
 use crate::profiles::msg::ProfilesMsg;
+#[cfg(feature = "reactions")]
+use crate::reactions::msg::ReactionsMsg;
 #[cfg(feature = "relationships")]
 use crate::relationships::msg::RelationshipsMsg;
 #[cfg(feature = "subspaces")]
@@ -15,12 +17,10 @@ use serde::{Deserialize, Serialize};
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
 // {
-//      "route": "profiles",
-//      "msg_data": {
+//     "profiles": {
 //          "method": {}
 //      }
 // }
-// Reference: https://serde.rs/enum-representations.html#adjacently-tagged
 
 /// Enum that defines how the messages are serialized.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -41,6 +41,10 @@ pub enum DesmosMsg {
     /// Messages relative to the x/posts module.
     #[cfg(feature = "posts")]
     Posts(PostsMsg),
+
+    /// Messages relative to the x/reactions module.
+    #[cfg(feature = "reactions")]
+    Reactions(ReactionsMsg),
 }
 
 impl Into<CosmosMsg<DesmosMsg>> for DesmosMsg {
@@ -94,14 +98,28 @@ impl Into<CosmosMsg<DesmosMsg>> for RelationshipsMsg {
 }
 
 #[cfg(feature = "posts")]
+impl Into<CosmosMsg<DesmosMsg>> for PostsMsg {
+    fn into(self) -> CosmosMsg<DesmosMsg> {
+        DesmosMsg::from(self).into()
+    }
+}
+
+#[cfg(feature = "posts")]
 impl From<PostsMsg> for DesmosMsg {
     fn from(msg: PostsMsg) -> Self {
         Self::Posts(msg)
     }
 }
 
-#[cfg(feature = "posts")]
-impl Into<CosmosMsg<DesmosMsg>> for PostsMsg {
+#[cfg(feature = "reactions")]
+impl From<ReactionsMsg> for DesmosMsg {
+    fn from(msg: ReactionsMsg) -> Self {
+        Self::Reactions(msg)
+    }
+}
+
+#[cfg(feature = "reactions")]
+impl Into<CosmosMsg<DesmosMsg>> for ReactionsMsg {
     fn into(self) -> CosmosMsg<DesmosMsg> {
         DesmosMsg::from(self).into()
     }
@@ -111,7 +129,10 @@ impl Into<CosmosMsg<DesmosMsg>> for PostsMsg {
 mod tests {
     use crate::posts::msg::PostsMsg;
     use crate::{
-        msg::DesmosMsg, profiles::msg::ProfilesMsg, relationships::msg::RelationshipsMsg,
+        msg::DesmosMsg,
+        profiles::msg::ProfilesMsg,
+        reactions::{models::ReactionValue, msg::ReactionsMsg},
+        relationships::msg::RelationshipsMsg,
         subspaces::msg::SubspacesMsg,
     };
     use cosmwasm_std::{Addr, Uint64};
@@ -158,6 +179,21 @@ mod tests {
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
         let expected = DesmosMsg::Posts(msg.clone());
+        assert_eq!(expected, DesmosMsg::from(msg));
+    }
+
+    #[test]
+    fn test_from_reactions_msg() {
+        let msg = ReactionsMsg::AddReaction {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            value: ReactionValue::FreeText {
+                text: "test".to_string(),
+            }
+            .into(),
+            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+        };
+        let expected = DesmosMsg::Reactions(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
 }

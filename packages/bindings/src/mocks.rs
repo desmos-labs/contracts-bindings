@@ -5,6 +5,8 @@ use crate::posts::mocks::mock_posts_query_response;
 #[cfg(feature = "profiles")]
 use crate::profiles::mocks::mock_profiles_query_response;
 use crate::query::DesmosQuery;
+#[cfg(feature = "reactions")]
+use crate::reactions::mocks::mock_reactions_query_response;
 #[cfg(feature = "relationships")]
 use crate::relationships::mocks::mock_relationships_query_response;
 #[cfg(feature = "subspaces")]
@@ -33,6 +35,8 @@ pub fn mock_dependencies_with_custom_querier(
             }
             #[cfg(feature = "posts")]
             DesmosQuery::Posts(query) => SystemResult::Ok(mock_posts_query_response(query)),
+            #[cfg(feature = "reactions")]
+            DesmosQuery::Reactions(query) => SystemResult::Ok(mock_reactions_query_response(query)),
             // Hide this warning since when we compile the package without any module feature
             // this pattern is reached.
             #[allow(unreachable_patterns)]
@@ -53,6 +57,10 @@ mod tests {
         profiles::{
             mocks::MockProfilesQueries, models_query::QueryProfileResponse,
             querier::ProfilesQuerier,
+        },
+        reactions::{
+            mocks::MockReactionsQueries, models_query::QueryReactionsResponse,
+            querier::ReactionsQuerier,
         },
         relationships::{
             mocks::MockRelationshipsQueries, models_query::QueryRelationshipsResponse,
@@ -105,6 +113,19 @@ mod tests {
             .unwrap();
         let expected = QueryRelationshipsResponse {
             relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
+            pagination: Default::default(),
+        };
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_reactions_querier() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let response = querier.query_reactions(1, 1, None, None).unwrap();
+        let expected = QueryReactionsResponse {
+            reactions: vec![MockReactionsQueries::get_mock_reaction()],
             pagination: Default::default(),
         };
         assert_eq!(expected, response)
