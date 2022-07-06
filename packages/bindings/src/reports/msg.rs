@@ -73,14 +73,14 @@ impl ReportsMsg {
     pub fn create_report(
         subspace_id: u64,
         reasons_ids: Vec<u32>,
-        message: Option<String>,
+        message: Option<impl Into<String>>,
         reporter: Addr,
         target: ReportTarget,
     ) -> ReportsMsg {
         ReportsMsg::CreateReport {
             subspace_id: subspace_id.into(),
             reasons_ids,
-            message,
+            message: message.map(|message| message.into()),
             reporter,
             target: target.into(),
         }
@@ -125,13 +125,13 @@ impl ReportsMsg {
     pub fn add_reason(
         subspace_id: u64,
         title: impl Into<String>,
-        description: Option<String>,
+        description: Option<impl Into<String>>,
         signer: Addr,
     ) -> ReportsMsg {
         ReportsMsg::AddReason {
             subspace_id: subspace_id.into(),
             title: title.into(),
-            description,
+            description: description.map(|description| description.into()),
             signer,
         }
     }
