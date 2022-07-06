@@ -40,7 +40,7 @@ pub enum DesmosMsg {
     #[cfg(feature = "reactions")]
     Reactions(ReactionsMsg),
 
-    /// Messages relative to the x/posts module.
+    /// Messages relative to the x/reports module.
     #[cfg(feature = "reports")]
     Reports(ReportsMsg),
 }
