@@ -17,7 +17,7 @@ Assuming you have a recent version of rust and cargo (v1.58.1+) installed
 then the following instruction should provide you with a new template contract already set-up to interact with the bindings:
 
 Install [cargo-generate](https://github.com/ashleygwilliams/cargo-generate) and [cargo-run-script](https://github.com/JoshMcguigan/cargo-run-script).
-Unless you did that before, run this line now:
+Unless you did that before, you can install them by running the following commands:
 
 ```sh
 cargo install cargo-generate --features vendored-openssl
