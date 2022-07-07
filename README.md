@@ -25,7 +25,7 @@ cargo install cargo-run-script
 ```
 
 Now you can use `cargo-generate` to set-up your new contract.
-Go to the folder in which you want to place it and run:
+Go to the folder in which you want to place the project and run:
 
 ```sh
 cargo generate --git https://github.com/desmos-labs/cw-template.git --name PROJECT_NAME
