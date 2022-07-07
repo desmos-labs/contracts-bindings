@@ -16,7 +16,7 @@ Assuming you have a recent version of rust and cargo (v1.58.1+) installed
 (via [rustup](https://rustup.rs/)),
 then the following instruction should provide you with a new template contract already set-up to interact with the bindings:
 
-Install [cargo-generate](https://github.com/ashleygwilliams/cargo-generate) and cargo-run-script.
+Install [cargo-generate](https://github.com/ashleygwilliams/cargo-generate) and [cargo-run-script](https://github.com/JoshMcguigan/cargo-run-script).
 Unless you did that before, run this line now:
 
 ```sh
