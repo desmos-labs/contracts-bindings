@@ -1,6 +1,6 @@
 # Bindings test
 
-Test suite to the interaction of the bindings with a real chain.  
+Suite to test the interaction of the bindings with a real chain.  
 
 To run the tests follow these instructions:
 * Go inside the `contracts/test-contract` 
