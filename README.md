@@ -1,6 +1,6 @@
 # Desmos Bindings
 
-This repository contains the CosmWasm bindings to interact with the custom Desmos features.
+This repository contains the CosmWasm bindings packages that allows the interaction with the Desmos chain features from smart contracts.
 
 
 # Compatibility
