@@ -4,11 +4,11 @@ use crate::subspaces::models::{Permission, Section, UserPermissions};
 use crate::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
 use crate::subspaces::{
     models::{PermissionDetail, Subspace, UserGroup},
-    query::SubspacesQuery,
     models_query::{
         QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
         QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
     },
+    query::SubspacesQuery,
 };
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 

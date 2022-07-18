@@ -4,11 +4,11 @@ use crate::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse
 use crate::{
     query::DesmosQuery,
     subspaces::{
-        query::SubspacesQuery,
         models_query::{
             QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
             QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
         },
+        query::SubspacesQuery,
     },
     types::PageRequest,
 };
