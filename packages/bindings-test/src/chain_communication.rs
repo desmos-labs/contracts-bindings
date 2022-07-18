@@ -1,7 +1,7 @@
 use crate::consts::USER1_KEY;
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
 use cosmwasm_std::Uint64;
-use desmos_bindings::subspaces::query_types::{
+use desmos_bindings::subspaces::models_query::{
     QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
     QueryUserGroupResponse, QueryUserGroupsResponse,
 };
