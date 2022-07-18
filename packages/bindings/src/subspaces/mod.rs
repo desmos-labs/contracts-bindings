@@ -10,4 +10,4 @@ pub mod querier;
 #[cfg(feature = "query")]
 pub mod query;
 
-pub mod query_types;
+pub mod models_query;

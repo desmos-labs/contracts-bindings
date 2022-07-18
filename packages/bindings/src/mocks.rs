@@ -74,8 +74,8 @@ mod tests {
             querier::RelationshipsQuerier,
         },
         subspaces::{
-            mocks::MockSubspacesQueries, querier::SubspacesQuerier,
-            query_types::QuerySubspaceResponse,
+            mocks::MockSubspacesQueries, models_query::QuerySubspaceResponse,
+            querier::SubspacesQuerier,
         },
     };
     use cosmwasm_std::{Addr, Uint64};

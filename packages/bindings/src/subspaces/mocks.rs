@@ -1,14 +1,14 @@
 //! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
 use crate::subspaces::models::{Permission, Section, UserPermissions};
-use crate::subspaces::query_types::{QuerySectionResponse, QuerySectionsResponse};
+use crate::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
 use crate::subspaces::{
     models::{PermissionDetail, Subspace, UserGroup},
-    query::SubspacesQuery,
-    query_types::{
+    models_query::{
         QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
         QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
     },
+    query::SubspacesQuery,
 };
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 

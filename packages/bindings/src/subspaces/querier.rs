@@ -1,14 +1,14 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
-use crate::subspaces::query_types::{QuerySectionResponse, QuerySectionsResponse};
+use crate::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
 use crate::{
     query::DesmosQuery,
     subspaces::{
-        query::SubspacesQuery,
-        query_types::{
+        models_query::{
             QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
             QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
         },
+        query::SubspacesQuery,
     },
     types::PageRequest,
 };

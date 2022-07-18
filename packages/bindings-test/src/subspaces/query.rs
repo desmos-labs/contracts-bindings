@@ -6,11 +6,11 @@ mod tests {
     use desmos_bindings::subspaces::models::{
         GroupPermissions, Permission, PermissionDetail, UserPermissions,
     };
-    use desmos_bindings::subspaces::query::SubspacesQuery;
-    use desmos_bindings::subspaces::query_types::{
+    use desmos_bindings::subspaces::models_query::{
         QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
         QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
     };
+    use desmos_bindings::subspaces::query::SubspacesQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
