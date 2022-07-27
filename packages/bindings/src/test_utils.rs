@@ -36,6 +36,7 @@ impl Module for DesmosKeeper {
     type ExecT = DesmosMsg;
     type QueryT = DesmosQuery;
     type SudoT = Empty;
+
     fn execute<ExecC, QueryC>(
         &self,
         _api: &dyn Api,
@@ -110,9 +111,34 @@ pub fn mock_desmos_app() -> DesmosApp {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::profiles::msg::ProfilesMsg;
+    use crate::{
+        posts::{
+            mocks::get_mocked_post, models_query::QueryPostResponse, msg::PostsMsg,
+            querier::PostsQuerier,
+        },
+        profiles::{
+            mocks::MockProfilesQueries, models_query::QueryProfileResponse, msg::ProfilesMsg,
+            querier::ProfilesQuerier,
+        },
+        reactions::{
+            mocks::MockReactionsQueries, models_query::QueryReactionsResponse, msg::ReactionsMsg,
+            querier::ReactionsQuerier,
+        },
+        relationships::{
+            mocks::MockRelationshipsQueries, models_query::QueryRelationshipsResponse,
+            msg::RelationshipsMsg, querier::RelationshipsQuerier,
+        },
+        reports::{
+            mocks::get_mocked_report, models_query::QueryReportResponse, msg::ReportsMsg,
+            querier::ReportsQuerier,
+        },
+        subspaces::{
+            mocks::MockSubspacesQueries, models_query::QuerySubspaceResponse, msg::SubspacesMsg,
+            querier::SubspacesQuerier,
+        },
+    };
     use cw_multi_test::Executor;
-
+    use std::ops::Deref;
     const SENDER: &str = "sender";
 
     #[test]
@@ -123,5 +149,144 @@ mod tests {
             DesmosMsg::Profiles(ProfilesMsg::delete_profile(Addr::unchecked(SENDER))).into(),
         );
         assert!(result.is_ok());
+    }
+
+    #[test]
+    fn execute_relationships_msg_properly() {
+        let mut app = mock_desmos_app();
+        let result = app.execute(
+            Addr::unchecked(SENDER),
+            DesmosMsg::Relationships(RelationshipsMsg::unblock_user(
+                Addr::unchecked(SENDER),
+                Addr::unchecked(SENDER),
+                1,
+            ))
+            .into(),
+        );
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn execute_subspaces_msg_properly() {
+        let mut app = mock_desmos_app();
+        let result = app.execute(
+            Addr::unchecked(SENDER),
+            DesmosMsg::Subspaces(SubspacesMsg::delete_subspace(1, Addr::unchecked(SENDER))).into(),
+        );
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn execute_posts_msg_properly() {
+        let mut app = mock_desmos_app();
+        let result = app.execute(
+            Addr::unchecked(SENDER),
+            DesmosMsg::Posts(PostsMsg::delete_post(1, 4, Addr::unchecked(SENDER))).into(),
+        );
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn execute_reports_msg_properly() {
+        let mut app = mock_desmos_app();
+        let result = app.execute(
+            Addr::unchecked(SENDER),
+            DesmosMsg::Reports(ReportsMsg::delete_report(1, 1, Addr::unchecked(SENDER))).into(),
+        );
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn execute_reactions_msg_properly() {
+        let mut app = mock_desmos_app();
+        let result = app.execute(
+            Addr::unchecked(SENDER),
+            DesmosMsg::Reactions(ReactionsMsg::remove_reaction(
+                1,
+                1,
+                1,
+                Addr::unchecked(SENDER),
+            ))
+            .into(),
+        );
+        assert!(result.is_ok());
+    }
+    #[test]
+    fn test_profiles_query_properly() {
+        let app = mock_desmos_app();
+        let app_querier = app.wrap();
+        let querier = ProfilesQuerier::new(app_querier.deref());
+        let expected = QueryProfileResponse {
+            profile: MockProfilesQueries::get_mock_profile(),
+        };
+        let response = querier.query_profile(Addr::unchecked("")).unwrap();
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_subspaces_query_properly() {
+        let app = mock_desmos_app();
+        let app_querier = app.wrap();
+        let querier = SubspacesQuerier::new(app_querier.deref());
+        let response = querier.query_subspace(1).unwrap();
+        let expected = QuerySubspaceResponse {
+            subspace: MockSubspacesQueries::get_mock_subspace(),
+        };
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_relationships_query_properly() {
+        let app = mock_desmos_app();
+        let app_querier = app.wrap();
+        let querier = RelationshipsQuerier::new(app_querier.deref());
+        let response = querier
+            .query_relationships(
+                1,
+                Some(Addr::unchecked("")),
+                Some(Addr::unchecked("")),
+                None,
+            )
+            .unwrap();
+        let expected = QueryRelationshipsResponse {
+            relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
+            pagination: Default::default(),
+        };
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_posts_query_properly() {
+        let app = mock_desmos_app();
+        let app_querier = app.wrap();
+        let querier = PostsQuerier::new(app_querier.deref());
+        let response = querier.query_post(1, 1).unwrap();
+        let expected = QueryPostResponse{ post: get_mocked_post(1u64.into(), 1u64.into())};
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_reactions_query_properly() {
+        let app = mock_desmos_app();
+        let app_querier = app.wrap();
+        let querier = ReactionsQuerier::new(app_querier.deref());
+        let response = querier.query_reactions(1, 1, None, None).unwrap();
+        let expected = QueryReactionsResponse {
+            reactions: vec![MockReactionsQueries::get_mock_reaction()],
+            pagination: Default::default(),
+        };
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_reports_query_properly() {
+        let app = mock_desmos_app();
+        let app_querier = app.wrap();
+        let querier = ReportsQuerier::new(app_querier.deref());
+        let response = querier.query_report(1, 1).unwrap();
+        let expected = QueryReportResponse {
+            report: get_mocked_report(&1u64.into()),
+        };
+        assert_eq!(expected, response)
     }
 }
