@@ -14,7 +14,9 @@ homepage = "https://www.desmos.network"
 keywords = ["social-networks", "blockchain", "smart-contracts", "desmos", "cryptocurrency"]
 
 [dependencies]
+anyhow = "1.0.58"
 cosmwasm-std = { version = "1.0.0" }
+cw-multi-test = "0.13.4"
 schemars = "0.8.1"
 serde = { version = "1.0.103", default-features = false, features = ["derive"] }
 thiserror = "1.0.31"
@@ -33,4 +35,5 @@ reactions = []
 query = []
 msg = []
 mocks = ["query"]
+integration-test = ["query", "msg", "mocks"]
 iterators = []

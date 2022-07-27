@@ -24,4 +24,7 @@ pub mod relationships;
 pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
+#[cfg(feature = "integration-test")]
+pub mod test_utils;
+
 pub mod types;
