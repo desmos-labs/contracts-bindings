@@ -5,7 +5,7 @@ use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Binary, BlockInfo, Empty, Querier, Storage};
 use cw_multi_test::{
     App, AppResponse, BankKeeper, BasicAppBuilder, CosmosRouter, FailingDistribution,
-    FailingStaking, Module, WasmKeeper, Router,
+    FailingStaking, Module, Router, WasmKeeper,
 };
 
 #[cfg(feature = "posts")]
