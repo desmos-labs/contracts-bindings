@@ -1,3 +1,4 @@
+// DONTCOVER
 //! Contains integration test utils for desmos custom modules.
 
 use crate::msg::DesmosMsg;
