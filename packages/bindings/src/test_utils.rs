@@ -1,6 +1,6 @@
-// DONTCOVER
 //! Contains integration test utils for desmos custom modules.
 
+#![no_coverage]
 use crate::msg::DesmosMsg;
 use crate::query::DesmosQuery;
 use anyhow::Result as AnyResult;
@@ -859,6 +859,7 @@ impl Module for DesmosKeeper {
             #[cfg(feature = "reactions")]
             DesmosMsg::Reactions(msg) => self.handle_reactions_msg(msg),
         }
+        unreachable!();
     }
 
     fn query(
@@ -893,6 +894,7 @@ impl Module for DesmosKeeper {
                 AnyResult::Ok(mock_reports_query_response(&query).unwrap())
             }
         }
+        unreachable!();
     }
 
     fn sudo<ExecC, QueryC>(
