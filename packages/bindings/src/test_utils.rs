@@ -1,6 +1,6 @@
 //! Contains integration test utils for desmos custom modules.
 
-#![no_coverage]
+#![cfg(not(tarpaulin_include))]
 use crate::msg::DesmosMsg;
 use crate::query::DesmosQuery;
 use anyhow::Result as AnyResult;
