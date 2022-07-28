@@ -859,7 +859,6 @@ impl Module for DesmosKeeper {
             #[cfg(feature = "reactions")]
             DesmosMsg::Reactions(msg) => self.handle_reactions_msg(msg),
         }
-        unreachable!();
     }
 
     fn query(
@@ -894,7 +893,6 @@ impl Module for DesmosKeeper {
                 AnyResult::Ok(mock_reports_query_response(&query).unwrap())
             }
         }
-        unreachable!();
     }
 
     fn sudo<ExecC, QueryC>(
