@@ -4,7 +4,8 @@ use anyhow::Result as AnyResult;
 use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Binary, BlockInfo, Empty, Querier, Storage};
 use cw_multi_test::{
-    App, AppResponse, BankKeeper, BasicAppBuilder, CosmosRouter, Module, WasmKeeper,
+    App, AppResponse, BankKeeper, BasicAppBuilder, CosmosRouter, FailingDistribution,
+    FailingStaking, Module, WasmKeeper, Router,
 };
 
 #[cfg(feature = "posts")]
@@ -20,13 +21,16 @@ use crate::reports::mocks::mock_reports_query_response;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::mocks::mock_subspaces_query_response;
 
+/// DesmosApp wraps the desmos custom module into a mock app for integration tests.
 pub type DesmosApp =
     App<BankKeeper, MockApi, MockStorage, DesmosKeeper, WasmKeeper<DesmosMsg, DesmosQuery>>;
 
+/// Represents the implementation of [`Module`](cw_multi_test::Module) for handling the desmos execution and query messages.
 #[derive(Default)]
 pub struct DesmosKeeper {}
 
 impl DesmosKeeper {
+    /// Returns a new [DesmosKeeper].
     pub fn new() -> Self {
         DesmosKeeper {}
     }
@@ -102,6 +106,27 @@ impl Module for DesmosKeeper {
     }
 }
 
+/// Creates new default `DesmosApp` with customized initialization function.
+pub fn custom_desmos_app<F>(init_fn: F) -> DesmosApp
+where
+    F: FnOnce(
+        &mut Router<
+            BankKeeper,
+            DesmosKeeper,
+            WasmKeeper<DesmosMsg, DesmosQuery>,
+            FailingStaking,
+            FailingDistribution,
+        >,
+        &dyn Api,
+        &mut dyn Storage,
+    ),
+{
+    BasicAppBuilder::<DesmosMsg, DesmosQuery>::new_custom()
+        .with_custom(DesmosKeeper::new())
+        .build(init_fn)
+}
+
+/// Returns a mock desmos app
 pub fn mock_desmos_app() -> DesmosApp {
     BasicAppBuilder::<DesmosMsg, DesmosQuery>::new_custom()
         .with_custom(DesmosKeeper::new())
@@ -261,7 +286,9 @@ mod tests {
         let app_querier = app.wrap();
         let querier = PostsQuerier::new(app_querier.deref());
         let response = querier.query_post(1, 1).unwrap();
-        let expected = QueryPostResponse{ post: get_mocked_post(1u64.into(), 1u64.into())};
+        let expected = QueryPostResponse {
+            post: get_mocked_post(1u64.into(), 1u64.into()),
+        };
         assert_eq!(expected, response)
     }
 
