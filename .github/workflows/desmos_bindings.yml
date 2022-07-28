@@ -179,7 +179,3 @@ jobs:
       - name: Build feature (mocks)
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features mocks
-
-      - name: Build feature (integration-test)
-        working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features integration-test
