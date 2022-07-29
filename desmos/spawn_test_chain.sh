@@ -28,7 +28,7 @@ desmos() {
 }
 
 rm -r -f "$DESMOS_HOME"
-desmos unsafe-reset-all
+desmos tendermint unsafe-reset-all
 desmos init testchain --chain-id=testchain
 # Add a default reason to the reports module params
 jq '.app_state.reports.params.standard_reasons[0] |= . + {"id":"1","title":"Spam","description":"Spam user or content"}' "$DESMOS_HOME/config/genesis.json" > "$DESMOS_HOME/config/genesis-patched.json"
