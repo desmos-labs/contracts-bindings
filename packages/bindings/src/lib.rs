@@ -24,7 +24,5 @@ pub mod relationships;
 pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
-#[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
-pub mod test_utils;
 
 pub mod types;

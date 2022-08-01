@@ -56,11 +56,8 @@ pub fn mock_dependencies_with_custom_querier(
 
 #[cfg(test)]
 mod tests {
-    use crate::reports::mocks::get_mocked_report;
-    use crate::reports::models_query::QueryReportResponse;
-    use crate::reports::querier::ReportsQuerier;
     use crate::{
-        mocks::mock_dependencies_with_custom_querier,
+        mocks::mock_queriers::mock_dependencies_with_custom_querier,
         profiles::{
             mocks::MockProfilesQueries, models_query::QueryProfileResponse,
             querier::ProfilesQuerier,
@@ -72,6 +69,9 @@ mod tests {
         relationships::{
             mocks::MockRelationshipsQueries, models_query::QueryRelationshipsResponse,
             querier::RelationshipsQuerier,
+        },
+        reports::{
+            mocks::MockReportsQueries, models_query::QueryReportResponse, querier::ReportsQuerier,
         },
         subspaces::{
             mocks::MockSubspacesQueries, models_query::QuerySubspaceResponse,
@@ -145,7 +145,7 @@ mod tests {
         let querier = ReportsQuerier::new(deps.querier.deref());
         let response = querier.query_report(1, 1).unwrap();
         let expected = QueryReportResponse {
-            report: get_mocked_report(&Uint64::new(1)),
+            report: MockReportsQueries::get_mocked_report(&Uint64::new(1)),
         };
         assert_eq!(expected, response)
     }

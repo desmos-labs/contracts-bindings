@@ -172,7 +172,7 @@ impl<'a> RelationshipsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        mocks::mock_dependencies_with_custom_querier,
+        mocks::mock_queriers::mock_dependencies_with_custom_querier,
         relationships::{
             mocks::MockRelationshipsQueries,
             models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
