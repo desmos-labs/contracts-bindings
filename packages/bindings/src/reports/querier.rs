@@ -195,7 +195,10 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_reports(1, None, None, None).unwrap();
-        assert_eq!(MockReportsQueries::get_mocked_reports(&Uint64::new(1)), response.reports);
+        assert_eq!(
+            MockReportsQueries::get_mocked_reports(&Uint64::new(1)),
+            response.reports
+        );
         assert_eq!(None, response.pagination);
     }
 
@@ -222,7 +225,10 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_report(1, 1).unwrap();
-        assert_eq!(MockReportsQueries::get_mocked_report(&Uint64::new(1)), response.report);
+        assert_eq!(
+            MockReportsQueries::get_mocked_report(&Uint64::new(1)),
+            response.report
+        );
     }
 
     #[test]
@@ -232,7 +238,10 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_reasons(1, None).unwrap();
-        assert_eq!(MockReportsQueries::get_mocked_reasons(&Uint64::new(1)), response.reasons);
+        assert_eq!(
+            MockReportsQueries::get_mocked_reasons(&Uint64::new(1)),
+            response.reasons
+        );
         assert_eq!(None, response.pagination);
     }
 
@@ -259,6 +268,9 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_reason(1, 1).unwrap();
-        assert_eq!(MockReportsQueries::get_mocked_reason(&Uint64::new(1)), response.reason);
+        assert_eq!(
+            MockReportsQueries::get_mocked_reason(&Uint64::new(1)),
+            response.reason
+        );
     }
 }

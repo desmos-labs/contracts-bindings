@@ -298,7 +298,10 @@ mod tests {
         assert_eq!(2, response.posts.len());
 
         let posts = response.posts;
-        assert_eq!(MockPostsQueries::get_mocked_subspace_posts(&Uint64::zero()), posts);
+        assert_eq!(
+            MockPostsQueries::get_mocked_subspace_posts(&Uint64::zero()),
+            posts
+        );
     }
 
     #[test]
@@ -337,7 +340,10 @@ mod tests {
         assert_eq!(2, response.posts.len());
 
         let posts = response.posts;
-        assert_eq!(MockPostsQueries::get_mocked_section_posts(&Uint64::zero(), &0), posts);
+        assert_eq!(
+            MockPostsQueries::get_mocked_section_posts(&Uint64::zero(), &0),
+            posts
+        );
     }
 
     #[test]
@@ -401,7 +407,8 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let mut iterator = querier.iterate_post_attachments(0, 0, 32);
-        let expected_attachments = MockPostsQueries::get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero());
+        let expected_attachments =
+            MockPostsQueries::get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero());
 
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
@@ -443,7 +450,8 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let mut iterator = querier.iterate_poll_answers(0, 0, 0, None, 32);
-        let expected_answers = MockPostsQueries::get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None);
+        let expected_answers =
+            MockPostsQueries::get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None);
 
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
