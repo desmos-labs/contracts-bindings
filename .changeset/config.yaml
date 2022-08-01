@@ -1,0 +1,55 @@
+github_repo: https://github.com/desmos-labs/desmos-bindings.git
+version: 1.0.1
+types:
+- code: fix
+  title: Bug Fixes
+  description: A bug fix
+  hide: false
+- code: deps
+  title: Dependencies
+  description: Updated a third party dependency
+  hide: false
+- code: docs
+  title: Documentation
+  description: Documentation only changes
+  hide: true
+- code: style
+  title: Styles
+  description: Changes that do not affect the meaning of the code (white-space, formatting,
+    missing semi-colons, etc)
+  hide: true
+- code: refactor
+  title: Code Refactoring
+  description: A code change that neither fixes a bug nor adds a feature
+  hide: true
+- code: test
+  title: Tests
+  description: Adding missing tests or correcting existing tests
+  hide: true
+- code: build
+  title: Builds
+  description: 'Changes that affect the build system or external dependencies (example
+    scopes: gulp, broccoli, npm)'
+  hide: true
+- code: feat
+  title: Features
+  description: A new feature
+  hide: false
+- code: revert
+  title: Reverts
+  description: Reverts a previous commit
+  hide: false
+- code: ci
+  title: Continuous Integrations
+  description: 'Changes to our CI configuration files and scripts (example scopes:
+    Travis, Circle, BrowserStack, SauceLabs)'
+  hide: true
+- code: chore
+  title: Chores
+  description: Other changes that don't modify src or test files
+  hide: true
+- code: perf
+  title: Performance Improvements
+  description: A code change that improves performance
+  hide: false
+modules: []
