@@ -7,6 +7,8 @@ use crate::reports::models_query::{
 use crate::reports::query::ReportsQuery;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
+/// Struct that contains some utility methods to mock data of the Desmos
+/// x/reports module.
 pub struct MockReportsQueries {}
 
 impl MockReportsQueries {

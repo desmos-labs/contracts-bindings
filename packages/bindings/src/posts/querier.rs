@@ -280,10 +280,7 @@ impl<'a> PostsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use crate::mocks::mock_queriers::mock_dependencies_with_custom_querier;
-    use crate::posts::mocks::{
-        get_mocked_poll_answers, get_mocked_post, get_mocked_post_attachments,
-        get_mocked_section_posts, get_mocked_subspace_posts,
-    };
+    use crate::posts::mocks::MockPostsQueries;
     use crate::posts::querier::PostsQuerier;
     use cosmwasm_std::Uint64;
     use std::ops::Deref;
@@ -301,7 +298,7 @@ mod tests {
         assert_eq!(2, response.posts.len());
 
         let posts = response.posts;
-        assert_eq!(get_mocked_subspace_posts(&Uint64::zero()), posts);
+        assert_eq!(MockPostsQueries::get_mocked_subspace_posts(&Uint64::zero()), posts);
     }
 
     #[test]
@@ -311,7 +308,7 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let mut iterator = querier.iterate_subspace_posts(0, 32);
-        let expected_posts = get_mocked_subspace_posts(&Uint64::zero());
+        let expected_posts = MockPostsQueries::get_mocked_subspace_posts(&Uint64::zero());
 
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
@@ -340,7 +337,7 @@ mod tests {
         assert_eq!(2, response.posts.len());
 
         let posts = response.posts;
-        assert_eq!(get_mocked_section_posts(&Uint64::zero(), &0), posts);
+        assert_eq!(MockPostsQueries::get_mocked_section_posts(&Uint64::zero(), &0), posts);
     }
 
     #[test]
@@ -350,7 +347,7 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let mut iterator = querier.iterate_section_posts(0, 0, 32);
-        let expected_posts = get_mocked_section_posts(&Uint64::zero(), &0);
+        let expected_posts = MockPostsQueries::get_mocked_section_posts(&Uint64::zero(), &0);
 
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
@@ -373,7 +370,7 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let result = querier.query_post(0, 42);
-        let expected_post = get_mocked_post(Uint64::zero(), Uint64::new(42));
+        let expected_post = MockPostsQueries::get_mocked_post(Uint64::zero(), Uint64::new(42));
 
         assert_eq!(expected_post, result.unwrap().post);
     }
@@ -392,7 +389,7 @@ mod tests {
 
         let attachments = response.attachments;
         assert_eq!(
-            get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero()),
+            MockPostsQueries::get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero()),
             attachments
         );
     }
@@ -404,7 +401,7 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let mut iterator = querier.iterate_post_attachments(0, 0, 32);
-        let expected_attachments = get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero());
+        let expected_attachments = MockPostsQueries::get_mocked_post_attachments(&Uint64::zero(), &Uint64::zero());
 
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
@@ -434,7 +431,7 @@ mod tests {
 
         let answers = response.answers;
         assert_eq!(
-            get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None),
+            MockPostsQueries::get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None),
             answers
         );
     }
@@ -446,7 +443,7 @@ mod tests {
         let querier = PostsQuerier::new(deps.querier.deref());
 
         let mut iterator = querier.iterate_poll_answers(0, 0, 0, None, 32);
-        let expected_answers = get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None);
+        let expected_answers = MockPostsQueries::get_mocked_poll_answers(&Uint64::zero(), &Uint64::zero(), &0, &None);
 
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(

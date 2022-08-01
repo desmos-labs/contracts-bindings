@@ -947,7 +947,7 @@ mod tests {
     use super::*;
     use crate::{
         posts::{
-            mocks::get_mocked_post, models_query::QueryPostResponse, msg::PostsMsg,
+            mocks::MockPostsQueries, models_query::QueryPostResponse, msg::PostsMsg,
             querier::PostsQuerier,
         },
         profiles::{
@@ -1096,7 +1096,7 @@ mod tests {
         let querier = PostsQuerier::new(app_querier.deref());
         let response = querier.query_post(1, 1).unwrap();
         let expected = QueryPostResponse {
-            post: get_mocked_post(1u64.into(), 1u64.into()),
+            post: MockPostsQueries::get_mocked_post(1u64.into(), 1u64.into()),
         };
         assert_eq!(expected, response)
     }
