@@ -377,7 +377,7 @@ impl<'a> ProfilesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        mocks::mock_dependencies_with_custom_querier,
+        mocks::mock_queriers::mock_dependencies_with_custom_querier,
         profiles::{
             mocks::MockProfilesQueries,
             models_query::{

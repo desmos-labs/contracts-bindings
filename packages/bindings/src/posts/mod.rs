@@ -1,6 +1,6 @@
 //! Contains utilities,structs and enum to interact with the Desmos x/posts module.
 
-#[cfg(feature = "mocks")]
+#[cfg(all(not(target_arch = "wasm32"), test))]
 pub mod mocks;
 pub mod models;
 #[cfg(feature = "query")]

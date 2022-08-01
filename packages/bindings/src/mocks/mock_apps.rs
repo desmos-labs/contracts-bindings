@@ -947,7 +947,7 @@ mod tests {
     use super::*;
     use crate::{
         posts::{
-            mocks::get_mocked_post, models_query::QueryPostResponse, msg::PostsMsg,
+            mocks::MockPostsQueries, models_query::QueryPostResponse, msg::PostsMsg,
             querier::PostsQuerier,
         },
         profiles::{
@@ -963,7 +963,7 @@ mod tests {
             msg::RelationshipsMsg, querier::RelationshipsQuerier,
         },
         reports::{
-            mocks::get_mocked_report, models_query::QueryReportResponse, msg::ReportsMsg,
+            mocks::MockReportsQueries, models_query::QueryReportResponse, msg::ReportsMsg,
             querier::ReportsQuerier,
         },
         subspaces::{
@@ -1096,7 +1096,7 @@ mod tests {
         let querier = PostsQuerier::new(app_querier.deref());
         let response = querier.query_post(1, 1).unwrap();
         let expected = QueryPostResponse {
-            post: get_mocked_post(1u64.into(), 1u64.into()),
+            post: MockPostsQueries::get_mocked_post(1u64.into(), 1u64.into()),
         };
         assert_eq!(expected, response)
     }
@@ -1121,7 +1121,7 @@ mod tests {
         let querier = ReportsQuerier::new(app_querier.deref());
         let response = querier.query_report(1, 1).unwrap();
         let expected = QueryReportResponse {
-            report: get_mocked_report(&1u64.into()),
+            report: MockReportsQueries::get_mocked_report(&1u64.into()),
         };
         assert_eq!(expected, response)
     }

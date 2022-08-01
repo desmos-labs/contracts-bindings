@@ -182,10 +182,8 @@ impl<'a> ReportsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_dependencies_with_custom_querier;
-    use crate::reports::mocks::{
-        get_mocked_reason, get_mocked_reasons, get_mocked_report, get_mocked_reports,
-    };
+    use crate::mocks::mock_queriers::mock_dependencies_with_custom_querier;
+    use crate::reports::mocks::MockReportsQueries;
     use crate::reports::querier::ReportsQuerier;
     use cosmwasm_std::Uint64;
     use std::ops::Deref;
@@ -197,7 +195,10 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_reports(1, None, None, None).unwrap();
-        assert_eq!(get_mocked_reports(&Uint64::new(1)), response.reports);
+        assert_eq!(
+            MockReportsQueries::get_mocked_reports(&Uint64::new(1)),
+            response.reports
+        );
         assert_eq!(None, response.pagination);
     }
 
@@ -208,7 +209,7 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let mut it = reports_querier.iterate_reports(1, None, None, 32);
-        let expected_items = get_mocked_reports(&Uint64::new(1));
+        let expected_items = MockReportsQueries::get_mocked_reports(&Uint64::new(1));
 
         let first_element = it.next().unwrap().unwrap();
         let second_element = it.next().unwrap().unwrap();
@@ -224,7 +225,10 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_report(1, 1).unwrap();
-        assert_eq!(get_mocked_report(&Uint64::new(1)), response.report);
+        assert_eq!(
+            MockReportsQueries::get_mocked_report(&Uint64::new(1)),
+            response.report
+        );
     }
 
     #[test]
@@ -234,7 +238,10 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_reasons(1, None).unwrap();
-        assert_eq!(get_mocked_reasons(&Uint64::new(1)), response.reasons);
+        assert_eq!(
+            MockReportsQueries::get_mocked_reasons(&Uint64::new(1)),
+            response.reasons
+        );
         assert_eq!(None, response.pagination);
     }
 
@@ -245,7 +252,7 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let mut it = reports_querier.iterate_reasons(1, 32);
-        let expected_items = get_mocked_reasons(&Uint64::new(1));
+        let expected_items = MockReportsQueries::get_mocked_reasons(&Uint64::new(1));
 
         let first_element = it.next().unwrap().unwrap();
         let second_element = it.next().unwrap().unwrap();
@@ -261,6 +268,9 @@ mod tests {
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
         let response = reports_querier.query_reason(1, 1).unwrap();
-        assert_eq!(get_mocked_reason(&Uint64::new(1)), response.reason);
+        assert_eq!(
+            MockReportsQueries::get_mocked_reason(&Uint64::new(1)),
+            response.reason
+        );
     }
 }

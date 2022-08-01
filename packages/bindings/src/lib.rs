@@ -6,7 +6,7 @@
 extern crate core;
 #[cfg(feature = "iterators")]
 pub mod iter;
-#[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
+#[cfg(all(not(target_arch = "wasm32"), test))]
 pub mod mocks;
 #[cfg(feature = "msg")]
 pub mod msg;
@@ -24,7 +24,5 @@ pub mod relationships;
 pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
-#[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
-pub mod test_utils;
 
 pub mod types;
