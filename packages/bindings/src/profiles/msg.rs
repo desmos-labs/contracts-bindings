@@ -233,7 +233,7 @@ impl ProfilesMsg {
     }
 
     /// Creates an instance of [`ProfilesMsg::SetDefaultExternalAddress`].
-    /// 
+    ///
     /// * `chain_name` - The chain name associated with the link to be set as default one.
     /// * `target` - The external address to be set as default one.
     /// * `signer` - The profile address which to set a default external address.

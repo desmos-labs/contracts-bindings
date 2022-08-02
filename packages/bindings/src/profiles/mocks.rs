@@ -12,7 +12,8 @@ use crate::profiles::{
     models_query::{
         QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
         QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryIncomingDtagTransferRequestResponse, QueryProfileResponse, QueryDefaultExternalAddressesResponse,
+        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+        QueryProfileResponse,
     },
     query::ProfilesQuery,
 };
@@ -118,7 +119,7 @@ impl MockProfilesQueries {
                     .to_string(),
             }),
             creation_time: "2022-02-21T13:18:57.800827Z".to_string(),
-            expiration_time: "2023-02-21T13:18:57.800827Z".to_string()
+            expiration_time: "2023-02-21T13:18:57.800827Z".to_string(),
         }
     }
 
@@ -159,14 +160,14 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
                 owners: vec![owner],
                 pagination: Default::default(),
             })
-        },
+        }
         ProfilesQuery::DefaultExternalAddresses { .. } => {
             let chain_link = MockProfilesQueries::get_mock_chain_link();
             to_binary(&QueryDefaultExternalAddressesResponse {
                 links: vec![chain_link],
                 pagination: Default::default(),
             })
-        },
+        }
         ProfilesQuery::ApplicationLinks { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinksResponse {
