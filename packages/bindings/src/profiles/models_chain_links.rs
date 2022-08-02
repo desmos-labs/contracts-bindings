@@ -78,7 +78,7 @@ pub enum SignatureValueType {
     #[serde(rename = "SIGNATURE_VALUE_TYPE_COSMOS_AMINO")]
     CosmosAnimo,
     /// Used when the value has been encoded following the EVM personal_sign specification.
-    #[serde(rename = "SIGNATURE_VALUE_TYPE_EVM_PERSONAL_SIGN")]
+    #[serde(rename = "SIGNATURE_VALUE_TYPE_EVM_PERSONAL_SIGN")]   
     EVMPersonalSign,
 }
 

@@ -594,11 +594,12 @@ mod tests {
         let owned_deps = mock_dependencies_with_custom_querier(&[]);
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
-        let mut it = profiles_querier.iterate_default_external_addresses(
-            Some(Addr::unchecked("")),
-            Some("".to_string()),
-            10,
-        );
+        let mut it = profiles_querier
+            .iterate_default_external_addresses(
+                Some(Addr::unchecked("")),
+                Some("".to_string()),
+                10,
+            );
         assert_eq!(
             it.next().unwrap().unwrap(),
             MockProfilesQueries::get_mock_chain_link()
