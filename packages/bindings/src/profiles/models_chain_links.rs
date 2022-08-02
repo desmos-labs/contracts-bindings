@@ -47,34 +47,6 @@ pub struct Proof {
     pub plain_text: String,
 }
 
-/// Represents a signing mode with its own security guarantees.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub enum SignMode {
-    /// Signing mode which uses SignDoc and is erified with raw bytes from Tx.
-    #[serde(rename = "SIGN_MODE_DIRECT")]
-    Direct,
-    /// Future signing mode that will verify some human-readable textual representation
-    /// on top of the binary representation from SIGN_MODE_DIRECT.
-    /// It is currently not supported.
-    #[serde(rename = "SIGN_MODE_TEXTUAL")]
-    Textual,
-    /// Specifies a signing mode which uses SignDocDirectAux.
-    /// As opposed to SIGN_MODE_DIRECT, this sign mode does not
-    /// require signers signing over other signers' `signer_info`.
-    /// It also allows for adding Tips in transactions.
-    ///
-    /// Since: cosmos-sdk 0.46
-    #[serde(rename = "SIGN_MODE_DIRECT_AUX")]
-    DirectAux,
-    /// Backwards compatibility mode which uses Amino JSON and will be removed in the future.
-    #[serde(rename = "SIGN_MODE_LEGACY_AMINO_JSON")]
-    AminoJson,
-    /// Specifies the sign mode for EIP 191 signing on the Cosmos SDK.
-    /// Ref: `<https://eips.ethereum.org/EIPS/eip-191>`
-    #[serde(rename = "SIGN_MODE_EIP_191")]
-    Eip191,
-}
-
 /// Represents a signature of a payload.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
@@ -83,9 +55,31 @@ pub struct Signature {
     #[serde(rename = "@type")]
     pub proto_type: String,
     /// Sign mode.
-    pub mode: SignMode,
+    pub value_type: SignatureValueType,
     /// Signature data.
     pub signature: Binary,
+}
+
+/// Represents all the possible signature types.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub enum SignatureValueType {
+    /// Specifies an unknown signing mode and will be rejected.
+    #[serde(rename = "SIGNATURE_VALUE_TYPE_UNSPECIFIED")]
+    Unspecified,
+    /// Used when the value has been signed as a raw byte array
+    #[serde(rename = "SIGNATURE_VALUE_TYPE_RAW")]
+    Raw,
+    /// Used when the signed value has been encoded as a Protobuf transaction containing the owner
+    /// address inside its memo field.
+    #[serde(rename = "SIGNATURE_VALUE_TYPE_COSMOS_DIRECT")]
+    CosmosDirect,
+    /// Used when the value has been encoded as an Amino transaction containing the owner address inside
+    /// its memo field.
+    #[serde(rename = "SIGNATURE_VALUE_TYPE_COSMOS_AMINO")]
+    CosmosAnimo,
+    /// Used when the value has been encoded following the EVM personal_sign specification.
+    #[serde(rename = "SIGNATURE_VALUE_TYPE_EVM_PERSONAL_SIGN")]   
+    EVMPersonalSign,
 }
 
 /// Contains the data of the linked chain.
