@@ -73,7 +73,7 @@ impl MockProfilesQueries {
                     key: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap(),
                 },
                 signature: Signature {
-                    proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
+                    proto_type: "/desmos.profiles.v1beta1.SignatureData".to_string(),
                     value_type: SignatureValueType::CosmosDirect,
                     signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
                 },
