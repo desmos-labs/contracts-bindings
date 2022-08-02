@@ -1,29 +1,10 @@
 # Changelog
 
-## Unreleased
+## Version 1.0.1
 
-- Added `PageIterator` to provide paginated chain data as a sequence of elements;
-- Renamed package from `desmos-std` to `desmos-bindings`;
-- Added methods to queriers to fetch data using the `PageIterator`;
-- 
+* (#29)[https://github.com/desmos-labs/desmos-bindings/pull/29] Added integration test library `mock_apps`
+* (#30)[https://github.com/desmos-labs/desmos-bindings/pull/30] Replace `mocks` feature into `test` config
 
-### Version 0.1.6
+## Version 1.0.0
 
-- Renamed package from `desmos-cw` to `desmos-std`
-
-### Version 0.1.4
-
-- Renamed package from `desmos` to `desmos-cw`
-
-### Version 0.1.3
-
-- Updated `cosmwasm` dependencies to `v1.0.0-beta`;
-- Updated custom queries code to fit `v1.0.0-beta` changes;
-- Updated schemas;
-- Fixed broken tests.
-
-### Version 0.1.2
-
-- Updated `cosmwasm` to `v0.14.0`;
-- Updated schemas to be compatible the latest [desmos](https://github.com/desmos-labs/desmos) version changes;
-- Fixed broken tests.
+* Implemented all modules for cosmwasm 
