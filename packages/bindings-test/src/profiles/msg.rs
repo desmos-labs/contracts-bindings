@@ -264,8 +264,8 @@ mod tests {
             creator: Addr::unchecked(contract_address.clone()),
         };
 
-        // Prepare the LinkChainAccount msg of the default address for the smart contract
-        let link_default_chain_account = ProfilesMsg::LinkChainAccount {
+        // Prepare the LinkChainAccount msg of the first address for the smart contract
+        let link_first_chain_account = ProfilesMsg::LinkChainAccount {
             chain_address: Address {
                 proto_type: "/desmos.profiles.v3.Bech32Address".to_string(),
                 value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
@@ -287,8 +287,8 @@ mod tests {
             signer: Addr::unchecked(&contract_address),
         };
 
-        // Prepare the LinkChainAccount msg of the new address for the smart contract
-        let link_new_chain_account = ProfilesMsg::LinkChainAccount {
+        // Prepare the LinkChainAccount msg of the second address for the smart contract
+        let link_second_chain_account = ProfilesMsg::LinkChainAccount {
             chain_address: Address {
                 proto_type: "/desmos.profiles.v3.Bech32Address".to_string(),
                 value: "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn".to_string(),
@@ -310,22 +310,36 @@ mod tests {
             signer: Addr::unchecked(&contract_address),
         };
 
+        // Prepare the SetDefaultExternalAddress msg
         let set_default_external_address = ProfilesMsg::set_default_external_address(
             "cosmos",
             "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn",
             Addr::unchecked(&contract_address),
         );
 
-        let delete_profile = ProfilesMsg::delete_profile(Addr::unchecked(&contract_address));
+        // Prepare the UnlinkChainAccount msg for first chain account
+        let unlink_first_chain_account = ProfilesMsg::UnlinkChainAccount {
+            owner: Addr::unchecked(&contract_address),
+            chain_name: "cosmos".to_string(),
+            target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
+        };
+
+        // Prepare the UnlinkChainAccount msg for second chain account
+        let unlink_second_chain_account = ProfilesMsg::UnlinkChainAccount {
+            owner: Addr::unchecked(&contract_address),
+            chain_name: "cosmos".to_string(),
+            target: "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn".to_string(),
+        };
 
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![
                 save_profile.into(),
-                link_default_chain_account.into(),
-                link_new_chain_account.into(),
+                link_first_chain_account.into(),
+                link_second_chain_account.into(),
                 set_default_external_address.into(),
-                delete_profile.into(),
+                unlink_first_chain_account.into(),
+                unlink_second_chain_account.into(),
             ],
         };
 
