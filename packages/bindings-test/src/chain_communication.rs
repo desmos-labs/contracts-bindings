@@ -1,4 +1,4 @@
-use crate::consts::{USER1_KEY, GAS};
+use crate::consts::{GAS, USER1_KEY};
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
 use cosmwasm_std::Uint64;
 use desmos_bindings::subspaces::models_query::{
