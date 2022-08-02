@@ -271,7 +271,7 @@ impl ProfilesMsg {
 
 #[cfg(test)]
 mod tests {
-    use crate::profiles::models_chain_links::{Address, SignMode};
+    use crate::profiles::models_chain_links::{Address, SignatureValueType};
     use crate::profiles::{
         models_app_links::{CallData, Data, OracleRequest},
         models_chain_links::{ChainConfig, Proof, Signature},
@@ -380,7 +380,7 @@ mod tests {
             },
             signature: Signature {
                 proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
-                mode: SignMode::Direct,
+                value_type: SignatureValueType::CosmosDirect,
                 signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
             },
             plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
