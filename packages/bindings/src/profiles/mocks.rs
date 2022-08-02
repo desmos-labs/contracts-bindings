@@ -12,7 +12,7 @@ use crate::profiles::{
     models_query::{
         QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
         QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
+        QueryIncomingDtagTransferRequestResponse, QueryProfileResponse, QueryDefaultExternalAddressesResponse,
     },
     query::ProfilesQuery,
 };
@@ -118,6 +118,7 @@ impl MockProfilesQueries {
                     .to_string(),
             }),
             creation_time: "2022-02-21T13:18:57.800827Z".to_string(),
+            expiration_time: "2023-02-21T13:18:57.800827Z".to_string()
         }
     }
 
@@ -158,7 +159,14 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
                 owners: vec![owner],
                 pagination: Default::default(),
             })
-        }
+        },
+        ProfilesQuery::DefaultExternalAddresses { .. } => {
+            let chain_link = MockProfilesQueries::get_mock_chain_link();
+            to_binary(&QueryDefaultExternalAddressesResponse {
+                links: vec![chain_link],
+                pagination: Default::default(),
+            })
+        },
         ProfilesQuery::ApplicationLinks { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinksResponse {
@@ -183,15 +191,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
 
 #[cfg(test)]
 mod tests {
-    use crate::profiles::{
-        mocks::{mock_profiles_query_response, MockProfilesQueries},
-        models_query::{
-            QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
-            QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-            QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
-        },
-        query::ProfilesQuery,
-    };
+    use super::*;
     use cosmwasm_std::{to_binary, Addr};
 
     #[test]
@@ -246,6 +246,21 @@ mod tests {
         let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryChainLinkOwnersResponse {
             owners: vec![MockProfilesQueries::get_mock_chain_link_owner()],
+            pagination: Default::default(),
+        });
+        assert_eq!(response.into_result().ok(), expected.ok())
+    }
+
+    #[test]
+    fn test_query_default_external_addresses() {
+        let query = ProfilesQuery::DefaultExternalAddresses {
+            owner: Some(Addr::unchecked("")),
+            chain_name: Some("".to_string()),
+            pagination: Default::default(),
+        };
+        let response = mock_profiles_query_response(&query);
+        let expected = to_binary(&QueryDefaultExternalAddressesResponse {
+            links: vec![MockProfilesQueries::get_mock_chain_link()],
             pagination: Default::default(),
         });
         assert_eq!(response.into_result().ok(), expected.ok())

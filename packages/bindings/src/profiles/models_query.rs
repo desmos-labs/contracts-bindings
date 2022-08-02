@@ -50,6 +50,16 @@ pub struct QueryChainLinkOwnersResponse {
     pub pagination: Option<PageResponse>,
 }
 
+/// Response to [`ProfilesQuery::DefaultExternalAddresses`](crate::profiles::query::ProfilesQuery::DefaultExternalAddresses).
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "snake_case")]
+pub struct QueryDefaultExternalAddressesResponse {
+    /// List of default addresses, each one represented by the associated chain link.
+    pub links: Vec<ChainLink>,
+    /// Details of the current fetched page.
+    pub pagination: Option<PageResponse>,
+}
+
 /// Response to [`ProfilesQuery::ApplicationLinks`](crate::profiles::query::ProfilesQuery::ApplicationLinks).
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]

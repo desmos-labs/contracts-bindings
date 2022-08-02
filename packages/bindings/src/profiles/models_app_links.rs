@@ -45,6 +45,8 @@ pub struct ApplicationLink {
     pub result: Option<AppLinkResult>,
     /// The time when the link was created.
     pub creation_time: String,
+    /// The time when the link is expired.
+    pub expiration_time: String,
 }
 
 /// Represents the data associated to a specific user of a
