@@ -45,6 +45,15 @@ pub enum ProfilesQuery {
         /// Optional pagination configs.
         pagination: Option<PageRequest>,
     },
+    /// Message to query the default external addresses.
+    DefaultExternalAddresses{
+        /// (Optional) Owner for which to query the default addresses.
+        owner: Option<Addr>,
+        /// (Optional) Chain name to query the default addresses for.
+        chain_name: Option<String>,
+        /// Optional pagination configs.
+        pagination: Option<PageRequest>,
+    },
     /// Message to query the application links.
     ApplicationLinks {
         /// Address associated for which the link should be searched.
