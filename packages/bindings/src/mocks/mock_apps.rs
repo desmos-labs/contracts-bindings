@@ -164,7 +164,7 @@ impl DesmosKeeper {
                     events: events,
                     data: None,
                 })
-            },
+            }
             ProfilesMsg::SetDefaultExternalAddress {
                 chain_name,
                 target,

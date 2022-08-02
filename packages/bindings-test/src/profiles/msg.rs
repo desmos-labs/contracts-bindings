@@ -4,7 +4,7 @@ mod tests {
     use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
     use desmos_bindings::profiles::models_chain_links::{
-        Address, ChainConfig, Proof, SignatureValueType, Signature,
+        Address, ChainConfig, Proof, Signature, SignatureValueType,
     };
     use desmos_bindings::profiles::msg::ProfilesMsg;
     use desmos_bindings::profiles::msg::ProfilesMsg::{DeleteProfile, SaveProfile};
@@ -313,7 +313,7 @@ mod tests {
         let set_default_external_address = ProfilesMsg::set_default_external_address(
             "cosmos",
             "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn",
-            Addr::unchecked(&contract_address)
+            Addr::unchecked(&contract_address),
         );
 
         // Wrap the message into the smart contract message

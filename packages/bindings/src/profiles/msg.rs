@@ -233,7 +233,7 @@ impl ProfilesMsg {
     }
 
     /// Creates an instance of [`ProfilesMsg::SetDefaultExternalAddress`]
-    /// 
+    ///
     /// * `chain_name` - The chain name associated with the link to be set as default one.
     /// * `target` - The external address to be set as default one.
     /// * `signer` - The profile address which to set a default external address.
@@ -455,7 +455,6 @@ mod tests {
             chain_name: "cosmos".to_owned(),
             target: "cosmos1cjf97gpzwmaf30pzvaargfgr884mpp5ak8f7ns".to_owned(),
             signer: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
-
         };
         assert_eq!(expected, msg)
     }
