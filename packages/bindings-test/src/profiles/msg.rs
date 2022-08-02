@@ -217,7 +217,7 @@ mod tests {
                     key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap(),
                 },
                 signature: Signature {
-                    proto_type: "/desmos.profiles.v3.Signature".to_string(),
+                    proto_type: "/desmos.profiles.v3.SingleSignature".to_string(),
                     value_type: SignatureValueType::Raw,
                     signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap(),
                 },
@@ -277,7 +277,7 @@ mod tests {
                     key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap(),
                 },
                 signature: Signature {
-                    proto_type: "/desmos.profiles.v3.Signature".to_string(),
+                    proto_type: "/desmos.profiles.v3.SingleSignature".to_string(),
                     value_type: SignatureValueType::Raw,
                     signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap(),
                 },
@@ -300,7 +300,7 @@ mod tests {
                     key: Binary::from_base64("AqYZhHKaeBcrYktZEvor/SUDlHCkv5JBplaG2vc2bvfS").unwrap(),
                 },
                 signature: Signature {
-                    proto_type: "/desmos.profiles.v3.Signature".to_string(),
+                    proto_type: "/desmos.profiles.v3.SingleSignature".to_string(),
                     value_type: SignatureValueType::Raw,
                     signature: Binary::from_base64("gLIWKbyZ8nUtCVvr8TfPGDYU1rybwPDi6neMuEjfvkwNXJVuNcmthqVeuvxEln7K15PIEPUGTMTV/kU0n3iGPw==").unwrap(),
                 },
@@ -316,6 +316,8 @@ mod tests {
             Addr::unchecked(&contract_address),
         );
 
+        let delete_profile = ProfilesMsg::delete_profile(Addr::unchecked(&contract_address));
+
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![
@@ -323,6 +325,7 @@ mod tests {
                 link_default_chain_account.into(),
                 link_new_chain_account.into(),
                 set_default_external_address.into(),
+                delete_profile.into(),
             ],
         };
 
