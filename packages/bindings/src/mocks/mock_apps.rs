@@ -703,7 +703,7 @@ impl Module for DesmosKeeper {
         _api: &dyn Api,
         _storage: &mut dyn Storage,
         _router: &dyn CosmosRouter<ExecC = ExecC, QueryC = QueryC>,
-        _block: &BlockInfo,
+        block: &BlockInfo,
         _sender: Addr,
         msg: DesmosMsg,
     ) -> AnyResult<AppResponse> {
