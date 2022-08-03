@@ -20,7 +20,7 @@ schemars = "0.8.1"
 serde = { version = "1.0.103", default-features = false, features = ["derive"] }
 thiserror = "1.0.31"
 
-[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+[target.'cfg(all(not(target_arch = "wasm32"), feature = "mocks"))'.dependencies]
 cw-multi-test = { version = "0.13.4"}
 
 [dev-dependencies]
