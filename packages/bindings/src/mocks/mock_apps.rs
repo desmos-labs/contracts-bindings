@@ -52,18 +52,12 @@ impl DesmosKeeper {
                         .add_attribute("profile_creator", creator)
                         .add_attribute("profile_creation_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::DeleteProfile { creator, .. } => {
                 let mut events = Vec::with_capacity(1);
                 events.push(Event::new("delete_profile").add_attribute("profile_creator", creator));
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::RequestDtagTransfer {
                 sender: request_sender,
@@ -76,10 +70,7 @@ impl DesmosKeeper {
                         .add_attribute("request_sender", request_sender)
                         .add_attribute("request_receiver", request_receiver),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::AcceptDtagTransferRequest {
                 new_dtag,
@@ -94,10 +85,7 @@ impl DesmosKeeper {
                         .add_attribute("request_sender", request_sender)
                         .add_attribute("request_receiver", request_receiver),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::RefuseDtagTransferRequest {
                 sender: request_sender,
@@ -109,10 +97,7 @@ impl DesmosKeeper {
                         .add_attribute("request_sender", request_sender)
                         .add_attribute("request_receiver", request_receiver),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::CancelDtagTransferRequest {
                 sender: request_sender,
@@ -124,10 +109,7 @@ impl DesmosKeeper {
                         .add_attribute("request_sender", request_sender)
                         .add_attribute("request_receiver", request_receiver),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::LinkChainAccount {
                 chain_address,
@@ -143,10 +125,7 @@ impl DesmosKeeper {
                         .add_attribute("chain_link_account_owner", owner)
                         .add_attribute("chain_link_creation_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::UnlinkChainAccount {
                 owner,
@@ -160,10 +139,7 @@ impl DesmosKeeper {
                         .add_attribute("chain_link_source_chain_name", chain_name)
                         .add_attribute("chain_link_account_owner", owner),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::LinkApplication {
                 sender: user,
@@ -178,10 +154,7 @@ impl DesmosKeeper {
                         .add_attribute("application_username", link_data.username)
                         .add_attribute("application_link_creation_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ProfilesMsg::UnlinkApplication {
                 application,
@@ -195,10 +168,7 @@ impl DesmosKeeper {
                         .add_attribute("application_name", application)
                         .add_attribute("application_username", username),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
         }
     }
@@ -216,29 +186,20 @@ impl DesmosKeeper {
                         .add_attribute("subspace_creator", creator)
                         .add_attribute("creation_date", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::EditSubspace { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
 
                 events.push(Event::new("edit_subspace").add_attribute("subspace_id", subspace_id));
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::DeleteSubspace { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
 
                 events
                     .push(Event::new("delete_subspace").add_attribute("subspace_id", subspace_id));
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::CreateSection { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
@@ -247,10 +208,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("create_section", 1.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::EditSection {
                 subspace_id,
@@ -263,10 +221,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("section_id", section_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::MoveSection {
                 subspace_id,
@@ -279,10 +234,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("section_id", section_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::DeleteSection {
                 subspace_id,
@@ -295,10 +247,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("section_id", section_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::CreateUserGroup { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
@@ -307,10 +256,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("user_group_id", 1.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::EditUserGroup {
                 subspace_id,
@@ -323,10 +269,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("user_group_id", group_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::MoveUserGroup {
                 subspace_id,
@@ -339,10 +282,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("user_group_id", group_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::SetUserGroupPermissions {
                 subspace_id,
@@ -355,10 +295,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("user_group_id", group_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::DeleteUserGroup {
                 subspace_id,
@@ -371,10 +308,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("user_group_id", group_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::AddUserToUserGroup {
                 subspace_id,
@@ -389,10 +323,7 @@ impl DesmosKeeper {
                         .add_attribute("user_group_id", group_id.to_string())
                         .add_attribute("user", user),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::RemoveUserFromUserGroup {
                 subspace_id,
@@ -407,10 +338,7 @@ impl DesmosKeeper {
                         .add_attribute("user_group_id", group_id.to_string())
                         .add_attribute("user", user),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             SubspacesMsg::SetUserPermissions {
                 subspace_id, user, ..
@@ -421,10 +349,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("user", user),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
         }
     }
@@ -445,10 +370,7 @@ impl DesmosKeeper {
                         .add_attribute("counterparty", counterparty)
                         .add_attribute("subspace", subspace_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             RelationshipsMsg::DeleteRelationship {
                 signer: creator,
@@ -462,10 +384,7 @@ impl DesmosKeeper {
                         .add_attribute("counterparty", counterparty)
                         .add_attribute("subspace", subspace_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             RelationshipsMsg::BlockUser {
                 blocker,
@@ -480,10 +399,7 @@ impl DesmosKeeper {
                         .add_attribute("blocked", blocked)
                         .add_attribute("subspace", subspace_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             RelationshipsMsg::UnblockUser {
                 blocker,
@@ -497,10 +413,7 @@ impl DesmosKeeper {
                         .add_attribute("blocked", blocked)
                         .add_attribute("subspace", subspace_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
         }
     }
@@ -524,10 +437,7 @@ impl DesmosKeeper {
                         .add_attribute("author", author)
                         .add_attribute("creation_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             PostsMsg::EditPost {
                 subspace_id,
@@ -541,10 +451,7 @@ impl DesmosKeeper {
                         .add_attribute("post_id", post_id)
                         .add_attribute("last_edit_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             PostsMsg::DeletePost {
                 subspace_id,
@@ -557,10 +464,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("post_id", post_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             PostsMsg::AddPostAttachment {
                 subspace_id,
@@ -575,10 +479,7 @@ impl DesmosKeeper {
                         .add_attribute("attachment_id", 1.to_string())
                         .add_attribute("last_edit_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             PostsMsg::RemovePostAttachment {
                 subspace_id,
@@ -594,10 +495,7 @@ impl DesmosKeeper {
                         .add_attribute("attachment_id", attachment_id.to_string())
                         .add_attribute("last_edit_time", block.time.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             PostsMsg::AnswerPoll {
                 subspace_id,
@@ -612,10 +510,7 @@ impl DesmosKeeper {
                         .add_attribute("post_id", post_id)
                         .add_attribute("poll_id", poll_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
         }
     }
@@ -657,10 +552,7 @@ impl DesmosKeeper {
                         );
                     }
                 }
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReportsMsg::DeleteReport {
                 subspace_id,
@@ -673,10 +565,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("report_id", report_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReportsMsg::SupportStandardReason {
                 subspace_id,
@@ -690,10 +579,7 @@ impl DesmosKeeper {
                         .add_attribute("standard_reason_id", standard_reason_id.to_string())
                         .add_attribute("reason_id", 1.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReportsMsg::AddReason { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
@@ -702,10 +588,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("reason_id", 1.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReportsMsg::RemoveReason {
                 subspace_id,
@@ -718,10 +601,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("reason_id", reason_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
         }
     }
@@ -744,10 +624,7 @@ impl DesmosKeeper {
                         .add_attribute("reaction_id", 1.to_string())
                         .add_attribute("user", user),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReactionsMsg::RemoveReaction {
                 subspace_id,
@@ -762,10 +639,7 @@ impl DesmosKeeper {
                         .add_attribute("post_id	", post_id)
                         .add_attribute("reaction_id", reaction_id.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReactionsMsg::AddRegisteredReaction { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
@@ -774,10 +648,7 @@ impl DesmosKeeper {
                         .add_attribute("subspace_id", subspace_id)
                         .add_attribute("registered_reaction_id", 1.to_string()),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReactionsMsg::EditRegisteredReaction {
                 subspace_id,
@@ -793,10 +664,7 @@ impl DesmosKeeper {
                             registered_reaction_id.to_string(),
                         ),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReactionsMsg::RemoveRegisteredReaction {
                 subspace_id,
@@ -812,20 +680,14 @@ impl DesmosKeeper {
                             registered_reaction_id.to_string(),
                         ),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
             ReactionsMsg::SetReactionsParams { subspace_id, .. } => {
                 let mut events = Vec::with_capacity(1);
                 events.push(
                     Event::new("set_reactions_params").add_attribute("subspace_id", subspace_id),
                 );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
+                AnyResult::Ok(AppResponse { events, data: None })
             }
         }
     }
