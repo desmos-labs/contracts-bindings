@@ -15,7 +15,8 @@ use crate::{
         models_query::{
             QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
             QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-            QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
+            QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+            QueryProfileResponse,
         },
         query::ProfilesQuery,
     },
@@ -233,6 +234,62 @@ impl<'a> ProfilesQuerier<'a> {
         )
     }
 
+    /// Queries default external addresses.
+    ///
+    /// * `owner` - Optional address of the owner to which search the default external addresses for.
+    /// * `chain_name` - Optional chain name to which search the default external addresses for.
+    /// Used only if owner is also set.
+    /// * `pagination` - Optional pagination configs.
+    pub fn query_default_external_addresses(
+        &self,
+        owner: Option<Addr>,
+        chain_name: Option<String>,
+        pagination: Option<PageRequest>,
+    ) -> StdResult<QueryDefaultExternalAddressesResponse> {
+        let request = DesmosQuery::Profiles(ProfilesQuery::DefaultExternalAddresses {
+            owner,
+            chain_name,
+            pagination,
+        });
+        let res: QueryDefaultExternalAddressesResponse = self.querier.query(&request.into())?;
+        Ok(res)
+    }
+
+    /// Gives an iterator to scan over chain link owners.
+    ///
+    /// * `owner` - Optional address of the owner to which search the default external addresses for.
+    /// * `chain_name` - Optional chain name to which search the default external addresses for.
+    /// Used only if owner is also set.
+    /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
+    pub fn iterate_default_external_addresses(
+        &self,
+        owner: Option<Addr>,
+        chain_name: Option<String>,
+        page_size: u64,
+    ) -> PageIterator<ChainLink, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_default_external_addresses(
+                    owner.clone(),
+                    chain_name.clone(),
+                    Some(PageRequest {
+                        key,
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: None,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.links,
+                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                })
+            }),
+            page_size,
+        )
+    }
+
     /// Queries a user's app links or all the performed app links.
     ///
     /// * `user` - Optional Desmos address of the user to which search the link for, if it's None
@@ -376,18 +433,10 @@ impl<'a> ProfilesQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use crate::{
         mocks::mock_queriers::mock_dependencies_with_custom_querier,
-        profiles::{
-            mocks::MockProfilesQueries,
-            models_query::{
-                QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
-                QueryApplicationLinksResponse, QueryChainLinkOwnersResponse,
-                QueryChainLinksResponse, QueryIncomingDtagTransferRequestResponse,
-                QueryProfileResponse,
-            },
-            querier::ProfilesQuerier,
-        },
+        profiles::mocks::MockProfilesQueries,
     };
     use cosmwasm_std::Addr;
     use std::ops::Deref;
@@ -517,6 +566,42 @@ mod tests {
         assert_eq!(
             it.next().unwrap().unwrap(),
             MockProfilesQueries::get_mock_chain_link_owner()
+        );
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_default_external_addresses() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let response = profiles_querier
+            .query_default_external_addresses(
+                Some(Addr::unchecked("")),
+                Some("".to_string()),
+                Default::default(),
+            )
+            .unwrap();
+        let expected = QueryDefaultExternalAddressesResponse {
+            links: vec![MockProfilesQueries::get_mock_chain_link()],
+            pagination: Default::default(),
+        };
+        assert_eq!(response, expected)
+    }
+
+    #[test]
+    fn test_iterate_default_external_addresses() {
+        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let deps = owned_deps.as_ref();
+        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let mut it = profiles_querier.iterate_default_external_addresses(
+            Some(Addr::unchecked("")),
+            Some("".to_string()),
+            10,
+        );
+        assert_eq!(
+            it.next().unwrap().unwrap(),
+            MockProfilesQueries::get_mock_chain_link()
         );
         assert!(it.next().is_none());
     }

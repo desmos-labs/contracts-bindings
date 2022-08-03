@@ -1,6 +1,6 @@
 {
   "address": {
-    "@type": "/desmos.profiles.v2.Bech32Address",
+    "@type": "/desmos.profiles.v3.Bech32Address",
     "value": "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r",
     "prefix": "cosmos"
   },
@@ -10,8 +10,8 @@
       "key": "A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY"
     },
     "signature": {
-      "@type": "/desmos.profiles.v2.SingleSignatureData",
-      "mode": "SIGN_MODE_DIRECT",
+      "@type": "/desmos.profiles.v3.SingleSignature",
+      "value_type": "SIGNATURE_VALUE_TYPE_RAW",
       "signature": "dhTNhVqap+JDGTu1GshTkSfzE7p3yb6Z5+f/lqGUzSUSlfFZM/NZG4UsBwR3DyJF28nmS66jsarPXOTlLnfTBw=="
     },
     "plain_text": "6465736d6f73316a6e70666130367868666c796a68366b6c776c7271386d6b3535733533637a68366e63646d33"

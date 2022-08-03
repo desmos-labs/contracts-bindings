@@ -1,5 +1,7 @@
 use cosmwasm_std::Uint64;
 
+pub const GAS: Uint64 = Uint64::new(300000);
+
 pub const USER1_KEY: &str = "user1";
 pub const USER1_ADDRESS: &str = "desmos1jnpfa06xhflyjh6klwlrq8mk55s53czh6ncdm3";
 pub const USER2_KEY: &str = "user2";
@@ -13,7 +15,6 @@ pub const TEST_POLL_ID: u32 = 1;
 pub const TEST_REASON_ID: u32 = 1;
 pub const TEST_DELETABLE_REASON_ID: u32 = 2;
 pub const TEST_REPORT_ID_WITH_USER_TARGET: Uint64 = Uint64::new(1);
-pub const TEST_REPORT_ID_WITH_POST_TARGET: Uint64 = Uint64::new(2);
 pub const TEST_DELETABLE_REPORT_ID: Uint64 = Uint64::new(3);
 
 pub const TEST_EDITABLE_REGISTERED_REACTION_ID: u32 = 1;

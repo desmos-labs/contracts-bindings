@@ -83,6 +83,15 @@ pub enum ProfilesMsg {
         /// The external address to be removed.
         target: String,
     },
+    /// Set an external address as a default one.
+    SetDefaultExternalAddress {
+        /// Name of the chain for which to set the default address
+        chain_name: String,
+        /// Address to be set as the default one.
+        target: String,
+        /// User address signing the message.
+        signer: Addr,
+    },
     /// Connects a profile with a centralized application
     /// account (eg. Twitter, GitHub, etc).
     LinkApplication {
@@ -223,6 +232,23 @@ impl ProfilesMsg {
         }
     }
 
+    /// Creates an instance of [`ProfilesMsg::SetDefaultExternalAddress`].
+    ///
+    /// * `chain_name` - The chain name associated with the link to be set as default one.
+    /// * `target` - The external address to be set as default one.
+    /// * `signer` - The profile address which to set a default external address.
+    pub fn set_default_external_address(
+        chain_name: &str,
+        target: &str,
+        signer: Addr,
+    ) -> ProfilesMsg {
+        ProfilesMsg::SetDefaultExternalAddress {
+            chain_name: chain_name.to_owned(),
+            target: target.to_owned(),
+            signer,
+        }
+    }
+
     /// Creates an instance of [`ProfilesMsg::LinkApplication`].
     ///
     /// * `sender` - Sender of the connection request.
@@ -271,11 +297,11 @@ impl ProfilesMsg {
 
 #[cfg(test)]
 mod tests {
-    use crate::profiles::models_chain_links::{Address, SignMode};
+    use super::*;
+    use crate::profiles::models_chain_links::{Address, SignatureValueType};
     use crate::profiles::{
         models_app_links::{CallData, Data, OracleRequest},
         models_chain_links::{ChainConfig, Proof, Signature},
-        msg::ProfilesMsg,
     };
     use crate::types::{Height, PubKey};
     use cosmwasm_std::{Addr, Binary, Uint64};
@@ -369,7 +395,7 @@ mod tests {
     #[test]
     fn test_link_chain_account() {
         let chain_addr = Address {
-            proto_type: "/desmos.profiles.v2.Bech32Addres".to_string(),
+            proto_type: "/desmos.profiles.v3.Bech32Addres".to_string(),
             value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
             prefix: Some("cosmos".to_string()),
         };
@@ -379,8 +405,8 @@ mod tests {
                 key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y").unwrap(),
             },
             signature: Signature {
-                proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
-                mode: SignMode::Direct,
+                proto_type: "/desmos.profiles.v1beta1.SignatureData".to_string(),
+                value_type: SignatureValueType::Raw,
                 signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
             },
             plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
@@ -414,6 +440,21 @@ mod tests {
             owner: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
             chain_name: "cosmos".to_owned(),
             target: "cosmos1cjf97gpzwmaf30pzvaargfgr884mpp5ak8f7ns".to_owned(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_set_default_external_address() {
+        let msg = ProfilesMsg::set_default_external_address(
+            "cosmos",
+            "cosmos1cjf97gpzwmaf30pzvaargfgr884mpp5ak8f7ns",
+            Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+        );
+        let expected = ProfilesMsg::SetDefaultExternalAddress {
+            chain_name: "cosmos".to_owned(),
+            target: "cosmos1cjf97gpzwmaf30pzvaargfgr884mpp5ak8f7ns".to_owned(),
+            signer: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
         };
         assert_eq!(expected, msg)
     }

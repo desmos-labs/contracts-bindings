@@ -7,7 +7,8 @@ mod tests {
     use desmos_bindings::profiles::models_profile::Pictures;
     use desmos_bindings::profiles::models_query::{
         QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
+        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+        QueryProfileResponse,
     };
     use desmos_bindings::profiles::query::ProfilesQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
@@ -86,7 +87,7 @@ mod tests {
         assert_eq!(2, result.links.len());
         let cosmos_address = result.links.first().unwrap();
         assert_eq!(
-            "/desmos.profiles.v2.Bech32Address",
+            "/desmos.profiles.v3.Bech32Address",
             cosmos_address.address.proto_type
         );
         assert_eq!(
@@ -97,7 +98,7 @@ mod tests {
 
         let osmosis_address = result.links.last().unwrap();
         assert_eq!(
-            "/desmos.profiles.v2.Bech32Address",
+            "/desmos.profiles.v3.Bech32Address",
             osmosis_address.address.proto_type
         );
         assert_eq!(
@@ -128,7 +129,7 @@ mod tests {
 
         let cosmos_address = result.links.first().unwrap();
         assert_eq!(
-            "/desmos.profiles.v2.Bech32Address",
+            "/desmos.profiles.v3.Bech32Address",
             cosmos_address.address.proto_type
         );
         assert_eq!(
@@ -159,7 +160,7 @@ mod tests {
 
         let cosmos_address = result.links.first().unwrap();
         assert_eq!(
-            "/desmos.profiles.v2.Bech32Address",
+            "/desmos.profiles.v3.Bech32Address",
             cosmos_address.address.proto_type
         );
         assert_eq!(
@@ -194,5 +195,33 @@ mod tests {
             target: "osmo1wrx0kayjzuf27gaaqult0z576y0xggq08qsgu3".to_string(),
         };
         assert_eq!(&expected, owner);
+    }
+
+    #[test]
+    fn test_query_default_external_addresses() {
+        let desmos_cli = DesmosCli::default();
+        let query_msg = DesmosChain {
+            request: ProfilesQuery::DefaultExternalAddresses {
+                owner: Some(Addr::unchecked(USER1_ADDRESS)),
+                chain_name: Some("cosmos".to_string()),
+                pagination: None,
+            }
+            .into(),
+        };
+        let contract_address = desmos_cli.get_contract_by_code(1);
+        let result: QueryDefaultExternalAddressesResponse = desmos_cli
+            .wasm_query(&contract_address, &query_msg)
+            .to_object();
+
+        let cosmos_address = result.links.first().unwrap();
+        assert_eq!(
+            "/desmos.profiles.v3.Bech32Address",
+            cosmos_address.address.proto_type
+        );
+        assert_eq!(
+            "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r",
+            cosmos_address.address.value
+        );
+        assert_eq!("cosmos", cosmos_address.address.prefix.as_ref().unwrap());
     }
 }

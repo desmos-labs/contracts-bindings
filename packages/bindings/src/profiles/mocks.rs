@@ -1,7 +1,7 @@
 //! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
 use crate::profiles::models_app_links::ApplicationLinkState;
-use crate::profiles::models_chain_links::{Address, SignMode};
+use crate::profiles::models_chain_links::{Address, SignatureValueType};
 use crate::profiles::{
     models_app_links::{
         AppLinkResult, ApplicationLink, ApplicationLinkOwnerDetails, CallData, Data, OracleRequest,
@@ -12,7 +12,8 @@ use crate::profiles::{
     models_query::{
         QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
         QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
+        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+        QueryProfileResponse,
     },
     query::ProfilesQuery,
 };
@@ -63,7 +64,7 @@ impl MockProfilesQueries {
         ChainLink {
             user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
             address: Address {
-                proto_type: "/desmos.profiles.v2.Bech32Addres".to_string(),
+                proto_type: "/desmos.profiles.v3.Bech32Addres".to_string(),
                 value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
                 prefix: Some("cosmos".to_string()),
             },
@@ -73,8 +74,8 @@ impl MockProfilesQueries {
                     key: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap(),
                 },
                 signature: Signature {
-                    proto_type: "/desmos.profiles.v1beta1.SingleSignatureData".to_string(),
-                    mode: SignMode::Direct,
+                    proto_type: "/desmos.profiles.v1beta1.SignatureData".to_string(),
+                    value_type: SignatureValueType::Raw,
                     signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
                 },
                 plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
@@ -118,6 +119,7 @@ impl MockProfilesQueries {
                     .to_string(),
             }),
             creation_time: "2022-02-21T13:18:57.800827Z".to_string(),
+            expiration_time: "2023-02-21T13:18:57.800827Z".to_string(),
         }
     }
 
@@ -159,6 +161,13 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
                 pagination: Default::default(),
             })
         }
+        ProfilesQuery::DefaultExternalAddresses { .. } => {
+            let chain_link = MockProfilesQueries::get_mock_chain_link();
+            to_binary(&QueryDefaultExternalAddressesResponse {
+                links: vec![chain_link],
+                pagination: Default::default(),
+            })
+        }
         ProfilesQuery::ApplicationLinks { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinksResponse {
@@ -183,15 +192,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
 
 #[cfg(test)]
 mod tests {
-    use crate::profiles::{
-        mocks::{mock_profiles_query_response, MockProfilesQueries},
-        models_query::{
-            QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
-            QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-            QueryIncomingDtagTransferRequestResponse, QueryProfileResponse,
-        },
-        query::ProfilesQuery,
-    };
+    use super::*;
     use cosmwasm_std::{to_binary, Addr};
 
     #[test]
@@ -246,6 +247,21 @@ mod tests {
         let response = mock_profiles_query_response(&query);
         let expected = to_binary(&QueryChainLinkOwnersResponse {
             owners: vec![MockProfilesQueries::get_mock_chain_link_owner()],
+            pagination: Default::default(),
+        });
+        assert_eq!(response.into_result().ok(), expected.ok())
+    }
+
+    #[test]
+    fn test_query_default_external_addresses() {
+        let query = ProfilesQuery::DefaultExternalAddresses {
+            owner: Some(Addr::unchecked("")),
+            chain_name: Some("".to_string()),
+            pagination: Default::default(),
+        };
+        let response = mock_profiles_query_response(&query);
+        let expected = to_binary(&QueryDefaultExternalAddressesResponse {
+            links: vec![MockProfilesQueries::get_mock_chain_link()],
             pagination: Default::default(),
         });
         assert_eq!(response.into_result().ok(), expected.ok())
