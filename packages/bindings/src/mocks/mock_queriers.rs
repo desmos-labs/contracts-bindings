@@ -23,7 +23,7 @@ use std::marker::PhantomData;
 /// this use our CustomQuerier to use desmos querier
 pub fn mock_dependencies_with_custom_querier(
     contract_balance: &[Coin],
-) -> OwnedDeps<MockStorage, MockApi, MockQuerier<DesmosQuery>, impl CustomQuery> {
+) -> OwnedDeps<MockStorage, MockApi, MockQuerier<DesmosQuery>, DesmosQuery> {
     let contract_addr = MOCK_CONTRACT_ADDR;
     let custom_querier = MockQuerier::<DesmosQuery>::new(&[(contract_addr, contract_balance)])
         .with_custom_handler(|query| match query {
