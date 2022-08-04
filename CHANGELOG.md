@@ -2,10 +2,11 @@
 
 ## Version 1.0.2
 ### Bug Fixes
-* ([#33](https://github.com/desmos-labs/desmos-bindings/pull/33)) Fixed mocks mod importing issue
+* ([\#33](https://github.com/desmos-labs/desmos-bindings/pull/33)) Fixed mocks mod importing issue
+* ([\#35](https://github.com/desmos-labs/desmos-bindings/pull/33)) Fixed mocks `OwnedDeps` to returns `DesmosQuery` in generic parameter
 
 ### Dependencies
-* ([#32](https://github.com/desmos-labs/desmos-bindings/pull/32)) Updated desmos bindings to match desemos v4.3.0
+* ([\#32](https://github.com/desmos-labs/desmos-bindings/pull/32)) Updated desmos bindings to match desemos v4.3.0
 
 ## Version 1.0.1
 
