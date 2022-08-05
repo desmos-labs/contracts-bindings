@@ -158,23 +158,6 @@ impl DesmosKeeper {
                     data: None,
                 })
             }
-            ProfilesMsg::SetDefaultExternalAddress {
-                chain_name,
-                target,
-                signer,
-            } => {
-                let mut events = Vec::with_capacity(1);
-                events.push(
-                    Event::new("set_default_external_address")
-                        .add_attribute("chain_link_source_chain_name", chain_name)
-                        .add_attribute("chain_link_account_target", target)
-                        .add_attribute("chain_link_account_owner", signer),
-                );
-                AnyResult::Ok(AppResponse {
-                    events: events,
-                    data: None,
-                })
-            }
             ProfilesMsg::LinkApplication {
                 sender: user,
                 link_data,
