@@ -1,6 +1,0 @@
-type: refactor
-module: none
-pull_request: 36
-description: removed duplicated cases in the mock apps execution
-backward_compatible: true
-date: 2022-08-05T04:18:49.3713642Z
