@@ -1,0 +1,6 @@
+type: fix
+module: none
+pull_request: 37
+description: Fixed mocks cfg tags
+backward_compatible: true
+date: 2022-08-08T09:54:08.4074112Z

@@ -69,11 +69,9 @@ jobs:
           components: rustfmt, clippy
 
       - name: Run cargo fmt
-        working-directory: ./packages/bindings
         run: cargo fmt --all -- --check
 
       - name: Run cargo clippy
-        working-directory: ./packages/bindings
         run: cargo clippy
 
   build:

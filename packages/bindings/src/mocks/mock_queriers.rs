@@ -15,7 +15,7 @@ use crate::reports::mocks::mock_reports_query_response;
 use crate::subspaces::mocks::mock_subspaces_query_response;
 use cosmwasm_std::{
     testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR},
-    Coin, CustomQuery, OwnedDeps, SystemError, SystemResult,
+    Coin, OwnedDeps, SystemError, SystemResult,
 };
 use std::marker::PhantomData;
 
