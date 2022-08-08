@@ -7,11 +7,14 @@ use crate::query::DesmosQuery;
 use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Empty, Storage};
 use cw_multi_test::{
-    App, BankKeeper, BasicAppBuilder, FailingDistribution, FailingModule, FailingStaking, Router,
-    WasmKeeper, Module,
+    App, BankKeeper, BasicAppBuilder, FailingDistribution, FailingModule, FailingStaking, Module,
+    Router, WasmKeeper,
 };
 
 pub trait DesmosModule: Module<ExecT = DesmosMsg, QueryT = DesmosQuery, SudoT = Empty> {}
+
+impl DesmosModule for DesmosKeeper {}
+impl DesmosModule for FailingModule<DesmosMsg, DesmosQuery, Empty> {}
 
 /// DesmosApp wraps the desmos custom module into a mock app for integration tests.
 /// It always returns successful response with proper events.
