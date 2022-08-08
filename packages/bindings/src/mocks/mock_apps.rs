@@ -11,6 +11,8 @@ use cw_multi_test::{
     WasmKeeper,
 };
 
+pub trait DesmosModule: Module<DesmosMsg, DesmosQuery, Empty> {}
+
 /// DesmosApp wraps the desmos custom module into a mock app for integration tests.
 /// It always returns successful response with proper events.
 pub type DesmosApp<M = DesmosKeeper> =
