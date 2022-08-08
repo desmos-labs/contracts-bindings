@@ -1,6 +1,6 @@
 //! Contains utilities,structs and enum to interact with the Desmos x/reactions module.
 
-#[cfg(all(not(target_arch = "wasm32"), test))]
+#[cfg(not(target_arch = "wasm32"))]
 pub mod mocks;
 
 pub mod models;
