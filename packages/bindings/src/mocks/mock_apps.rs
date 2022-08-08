@@ -7,8 +7,8 @@ use anyhow::Result as AnyResult;
 use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Binary, BlockInfo, Empty, Event, Querier, Storage};
 use cw_multi_test::{
-    App, AppResponse, BankKeeper, BasicApp, BasicAppBuilder, CosmosRouter, FailingDistribution,
-    FailingStaking, Module, Router, WasmKeeper,
+    App, AppResponse, BankKeeper, BasicAppBuilder, CosmosRouter, FailingDistribution,
+    FailingStaking, Module, Router, WasmKeeper, FailingModule,
 };
 use std::convert::TryFrom;
 
@@ -27,8 +27,8 @@ use crate::subspaces::{mocks::mock_subspaces_query_response, msg::SubspacesMsg};
 
 /// DesmosApp wraps the desmos custom module into a mock app for integration tests.
 /// It always returns successful response with proper events.
-pub type DesmosApp =
-    App<BankKeeper, MockApi, MockStorage, DesmosKeeper, WasmKeeper<DesmosMsg, DesmosQuery>>;
+pub type DesmosApp<M = DesmosKeeper> =
+    App<BankKeeper, MockApi, MockStorage, M, WasmKeeper<DesmosMsg, DesmosQuery>>;
 
 /// Represents the implementation of [`Module`](cw_multi_test::Module) for handling the desmos execution and query messages.
 #[derive(Default)]
@@ -823,11 +823,9 @@ where
         .build(init_fn)
 }
 
-/// Represents failing desmos app always returning error.
-pub type FailingDesmosApp = BasicApp<DesmosMsg, DesmosQuery>;
 
 /// Returns a mock failing app.
-pub fn mock_failing_desmos_app() -> FailingDesmosApp {
+pub fn mock_failing_desmos_app() -> DesmosApp<FailingModule<DesmosMsg, DesmosQuery, Empty>> {
     BasicAppBuilder::<DesmosMsg, DesmosQuery>::new_custom().build(|_, _, _| {})
 }
 
