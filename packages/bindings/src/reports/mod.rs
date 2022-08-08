@@ -1,6 +1,6 @@
 //! Contains utilities,structs and enum to interact with the Desmos x/reports module.
 
-#[cfg(not(target_arch = "wasm32"))]
+#[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
 pub mod mocks;
 pub mod models;
 #[cfg(feature = "query")]
