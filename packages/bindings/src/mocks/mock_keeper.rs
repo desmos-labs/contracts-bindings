@@ -1,10 +1,9 @@
-
 #![cfg(not(tarpaulin_include))]
 use crate::msg::DesmosMsg;
 use crate::query::DesmosQuery;
 use anyhow::Result as AnyResult;
 use cosmwasm_std::{Addr, Api, Binary, BlockInfo, Empty, Event, Querier, Storage};
-use cw_multi_test::{ AppResponse, CosmosRouter, Module};
+use cw_multi_test::{AppResponse, CosmosRouter, Module};
 use std::convert::TryFrom;
 
 #[cfg(feature = "posts")]
