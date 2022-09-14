@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.0.3
+### Bug Fixes
+[\#36](https://github.com/desmos-labs/desmos-bindings/pull/36)) Removed duplicated cases in the mock apps execution
+[\#37](https://github.com/desmos-labs/desmos-bindings/pull/37)) Fixed mocks cfg tags
+
 ## Version 1.0.2
 ### Bug Fixes
 * ([\#33](https://github.com/desmos-labs/desmos-bindings/pull/33)) Fixed mocks mod importing issue
