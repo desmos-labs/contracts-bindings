@@ -745,7 +745,7 @@ dependencies = [
  "cosmwasm-storage",
  "cw-controllers",
  "cw-multi-test",
- "cw-storage-plus 0.13.4",
+ "cw-storage-plus 0.14.0",
  "cw2 0.13.4",
  "desmos-bindings",
  "schemars",
