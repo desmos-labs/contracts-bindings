@@ -49,7 +49,7 @@ pub fn mock_failing_desmos_app() -> DesmosApp<FailingModule<DesmosMsg, DesmosQue
 }
 
 /// Returns a mock default desmos app.
-pub fn mock_default_desmos_app() -> DesmosApp {
+pub fn mock_desmos_app() -> DesmosApp {
     BasicAppBuilder::<DesmosMsg, DesmosQuery>::new_custom()
         .with_custom(DesmosKeeper::new())
         .build(|_, _, _| {})
@@ -90,7 +90,7 @@ mod tests {
 
     #[test]
     fn execute_profiles_msg_properly() {
-        let mut app = mock_default_desmos_app();
+        let mut app = mock_desmos_app();
         let result = app.execute(
             Addr::unchecked(SENDER),
             DesmosMsg::Profiles(ProfilesMsg::delete_profile(Addr::unchecked(SENDER))).into(),
@@ -100,7 +100,7 @@ mod tests {
 
     #[test]
     fn execute_relationships_msg_properly() {
-        let mut app = mock_default_desmos_app();
+        let mut app = mock_desmos_app();
         let result = app.execute(
             Addr::unchecked(SENDER),
             DesmosMsg::Relationships(RelationshipsMsg::unblock_user(
@@ -115,7 +115,7 @@ mod tests {
 
     #[test]
     fn execute_subspaces_msg_properly() {
-        let mut app = mock_default_desmos_app();
+        let mut app = mock_desmos_app();
         let result = app.execute(
             Addr::unchecked(SENDER),
             DesmosMsg::Subspaces(SubspacesMsg::delete_subspace(1, Addr::unchecked(SENDER))).into(),
@@ -125,7 +125,7 @@ mod tests {
 
     #[test]
     fn execute_posts_msg_properly() {
-        let mut app = mock_default_desmos_app();
+        let mut app = mock_desmos_app();
         let result = app.execute(
             Addr::unchecked(SENDER),
             DesmosMsg::Posts(PostsMsg::delete_post(1, 4, Addr::unchecked(SENDER))).into(),
@@ -135,7 +135,7 @@ mod tests {
 
     #[test]
     fn execute_reports_msg_properly() {
-        let mut app = mock_default_desmos_app();
+        let mut app = mock_desmos_app();
         let result = app.execute(
             Addr::unchecked(SENDER),
             DesmosMsg::Reports(ReportsMsg::delete_report(1, 1, Addr::unchecked(SENDER))).into(),
@@ -145,7 +145,7 @@ mod tests {
 
     #[test]
     fn execute_reactions_msg_properly() {
-        let mut app = mock_default_desmos_app();
+        let mut app = mock_desmos_app();
         let result = app.execute(
             Addr::unchecked(SENDER),
             DesmosMsg::Reactions(ReactionsMsg::remove_reaction(
@@ -160,7 +160,7 @@ mod tests {
     }
     #[test]
     fn test_profiles_query_properly() {
-        let app = mock_default_desmos_app();
+        let app = mock_desmos_app();
         let app_querier = app.wrap();
         let querier = ProfilesQuerier::new(app_querier.deref());
         let expected = QueryProfileResponse {
@@ -172,7 +172,7 @@ mod tests {
 
     #[test]
     fn test_subspaces_query_properly() {
-        let app = mock_default_desmos_app();
+        let app = mock_desmos_app();
         let app_querier = app.wrap();
         let querier = SubspacesQuerier::new(app_querier.deref());
         let response = querier.query_subspace(1).unwrap();
@@ -184,7 +184,7 @@ mod tests {
 
     #[test]
     fn test_relationships_query_properly() {
-        let app = mock_default_desmos_app();
+        let app = mock_desmos_app();
         let app_querier = app.wrap();
         let querier = RelationshipsQuerier::new(app_querier.deref());
         let response = querier
@@ -204,7 +204,7 @@ mod tests {
 
     #[test]
     fn test_posts_query_properly() {
-        let app = mock_default_desmos_app();
+        let app = mock_desmos_app();
         let app_querier = app.wrap();
         let querier = PostsQuerier::new(app_querier.deref());
         let response = querier.query_post(1, 1).unwrap();
@@ -216,7 +216,7 @@ mod tests {
 
     #[test]
     fn test_reactions_query_properly() {
-        let app = mock_default_desmos_app();
+        let app = mock_desmos_app();
         let app_querier = app.wrap();
         let querier = ReactionsQuerier::new(app_querier.deref());
         let response = querier.query_reactions(1, 1, None, None).unwrap();
@@ -229,7 +229,7 @@ mod tests {
 
     #[test]
     fn test_reports_query_properly() {
-        let app = mock_default_desmos_app();
+        let app = mock_desmos_app();
         let app_querier = app.wrap();
         let querier = ReportsQuerier::new(app_querier.deref());
         let response = querier.query_report(1, 1).unwrap();
