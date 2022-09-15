@@ -2,5 +2,5 @@ type: feat
 module: none
 pull_request: 38
 description: Improve desmos mock apps lib
-backward_compatible: false
+backward_compatible: true
 date: 2022-09-15T11:24:06.8537005Z
