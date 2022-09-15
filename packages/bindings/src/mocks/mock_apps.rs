@@ -11,6 +11,7 @@ use cw_multi_test::{
     Router, WasmKeeper,
 };
 
+/// Defines the module trait for desmos app.
 pub trait DesmosModule: Module<ExecT = DesmosMsg, QueryT = DesmosQuery, SudoT = Empty> {}
 
 impl DesmosModule for DesmosKeeper {}
