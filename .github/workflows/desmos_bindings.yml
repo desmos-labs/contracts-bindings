@@ -9,17 +9,31 @@ jobs:
     name: Test Suite
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout sources
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Install Rust
+      - name: Verify .rs or toml files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+            **/**.toml
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
           toolchain: 1.61.0
           profile: minimal
           override: true
 
-      - name: Unit tests
+      - name: Prepare rust cache 🗄️
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Unit tests 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo unit-test --locked
         env:
@@ -29,25 +43,40 @@ jobs:
     name: Upload coverage
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
+      - name: Verify .rs files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
           toolchain: 1.61.0
           override: true
 
-      - name: Install cargo-tarpaulin
+      - name: Prepare rust cache 🗄️
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install cargo-tarpaulin ⚙
+        if: env.GIT_DIFF
         run: cargo install cargo-tarpaulin
 
-      - name: Run cargo-tarpaulin
+      - name: Generate coverage report 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo tarpaulin --avoid-cfg-tarpaulin --all-features --out xml
         env:
           RUST_BACKTRACE: 1
 
-      - name: Upload to codecov.io
+      - name: Upload coverage 📤
+        if: env.GIT_DIFF
         uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -57,10 +86,18 @@ jobs:
     name: Lints
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout sources
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
+      - name: Verify .rs files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -68,10 +105,16 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Run cargo fmt
+      - name: Prepare rust cache 🗄️
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run cargo fmt ✅
+        if: env.GIT_DIFF
         run: cargo fmt --all -- --check
 
-      - name: Run cargo clippy
+      - name: Run cargo clippy ✅
+        if: env.GIT_DIFF
         run: cargo clippy
 
   build:
@@ -79,10 +122,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout sources
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
+      - name: Verify .rs and toml files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+            **/**.toml
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -90,86 +142,111 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Build No features
+      - name: Prepare rust cache 🗄️
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build No features 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features
 
-      - name: Build feature (query)
+      - name: Build feature (query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features query
 
-      - name: Build feature (profiles)
+      - name: Build feature (profiles) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features profiles
 
-      - name: Build feature (profiles+query)
+      - name: Build feature (profiles+query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features profiles,query
 
-      - name: Build feature (subspaces)
+      - name: Build feature (subspaces) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features subspaces
 
-      - name: Build feature (subspaces+query)
+      - name: Build feature (subspaces+query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features subspaces,query
 
-      - name: Build feature (relationships)
+      - name: Build feature (relationships) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features relationships
 
-      - name: Build feature (relationships+query)
+      - name: Build feature (relationships+query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features relationships,query
 
-      - name: Build feature (posts)
+      - name: Build feature (posts) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features posts
 
-      - name: Build feature (posts+query)
+      - name: Build feature (posts+query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features posts,query
 
-      - name: Build feature (reactions)
+      - name: Build feature (reactions) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features reactions
 
-      - name: Build feature (reactions+query)
+      - name: Build feature (reactions+query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features reactions,query
 
-      - name: Build feature (reports)
+      - name: Build feature (reports) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features reports
 
-      - name: Build feature (reports+query)
+      - name: Build feature (reports+query) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features reports,query
 
-      - name: Build feature (msg)
+      - name: Build feature (msg) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg
 
-      - name: Build feature (msg+profiles)
+      - name: Build feature (msg+profiles) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,profiles
 
-      - name: Build feature (msg+relationships)
+      - name: Build feature (msg+relationships) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,relationships
 
-      - name: Build feature (msg+subspaces)
+      - name: Build feature (msg+subspaces) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,subspaces
 
-      - name: Build feature (msg+posts)
+      - name: Build feature (msg+posts) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,posts
 
-      - name: Build feature (msg+reactions)
+      - name: Build feature (msg+reactions) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,reactions
 
-      - name: Build feature (msg+reports)
+      - name: Build feature (msg+reports) 🧪
+        if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,reports
