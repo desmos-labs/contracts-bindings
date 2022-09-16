@@ -17,8 +17,8 @@ use cosmwasm_std::testing::MockQuerierCustomHandlerResult;
 use cosmwasm_std::{
     from_slice,
     testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR},
-    Binary, Coin, ContractResult, OwnedDeps, Querier, QuerierResult, QueryRequest, StdResult,
-    SystemError, SystemResult,
+    Binary, Coin, ContractResult, OwnedDeps, Querier, QuerierResult, QueryRequest, SystemError,
+    SystemResult,
 };
 use serde::de::DeserializeOwned;
 use std::marker::PhantomData;
@@ -336,6 +336,18 @@ pub fn mock_dependencies_with_custom_querier(
 
 #[cfg(test)]
 mod tests {
+    use crate::mocks::mock_queriers::MockDesmosQuerier;
+    use crate::posts::mocks::MockPostsQueries;
+    use crate::posts::models_query::QueryPostResponse;
+    use crate::posts::querier::PostsQuerier;
+    use crate::posts::query::PostsQuery;
+    use crate::profiles::query::ProfilesQuery;
+    use crate::reactions::models::ReactionValue;
+    use crate::reactions::models_query::QueryReactionResponse;
+    use crate::reactions::query::ReactionsQuery;
+    use crate::relationships::query::RelationshipsQuery;
+    use crate::reports::query::ReportsQuery;
+    use crate::subspaces::query::SubspacesQuery;
     use crate::{
         mocks::mock_queriers::mock_dependencies_with_custom_querier,
         profiles::{
@@ -358,7 +370,7 @@ mod tests {
             querier::SubspacesQuerier,
         },
     };
-    use cosmwasm_std::{Addr, Uint64};
+    use cosmwasm_std::{to_binary, Addr, ContractResult, Uint64};
     use std::ops::Deref;
 
     #[test]
@@ -428,5 +440,136 @@ mod tests {
             report: MockReportsQueries::get_mocked_report(&Uint64::new(1)),
         };
         assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_mock_profile_query() {
+        let mut profile = MockProfilesQueries::get_mock_profile();
+        profile.account.address = Addr::unchecked("mock");
+        profile.nickname = "test_nickname".to_string();
+        let response = QueryProfileResponse {
+            profile: profile.clone(),
+        };
+
+        let querier =
+            MockDesmosQuerier::default().with_custom_profiles_handler(move |query| match query {
+                ProfilesQuery::Profile { .. } => to_binary(&response).into(),
+                _ => ContractResult::Err("not supported".to_string()),
+            });
+
+        let profile_querier = ProfilesQuerier::new(&querier);
+        let response = profile_querier
+            .query_profile(Addr::unchecked("test"))
+            .unwrap();
+
+        assert_eq!(response.profile, profile);
+    }
+
+    #[test]
+    fn test_mock_subspces_query() {
+        let mut subspace = MockSubspacesQueries::get_mock_subspace();
+        subspace.name = "test_subspace".to_string();
+        let response = QuerySubspaceResponse {
+            subspace: subspace.clone(),
+        };
+
+        let querier =
+            MockDesmosQuerier::default().with_custom_subspaces_handler(move |query| match query {
+                SubspacesQuery::Subspace { .. } => to_binary(&response).into(),
+                _ => ContractResult::Err("not supported".to_string()),
+            });
+
+        let subspace_querier = SubspacesQuerier::new(&querier);
+        let response = subspace_querier.query_subspace(42).unwrap();
+
+        assert_eq!(response.subspace, subspace);
+    }
+
+    #[test]
+    fn test_mock_posts_query() {
+        let mut post = MockPostsQueries::get_mocked_post(Uint64::new(13), Uint64::new(37));
+        post.text = Some("mocked post text".to_string());
+        let response = QueryPostResponse { post: post.clone() };
+
+        let querier =
+            MockDesmosQuerier::default().with_custom_posts_handler(move |query| match query {
+                PostsQuery::Post { .. } => to_binary(&response).into(),
+                _ => ContractResult::Err("not supported".to_string()),
+            });
+
+        let subspace_querier = PostsQuerier::new(&querier);
+        let response = subspace_querier.query_post(13, 37).unwrap();
+
+        assert_eq!(response.post, post);
+    }
+
+    #[test]
+    fn test_mock_relationships_query() {
+        let mut relationship = MockRelationshipsQueries::get_mock_relationship();
+        relationship.creator = Addr::unchecked("mocked_creator");
+        relationship.counterparty = Addr::unchecked("mocked_counterparty");
+
+        let response = QueryRelationshipsResponse {
+            relationships: vec![relationship.clone()],
+            pagination: None,
+        };
+
+        let querier = MockDesmosQuerier::default().with_custom_relationships_handler(
+            move |query| match query {
+                RelationshipsQuery::Relationships { .. } => to_binary(&response).into(),
+                _ => ContractResult::Err("not supported".to_string()),
+            },
+        );
+
+        let subspace_querier = RelationshipsQuerier::new(&querier);
+        let response = subspace_querier
+            .query_relationships(13, None, None, None)
+            .unwrap();
+
+        assert_eq!(response.relationships, vec![relationship]);
+    }
+
+    #[test]
+    fn test_mock_reports_query() {
+        let mut report = MockReportsQueries::get_mocked_report(&Uint64::new(1));
+        report.message = Some("mocked report".to_string());
+        let response = QueryReportResponse {
+            report: report.clone(),
+        };
+
+        let querier =
+            MockDesmosQuerier::default().with_custom_reports_handler(move |query| match query {
+                ReportsQuery::Report { .. } => to_binary(&response).into(),
+                _ => ContractResult::Err("not supported".to_string()),
+            });
+
+        let reports_querier = ReportsQuerier::new(&querier);
+        let response = reports_querier.query_report(13, 137).unwrap();
+
+        assert_eq!(response.report, report);
+    }
+
+    #[test]
+    fn test_mock_reactions_query() {
+        let mut reaction = MockReactionsQueries::get_mock_reaction();
+        reaction.author = Addr::unchecked("mock_addr");
+        reaction.value = ReactionValue::FreeText {
+            text: "mock value".to_string(),
+        }
+        .into();
+        let response = QueryReactionResponse {
+            reaction: reaction.clone(),
+        };
+
+        let querier =
+            MockDesmosQuerier::default().with_custom_reactions_handler(move |query| match query {
+                ReactionsQuery::Reaction { .. } => to_binary(&response).into(),
+                _ => ContractResult::Err("not supported".to_string()),
+            });
+
+        let reaction_querier = ReactionsQuerier::new(&querier);
+        let response = reaction_querier.query_reaction(1, 33, 7).unwrap();
+
+        assert_eq!(response.reaction, reaction);
     }
 }
