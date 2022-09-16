@@ -143,29 +143,29 @@ pub struct RegisteredReaction {
 pub struct SubspaceReactionsParams {
     /// Id of the subspace for which these params are valid.
     pub subspace_id: Uint64,
-    /// Params related to [`RegisteredReactionValue`] reactions.
+    /// Params related to [`ReactionValue::Registered`] reactions.
     pub registered_reaction: RegisteredReactionValueParams,
-    /// Params related to [`FreeTextValue`] reactions.
+    /// Params related to [`ReactionValue::FreeText`] reactions.
     pub free_text: FreeTextValueParams,
 }
 
-/// Contains the params for [`FreeTextValue`] based reactions.
+/// Contains the params for [`ReactionValue::FreeText`] based reactions.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct FreeTextValueParams {
-    /// Whether [`FreeTextValue`] reactions should be enabled.
+    /// Whether [`ReactionValue::FreeText`] reactions should be enabled.
     pub enabled: bool,
-    /// The max length that [`FreeTextValue`] reactions should have.
+    /// The max length that [`ReactionValue::FreeText`] reactions should have.
     pub max_length: u32,
-    /// RegEx that each [`FreeTextValue`] should respect.
+    /// RegEx that each [`ReactionValue::FreeText`] should respect.
     /// This is useful to limit what characters can be used as a reaction.
     pub reg_ex: String,
 }
 
-/// Contains the params for [`RegisteredReactionValue`] based reactions.
+/// Contains the params for [`ReactionValue::Registered`] based reactions.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub struct RegisteredReactionValueParams {
-    /// Whether [`RegisteredReactionValue`] reactions should be enabled.
+    /// Whether [`ReactionValue::Registered`] reactions should be enabled.
     pub enabled: bool,
 }
