@@ -19,6 +19,9 @@ jobs:
           PATTERNS: |
             **/**.rs
             **/**.toml
+            **/Cargo.lock
+          FILES: |
+            Cargo.lock
 
       - name: Setup Rust ⚙
         if: env.GIT_DIFF
