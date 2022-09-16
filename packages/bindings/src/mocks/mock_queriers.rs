@@ -155,7 +155,7 @@ impl MockDesmosQuerier {
     /// use desmos_bindings::subspaces::query::SubspacesQuery;
     ///
     /// let querier =
-    ///     MockDesmosQuerier::default().with_custom_subspace_handler(|query| match query {
+    ///     MockDesmosQuerier::default().with_custom_subspaces_handler(|query| match query {
     ///         SubspacesQuery::Subspace { subspace_id } => to_binary(&QuerySubspaceResponse {
     ///             subspace: MockSubspacesQueries::get_mock_subspace(),
     ///         })
@@ -164,7 +164,7 @@ impl MockDesmosQuerier {
     ///     });
     /// ```
     #[cfg(feature = "subspaces")]
-    pub fn with_custom_subspace_handler<CH>(mut self, handler: CH) -> Self
+    pub fn with_custom_subspaces_handler<CH>(mut self, handler: CH) -> Self
     where
         CH: Fn(&SubspacesQuery) -> ContractResult<Binary> + 'static,
     {
