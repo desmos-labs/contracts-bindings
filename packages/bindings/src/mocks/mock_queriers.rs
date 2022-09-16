@@ -186,7 +186,7 @@ impl MockDesmosQuerier {
     /// use desmos_bindings::posts::query::PostsQuery;
     ///
     /// let querier =
-    ///     MockDesmosQuerier::default().with_custom_subspace_handler(|query| match query {
+    ///     MockDesmosQuerier::default().with_custom_posts_handler(|query| match query {
     ///         PostsQuery::Post { subspace_id, post_id } => to_binary(&QueryPostResponse {
     ///             post: MockPostsQueries::get_mocked_post(subspace_id.clone(), post_id.clone()),
     ///         })
@@ -217,7 +217,7 @@ impl MockDesmosQuerier {
     /// use desmos_bindings::relationships::query::RelationshipsQuery;
     ///
     /// let querier =
-    ///     MockDesmosQuerier::default().with_custom_subspace_handler(|query| match query {
+    ///     MockDesmosQuerier::default().with_custom_relationships_handler(|query| match query {
     ///         RelationshipsQuery::Relationships { .. } => to_binary(&QueryRelationshipsResponse {
     ///             relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
     ///             pagination: None,
@@ -249,7 +249,7 @@ impl MockDesmosQuerier {
     /// use desmos_bindings::reports::query::ReportsQuery;
     ///
     /// let querier =
-    ///     MockDesmosQuerier::default().with_custom_subspace_handler(|query| match query {
+    ///     MockDesmosQuerier::default().with_custom_reports_handler(|query| match query {
     ///         ReportsQuery::Report { subspace_id, report_id } => to_binary(&QueryReportResponse {
     ///             report: MockReportsQueries::get_mocked_report(subspace_id),
     ///         })
@@ -280,7 +280,7 @@ impl MockDesmosQuerier {
     /// use desmos_bindings::reactions::query::ReactionsQuery;
     ///
     /// let querier =
-    ///     MockDesmosQuerier::default().with_custom_subspace_handler(|query| match query {
+    ///     MockDesmosQuerier::default().with_custom_reactions_handler(|query| match query {
     ///         ReactionsQuery::Reaction { subspace_id, post_id, reaction_id } => to_binary(&QueryReactionResponse {
     ///             reaction: MockReactionsQueries::get_mock_reaction(),
     ///         })
