@@ -2,5 +2,6 @@ type: feat
 module: none
 pull_request: 58
 description: Add MockDesmosQuerier utility to mock desmos query responses in unit
+  tests
 backward_compatible: true
-date: 2022-09-16T07:42:44.260806674Z
+date: 2022-09-16T09:55:42.822043324Z
