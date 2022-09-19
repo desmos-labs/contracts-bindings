@@ -332,6 +332,18 @@ pub fn mock_dependencies_with_custom_querier(
     }
 }
 
+/// Creates an instance of [`OwnedDeps`](cosmwasm_std::OwnedDeps) that is capable of
+/// handling queries towards Desmos's modules.
+pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, DesmosQuery>
+{
+    OwnedDeps::<_, _, _, DesmosQuery> {
+        storage: MockStorage::default(),
+        api: MockApi::default(),
+        querier: MockDesmosQuerier::default(),
+        custom_query_type: PhantomData,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::mocks::mock_queriers::MockDesmosQuerier;
