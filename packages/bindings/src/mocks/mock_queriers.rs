@@ -322,14 +322,12 @@ impl Default for MockDesmosQuerier {
 /// Replacement for cosmwasm_std::testing::mock_dependencies
 /// this use our CustomQuerier to use desmos querier
 pub fn mock_dependencies_with_custom_querier(
-    contract_balance: &[Coin],
+    querier: MockDesmosQuerier,
 ) -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, DesmosQuery> {
-    let contract_addr = MOCK_CONTRACT_ADDR;
-    let custom_querier = MockDesmosQuerier::new(&[(contract_addr, contract_balance)]);
     OwnedDeps::<_, _, _, DesmosQuery> {
         storage: MockStorage::default(),
         api: MockApi::default(),
-        querier: custom_querier,
+        querier,
         custom_query_type: PhantomData,
     }
 }
