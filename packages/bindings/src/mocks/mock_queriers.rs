@@ -325,7 +325,7 @@ impl Default for MockDesmosQuerier {
 /// # Example
 /// ```
 /// use cosmwasm_std::{ContractResult, SystemError, SystemResult, to_binary};
-/// use desmos_bindings::mocks::mock_queriers::{mock_dependencies_with_custom_querier, MockDesmosQuerier};
+/// use desmos_bindings::mocks::mock_queriers::{mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier};
 /// use desmos_bindings::profiles::mocks::MockProfilesQueries;
 /// use desmos_bindings::profiles::models_profile::Profile;
 /// use desmos_bindings::profiles::models_query::QueryProfileResponse;
@@ -342,9 +342,9 @@ impl Default for MockDesmosQuerier {
 ///     });
 ///
 /// // Create the OwnedDeps instance with the custom querier
-/// let deps =  mock_dependencies_with_custom_querier(querier);
+/// let deps =  mock_desmos_dependencies_with_custom_querier(querier);
 /// ```
-pub fn mock_dependencies_with_custom_querier(
+pub fn mock_desmos_dependencies_with_custom_querier(
     querier: MockDesmosQuerier,
 ) -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, DesmosQuery> {
     OwnedDeps::<_, _, _, DesmosQuery> {
