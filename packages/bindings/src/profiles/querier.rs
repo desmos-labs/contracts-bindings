@@ -434,16 +434,14 @@ impl<'a> ProfilesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
-        mocks::mock_queriers::mock_dependencies_with_custom_querier,
-        profiles::mocks::MockProfilesQueries,
-    };
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::profiles::mocks::MockProfilesQueries;
     use cosmwasm_std::Addr;
     use std::ops::Deref;
 
     #[test]
     fn test_query_profile() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -457,7 +455,7 @@ mod tests {
 
     #[test]
     fn test_query_incoming_dtag_transfer_requests() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -474,7 +472,7 @@ mod tests {
 
     #[test]
     fn test_iterate_incoming_dtag_transfer_requests() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -490,7 +488,7 @@ mod tests {
 
     #[test]
     fn test_query_chain_links() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -512,7 +510,7 @@ mod tests {
 
     #[test]
     fn test_iterate_chain_links() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -532,7 +530,7 @@ mod tests {
 
     #[test]
     fn test_query_chain_link_owners() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -553,7 +551,7 @@ mod tests {
 
     #[test]
     fn test_iterate_chain_link_owners() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -572,7 +570,7 @@ mod tests {
 
     #[test]
     fn test_query_default_external_addresses() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
         let response = profiles_querier
@@ -591,7 +589,7 @@ mod tests {
 
     #[test]
     fn test_iterate_default_external_addresses() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
         let mut it = profiles_querier.iterate_default_external_addresses(
@@ -608,7 +606,7 @@ mod tests {
 
     #[test]
     fn test_query_app_links() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -630,7 +628,7 @@ mod tests {
 
     #[test]
     fn test_iterate_app_links() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -650,7 +648,7 @@ mod tests {
 
     #[test]
     fn test_query_application_link_by_chain_id() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -666,7 +664,7 @@ mod tests {
 
     #[test]
     fn test_query_app_link_owners() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
@@ -687,7 +685,7 @@ mod tests {
 
     #[test]
     fn test_iterate_app_link_owners() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 

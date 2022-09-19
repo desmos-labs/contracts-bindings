@@ -182,7 +182,7 @@ impl<'a> ReportsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::mock_dependencies_with_custom_querier;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
     use crate::reports::mocks::MockReportsQueries;
     use crate::reports::querier::ReportsQuerier;
     use cosmwasm_std::Uint64;
@@ -190,7 +190,7 @@ mod tests {
 
     #[test]
     fn test_query_reports() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
@@ -204,7 +204,7 @@ mod tests {
 
     #[test]
     fn test_iterate_reports() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
@@ -220,7 +220,7 @@ mod tests {
 
     #[test]
     fn test_query_report() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
@@ -233,7 +233,7 @@ mod tests {
 
     #[test]
     fn test_query_reasons() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
@@ -247,7 +247,7 @@ mod tests {
 
     #[test]
     fn test_iterate_reasons() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 
@@ -263,7 +263,7 @@ mod tests {
 
     #[test]
     fn test_query_reason() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let reports_querier = ReportsQuerier::new(deps.querier.deref());
 

@@ -171,20 +171,18 @@ impl<'a> RelationshipsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{
-        mocks::mock_queriers::mock_dependencies_with_custom_querier,
-        relationships::{
-            mocks::MockRelationshipsQueries,
-            models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
-            querier::RelationshipsQuerier,
-        },
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::relationships::{
+        mocks::MockRelationshipsQueries,
+        models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
+        querier::RelationshipsQuerier,
     };
     use cosmwasm_std::Addr;
     use std::ops::Deref;
 
     #[test]
     fn test_query_relationships() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
 
@@ -206,7 +204,7 @@ mod tests {
 
     #[test]
     fn test_iterate_relationships() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
 
@@ -221,7 +219,7 @@ mod tests {
 
     #[test]
     fn test_query_blocks() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
 
@@ -243,7 +241,7 @@ mod tests {
 
     #[test]
     fn test_iterate_blocks() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
 

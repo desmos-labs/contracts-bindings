@@ -16,7 +16,7 @@ use crate::subspaces::{mocks::mock_subspaces_query_response, query::SubspacesQue
 use cosmwasm_std::testing::MockQuerierCustomHandlerResult;
 use cosmwasm_std::{
     from_slice,
-    testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR},
+    testing::{MockApi, MockQuerier, MockStorage},
     Binary, Coin, ContractResult, OwnedDeps, Querier, QuerierResult, QueryRequest, SystemError,
     SystemResult,
 };
@@ -369,7 +369,7 @@ pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQ
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::MockDesmosQuerier;
+    use crate::mocks::mock_queriers::{mock_desmos_dependencies, MockDesmosQuerier};
     use crate::posts::mocks::MockPostsQueries;
     use crate::posts::models_query::QueryPostResponse;
     use crate::posts::querier::PostsQuerier;
@@ -382,7 +382,6 @@ mod tests {
     use crate::reports::query::ReportsQuery;
     use crate::subspaces::query::SubspacesQuery;
     use crate::{
-        mocks::mock_queriers::mock_dependencies_with_custom_querier,
         profiles::{
             mocks::MockProfilesQueries, models_query::QueryProfileResponse,
             querier::ProfilesQuerier,
@@ -408,7 +407,7 @@ mod tests {
 
     #[test]
     fn test_profiles_querier_mock() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(deps.querier.deref());
         let response = querier.query_profile(Addr::unchecked("")).unwrap();
@@ -420,7 +419,7 @@ mod tests {
 
     #[test]
     fn test_subspaces_querier() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_subspace(1).unwrap();
@@ -432,7 +431,7 @@ mod tests {
 
     #[test]
     fn test_relationships_querier() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = RelationshipsQuerier::new(deps.querier.deref());
         let response = querier
@@ -452,7 +451,7 @@ mod tests {
 
     #[test]
     fn test_reactions_querier() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
         let response = querier.query_reactions(1, 1, None, None).unwrap();
@@ -465,7 +464,7 @@ mod tests {
 
     #[test]
     fn test_reports_querier() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(deps.querier.deref());
         let response = querier.query_report(1, 1).unwrap();
