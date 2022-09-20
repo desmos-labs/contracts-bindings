@@ -52,4 +52,6 @@ types:
   title: Performance Improvements
   description: A code change that improves performance
   hide: false
-modules: []
+modules:
+  - id: none
+    description: None

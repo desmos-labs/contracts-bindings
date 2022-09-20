@@ -1,7 +1,0 @@
-type: feat
-module: none
-pull_request: 58
-description: Add MockDesmosQuerier utility to mock desmos query responses in unit
-  tests
-backward_compatible: false
-date: 2022-09-19T11:38:06.34779132Z
