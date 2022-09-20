@@ -64,7 +64,7 @@ impl<'a> ReactionsQuerier<'a> {
         let request = DesmosQuery::from(ReactionsQuery::Reactions {
             subspace_id: subspace_id.into(),
             post_id: post_id.into(),
-            user: user,
+            user,
             pagination,
         });
         let res: QueryReactionsResponse = self.querier.query(&request.into())?;
@@ -216,13 +216,13 @@ impl<'a> ReactionsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_dependencies_with_custom_querier;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
     use crate::reactions::mocks::MockReactionsQueries;
     use std::ops::Deref;
 
     #[test]
     fn test_query_reactions() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
         let response = querier.query_reactions(1, 1, None, Default::default());
@@ -235,7 +235,7 @@ mod tests {
 
     #[test]
     fn test_query_reaction() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
         let response = querier.query_reaction(1, 1, 1);
@@ -247,7 +247,7 @@ mod tests {
 
     #[test]
     fn test_query_registered_reactions() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
         let response = querier.query_registered_reactions(1, Default::default());
@@ -260,7 +260,7 @@ mod tests {
 
     #[test]
     fn test_query_registered_reaction() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
         let response = querier.query_registered_reaction(1, 1);
@@ -272,7 +272,7 @@ mod tests {
 
     #[test]
     fn test_query_reactions_params() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
         let response = querier.query_reactions_params(1);

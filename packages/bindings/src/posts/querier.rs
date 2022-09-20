@@ -279,7 +279,7 @@ impl<'a> PostsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::mock_dependencies_with_custom_querier;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
     use crate::posts::mocks::MockPostsQueries;
     use crate::posts::querier::PostsQuerier;
     use cosmwasm_std::Uint64;
@@ -287,7 +287,7 @@ mod tests {
 
     #[test]
     fn test_query_subspace_posts() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -306,7 +306,7 @@ mod tests {
 
     #[test]
     fn test_iterate_subspace_posts() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -329,7 +329,7 @@ mod tests {
 
     #[test]
     fn test_query_section_posts() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -348,7 +348,7 @@ mod tests {
 
     #[test]
     fn test_iterate_section_posts() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -371,7 +371,7 @@ mod tests {
 
     #[test]
     fn test_query_post() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -383,7 +383,7 @@ mod tests {
 
     #[test]
     fn test_query_post_attachments() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -402,7 +402,7 @@ mod tests {
 
     #[test]
     fn test_iterate_post_attachments() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -426,7 +426,7 @@ mod tests {
 
     #[test]
     fn test_query_poll_answers() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 
@@ -445,7 +445,7 @@ mod tests {
 
     #[test]
     fn test_iterate_poll_answers() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(deps.querier.deref());
 

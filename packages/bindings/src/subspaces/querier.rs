@@ -307,13 +307,13 @@ impl<'a> SubspacesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_dependencies_with_custom_querier;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
     use crate::subspaces::mocks::MockSubspacesQueries;
     use std::ops::Deref;
 
     #[test]
     fn test_query_subspaces() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_subspaces(Default::default());
@@ -326,7 +326,7 @@ mod tests {
 
     #[test]
     fn test_iterate_subspaces() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
 
@@ -341,7 +341,7 @@ mod tests {
 
     #[test]
     fn test_query_subspace() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_subspace(1);
@@ -353,7 +353,7 @@ mod tests {
 
     #[test]
     fn test_query_sections() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_sections(1, Default::default());
@@ -366,7 +366,7 @@ mod tests {
 
     #[test]
     fn test_iterate_sections() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
 
@@ -381,7 +381,7 @@ mod tests {
 
     #[test]
     fn test_query_section() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_section(1, 1);
@@ -393,7 +393,7 @@ mod tests {
 
     #[test]
     fn test_query_user_groups() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_user_groups(1, None, Default::default());
@@ -406,7 +406,7 @@ mod tests {
 
     #[test]
     fn test_iterate_user_groups() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
 
@@ -421,7 +421,7 @@ mod tests {
 
     #[test]
     fn test_query_user_group() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_user_group(1, 1);
@@ -433,7 +433,7 @@ mod tests {
 
     #[test]
     fn test_query_user_group_members() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_user_group_members(1, 1, Default::default());
@@ -446,7 +446,7 @@ mod tests {
 
     #[test]
     fn test_iterate_user_group_members() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
 
@@ -461,7 +461,7 @@ mod tests {
 
     #[test]
     fn test_query_user_permissions() {
-        let owned_deps = mock_dependencies_with_custom_querier(&[]);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = SubspacesQuerier::new(deps.querier.deref());
         let response = querier.query_user_permissions(
