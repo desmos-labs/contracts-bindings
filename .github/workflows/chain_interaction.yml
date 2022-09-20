@@ -63,7 +63,7 @@ jobs:
         working-directory: ./packages/bindings-test
         run: | 
           ../../desmos/spawn_test_chain.sh -b
-          sleep 10 
+          sleep 2 
           ../../desmos/setup_chain.sh
           cargo test --all-features -- --test-threads=1
 
