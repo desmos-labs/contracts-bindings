@@ -15,7 +15,7 @@ keywords = ["social-networks", "blockchain", "smart-contracts", "desmos", "crypt
 
 [dependencies]
 anyhow = "1.0.65"
-cosmwasm-std = { version = "1.1.0" }
+cosmwasm-std = { version = "1.1.1" }
 schemars = "0.8.1"
 serde = { version = "1.0.144", default-features = false, features = ["derive"] }
 thiserror = "1.0.35"
@@ -24,7 +24,7 @@ thiserror = "1.0.35"
 cw-multi-test = { version = "0.15.0"}
 
 [dev-dependencies]
-cosmwasm-schema = { version = "1.1.0" }
+cosmwasm-schema = { version = "1.1.1" }
 
 [features]
 default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "query", "msg"]

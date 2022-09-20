@@ -42,7 +42,7 @@ impl MockReactionsQueries {
         }
     }
 
-    /// Get a mocked [`ReactionsParams`]
+    /// Get a mocked [`SubspaceReactionsParams`].
     pub fn get_mock_reactions_parameters() -> SubspaceReactionsParams {
         SubspaceReactionsParams {
             subspace_id: Uint64::new(1),

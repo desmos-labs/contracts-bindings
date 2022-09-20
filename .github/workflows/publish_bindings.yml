@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout sources
+      - name: Checkout 🛎️
         uses: actions/checkout@v2
 
-      - name: Install stable toolchain
+      - name: Setup Rust ⚙
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -22,7 +22,8 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - uses: katyo/publish-crates@v1
+      - name: Publish to crates.io 📤
+        uses: katyo/publish-crates@v1
         with:
           path: './packages/bindings'
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
