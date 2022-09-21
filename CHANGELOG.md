@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.1
+## Bug Fixes
+- ([\#68](https://github.com/desmos-labs/desmos-bindings.git/pull/68)) Added missing features tags to `MockDesmosQuerier`
+
 ## Version 1.1.0
 ### Bug Fixes
 - ([\#37](https://github.com/desmos-labs/desmos-bindings.git/pull/37)) Fixed mocks cfg tags
