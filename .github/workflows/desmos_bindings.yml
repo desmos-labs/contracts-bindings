@@ -253,3 +253,8 @@ jobs:
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features msg,reports
+      
+      - name: Build feature (mocks) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features mocks

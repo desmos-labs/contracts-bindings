@@ -10,7 +10,7 @@ Below the compatibility between the bindings and the Desmos chain
 
 | Bindings Version | Desmos Version |
 |---|---|
-| **v1.1.0** | **v4.3.0** |
+| **v1.1.x** | **v4.3.0** |
 | **v1.0.0** | **v4.1.0** |
 
 # Create a new contract
