@@ -30,9 +30,15 @@ desmos() {
 rm -r -f "$DESMOS_HOME"
 desmos tendermint unsafe-reset-all
 desmos init testchain --chain-id=testchain
+
 # Add a default reason to the reports module params
-jq '.app_state.reports.params.standard_reasons[0] |= . + {"id":"1","title":"Spam","description":"Spam user or content"}' "$DESMOS_HOME/config/genesis.json" > "$DESMOS_HOME/config/genesis-patched.json"
-mv "$DESMOS_HOME/config/genesis-patched.json" "$DESMOS_HOME/config/genesis.json"
+DESMOS_GENESIS="$DESMOS_HOME/config/genesis.json"
+jq '.app_state.reports.params.standard_reasons[0] |= . + {"id":"1","title":"Spam","description":"Spam user or content"}' \
+  "$DESMOS_GENESIS" > "$DESMOS_GENESIS.temp"
+mv "$DESMOS_GENESIS.temp" "$DESMOS_GENESIS"
+
+# Set block time to 500 milliseconds
+sed -i -e 's/timeout_commit = "5s"/timeout_commit = "500ms"/g' "$DESMOS_HOME/config/config.toml"
 
 (echo "$USER1_MNEMONIC"; echo $KEYRING_PASS; echo $KEYRING_PASS) | desmos keys add "$USER1" --recover --keyring-backend=file
 (echo "$USER2_MNEMONIC"; echo $KEYRING_PASS; echo $KEYRING_PASS) | desmos keys add "$USER2" --recover --keyring-backend=file
