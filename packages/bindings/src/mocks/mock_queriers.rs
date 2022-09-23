@@ -50,13 +50,19 @@ impl MockDesmosQuerier {
     pub fn new(balances: &[(&str, &[Coin])]) -> Self {
         MockDesmosQuerier {
             mock_querier: MockQuerier::new(balances),
+            #[cfg(feature = "profiles")]
             profiles_handler: Box::new(|q| SystemResult::Ok(mock_profiles_query_response(q))),
+            #[cfg(feature = "subspaces")]
             subspaces_handler: Box::new(|q| SystemResult::Ok(mock_subspaces_query_response(q))),
+            #[cfg(feature = "posts")]
             posts_handler: Box::new(|q| SystemResult::Ok(mock_posts_query_response(q))),
+            #[cfg(feature = "relationships")]
             relationships_handler: Box::new(|q| {
                 SystemResult::Ok(mock_relationships_query_response(q))
             }),
+            #[cfg(feature = "reports")]
             reports_handler: Box::new(|q| SystemResult::Ok(mock_reports_query_response(q))),
+            #[cfg(feature = "reactions")]
             reactions_handler: Box::new(|q| SystemResult::Ok(mock_reactions_query_response(q))),
         }
     }
