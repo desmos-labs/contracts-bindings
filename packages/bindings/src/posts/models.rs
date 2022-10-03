@@ -27,7 +27,7 @@ pub struct Post {
     /// Text of the post.
     pub text: Option<String>,
     /// Entities connected to this post.
-    pub entities: Option<Vec<Entities>>,
+    pub entities: Option<Entities>,
     /// Tags related to this post.
     pub tags: Vec<String>,
     /// Author of the post.

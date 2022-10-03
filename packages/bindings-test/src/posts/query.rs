@@ -3,7 +3,9 @@ mod test {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_EDITABLE_POST_ID};
     use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::posts::models::{Post, PostAttachment, ProvidedAnswer, ReplySetting};
+    use desmos_bindings::posts::models::{
+        Entities, Post, PostAttachment, ProvidedAnswer, ReplySetting, UrlEntity,
+    };
     use desmos_bindings::posts::models_query::{
         QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
         QuerySectionPostsResponse, QuerySubspacePostsResponse,
@@ -20,7 +22,18 @@ mod test {
             section_id: 0,
             eternal_id: None,
             text: Some("Editable post".to_string()),
-            entities: None,
+            entities: Some(Entities {
+                hashtags: vec![],
+                mentions: vec![],
+                urls: vec![UrlEntity {
+                    start: Uint64::new(0),
+                    end: Uint64::new(1),
+                    url:
+                        "https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7"
+                            .into(),
+                    display_url: "IPFS".into(),
+                }],
+            }),
             tags: vec![],
             author: Addr::unchecked(contract_address),
             conversation_id: Some(Uint64::new(0)),
