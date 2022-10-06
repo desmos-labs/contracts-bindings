@@ -46,7 +46,7 @@ cosmwasm-storage = { version = "1.1.0" }
 cw-storage-plus = "0.15.0"
 cw-controllers = "0.15.0"
 cw2 = "0.15.0"
-schemars = "0.8.8"
+schemars = "0.8.11"
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 thiserror = { version = "1.0" }
 desmos-bindings = { path = "../../packages/bindings", version = "1.0.0" }
