@@ -30,8 +30,8 @@ mod test {
                     end: Uint64::new(1),
                     url:
                         "https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7"
-                            .to_string(),
-                    display_url: "IPFS".to_string(),
+                            .into(),
+                    display_url: "IPFS".into(),
                 }],
             }),
             tags: vec![],

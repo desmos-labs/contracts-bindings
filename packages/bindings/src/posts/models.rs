@@ -69,7 +69,7 @@ pub struct UrlEntity {
     /// Value of the URL where the user should be redirected to.
     pub url: String,
     /// Display value of the URL.
-    pub display_url: Option<String>,
+    pub display_url: String,
 }
 
 /// Contains the details of entities parsed out of the post text.
