@@ -27,7 +27,7 @@ pub struct Post {
     /// Text of the post.
     pub text: Option<String>,
     /// Entities connected to this post.
-    pub entities: Option<Vec<Entities>>,
+    pub entities: Option<Entities>,
     /// Tags related to this post.
     pub tags: Vec<String>,
     /// Author of the post.
@@ -69,7 +69,7 @@ pub struct UrlEntity {
     /// Value of the URL where the user should be redirected to.
     pub url: String,
     /// Display value of the URL.
-    pub display_url: Option<String>,
+    pub display_url: String,
 }
 
 /// Contains the details of entities parsed out of the post text.

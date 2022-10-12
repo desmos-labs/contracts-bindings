@@ -5,9 +5,10 @@ mod test {
         TEST_DELETABLE_ATTACHMENT_ID, TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_DELETABLE_POST_ID,
         TEST_SUBSPACE_EDITABLE_POST_ID,
     };
-    use cosmwasm_std::Addr;
+    use cosmwasm_std::{Addr, Uint64};
     use desmos_bindings::posts::models::{
-        PostAttachment, PostReference, PostReferenceType, ProvidedAnswer, ReplySetting,
+        Entities, PostAttachment, PostReference, PostReferenceType, ProvidedAnswer, ReplySetting,
+        UrlEntity,
     };
     use desmos_bindings::posts::msg::PostsMsg;
     use test_contract::msg::ExecuteMsg;
@@ -53,7 +54,18 @@ mod test {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
             text: "[do-not-modify]".to_string(),
-            entities: None,
+            entities: Some(Entities {
+                hashtags: vec![],
+                mentions: vec![],
+                urls: vec![UrlEntity {
+                    start: Uint64::new(0),
+                    end: Uint64::new(1),
+                    url:
+                        "https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7"
+                            .into(),
+                    display_url: "IPFS".into(),
+                }],
+            }),
             editor: Addr::unchecked(&contract_address),
         };
 
