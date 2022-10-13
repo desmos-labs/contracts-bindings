@@ -114,7 +114,7 @@ echo $KEYRING_PASS | desmos tx relationships block $USER1_ADDRESS 1 --from $USER
 
 # Create a test post that can be edited
 echo "Create editable post"
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Editable post\",\"entities\":null,\"tags\":[],\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"create_post\":{\"subspace_id\":\"1\",\"section_id\":0,\"external_id\":null,\"text\":\"Editable post\",\"entities\":{\"urls\":[{\"start\":\"0\", \"end\":\"1\",\"url\":\"https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7\",\"display_url\":\"IPFS\"}],\"hashtags\":[],\"mentions\":[]},\"tags\":[],\"attachments\":null,\"author\":\"$CONTRACT\",\"conversation_id\":null,\"reply_settings\":\"REPLY_SETTING_EVERYONE\",\"referenced_posts\":[]}}}}]}}"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y
