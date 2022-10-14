@@ -20,7 +20,7 @@ mod test {
             id: TEST_SUBSPACE_EDITABLE_POST_ID,
             subspace_id: TEST_SUBSPACE,
             section_id: 0,
-            eternal_id: None,
+            external_id: None,
             text: Some("Editable post".to_string()),
             entities: Some(Entities {
                 hashtags: vec![],
@@ -49,7 +49,7 @@ mod test {
         assert_eq!(post_l.id, post_r.id);
         assert_eq!(post_l.subspace_id, post_r.subspace_id);
         assert_eq!(post_l.section_id, post_r.section_id);
-        assert_eq!(post_l.eternal_id, post_r.eternal_id);
+        assert_eq!(post_l.external_id, post_r.external_id);
         assert_eq!(post_l.text, post_r.text);
         assert_eq!(post_l.entities, post_r.entities);
         assert_eq!(post_l.author, post_r.author);

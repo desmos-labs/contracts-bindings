@@ -23,7 +23,7 @@ pub struct Post {
     /// Id of the section inside which the post has been created.
     pub section_id: u32,
     /// External id for this post.
-    pub eternal_id: Option<String>,
+    pub external_id: Option<String>,
     /// Text of the post.
     pub text: Option<String>,
     /// Entities connected to this post.
