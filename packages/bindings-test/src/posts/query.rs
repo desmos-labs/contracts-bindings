@@ -20,7 +20,7 @@ mod test {
             id: TEST_SUBSPACE_EDITABLE_POST_ID,
             subspace_id: TEST_SUBSPACE,
             section_id: 0,
-            external_id: None,
+            external_id: Some("".to_string()),
             text: Some("Editable post".to_string()),
             entities: Some(Entities {
                 hashtags: vec![],
