@@ -801,7 +801,7 @@ dependencies = [
  "cw-controllers",
  "cw-multi-test",
  "cw-storage-plus 0.16.0",
- "cw2 0.15.1",
+ "cw2 0.16.0",
  "desmos-bindings",
  "schemars",
  "serde",
