@@ -160,7 +160,9 @@ mod tests {
             post_id: None,
         };
         assert_eq!(
-            ReportTarget::User{ user: Addr::unchecked("user") },
+            ReportTarget::User {
+                user: Addr::unchecked("user")
+            },
             ReportTarget::try_from(raw).unwrap()
         )
     }
@@ -184,7 +186,9 @@ mod tests {
             post_id: Some(Uint64::new(1)),
         };
         assert_eq!(
-            ReportTarget::Post{ post_id: Uint64::new(1) },
+            ReportTarget::Post {
+                post_id: Uint64::new(1)
+            },
             ReportTarget::try_from(raw).unwrap()
         )
     }

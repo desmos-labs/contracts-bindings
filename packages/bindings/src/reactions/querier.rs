@@ -283,7 +283,7 @@ mod tests {
     }
 
     #[test]
-    fn test_iterate_reactions(){
+    fn test_iterate_reactions() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());
@@ -298,7 +298,7 @@ mod tests {
     }
 
     #[test]
-    fn test_iterate_registered_reactions(){
+    fn test_iterate_registered_reactions() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(deps.querier.deref());

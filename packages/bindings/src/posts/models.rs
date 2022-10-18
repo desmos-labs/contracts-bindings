@@ -300,7 +300,7 @@ impl From<PostAttachment> for RawPostAttachment {
 }
 
 /// Represents the errors that can occur when converting a [`RawPostAttachment`] into a [`PostAttachment`].
-#[derive(Error, Debug, Clone)]
+#[derive(Error, Debug, Clone, PartialEq)]
 pub enum UnwrapPostAttachmentError {
     /// Error that occur if [`RawPostAttachment`] have an unknown attachment type.
     #[error("unknown attachment type: {0}")]
@@ -348,5 +348,217 @@ impl TryFrom<RawPostAttachment> for PostAttachment {
         } else {
             Err(UnwrapPostAttachmentError::UnknownAttachment(value.type_uri))
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn post_attachment_try_from_invalid_raw_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.InvalidAttachment".to_string(),
+            mime_type: None,
+            uri: None,
+            question: None,
+            provided_answers: None,
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::UnknownAttachment(
+                "/desmos.posts.v2.InvalidAttachment".to_string()
+            ),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_media_attachment_try_from_raw_without_mime_type_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Media".to_string(),
+            mime_type: None,
+            uri: None,
+            question: None,
+            provided_answers: None,
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidMedia("mime_type".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_media_attachment_try_from_raw_without_uri_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Media".to_string(),
+            mime_type: Some("test".to_string()),
+            uri: None,
+            question: None,
+            provided_answers: None,
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidMedia("uri".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_media_attachment_try_from_valid_raw_properly() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Media".to_string(),
+            mime_type: Some("test".to_string()),
+            uri: Some("ipfs://test".to_string()),
+            question: None,
+            provided_answers: None,
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            PostAttachment::Media {
+                mime_type: "test".to_string(),
+                uri: "ipfs://test".to_string()
+            },
+            PostAttachment::try_from(raw).unwrap()
+        )
+    }
+    #[test]
+    fn post_poll_attachment_try_from_wrong_raw_without_question_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            mime_type: None,
+            uri: None,
+            question: None,
+            provided_answers: None,
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidPoll("question".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_poll_attachment_try_from_wrong_raw_without_provided_answers_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            mime_type: None,
+            uri: None,
+            question: Some("test".to_string()),
+            provided_answers: None,
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidPoll("provided_answers".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_poll_attachment_try_from_wrong_raw_without_end_date_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            mime_type: None,
+            uri: None,
+            question: Some("test".to_string()),
+            provided_answers: Some(vec![ProvidedAnswer {
+                text: Some("answer".to_string()),
+                attachments: vec![],
+            }]),
+            end_date: None,
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidPoll("end_date".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_poll_attachment_try_from_wrong_raw_without_allows_multiple_answers_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            mime_type: None,
+            uri: None,
+            question: Some("test".to_string()),
+            provided_answers: Some(vec![ProvidedAnswer {
+                text: Some("answer".to_string()),
+                attachments: vec![],
+            }]),
+            end_date: Some("end_date".to_string()),
+            allows_multiple_answers: None,
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidPoll("allows_multiple_answers".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_poll_attachment_try_from_wrong_raw_without_allows_answer_edits_error() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            mime_type: None,
+            uri: None,
+            question: Some("test".to_string()),
+            provided_answers: Some(vec![ProvidedAnswer {
+                text: Some("answer".to_string()),
+                attachments: vec![],
+            }]),
+            end_date: Some("end_date".to_string()),
+            allows_multiple_answers: Some(true),
+            allows_answer_edits: None,
+            final_tally_results: None,
+        };
+        assert_eq!(
+            UnwrapPostAttachmentError::InvalidPoll("allows_answer_edits".to_string()),
+            PostAttachment::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_poll_attachment_try_from_valid_raw_properly() {
+        let raw = RawPostAttachment {
+            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            mime_type: None,
+            uri: None,
+            question: Some("test".to_string()),
+            provided_answers: Some(vec![ProvidedAnswer {
+                text: Some("answer".to_string()),
+                attachments: vec![],
+            }]),
+            end_date: Some("end_date".to_string()),
+            allows_multiple_answers: Some(true),
+            allows_answer_edits: Some(true),
+            final_tally_results: Some(PollTallyResults { results: vec![] }),
+        };
+        assert_eq!(
+            PostAttachment::Poll {
+                question: "test".to_string(),
+                provided_answers: vec![ProvidedAnswer {
+                    text: Some("answer".to_string()),
+                    attachments: vec![]
+                }],
+                end_date: "end_date".to_string(),
+                allows_multiple_answers: true,
+                allows_answer_edits: true,
+                final_tally_results: Some(PollTallyResults { results: vec![] }),
+            },
+            PostAttachment::try_from(raw).unwrap()
+        )
     }
 }

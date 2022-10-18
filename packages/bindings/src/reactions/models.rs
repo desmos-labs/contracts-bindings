@@ -181,7 +181,9 @@ mod tests {
             text: None,
         };
         assert_eq!(
-            UnwrapReactionValueError::UnknownReactionValue("/desmos.reactions.v1.InvalidValue".to_string()),
+            UnwrapReactionValueError::UnknownReactionValue(
+                "/desmos.reactions.v1.InvalidValue".to_string()
+            ),
             ReactionValue::try_from(raw).unwrap_err()
         )
     }
@@ -193,7 +195,9 @@ mod tests {
             text: None,
         };
         assert_eq!(
-            UnwrapReactionValueError::InvalidRegisteredReactionValue("registered_reaction_id".to_string()),
+            UnwrapReactionValueError::InvalidRegisteredReactionValue(
+                "registered_reaction_id".to_string()
+            ),
             ReactionValue::try_from(raw).unwrap_err()
         )
     }
@@ -205,7 +209,9 @@ mod tests {
             text: None,
         };
         assert_eq!(
-            ReactionValue::Registered{ registered_reaction_id: 1 },
+            ReactionValue::Registered {
+                registered_reaction_id: 1
+            },
             ReactionValue::try_from(raw).unwrap()
         )
     }
@@ -229,7 +235,9 @@ mod tests {
             text: Some("test".to_string()),
         };
         assert_eq!(
-            ReactionValue::FreeText{ text: "test".to_string() },
+            ReactionValue::FreeText {
+                text: "test".to_string()
+            },
             ReactionValue::try_from(raw).unwrap()
         )
     }

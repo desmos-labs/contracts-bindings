@@ -141,14 +141,8 @@ impl Into<QueryRequest<DesmosQuery>> for ReportsQuery {
 
 #[cfg(test)]
 mod tests {
-    use crate::posts::query::PostsQuery;
-    use crate::reports::query::ReportsQuery;
-    use crate::{
-        profiles::query::ProfilesQuery, query::DesmosQuery, reactions::query::ReactionsQuery,
-        relationships::query::RelationshipsQuery, subspaces::query::SubspacesQuery,
-    };
+    use super::*;
     use cosmwasm_std::{Addr, Uint64};
-
     #[test]
     fn test_from_profiles_query() {
         let query = ProfilesQuery::Profile {
@@ -157,7 +151,16 @@ mod tests {
         let expected = DesmosQuery::Profiles(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
     }
-
+    #[test]
+    fn test_profiles_query_into_query_request() {
+        let query = ProfilesQuery::Profile {
+            user: Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2").to_string(),
+        };
+        assert_eq!(
+            QueryRequest::<DesmosQuery>::Custom(DesmosQuery::from(query.clone())),
+            query.into()
+        )
+    }
     #[test]
     fn test_from_subspaces_query() {
         let query = SubspacesQuery::Subspaces {
@@ -166,7 +169,16 @@ mod tests {
         let expected = DesmosQuery::Subspaces(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
     }
-
+    #[test]
+    fn test_subspaces_query_into_query_request() {
+        let query = SubspacesQuery::Subspaces {
+            pagination: Default::default(),
+        };
+        assert_eq!(
+            QueryRequest::<DesmosQuery>::Custom(DesmosQuery::from(query.clone())),
+            query.into()
+        )
+    }
     #[test]
     fn test_from_relationships_query() {
         let query = RelationshipsQuery::Relationships {
@@ -182,7 +194,23 @@ mod tests {
         let expected = DesmosQuery::Relationships(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
-
+    #[test]
+    fn test_relationships_query_into_query_request() {
+        let query = RelationshipsQuery::Relationships {
+            user: Some(Addr::unchecked(
+                "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2",
+            )),
+            counterparty: Some(Addr::unchecked(
+                "desmos1rfv0f7mx7w9d3jv3h803u38vqym9ygg344asm3",
+            )),
+            subspace_id: Uint64::new(1),
+            pagination: None,
+        };
+        assert_eq!(
+            QueryRequest::<DesmosQuery>::Custom(DesmosQuery::from(query.clone())),
+            query.into()
+        )
+    }
     #[test]
     fn test_from_posts_query() {
         let query = PostsQuery::Post {
@@ -192,7 +220,17 @@ mod tests {
         let expected = DesmosQuery::Posts(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
     }
-
+    #[test]
+    fn test_posts_query_into_query_request() {
+        let query = PostsQuery::Post {
+            subspace_id: Uint64::new(0),
+            post_id: Uint64::new(0),
+        };
+        assert_eq!(
+            QueryRequest::<DesmosQuery>::Custom(DesmosQuery::from(query.clone())),
+            query.into()
+        )
+    }
     #[test]
     fn test_from_reactions_query() {
         let query = ReactionsQuery::Reactions {
@@ -204,7 +242,19 @@ mod tests {
         let expected = DesmosQuery::Reactions(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
-
+    #[test]
+    fn test_reactions_query_into_query_request() {
+        let query = ReactionsQuery::Reactions {
+            subspace_id: Uint64::new(1),
+            post_id: Uint64::new(1),
+            user: None,
+            pagination: None,
+        };
+        assert_eq!(
+            QueryRequest::<DesmosQuery>::Custom(DesmosQuery::from(query.clone())),
+            query.into()
+        )
+    }
     #[test]
     fn test_from_reports_query() {
         let query = ReportsQuery::Report {
@@ -213,5 +263,16 @@ mod tests {
         };
         let expected = DesmosQuery::Reports(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
+    }
+    #[test]
+    fn test_reports_query_into_query_request() {
+        let query = ReportsQuery::Report {
+            subspace_id: Uint64::new(1),
+            report_id: Uint64::new(2),
+        };
+        assert_eq!(
+            QueryRequest::<DesmosQuery>::Custom(DesmosQuery::from(query.clone())),
+            query.into()
+        )
     }
 }
