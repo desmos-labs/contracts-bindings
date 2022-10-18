@@ -7,8 +7,8 @@ use crate::query::DesmosQuery;
 use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Empty, Storage};
 use cw_multi_test::{
-    App, BankKeeper, BasicAppBuilder, DistributionKeeper, FailingModule, StakeKeeper, Module,
-    Router, WasmKeeper,
+    App, BankKeeper, BasicAppBuilder, DistributionKeeper, FailingModule, Module, Router,
+    StakeKeeper, WasmKeeper,
 };
 
 /// Defines the module trait for desmos app.
