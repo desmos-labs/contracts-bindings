@@ -28,7 +28,7 @@ thiserror = "1.0.37"
 cw-multi-test = { version = "0.15.1"}
 
 [dev-dependencies]
-cosmwasm-schema = { version = "1.1.4" }
+cosmwasm-schema = { version = "1.1.5" }
 
 [features]
 default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "query", "msg"]
