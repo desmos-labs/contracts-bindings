@@ -44,7 +44,7 @@ pub struct RawReportTarget {
 }
 
 /// Types of target for which a report can be made.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum ReportTarget {
     /// Represents a report about a user.
     User {
@@ -90,7 +90,7 @@ impl From<ReportTarget> for RawReportTarget {
 }
 
 /// Represents the errors that can occur when converting a [`RawReportTarget`] into a [`ReportTarget`].
-#[derive(Error, Debug, Clone)]
+#[derive(Error, Debug, Clone, PartialEq)]
 pub enum UnwrapReportTargetError {
     /// Error that occur if [`RawReportTarget`] has an unknown type.
     #[error("unknown attachment type: {0}")]
@@ -122,5 +122,70 @@ impl TryFrom<RawReportTarget> for ReportTarget {
             }),
             _ => Err(UnwrapReportTargetError::UnknownType(value.type_uri)),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn report_target_try_from_raw_with_invalid_type_uri_error() {
+        let raw = RawReportTarget {
+            type_uri: "/desmos.reports.v1.InvalidTarget".to_string(),
+            user: None,
+            post_id: None,
+        };
+        assert_eq!(
+            UnwrapReportTargetError::UnknownType("/desmos.reports.v1.InvalidTarget".to_string()),
+            ReportTarget::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn user_report_target_try_from_wrong_raw_error() {
+        let raw = RawReportTarget {
+            type_uri: "/desmos.reports.v1.UserTarget".to_string(),
+            user: None,
+            post_id: None,
+        };
+        assert_eq!(
+            UnwrapReportTargetError::InvalidUserTarget("user".to_string()),
+            ReportTarget::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn user_report_target_try_from_raw_properly() {
+        let raw = RawReportTarget {
+            type_uri: "/desmos.reports.v1.UserTarget".to_string(),
+            user: Some(Addr::unchecked("user")),
+            post_id: None,
+        };
+        assert_eq!(
+            ReportTarget::User{ user: Addr::unchecked("user") },
+            ReportTarget::try_from(raw).unwrap()
+        )
+    }
+    #[test]
+    fn post_report_target_try_from_wrong_raw_error() {
+        let raw = RawReportTarget {
+            type_uri: "/desmos.reports.v1.PostTarget".to_string(),
+            user: None,
+            post_id: None,
+        };
+        assert_eq!(
+            UnwrapReportTargetError::InvalidPostTarget("post_id".to_string()),
+            ReportTarget::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn post_report_target_try_from_raw_properly() {
+        let raw = RawReportTarget {
+            type_uri: "/desmos.reports.v1.PostTarget".to_string(),
+            user: None,
+            post_id: Some(Uint64::new(1)),
+        };
+        assert_eq!(
+            ReportTarget::Post{ post_id: Uint64::new(1) },
+            ReportTarget::try_from(raw).unwrap()
+        )
     }
 }

@@ -281,4 +281,34 @@ mod tests {
         };
         assert_eq!(response.ok(), Some(expected));
     }
+
+    #[test]
+    fn test_iterate_reactions(){
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let mut iterator = querier.iterate_reactions(1, 1, None, 32);
+        // The first item returned from the iterators should be the first item returned from the mock function.
+        assert_eq!(
+            &MockReactionsQueries::get_mock_reaction(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The second item should be none since the mock function provides only 1 reactions.
+        assert!(iterator.next().is_none())
+    }
+
+    #[test]
+    fn test_iterate_registered_reactions(){
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = ReactionsQuerier::new(deps.querier.deref());
+        let mut iterator = querier.iterate_registered_reactions(1, 32);
+        // The first item returned from the iterators should be the first item returned from the mock function.
+        assert_eq!(
+            &MockReactionsQueries::get_mock_registered_reaction(),
+            &iterator.next().unwrap().unwrap()
+        );
+        // The second item should be none since the mock function provides only 1 reactions.
+        assert!(iterator.next().is_none())
+    }
 }

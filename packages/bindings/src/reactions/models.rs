@@ -84,7 +84,7 @@ impl From<ReactionValue> for RawReactionValue {
 }
 
 /// Represents the errors that can occur when converting a [`RawReactionValue`] into a [`ReactionValue`].
-#[derive(Error, Debug, Clone)]
+#[derive(Error, Debug, Clone, PartialEq)]
 pub enum UnwrapReactionValueError {
     /// Error that occur if [`RawReactionValue`] have an unknown reaction value type.
     #[error("unknown reaction value type: {0}")]
@@ -168,4 +168,69 @@ pub struct FreeTextValueParams {
 pub struct RegisteredReactionValueParams {
     /// Whether [`ReactionValue::Registered`] reactions should be enabled.
     pub enabled: bool,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn reaction_value_try_from_raw_with_invalid_type_uri_error() {
+        let raw = RawReactionValue {
+            type_uri: "/desmos.reactions.v1.InvalidValue".to_string(),
+            registered_reaction_id: None,
+            text: None,
+        };
+        assert_eq!(
+            UnwrapReactionValueError::UnknownReactionValue("/desmos.reactions.v1.InvalidValue".to_string()),
+            ReactionValue::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn registered_reaction_value_try_from_wrong_raw_error() {
+        let raw = RawReactionValue {
+            type_uri: "/desmos.reactions.v1.RegisteredReactionValue".to_string(),
+            registered_reaction_id: None,
+            text: None,
+        };
+        assert_eq!(
+            UnwrapReactionValueError::InvalidRegisteredReactionValue("registered_reaction_id".to_string()),
+            ReactionValue::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn registered_reaction_value_try_from_raw_properly() {
+        let raw = RawReactionValue {
+            type_uri: "/desmos.reactions.v1.RegisteredReactionValue".to_string(),
+            registered_reaction_id: Some(1),
+            text: None,
+        };
+        assert_eq!(
+            ReactionValue::Registered{ registered_reaction_id: 1 },
+            ReactionValue::try_from(raw).unwrap()
+        )
+    }
+    #[test]
+    fn free_text_value_try_from_wrong_raw_error() {
+        let raw = RawReactionValue {
+            type_uri: "/desmos.reactions.v1.FreeTextValue".to_string(),
+            registered_reaction_id: None,
+            text: None,
+        };
+        assert_eq!(
+            UnwrapReactionValueError::InvalidFreeTextValue("text".to_string()),
+            ReactionValue::try_from(raw).unwrap_err()
+        )
+    }
+    #[test]
+    fn free_text_reaction_value_try_from_raw_properly() {
+        let raw = RawReactionValue {
+            type_uri: "/desmos.reactions.v1.FreeTextValue".to_string(),
+            registered_reaction_id: None,
+            text: Some("test".to_string()),
+        };
+        assert_eq!(
+            ReactionValue::FreeText{ text: "test".to_string() },
+            ReactionValue::try_from(raw).unwrap()
+        )
+    }
 }
