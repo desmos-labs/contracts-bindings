@@ -365,12 +365,7 @@ pub fn mock_desmos_dependencies_with_custom_querier(
 /// handling queries towards Desmos's modules.
 pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, DesmosQuery>
 {
-    OwnedDeps::<_, _, _, DesmosQuery> {
-        storage: MockStorage::default(),
-        api: MockApi::default(),
-        querier: MockDesmosQuerier::default(),
-        custom_query_type: PhantomData,
-    }
+    mock_desmos_dependencies_with_custom_querier(MockDesmosQuerier::default())
 }
 
 #[cfg(test)]

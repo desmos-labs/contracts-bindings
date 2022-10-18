@@ -19,7 +19,7 @@ impl MockPostsQueries {
             Post {
                 subspace_id: *subspace_id,
                 section_id: 0,
-                eternal_id: None,
+                external_id: None,
                 text: None,
                 entities: None,
                 tags: vec![],
@@ -34,7 +34,7 @@ impl MockPostsQueries {
             Post {
                 subspace_id: *subspace_id,
                 section_id: 0,
-                eternal_id: None,
+                external_id: None,
                 text: None,
                 entities: None,
                 tags: vec![],
@@ -55,7 +55,7 @@ impl MockPostsQueries {
             Post {
                 subspace_id: *subspace_id,
                 section_id: *section_id,
-                eternal_id: None,
+                external_id: None,
                 text: None,
                 entities: None,
                 tags: vec![],
@@ -70,7 +70,7 @@ impl MockPostsQueries {
             Post {
                 subspace_id: *subspace_id,
                 section_id: *section_id,
-                eternal_id: None,
+                external_id: None,
                 text: None,
                 entities: None,
                 tags: vec![],
@@ -91,7 +91,7 @@ impl MockPostsQueries {
             id: post_id,
             subspace_id,
             section_id: 0,
-            eternal_id: None,
+            external_id: None,
             text: None,
             entities: None,
             tags: vec![],
