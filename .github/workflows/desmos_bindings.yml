@@ -69,7 +69,7 @@ jobs:
 
       - name: Install cargo-tarpaulin ⚙
         if: env.GIT_DIFF
-        run: cargo install cargo-tarpaulin --version 0.21.0
+        run: cargo install cargo-tarpaulin --version 0.20.0
 
       - name: Generate coverage report 🧪
         if: env.GIT_DIFF
