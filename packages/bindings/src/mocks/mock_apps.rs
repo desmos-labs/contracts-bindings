@@ -7,7 +7,7 @@ use crate::query::DesmosQuery;
 use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Empty, Storage};
 use cw_multi_test::{
-    App, BankKeeper, BasicAppBuilder, FailingDistribution, FailingModule, FailingStaking, Module,
+    App, BankKeeper, BasicAppBuilder, DistributionKeeper, FailingModule, StakeKeeper, Module,
     Router, WasmKeeper,
 };
 
@@ -30,8 +30,8 @@ where
             BankKeeper,
             M,
             WasmKeeper<DesmosMsg, DesmosQuery>,
-            FailingStaking,
-            FailingDistribution,
+            StakeKeeper,
+            DistributionKeeper,
         >,
         &dyn Api,
         &mut dyn Storage,
