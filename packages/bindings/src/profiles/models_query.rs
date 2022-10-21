@@ -9,21 +9,18 @@ use crate::{
     },
     types::PageResponse,
 };
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+use cosmwasm_schema::cw_serde;
 
 /// Response to [`ProfilesQuery::Profile`](crate::profiles::query::ProfilesQuery::Profile).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryProfileResponse {
     /// The queried profile.
     pub profile: Profile,
 }
 
 /// Response to [`ProfilesQuery::IncomingDtagTransferRequests`](crate::profiles::query::ProfilesQuery::IncomingDtagTransferRequests).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
-pub struct QueryIncomingDtagTransferRequestResponse {
+#[cw_serde]
+pub struct QueryIncomingDtagTransferRequestsResponse {
     /// Queried dtag transfer requests.
     pub requests: Vec<DtagTransferRequest>,
     /// Details of the current fetched page.
@@ -31,8 +28,7 @@ pub struct QueryIncomingDtagTransferRequestResponse {
 }
 
 /// Response to [`ProfilesQuery::ChainLinks`](crate::profiles::query::ProfilesQuery::ChainLinks).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryChainLinksResponse {
     /// Queried chain links.
     pub links: Vec<ChainLink>,
@@ -41,8 +37,7 @@ pub struct QueryChainLinksResponse {
 }
 
 /// Response to [`ProfilesQuery::ChainLinkOwners`](crate::profiles::query::ProfilesQuery::ChainLinkOwners).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryChainLinkOwnersResponse {
     /// Queried owners with details.
     pub owners: Vec<ChainLinkOwnerDetails>,
@@ -51,8 +46,7 @@ pub struct QueryChainLinkOwnersResponse {
 }
 
 /// Response to [`ProfilesQuery::DefaultExternalAddresses`](crate::profiles::query::ProfilesQuery::DefaultExternalAddresses).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryDefaultExternalAddressesResponse {
     /// List of default addresses, each one represented by the associated chain link.
     pub links: Vec<ChainLink>,
@@ -61,8 +55,7 @@ pub struct QueryDefaultExternalAddressesResponse {
 }
 
 /// Response to [`ProfilesQuery::ApplicationLinks`](crate::profiles::query::ProfilesQuery::ApplicationLinks).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryApplicationLinksResponse {
     /// Queried application links.
     pub links: Vec<ApplicationLink>,
@@ -71,16 +64,14 @@ pub struct QueryApplicationLinksResponse {
 }
 
 /// Response to [`ProfilesQuery::ApplicationLinkByChainID`](crate::profiles::query::ProfilesQuery::ApplicationLinkByChainID).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryApplicationLinkByClientIDResponse {
     /// Queried application link.
     pub link: ApplicationLink,
 }
 
 /// Response to [`ProfilesQuery::ApplicationLinkOwners`](crate::profiles::query::ProfilesQuery::ApplicationLinkOwners).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryApplicationLinkOwnersResponse {
     /// Queried owners with details
     pub owners: Vec<ApplicationLinkOwnerDetails>,

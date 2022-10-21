@@ -2,12 +2,10 @@
 
 use crate::posts::models::{Attachment, Post, UserAnswer};
 use crate::types::PageResponse;
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+use cosmwasm_schema::cw_serde;
 
 /// Response to [`PostsQuery::SubspacePosts`](crate::posts::query::PostsQuery::SubspacePosts).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QuerySubspacePostsResponse {
     /// Queried posts.
     pub posts: Vec<Post>,
@@ -16,8 +14,7 @@ pub struct QuerySubspacePostsResponse {
 }
 
 /// Response to [`PostsQuery::SectionPosts`](crate::posts::query::PostsQuery::SectionPosts).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QuerySectionPostsResponse {
     /// Queried posts.
     pub posts: Vec<Post>,
@@ -26,16 +23,14 @@ pub struct QuerySectionPostsResponse {
 }
 
 /// Response to [`PostsQuery::Post`](crate::posts::query::PostsQuery::Post).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryPostResponse {
     /// Queried post.
     pub post: Post,
 }
 
 /// Response to [`PostsQuery::PostAttachments`](crate::posts::query::PostsQuery::PostAttachments).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryPostAttachmentsResponse {
     /// Queried attachments.
     pub attachments: Vec<Attachment>,
@@ -44,8 +39,7 @@ pub struct QueryPostAttachmentsResponse {
 }
 
 /// Response to [`PostsQuery::PollAnswers`](crate::posts::query::PostsQuery::PollAnswers).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryPollAnswersResponse {
     /// Queried answers.
     pub answers: Vec<UserAnswer>,

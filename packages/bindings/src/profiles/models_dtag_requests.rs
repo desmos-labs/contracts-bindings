@@ -1,12 +1,10 @@
 //! Contains structs and enums related to the dtag requests.
 
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::Addr;
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Represent a DTag transfer request between two users.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct DtagTransferRequest {
     /// Value of the DTag that should be transferred from
     /// the receiver of the request to the sender.

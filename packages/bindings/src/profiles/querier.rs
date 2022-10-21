@@ -15,7 +15,7 @@ use crate::{
         models_query::{
             QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
             QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-            QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+            QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestsResponse,
             QueryProfileResponse,
         },
         query::ProfilesQuery,
@@ -69,13 +69,13 @@ impl<'a> ProfilesQuerier<'a> {
         &self,
         receiver: Addr,
         pagination: Option<PageRequest>,
-    ) -> StdResult<QueryIncomingDtagTransferRequestResponse> {
+    ) -> StdResult<QueryIncomingDtagTransferRequestsResponse> {
         let request = DesmosQuery::Profiles(ProfilesQuery::IncomingDtagTransferRequests {
             receiver,
             pagination,
         });
 
-        let res: QueryIncomingDtagTransferRequestResponse = self.querier.query(&request.into())?;
+        let res: QueryIncomingDtagTransferRequestsResponse = self.querier.query(&request.into())?;
         Ok(res)
     }
 
@@ -364,7 +364,7 @@ impl<'a> ProfilesQuerier<'a> {
         &self,
         client_id: &str,
     ) -> StdResult<QueryApplicationLinkByClientIDResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkByChainID {
+        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkByClientID {
             client_id: client_id.to_owned(),
         });
 
@@ -462,7 +462,7 @@ mod tests {
         let response = profiles_querier
             .query_incoming_dtag_transfer_requests(Addr::unchecked(""), None)
             .unwrap();
-        let expected = QueryIncomingDtagTransferRequestResponse {
+        let expected = QueryIncomingDtagTransferRequestsResponse {
             requests: vec![MockProfilesQueries::get_mock_dtag_transfer_request()],
             pagination: Default::default(),
         };

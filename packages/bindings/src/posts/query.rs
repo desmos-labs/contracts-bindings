@@ -1,16 +1,17 @@
 //! Contains the query actions that can be sent to the chain in order to query data related
 //! to the x/posts module.
 
+use crate::posts::models_query::*;
 use crate::types::PageRequest;
+use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Query messages that can be sent to the x/relationships module.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
+#[derive(QueryResponses)]
 pub enum PostsQuery {
     /// Queries all the posts inside a given subspace.
+    #[returns(QuerySubspacePostsResponse)]
     SubspacePosts {
         /// Id of the subspace to query the posts for.
         subspace_id: Uint64,
@@ -18,6 +19,7 @@ pub enum PostsQuery {
         pagination: Option<PageRequest>,
     },
     /// Queries all the posts inside a given section.
+    #[returns(QuerySectionPostsResponse)]
     SectionPosts {
         /// Id of the subspace to query the posts for.
         subspace_id: Uint64,
@@ -27,6 +29,7 @@ pub enum PostsQuery {
         pagination: Option<PageRequest>,
     },
     /// Queries for a single post inside a given subspace.
+    #[returns(QueryPostResponse)]
     Post {
         /// Id of the subspace where the post is stored.
         subspace_id: Uint64,
@@ -34,6 +37,7 @@ pub enum PostsQuery {
         post_id: Uint64,
     },
     /// Queries the attachments of the post having the given id.
+    #[returns(QueryPostAttachmentsResponse)]
     PostAttachments {
         /// Id of the subspace where the post is stored.
         subspace_id: Uint64,
@@ -43,6 +47,7 @@ pub enum PostsQuery {
         pagination: Option<PageRequest>,
     },
     /// Queries the answers for the poll having the given id.
+    #[returns(QueryPollAnswersResponse)]
     PollAnswers {
         /// Id of the subspace where the post is stored.
         subspace_id: Uint64,

@@ -1,5 +1,5 @@
 use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
-use desmos_test_contract::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
+use test_contract::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use std::env::current_dir;
 use std::fs::create_dir_all;
 
