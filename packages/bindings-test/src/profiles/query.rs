@@ -7,7 +7,7 @@ mod tests {
     use desmos_bindings::profiles::models_profile::Pictures;
     use desmos_bindings::profiles::models_query::{
         QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestsResponse,
         QueryProfileResponse,
     };
     use desmos_bindings::profiles::query::ProfilesQuery;
@@ -55,7 +55,7 @@ mod tests {
         };
 
         let contract_address = desmos_cli.get_contract_by_code(1);
-        let result: QueryIncomingDtagTransferRequestResponse = desmos_cli
+        let result: QueryIncomingDtagTransferRequestsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
 
