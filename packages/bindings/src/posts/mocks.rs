@@ -29,7 +29,7 @@ impl MockPostsQueries {
                 reply_settings: ReplySetting::Everyone,
                 creation_date: "".to_string(),
                 conversation_id: None,
-                last_edit_date: None,
+                last_edited_date: None,
             },
             Post {
                 subspace_id: *subspace_id,
@@ -44,7 +44,7 @@ impl MockPostsQueries {
                 reply_settings: ReplySetting::Everyone,
                 creation_date: "".to_string(),
                 conversation_id: None,
-                last_edit_date: None,
+                last_edited_date: None,
             },
         ]
     }
@@ -65,7 +65,7 @@ impl MockPostsQueries {
                 reply_settings: ReplySetting::Everyone,
                 creation_date: "".to_string(),
                 conversation_id: None,
-                last_edit_date: None,
+                last_edited_date: None,
             },
             Post {
                 subspace_id: *subspace_id,
@@ -80,7 +80,7 @@ impl MockPostsQueries {
                 reply_settings: ReplySetting::Everyone,
                 creation_date: "".to_string(),
                 conversation_id: None,
-                last_edit_date: None,
+                last_edited_date: None,
             },
         ]
     }
@@ -100,7 +100,7 @@ impl MockPostsQueries {
             referenced_posts: vec![],
             reply_settings: ReplySetting::Unspecified,
             creation_date: "".to_string(),
-            last_edit_date: None,
+            last_edited_date: None,
         }
     }
 

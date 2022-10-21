@@ -41,7 +41,7 @@ pub struct Post {
     pub creation_date: String,
     /// Last edited time of the post in RFC 3339 format.
     /// example: 1972-01-01T10:00:20.
-    pub last_edit_date: Option<String>,
+    pub last_edited_date: Option<String>,
 }
 
 /// Represents a generic tag.

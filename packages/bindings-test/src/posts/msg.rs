@@ -24,6 +24,7 @@ mod test {
             external_id: None,
             text: Some("Post text".to_string()),
             entities: None,
+            tags: vec![],
             attachments: None,
             author: Addr::unchecked(&contract_address),
             conversation_id: None,

@@ -21,6 +21,8 @@ pub enum PostsMsg {
         text: Option<String>,
         /// Entities connected to this post.
         entities: Option<Entities>,
+        /// Tags related to this post.
+        tags: Vec<String>,
         /// Attachments of the post.
         attachments: Option<Vec<RawPostAttachment>>,
         /// Author of the post.
@@ -101,6 +103,7 @@ impl PostsMsg {
     /// * `external_id` - External id for this post.
     /// * `text` - Text of the post.
     /// * `entities` - Entities connected to this post.
+    /// * `tags` - Tags related to this post.
     /// * `attachments` - Attachments of the post.
     /// * `author` - Author of the post.
     /// * `conversation_id` - Id of the original post of the conversation.
@@ -112,6 +115,7 @@ impl PostsMsg {
         external_id: Option<&str>,
         text: Option<&str>,
         entities: Option<Entities>,
+        tags: Vec<String>,
         attachments: Option<Vec<PostAttachment>>,
         author: Addr,
         conversation_id: Option<u64>,
@@ -124,6 +128,7 @@ impl PostsMsg {
             external_id: external_id.map(str::to_string),
             text: text.map(str::to_string),
             entities,
+            tags,
             attachments: attachments.map(|attachments| {
                 attachments
                     .into_iter()
@@ -249,6 +254,7 @@ mod tests {
             Some("1"),
             Some("test"),
             None,
+            vec![],
             Some(vec![
                 PostAttachment::Media {
                     uri: "ftp://domain.io/image.png".to_string(),
@@ -277,6 +283,7 @@ mod tests {
             external_id: Some("1".to_string()),
             text: Some("test".to_string()),
             entities: None,
+            tags: vec![],
             attachments: Some(vec![
                 PostAttachment::Media {
                     uri: "ftp://domain.io/image.png".to_string(),

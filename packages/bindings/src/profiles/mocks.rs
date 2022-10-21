@@ -28,6 +28,7 @@ impl MockProfilesQueries {
     /// Gets a mocked instance of [`Profile`].
     pub fn get_mock_profile() -> Profile {
         Profile {
+            proto_type: "/desmos.profiles.v3.Profile".to_string(),
             account: Account {
                 proto_type: "/cosmos.auth.v1beta1.BaseAccount".to_string(),
                 address: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),

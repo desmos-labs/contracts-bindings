@@ -7,6 +7,9 @@ use cosmwasm_std::{Addr, Uint64};
 /// Represents a Desmos profile, contains the information of a single user.
 #[cw_serde]
 pub struct Profile {
+    /// The profile proto type.
+    #[serde(rename = "@type")]
+    pub proto_type: String,
     /// The base Cosmos account associated with this profile.
     pub account: Account,
     /// Unique tag of this profile.
