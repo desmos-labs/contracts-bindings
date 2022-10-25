@@ -2,16 +2,17 @@
 //! to the x/reports module.
 
 use crate::reports::models::RawReportTarget;
+use crate::reports::models_query::*;
 use crate::types::PageRequest;
+use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Query messages that can be sent to the x/reports module.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
+#[derive(QueryResponses)]
 pub enum ReportsQuery {
     /// Query the reports for a specific target.
+    #[returns(QueryReportsResponse)]
     Reports {
         /// Id of the subspace to query the reports for.
         subspace_id: Uint64,
@@ -24,6 +25,7 @@ pub enum ReportsQuery {
         pagination: Option<PageRequest>,
     },
     /// Query the report having the given id.
+    #[returns(QueryReportResponse)]
     Report {
         /// Id of the subspace that holds the report to query for.
         subspace_id: Uint64,
@@ -31,6 +33,7 @@ pub enum ReportsQuery {
         report_id: Uint64,
     },
     /// Query the supported reporting reasons for a subspace.
+    #[returns(QueryReasonsResponse)]
     Reasons {
         /// Id of the subspace to query the supported reporting reasons for.
         subspace_id: Uint64,
@@ -38,6 +41,7 @@ pub enum ReportsQuery {
         pagination: Option<PageRequest>,
     },
     /// Query the reason having the given id.
+    #[returns(QueryReasonResponse)]
     Reason {
         /// Id of the subspace that holds the reason to query for.
         subspace_id: Uint64,

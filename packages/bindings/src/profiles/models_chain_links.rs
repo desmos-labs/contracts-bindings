@@ -1,13 +1,11 @@
 //! Contains structs and enums related to the chain links.
 
 use crate::types::PubKey;
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Binary};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Contains the data of the external chain address to be connected with the Desmos profile.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Address {
     /// The address proto type.
     #[serde(rename = "@type")]
@@ -19,8 +17,7 @@ pub struct Address {
 }
 
 /// Contains the data representing either an inter- or cross- chain link.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct ChainLink {
     /// Defines the destination profile address to link.
     pub user: Addr,
@@ -36,8 +33,7 @@ pub struct ChainLink {
 }
 
 /// Contains all the data used to verify a signature when linking an account to a profile.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Proof {
     /// Represents the public key associated with the address for which to prove the ownership.
     pub pub_key: PubKey,
@@ -48,8 +44,7 @@ pub struct Proof {
 }
 
 /// Represents a signature of a payload.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Signature {
     /// Signature type.
     #[serde(rename = "@type")]
@@ -61,7 +56,7 @@ pub struct Signature {
 }
 
 /// Represents all the possible signature types.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub enum SignatureValueType {
     /// Specifies an unknown signing mode and will be rejected.
     #[serde(rename = "SIGNATURE_VALUE_TYPE_UNSPECIFIED")]
@@ -83,16 +78,14 @@ pub enum SignatureValueType {
 }
 
 /// Contains the data of the linked chain.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct ChainConfig {
     /// Name of the chain.
     pub name: String,
 }
 
 /// Contains the details of a single chain link owner.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct ChainLinkOwnerDetails {
     /// Address of the link owner.
     pub user: Addr,

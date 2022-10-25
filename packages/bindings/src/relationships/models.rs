@@ -1,12 +1,10 @@
 //! Contains structs and enums related to the x/relationships module.
 
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Struct that represents a block.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct UserBlock {
     /// User that had blocked the `blocked`.
     pub blocker: Addr,
@@ -19,8 +17,7 @@ pub struct UserBlock {
 }
 
 /// Struct that represents a relationship, like a follow on Twitter.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Relationship {
     /// Address of who has created the relationship.
     pub creator: Addr,

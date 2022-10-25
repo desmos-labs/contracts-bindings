@@ -1,11 +1,10 @@
 //! Contains structs and enums related to the application links.
 
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Defines the state of an application link.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub enum ApplicationLinkState {
     /// A link has just been initialized.
     #[serde(rename = "ApplicationLinkStateInitialized")]
@@ -29,8 +28,7 @@ pub enum ApplicationLinkState {
 }
 
 /// Represent a link between a Desmos profile and a centralized application.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct ApplicationLink {
     /// User to which the link is associated.
     pub user: Addr,
@@ -51,8 +49,7 @@ pub struct ApplicationLink {
 
 /// Represents the data associated to a specific user of a
 /// generic centralized application.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Data {
     /// The application name (eg. Twitter, GitHub, etc).
     pub application: String,
@@ -62,8 +59,7 @@ pub struct Data {
 
 /// Represents a generic oracle request used to verify the ownership of
 /// a centralized application account.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct OracleRequest {
     /// Id of the request.
     pub id: Uint64,
@@ -77,8 +73,7 @@ pub struct OracleRequest {
 
 /// Represents the data sent to a single oracle request in order to
 /// verify the ownership of a centralized application by a Desmos profile.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct CallData {
     /// The application for which the ownership should be verified.
     pub application: String,
@@ -88,8 +83,7 @@ pub struct CallData {
 }
 
 /// Represents a verification result.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum AppLinkResult {
     /// Result of an application link that has been successfully verified.
     Success {
@@ -106,8 +100,7 @@ pub enum AppLinkResult {
 }
 
 /// Contains the details of a single app link owner.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct ApplicationLinkOwnerDetails {
     /// Address of the link owner.
     pub user: Addr,

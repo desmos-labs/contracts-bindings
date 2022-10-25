@@ -41,11 +41,12 @@ mod test {
             reply_settings: ReplySetting::Everyone,
             // Leave the creation date blank since we can't guess it at runtime.
             creation_date: "".to_string(),
-            last_edit_date: None,
+            // Leave the last edited date None since we can't guess it at runtime.
+            last_edited_date: None,
         }
     }
 
-    fn assert_post_eq(post_l: &Post, post_r: &Post, check_creation_date: bool) {
+    fn assert_post_eq(post_l: &Post, post_r: &Post, check_date: bool) {
         assert_eq!(post_l.id, post_r.id);
         assert_eq!(post_l.subspace_id, post_r.subspace_id);
         assert_eq!(post_l.section_id, post_r.section_id);
@@ -56,10 +57,10 @@ mod test {
         assert_eq!(post_l.conversation_id, post_r.conversation_id);
         assert_eq!(post_l.referenced_posts, post_r.referenced_posts);
         assert_eq!(post_l.reply_settings, post_r.reply_settings);
-        if check_creation_date {
+        if check_date {
             assert_eq!(post_l.creation_date, post_r.creation_date);
+            assert_eq!(post_l.last_edited_date, post_r.last_edited_date);
         }
-        assert_eq!(post_l.last_edit_date, post_r.last_edit_date);
     }
 
     #[test]

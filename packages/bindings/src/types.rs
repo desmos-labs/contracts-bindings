@@ -1,8 +1,7 @@
 //! Contains some basic types of a cosmos sdk based chain.
 
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Binary, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Represents a chain block height.
 /// Normally the `revision_height` is incremented at each height while keeping `revision_number` the same.
@@ -10,8 +9,7 @@ use serde::{Deserialize, Serialize};
 /// certain conditions e.g. hard forks, state-machine breaking changes in these cases,
 /// the `revision_number` is incremented so that height continues to be monitonically increasing
 /// even as the `revision_height` gets reset.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Height {
     /// The revision that the client is currently on.
     pub revision_number: Uint64,
@@ -20,8 +18,7 @@ pub struct Height {
 }
 
 /// Represents a generic public key.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct PubKey {
     /// Public key type.
     #[serde(rename = "@type")]
@@ -31,8 +28,7 @@ pub struct PubKey {
 }
 
 /// Represents the configurations that tell the application which page of data to fetch.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct PageRequest {
     /// Value returned in PageResponse.next_key to begin querying the next page most efficiently.
     /// Only one of offset or key should be set.
@@ -52,8 +48,7 @@ pub struct PageRequest {
 }
 
 /// Response returned from a query method that had used [PageRequest].
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Default, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct PageResponse {
     /// Key to be passed to [PageRequest::key] to query the next page most efficiently.
     pub next_key: Option<Binary>,

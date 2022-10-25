@@ -4,12 +4,10 @@ use crate::{
     relationships::models::{Relationship, UserBlock},
     types::PageResponse,
 };
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+use cosmwasm_schema::cw_serde;
 
 /// Response to the [`RelationshipsQuery::Relationships`](crate::relationships::query::RelationshipsQuery::Relationships).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryRelationshipsResponse {
     /// The queried relationships.
     pub relationships: Vec<Relationship>,
@@ -18,8 +16,7 @@ pub struct QueryRelationshipsResponse {
 }
 
 /// Response to the [`RelationshipsQuery::Blocks`](crate::relationships::query::RelationshipsQuery::Blocks).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryBlocksResponse {
     /// The queried blocks.
     pub blocks: Vec<UserBlock>,

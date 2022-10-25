@@ -12,9 +12,8 @@ use crate::relationships::query::RelationshipsQuery;
 use crate::reports::query::ReportsQuery;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::query::SubspacesQuery;
+use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{CustomQuery, QueryRequest};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 // Use the serde `rename_all` tag in order to produce the following json file structure
 // ## Example
@@ -25,8 +24,9 @@ use serde::{Deserialize, Serialize};
 // }
 
 /// Enum that defines how the desmos query messages are serialized.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
+#[derive(QueryResponses)]
+#[query_responses(nested)]
 pub enum DesmosQuery {
     /// Queries relative to the x/profiles module.
     #[cfg(feature = "profiles")]

@@ -12,13 +12,11 @@ use crate::relationships::msg::RelationshipsMsg;
 use crate::reports::msg::ReportsMsg;
 #[cfg(feature = "subspaces")]
 use crate::subspaces::msg::SubspacesMsg;
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{CosmosMsg, CustomMsg};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Enum that defines how the messages are serialized.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum DesmosMsg {
     /// Messages relative to the x/profiles module.
     #[cfg(feature = "profiles")]

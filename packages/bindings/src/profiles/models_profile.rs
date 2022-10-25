@@ -1,14 +1,15 @@
 //! Contains structs and enums related to the Desmos profile.
 
 use crate::types::PubKey;
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Represents a Desmos profile, contains the information of a single user.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Profile {
+    /// The profile proto type.
+    #[serde(rename = "@type")]
+    pub proto_type: String,
     /// The base Cosmos account associated with this profile.
     pub account: Account,
     /// Unique tag of this profile.
@@ -24,8 +25,7 @@ pub struct Profile {
 }
 
 /// Represents the base Cosmos account.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Account {
     /// Account type.
     #[serde(rename = "@type")]
@@ -41,8 +41,7 @@ pub struct Account {
 }
 
 /// Data of a user profile's related pictures.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Pictures {
     /// URL to the profile picture.
     pub profile: String,

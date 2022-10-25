@@ -1,8 +1,7 @@
 //! Contains structs and enums related to the x/reports module.
 
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use thiserror::Error;
 
@@ -10,8 +9,7 @@ const USER_REPORT_TARGET_TYPE_URI: &str = "/desmos.reports.v1.UserTarget";
 const POST_REPORT_TARGET_TYPE_URI: &str = "/desmos.reports.v1.PostTarget";
 
 /// Represents a generic report.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Report {
     /// Id of the subspace for which the report has been created.
     pub subspace_id: Uint64,
@@ -32,8 +30,7 @@ pub struct Report {
 
 /// Serializable representation of [`ReportTarget`].  
 /// To create an instance of this struct use the `into()` method of [`ReportTarget`]
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct RawReportTarget {
     #[serde(rename = "@type")]
     type_uri: String,
@@ -59,8 +56,7 @@ pub enum ReportTarget {
 }
 
 /// Contains the data about a reporting reason.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Reason {
     /// Id of the subspace for which this reason is valid.
     pub subspace_id: Uint64,
