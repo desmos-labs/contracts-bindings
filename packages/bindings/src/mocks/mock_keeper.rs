@@ -605,6 +605,17 @@ impl Module for DesmosKeeper {
         }
     }
 
+    fn sudo<ExecC, QueryC>(
+        &self,
+        _api: &dyn Api,
+        _storage: &mut dyn Storage,
+        _router: &dyn CosmosRouter<ExecC = ExecC, QueryC = QueryC>,
+        _block: &BlockInfo,
+        _msg: Empty,
+    ) -> AnyResult<AppResponse> {
+        unimplemented!()
+    }
+
     fn query(
         &self,
         _api: &dyn Api,
@@ -625,16 +636,5 @@ impl Module for DesmosKeeper {
                 ContractResult::Err(err) => AnyResult::Err(anyhow::Error::msg(err)),
             }
         }
-    }
-
-    fn sudo<ExecC, QueryC>(
-        &self,
-        _api: &dyn Api,
-        _storage: &mut dyn Storage,
-        _router: &dyn CosmosRouter<ExecC = ExecC, QueryC = QueryC>,
-        _block: &BlockInfo,
-        _msg: Empty,
-    ) -> AnyResult<AppResponse> {
-        unimplemented!()
     }
 }
