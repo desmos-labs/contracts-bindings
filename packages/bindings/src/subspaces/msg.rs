@@ -1,13 +1,11 @@
 //! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
 use crate::subspaces::models::Permission;
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Represents the messages to interact with the x/subspaces module.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum SubspacesMsg {
     /// Message to create a new subspace.
     CreateSubspace {

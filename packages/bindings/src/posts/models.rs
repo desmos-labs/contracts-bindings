@@ -1,9 +1,8 @@
 //! Contains structs and enums related to the x/posts module.
 
 use crate::posts::models::UnwrapPostAttachmentError::{InvalidMedia, InvalidPoll};
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
 use thiserror::Error;
 
@@ -13,8 +12,7 @@ pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v2.Media";
 pub const POLL_TYPE_URI: &str = "/desmos.posts.v2.Poll";
 
 /// Contains all the information about a single post.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Post {
     /// Unique id of the post.
     pub id: Uint64,
@@ -43,12 +41,11 @@ pub struct Post {
     pub creation_date: String,
     /// Last edited time of the post in RFC 3339 format.
     /// example: 1972-01-01T10:00:20.
-    pub last_edit_date: Option<String>,
+    pub last_edited_date: Option<String>,
 }
 
 /// Represents a generic tag.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct TextTagEntity {
     /// Index of the character inside the text at which the tag starts.
     pub start: Uint64,
@@ -59,8 +56,7 @@ pub struct TextTagEntity {
 }
 
 /// Contains the details of a generic URL.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct UrlEntity {
     /// Index of the character inside the text at which the URL starts.
     pub start: Uint64,
@@ -73,8 +69,7 @@ pub struct UrlEntity {
 }
 
 /// Contains the details of entities parsed out of the post text.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Entities {
     /// Hashtag entities.
     pub hashtags: Vec<TextTagEntity>,
@@ -85,8 +80,7 @@ pub struct Entities {
 }
 
 /// Contains the details of a post reference.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct PostReference {
     /// Type of reference.
     #[serde(rename = "type")]
@@ -99,8 +93,7 @@ pub struct PostReference {
 }
 
 /// Represents the different types of [`PostReference`].
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum PostReferenceType {
     /// No reference specified.
     #[serde(rename = "POST_REFERENCE_TYPE_UNSPECIFIED")]
@@ -117,8 +110,7 @@ pub enum PostReferenceType {
 }
 
 /// Contains the possible reply settings that a post can have.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum ReplySetting {
     /// No reply setting specified.
     #[serde(rename = "REPLY_SETTING_UNSPECIFIED")]
@@ -138,8 +130,7 @@ pub enum ReplySetting {
 }
 
 /// Contains the data of a single post attachment.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Attachment {
     /// Id of the subspace inside which the post to which this attachment should be
     /// connected is.
@@ -154,8 +145,7 @@ pub struct Attachment {
 
 /// Struct representing a generic post attachment that can be serialized and sent to the chain.  
 /// This struct can be created converting a [`PostAttachment`] using the [`core::convert::Into`] trait.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct RawPostAttachment {
     /// Attachment uri type, can be:
     /// * `/desmos.post.v1.Media` if representing a media.
@@ -192,8 +182,7 @@ pub struct RawPostAttachment {
 }
 
 /// Contains the result of a single poll provided answer.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct AnswerResult {
     /// Index of the answer inside the [`PostAttachment::Poll::provided_answers`].
     pub answer_index: u32,
@@ -202,15 +191,13 @@ pub struct AnswerResult {
 }
 
 /// Contains the tally results for a [`PostAttachment::Poll`].
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct PollTallyResults {
     /// Lists of votes.
     pub results: Vec<AnswerResult>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 /// Contains the details of a possible poll answer
 pub struct ProvidedAnswer {
     /// Text of the answer.
@@ -220,8 +207,7 @@ pub struct ProvidedAnswer {
 }
 
 /// Represents a user answer to a poll.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct UserAnswer {
     /// Subspace id inside which the post related to this attachment is located.
     pub subspace_id: Uint64,

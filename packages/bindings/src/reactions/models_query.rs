@@ -4,12 +4,10 @@ use crate::{
     reactions::models::{Reaction, RegisteredReaction, SubspaceReactionsParams},
     types::PageResponse,
 };
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+use cosmwasm_schema::cw_serde;
 
 /// Response to [`ReactionsQuery::Reactions`](crate::reactions::query::ReactionsQuery::Reactions).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryReactionsResponse {
     /// Queried reactions.
     pub reactions: Vec<Reaction>,
@@ -18,16 +16,14 @@ pub struct QueryReactionsResponse {
 }
 
 /// Response to [`ReactionsQuery::Reaction`](crate::reactions::query::ReactionsQuery::Reaction).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryReactionResponse {
     /// Queried reaction.
     pub reaction: Reaction,
 }
 
 /// Response to [`ReactionsQuery::RegisteredReactions`](crate::reactions::query::ReactionsQuery::RegisteredReactions).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryRegisteredReactionsResponse {
     /// Queried registred reactions.
     pub registered_reactions: Vec<RegisteredReaction>,
@@ -36,16 +32,14 @@ pub struct QueryRegisteredReactionsResponse {
 }
 
 /// Response to [`ReactionsQuery::RegisteredReaction`](crate::reactions::query::ReactionsQuery::RegisteredReaction).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryRegisteredReactionResponse {
     /// Queried registered reaction.
     pub registered_reaction: RegisteredReaction,
 }
 
 /// Response to [`ReactionsQuery::ReactionsParams`](crate::reactions::query::ReactionsQuery::ReactionsParams).
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct QueryReactionsParamsResponse {
     /// Queried reactions parameters.
     pub params: SubspaceReactionsParams,

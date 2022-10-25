@@ -1,12 +1,10 @@
 //! Contains structs and enums related to the x/subspaces module.
 
+use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Struct that represents a subspace.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Subspace {
     /// Unique id of the subspace.
     pub id: Uint64,
@@ -26,8 +24,7 @@ pub struct Subspace {
 }
 
 /// Contains the data of a single subspace section.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct Section {
     /// Id of the subspace inside which the section exists.
     pub subspace_id: Uint64,
@@ -42,8 +39,7 @@ pub struct Section {
 }
 
 /// Structs that represents a user group.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct UserGroup {
     /// Subspace to which the group belongs.
     pub subspace_id: Uint64,
@@ -60,8 +56,7 @@ pub struct UserGroup {
 }
 
 /// Enum that represents a permission that has been given to an user.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct PermissionDetail {
     /// Id of the subspace for which this permission is valid.
     pub subspace_id: Uint64,
@@ -74,8 +69,7 @@ pub struct PermissionDetail {
 }
 
 /// Struct that represent the permissions given to an user.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct UserPermissions {
     /// User for which the permission was set.
     pub user: Addr,
@@ -84,8 +78,7 @@ pub struct UserPermissions {
 }
 
 /// Struct that represents a permissions given to a group.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub struct GroupPermissions {
     /// Group for which the permission was set.
     pub group_id: u32,
@@ -94,7 +87,7 @@ pub struct GroupPermissions {
 }
 
 /// Represents the permissions that can be given to an user or a user group.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub enum Permission {
     /// Allows to change the information of the subspace.
     #[serde(rename = "EDIT_SUBSPACE")]

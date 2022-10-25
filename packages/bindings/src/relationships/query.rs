@@ -1,16 +1,17 @@
 //! Contains the query messages that can be sent to the chain in order to query data related
 //! to the x/relationships module.
 
+use crate::relationships::models_query::*;
 use crate::types::PageRequest;
+use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Addr, Uint64};
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
 
 /// Query messages that can be sent to the x/relationships module.
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
+#[derive(QueryResponses)]
 pub enum RelationshipsQuery {
     /// Message to query the relationships inside a subspaces.
+    #[returns(QueryRelationshipsResponse)]
     Relationships {
         /// Subspace to query the relationships for.
         subspace_id: Uint64,
@@ -23,6 +24,7 @@ pub enum RelationshipsQuery {
         pagination: Option<PageRequest>,
     },
     /// Message to query the blocks created inside a subspace.
+    #[returns(QueryBlocksResponse)]
     Blocks {
         /// Subspace to query the blocks for.
         subspace_id: Uint64,

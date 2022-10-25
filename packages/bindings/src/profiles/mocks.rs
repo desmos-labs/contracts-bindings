@@ -12,7 +12,7 @@ use crate::profiles::{
     models_query::{
         QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
         QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestResponse,
+        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestsResponse,
         QueryProfileResponse,
     },
     query::ProfilesQuery,
@@ -28,6 +28,7 @@ impl MockProfilesQueries {
     /// Gets a mocked instance of [`Profile`].
     pub fn get_mock_profile() -> Profile {
         Profile {
+            proto_type: "/desmos.profiles.v3.Profile".to_string(),
             account: Account {
                 proto_type: "/cosmos.auth.v1beta1.BaseAccount".to_string(),
                 address: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
@@ -142,7 +143,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
         }
         ProfilesQuery::IncomingDtagTransferRequests { .. } => {
             let incoming_dtag_requests = MockProfilesQueries::get_mock_dtag_transfer_request();
-            to_binary(&QueryIncomingDtagTransferRequestResponse {
+            to_binary(&QueryIncomingDtagTransferRequestsResponse {
                 requests: vec![incoming_dtag_requests],
                 pagination: Default::default(),
             })
@@ -175,7 +176,7 @@ pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Bin
                 pagination: Default::default(),
             })
         }
-        ProfilesQuery::ApplicationLinkByChainID { .. } => {
+        ProfilesQuery::ApplicationLinkByClientID { .. } => {
             let app_link = MockProfilesQueries::get_mock_application_link();
             to_binary(&QueryApplicationLinkByClientIDResponse { link: app_link })
         }
@@ -214,7 +215,7 @@ mod tests {
             pagination: Default::default(),
         };
         let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryIncomingDtagTransferRequestResponse {
+        let expected = to_binary(&QueryIncomingDtagTransferRequestsResponse {
             requests: vec![MockProfilesQueries::get_mock_dtag_transfer_request()],
             pagination: Default::default(),
         });
@@ -285,7 +286,7 @@ mod tests {
 
     #[test]
     fn test_query_application_link_by_chain_id() {
-        let query = ProfilesQuery::ApplicationLinkByChainID {
+        let query = ProfilesQuery::ApplicationLinkByClientID {
             client_id: "".to_string(),
         };
         let response = mock_profiles_query_response(&query);
