@@ -689,7 +689,7 @@ pub struct ApplicationLink {
     /// Data coming from the result of the verification.
     /// Only available when the state is STATE_SUCCESS
     #[prost(message, optional, tag = "5")]
-    pub result: ::core::option::Option<AResult>,
+    pub result: ::core::option::Option<AppResult>,
     /// CreationTime represents the time in which the link was created
     #[prost(message, optional, tag = "6")]
     pub creation_time: ::core::option::Option<crate::shim::Timestamp>,
@@ -787,7 +787,7 @@ pub mod oracle_request {
     CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Result")]
-pub struct AResult {
+pub struct AppResult {
     /// sum is the oneof that specifies whether this represents a success or
     /// failure result
     #[prost(oneof = "result::Sum", tags = "1, 2")]

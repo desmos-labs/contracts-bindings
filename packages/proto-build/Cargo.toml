@@ -18,3 +18,4 @@ syn = {version = "1.0.98", features = ["full", "parsing", "extra-traits"]}
 tonic = "0.7"
 tonic-build = "0.7"
 walkdir = "2"
+proc-macro2 = "1.0.18"

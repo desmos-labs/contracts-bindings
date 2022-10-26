@@ -158,7 +158,9 @@ fn transform_items(
         .into_iter()
         .map(|i| match i.clone() {
             Item::Struct(s) => Item::Struct({
-                let s = transformers::append_struct_attrs(src, &s, descriptor);
+                let mut s = transformers::append_struct_attrs(src, &s, descriptor);
+                // TODO: Remove it if the name is changed
+                s = transformers::replace_result_into_app_result(&s);
                 transformers::allow_serde_int_as_str(s)
             }),
             Item::Enum(s) => Item::Enum({
