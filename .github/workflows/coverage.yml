@@ -1,4 +1,4 @@
-name: Contracts coverage
+name: Bindings coverage
 # Based on https://github.com/actions-rs/example/blob/master/.github/workflows/quickstart.yml
 
 on:
