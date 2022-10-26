@@ -25,4 +25,7 @@ pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
 
+pub mod proto;
+mod serde;
+mod shim;
 pub mod types;
