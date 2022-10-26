@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// Relationship is the struct of a relationship.
 /// It represent the concept of "follow" of traditional social networks.
 #[derive(
@@ -8,7 +7,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.Relationship")]
 pub struct Relationship {
@@ -36,7 +35,7 @@ pub struct Relationship {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.UserBlock")]
 pub struct UserBlock {
@@ -67,7 +66,7 @@ pub struct UserBlock {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsRequest")]
 #[proto_query(
@@ -103,7 +102,7 @@ pub struct QueryRelationshipsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsResponse")]
 pub struct QueryRelationshipsResponse {
@@ -122,7 +121,7 @@ pub struct QueryRelationshipsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksRequest")]
 #[proto_query(
@@ -158,7 +157,7 @@ pub struct QueryBlocksRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksResponse")]
 pub struct QueryBlocksResponse {
@@ -177,7 +176,7 @@ pub struct QueryBlocksResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationship")]
 pub struct MsgCreateRelationship {
@@ -204,7 +203,7 @@ pub struct MsgCreateRelationship {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationshipResponse")]
 pub struct MsgCreateRelationshipResponse {}
@@ -217,7 +216,7 @@ pub struct MsgCreateRelationshipResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationship")]
 pub struct MsgDeleteRelationship {
@@ -244,7 +243,7 @@ pub struct MsgDeleteRelationship {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationshipResponse")]
 pub struct MsgDeleteRelationshipResponse {}
@@ -257,7 +256,7 @@ pub struct MsgDeleteRelationshipResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUser")]
 pub struct MsgBlockUser {
@@ -286,7 +285,7 @@ pub struct MsgBlockUser {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUserResponse")]
 pub struct MsgBlockUserResponse {}
@@ -298,7 +297,7 @@ pub struct MsgBlockUserResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUser")]
 pub struct MsgUnblockUser {
@@ -324,7 +323,7 @@ pub struct MsgUnblockUser {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUserResponse")]
 pub struct MsgUnblockUserResponse {}

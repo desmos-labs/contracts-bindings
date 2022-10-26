@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// MultiSignature wraps the signatures from a multisig.LegacyAminoPubKey.
 /// See cosmos.tx.v1betata1.ModeInfo.Multi for how to specify which signers
 /// signed and with which modes.
@@ -9,7 +8,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.MultiSignature")]
 pub struct MultiSignature {
@@ -27,7 +26,7 @@ pub struct MultiSignature {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.CompactBitArray")]
 pub struct CompactBitArray {

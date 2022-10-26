@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// SignatureDescriptors wraps multiple SignatureDescriptor's.
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptors")]
 pub struct SignatureDescriptors {
@@ -26,7 +25,7 @@ pub struct SignatureDescriptors {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor")]
 pub struct SignatureDescriptor {
@@ -47,7 +46,6 @@ pub struct SignatureDescriptor {
 }
 /// Nested message and enum types in `SignatureDescriptor`.
 pub mod signature_descriptor {
-    use std_derive::CosmwasmExt;
     /// Data represents signature data
     #[derive(
         Clone,
@@ -56,7 +54,7 @@ pub mod signature_descriptor {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data")]
     pub struct Data {
@@ -66,7 +64,6 @@ pub mod signature_descriptor {
     }
     /// Nested message and enum types in `Data`.
     pub mod data {
-        use std_derive::CosmwasmExt;
         /// Single is the signature data for a single signer
         #[derive(
             Clone,
@@ -75,7 +72,7 @@ pub mod signature_descriptor {
             serde::Serialize,
             serde::Deserialize,
             schemars::JsonSchema,
-            CosmwasmExt,
+            std_derive::CosmwasmExt,
         )]
         #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single")]
         pub struct Single {
@@ -98,7 +95,7 @@ pub mod signature_descriptor {
             serde::Serialize,
             serde::Deserialize,
             schemars::JsonSchema,
-            CosmwasmExt,
+            std_derive::CosmwasmExt,
         )]
         #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi")]
         pub struct Multi {

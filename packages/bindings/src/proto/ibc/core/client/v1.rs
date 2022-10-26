@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// IdentifiedClientState defines a client state with an additional client
 /// identifier field.
 #[derive(
@@ -8,7 +7,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.IdentifiedClientState")]
 pub struct IdentifiedClientState {
@@ -28,7 +27,7 @@ pub struct IdentifiedClientState {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ConsensusStateWithHeight")]
 pub struct ConsensusStateWithHeight {
@@ -48,7 +47,7 @@ pub struct ConsensusStateWithHeight {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientConsensusStates")]
 pub struct ClientConsensusStates {
@@ -70,7 +69,7 @@ pub struct ClientConsensusStates {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientUpdateProposal")]
 pub struct ClientUpdateProposal {
@@ -97,7 +96,7 @@ pub struct ClientUpdateProposal {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.UpgradeProposal")]
 pub struct UpgradeProposal {
@@ -133,7 +132,7 @@ pub struct UpgradeProposal {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Height")]
 pub struct Height {
@@ -160,7 +159,7 @@ pub struct Height {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Params")]
 pub struct Params {

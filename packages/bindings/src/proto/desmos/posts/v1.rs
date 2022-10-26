@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// Post contains all the information about a single post
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Post")]
 pub struct Post {
@@ -76,7 +75,7 @@ pub struct Post {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.PostReference")]
 pub struct PostReference {
@@ -111,7 +110,7 @@ pub struct PostReference {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Entities")]
 pub struct Entities {
@@ -130,7 +129,7 @@ pub struct Entities {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Tag")]
 pub struct Tag {
@@ -160,7 +159,7 @@ pub struct Tag {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Url")]
 pub struct Url {
@@ -193,7 +192,7 @@ pub struct Url {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Attachment")]
 pub struct Attachment {
@@ -239,7 +238,7 @@ pub struct Attachment {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Media")]
 pub struct Media {
@@ -256,7 +255,7 @@ pub struct Media {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Poll")]
 pub struct Poll {
@@ -281,7 +280,6 @@ pub struct Poll {
 }
 /// Nested message and enum types in `Poll`.
 pub mod poll {
-    use std_derive::CosmwasmExt;
     /// Provided answer contains the details of a possible poll answer
     #[derive(
         Clone,
@@ -290,7 +288,7 @@ pub mod poll {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v1.Poll.ProvidedAnswer")]
     pub struct ProvidedAnswer {
@@ -310,7 +308,7 @@ pub mod poll {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.UserAnswer")]
 pub struct UserAnswer {
@@ -357,7 +355,7 @@ pub struct UserAnswer {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.PollTallyResults")]
 pub struct PollTallyResults {
@@ -366,7 +364,6 @@ pub struct PollTallyResults {
 }
 /// Nested message and enum types in `PollTallyResults`.
 pub mod poll_tally_results {
-    use std_derive::CosmwasmExt;
     /// AnswerResult contains the result of a single poll provided answer
     #[derive(
         Clone,
@@ -375,7 +372,7 @@ pub mod poll_tally_results {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v1.PollTallyResults.AnswerResult")]
     pub struct AnswerResult {
@@ -403,7 +400,7 @@ pub mod poll_tally_results {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v1.Params")]
 pub struct Params {

@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// GenericSubspaceAuthorization defines an authorization to perform any
 /// operation only inside a specific subspace.
 #[derive(
@@ -8,7 +7,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.authz.GenericSubspaceAuthorization")]
 pub struct GenericSubspaceAuthorization {

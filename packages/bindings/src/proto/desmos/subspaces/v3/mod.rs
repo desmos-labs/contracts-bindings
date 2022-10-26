@@ -1,5 +1,4 @@
 pub mod authz;
-use std_derive::CosmwasmExt;
 /// Subspace contains all the data of a Desmos subspace
 #[derive(
     Clone,
@@ -8,7 +7,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.Subspace")]
 pub struct Subspace {
@@ -47,7 +46,7 @@ pub struct Subspace {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.Section")]
 pub struct Section {
@@ -87,7 +86,7 @@ pub struct Section {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.UserGroup")]
 pub struct UserGroup {
@@ -130,7 +129,7 @@ pub struct UserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.UserPermission")]
 pub struct UserPermission {
@@ -159,7 +158,7 @@ pub struct UserPermission {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesRequest")]
 #[proto_query(
@@ -181,7 +180,7 @@ pub struct QuerySubspacesRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesResponse")]
 pub struct QuerySubspacesResponse {
@@ -199,7 +198,7 @@ pub struct QuerySubspacesResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceRequest")]
 #[proto_query(
@@ -223,7 +222,7 @@ pub struct QuerySubspaceRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceResponse")]
 pub struct QuerySubspaceResponse {
@@ -238,7 +237,7 @@ pub struct QuerySubspaceResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsRequest")]
 #[proto_query(
@@ -266,7 +265,7 @@ pub struct QuerySectionsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsResponse")]
 pub struct QuerySectionsResponse {
@@ -284,7 +283,7 @@ pub struct QuerySectionsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionRequest")]
 #[proto_query(
@@ -315,7 +314,7 @@ pub struct QuerySectionRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionResponse")]
 pub struct QuerySectionResponse {
@@ -331,7 +330,7 @@ pub struct QuerySectionResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsRequest")]
 #[proto_query(
@@ -367,7 +366,7 @@ pub struct QueryUserGroupsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsResponse")]
 pub struct QueryUserGroupsResponse {
@@ -385,7 +384,7 @@ pub struct QueryUserGroupsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupRequest")]
 #[proto_query(
@@ -417,7 +416,7 @@ pub struct QueryUserGroupRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupResponse")]
 pub struct QueryUserGroupResponse {
@@ -433,7 +432,7 @@ pub struct QueryUserGroupResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersRequest")]
 #[proto_query(
@@ -469,7 +468,7 @@ pub struct QueryUserGroupMembersRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersResponse")]
 pub struct QueryUserGroupMembersResponse {
@@ -488,7 +487,7 @@ pub struct QueryUserGroupMembersResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsRequest")]
 #[proto_query(
@@ -523,7 +522,7 @@ pub struct QueryUserPermissionsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsResponse")]
 pub struct QueryUserPermissionsResponse {
@@ -540,7 +539,7 @@ pub struct QueryUserPermissionsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail")]
 pub struct PermissionDetail {
@@ -565,7 +564,6 @@ pub struct PermissionDetail {
 }
 /// Nested message and enum types in `PermissionDetail`.
 pub mod permission_detail {
-    use std_derive::CosmwasmExt;
     /// User is a permission that has been set to a specific user
     #[derive(
         Clone,
@@ -574,7 +572,7 @@ pub mod permission_detail {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.User")]
     pub struct User {
@@ -593,7 +591,7 @@ pub mod permission_detail {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.Group")]
     pub struct Group {
@@ -630,7 +628,7 @@ pub mod permission_detail {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSubspace")]
 pub struct MsgCreateSubspace {
@@ -659,7 +657,7 @@ pub struct MsgCreateSubspace {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSubspaceResponse")]
 pub struct MsgCreateSubspaceResponse {
@@ -679,7 +677,7 @@ pub struct MsgCreateSubspaceResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSubspace")]
 pub struct MsgEditSubspace {
@@ -718,7 +716,7 @@ pub struct MsgEditSubspace {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSubspaceResponse")]
 pub struct MsgEditSubspaceResponse {}
@@ -730,7 +728,7 @@ pub struct MsgEditSubspaceResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSubspace")]
 pub struct MsgDeleteSubspace {
@@ -753,7 +751,7 @@ pub struct MsgDeleteSubspace {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSubspaceResponse")]
 pub struct MsgDeleteSubspaceResponse {}
@@ -766,7 +764,7 @@ pub struct MsgDeleteSubspaceResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSection")]
 pub struct MsgCreateSection {
@@ -802,7 +800,7 @@ pub struct MsgCreateSection {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSectionResponse")]
 pub struct MsgCreateSectionResponse {
@@ -823,7 +821,7 @@ pub struct MsgCreateSectionResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSection")]
 pub struct MsgEditSection {
@@ -859,7 +857,7 @@ pub struct MsgEditSection {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSectionResponse")]
 pub struct MsgEditSectionResponse {}
@@ -872,7 +870,7 @@ pub struct MsgEditSectionResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveSection")]
 pub struct MsgMoveSection {
@@ -909,7 +907,7 @@ pub struct MsgMoveSection {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveSectionResponse")]
 pub struct MsgMoveSectionResponse {}
@@ -921,7 +919,7 @@ pub struct MsgMoveSectionResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSection")]
 pub struct MsgDeleteSection {
@@ -951,7 +949,7 @@ pub struct MsgDeleteSection {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSectionResponse")]
 pub struct MsgDeleteSectionResponse {}
@@ -963,7 +961,7 @@ pub struct MsgDeleteSectionResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateUserGroup")]
 pub struct MsgCreateUserGroup {
@@ -1005,7 +1003,7 @@ pub struct MsgCreateUserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateUserGroupResponse")]
 pub struct MsgCreateUserGroupResponse {
@@ -1024,7 +1022,7 @@ pub struct MsgCreateUserGroupResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditUserGroup")]
 pub struct MsgEditUserGroup {
@@ -1060,7 +1058,7 @@ pub struct MsgEditUserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditUserGroupResponse")]
 pub struct MsgEditUserGroupResponse {}
@@ -1073,7 +1071,7 @@ pub struct MsgEditUserGroupResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveUserGroup")]
 pub struct MsgMoveUserGroup {
@@ -1110,7 +1108,7 @@ pub struct MsgMoveUserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveUserGroupResponse")]
 pub struct MsgMoveUserGroupResponse {}
@@ -1123,7 +1121,7 @@ pub struct MsgMoveUserGroupResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserGroupPermissions")]
 pub struct MsgSetUserGroupPermissions {
@@ -1157,7 +1155,7 @@ pub struct MsgSetUserGroupPermissions {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserGroupPermissionsResponse")]
 pub struct MsgSetUserGroupPermissionsResponse {}
@@ -1169,7 +1167,7 @@ pub struct MsgSetUserGroupPermissionsResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteUserGroup")]
 pub struct MsgDeleteUserGroup {
@@ -1199,7 +1197,7 @@ pub struct MsgDeleteUserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteUserGroupResponse")]
 pub struct MsgDeleteUserGroupResponse {}
@@ -1212,7 +1210,7 @@ pub struct MsgDeleteUserGroupResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgAddUserToUserGroup")]
 pub struct MsgAddUserToUserGroup {
@@ -1246,7 +1244,7 @@ pub struct MsgAddUserToUserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgAddUserToUserGroupResponse")]
 pub struct MsgAddUserToUserGroupResponse {}
@@ -1259,7 +1257,7 @@ pub struct MsgAddUserToUserGroupResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRemoveUserFromUserGroup")]
 pub struct MsgRemoveUserFromUserGroup {
@@ -1293,7 +1291,7 @@ pub struct MsgRemoveUserFromUserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRemoveUserFromUserGroupResponse")]
 pub struct MsgRemoveUserFromUserGroupResponse {}
@@ -1306,7 +1304,7 @@ pub struct MsgRemoveUserFromUserGroupResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserPermissions")]
 pub struct MsgSetUserPermissions {
@@ -1343,7 +1341,7 @@ pub struct MsgSetUserPermissions {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserPermissionsResponse")]
 pub struct MsgSetUserPermissionsResponse {}

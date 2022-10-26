@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// QueryTotalRequest is the request type for Query/Total RPC method
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryTotalRequest")]
 #[proto_query(
@@ -35,7 +34,7 @@ pub struct QueryTotalRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryTotalResponse")]
 pub struct QueryTotalResponse {
@@ -51,7 +50,7 @@ pub struct QueryTotalResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryCirculatingRequest")]
 #[proto_query(
@@ -80,7 +79,7 @@ pub struct QueryCirculatingRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryCirculatingResponse")]
 pub struct QueryCirculatingResponse {

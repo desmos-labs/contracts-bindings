@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// Plan specifies information about a planned upgrade and when it should occur.
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.Plan")]
 pub struct Plan {
@@ -54,7 +53,7 @@ pub struct Plan {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal")]
 pub struct SoftwareUpgradeProposal {
@@ -74,7 +73,7 @@ pub struct SoftwareUpgradeProposal {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal")]
 pub struct CancelSoftwareUpgradeProposal {
@@ -93,7 +92,7 @@ pub struct CancelSoftwareUpgradeProposal {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.ModuleVersion")]
 pub struct ModuleVersion {

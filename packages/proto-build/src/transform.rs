@@ -100,20 +100,7 @@ fn transform_module(
     nested_mod: bool,
 ) -> Vec<Item> {
     let items = transform_items(items, src, ancestors, descriptor);
-    let items = prepend(items);
-
     append(items, src, descriptor, nested_mod)
-}
-
-fn prepend(items: Vec<Item>) -> Vec<Item> {
-    let mut items = items;
-
-    let mut prepending_items = vec![syn::parse_quote! {
-        use std_derive::CosmwasmExt;
-    }];
-
-    items.splice(0..0, prepending_items.drain(..));
-    items
 }
 
 fn append(

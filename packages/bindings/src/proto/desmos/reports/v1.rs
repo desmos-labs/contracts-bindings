@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// Report contains the data of a generic report
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Report")]
 pub struct Report {
@@ -49,7 +48,7 @@ pub struct Report {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.UserTarget")]
 pub struct UserTarget {
@@ -65,7 +64,7 @@ pub struct UserTarget {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.PostTarget")]
 pub struct PostTarget {
@@ -85,7 +84,7 @@ pub struct PostTarget {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Reason")]
 pub struct Reason {
@@ -118,7 +117,7 @@ pub struct Reason {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Params")]
 pub struct Params {
@@ -136,7 +135,7 @@ pub struct Params {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.StandardReason")]
 pub struct StandardReason {
@@ -162,7 +161,7 @@ pub struct StandardReason {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportsRequest")]
 #[proto_query(
@@ -197,7 +196,7 @@ pub struct QueryReportsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportsResponse")]
 pub struct QueryReportsResponse {
@@ -215,7 +214,7 @@ pub struct QueryReportsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportRequest")]
 #[proto_query(
@@ -246,7 +245,7 @@ pub struct QueryReportRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportResponse")]
 pub struct QueryReportResponse {
@@ -261,7 +260,7 @@ pub struct QueryReportResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonsRequest")]
 #[proto_query(
@@ -289,7 +288,7 @@ pub struct QueryReasonsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonsResponse")]
 pub struct QueryReasonsResponse {
@@ -307,7 +306,7 @@ pub struct QueryReasonsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonRequest")]
 #[proto_query(
@@ -338,7 +337,7 @@ pub struct QueryReasonRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonResponse")]
 pub struct QueryReasonResponse {
@@ -353,7 +352,7 @@ pub struct QueryReasonResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryParamsRequest")]
 #[proto_query(
@@ -369,7 +368,7 @@ pub struct QueryParamsRequest {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryParamsResponse")]
 pub struct QueryParamsResponse {
@@ -384,7 +383,7 @@ pub struct QueryParamsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgCreateReport")]
 pub struct MsgCreateReport {
@@ -416,7 +415,7 @@ pub struct MsgCreateReport {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgCreateReportResponse")]
 pub struct MsgCreateReportResponse {
@@ -439,7 +438,7 @@ pub struct MsgCreateReportResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgDeleteReport")]
 pub struct MsgDeleteReport {
@@ -469,7 +468,7 @@ pub struct MsgDeleteReport {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgDeleteReportResponse")]
 pub struct MsgDeleteReportResponse {}
@@ -482,7 +481,7 @@ pub struct MsgDeleteReportResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgSupportStandardReason")]
 pub struct MsgSupportStandardReason {
@@ -513,7 +512,7 @@ pub struct MsgSupportStandardReason {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgSupportStandardReasonResponse")]
 pub struct MsgSupportStandardReasonResponse {
@@ -534,7 +533,7 @@ pub struct MsgSupportStandardReasonResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgAddReason")]
 pub struct MsgAddReason {
@@ -563,7 +562,7 @@ pub struct MsgAddReason {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgAddReasonResponse")]
 pub struct MsgAddReasonResponse {
@@ -584,7 +583,7 @@ pub struct MsgAddReasonResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReason")]
 pub struct MsgRemoveReason {
@@ -614,7 +613,7 @@ pub struct MsgRemoveReason {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReasonResponse")]
 pub struct MsgRemoveReasonResponse {}

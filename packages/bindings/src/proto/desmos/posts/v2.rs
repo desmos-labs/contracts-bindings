@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// Post contains all the information about a single post
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Post")]
 pub struct Post {
@@ -79,7 +78,7 @@ pub struct Post {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.PostReference")]
 pub struct PostReference {
@@ -114,7 +113,7 @@ pub struct PostReference {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Entities")]
 pub struct Entities {
@@ -136,7 +135,7 @@ pub struct Entities {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.TextTag")]
 pub struct TextTag {
@@ -166,7 +165,7 @@ pub struct TextTag {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Url")]
 pub struct Url {
@@ -199,7 +198,7 @@ pub struct Url {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Attachment")]
 pub struct Attachment {
@@ -237,7 +236,7 @@ pub struct Attachment {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Media")]
 pub struct Media {
@@ -254,7 +253,7 @@ pub struct Media {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Poll")]
 pub struct Poll {
@@ -279,7 +278,6 @@ pub struct Poll {
 }
 /// Nested message and enum types in `Poll`.
 pub mod poll {
-    use std_derive::CosmwasmExt;
     /// Provided answer contains the details of a possible poll answer
     #[derive(
         Clone,
@@ -288,7 +286,7 @@ pub mod poll {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v2.Poll.ProvidedAnswer")]
     pub struct ProvidedAnswer {
@@ -308,7 +306,7 @@ pub mod poll {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.UserAnswer")]
 pub struct UserAnswer {
@@ -348,7 +346,7 @@ pub struct UserAnswer {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.PollTallyResults")]
 pub struct PollTallyResults {
@@ -357,7 +355,6 @@ pub struct PollTallyResults {
 }
 /// Nested message and enum types in `PollTallyResults`.
 pub mod poll_tally_results {
-    use std_derive::CosmwasmExt;
     /// AnswerResult contains the result of a single poll provided answer
     #[derive(
         Clone,
@@ -366,7 +363,7 @@ pub mod poll_tally_results {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v2.PollTallyResults.AnswerResult")]
     pub struct AnswerResult {
@@ -394,7 +391,7 @@ pub mod poll_tally_results {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Params")]
 pub struct Params {
@@ -445,7 +442,7 @@ pub enum ReplySetting {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QuerySubspacePostsRequest")]
 #[proto_query(
@@ -474,7 +471,7 @@ pub struct QuerySubspacePostsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QuerySubspacePostsResponse")]
 pub struct QuerySubspacePostsResponse {
@@ -493,7 +490,7 @@ pub struct QuerySubspacePostsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QuerySectionPostsRequest")]
 #[proto_query(
@@ -529,7 +526,7 @@ pub struct QuerySectionPostsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QuerySectionPostsResponse")]
 pub struct QuerySectionPostsResponse {
@@ -547,7 +544,7 @@ pub struct QuerySectionPostsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryPostRequest")]
 #[proto_query(path = "/desmos.posts.v2.Query/Post", response_type = QueryPostResponse)]
@@ -575,7 +572,7 @@ pub struct QueryPostRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryPostResponse")]
 pub struct QueryPostResponse {
@@ -591,7 +588,7 @@ pub struct QueryPostResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryPostAttachmentsRequest")]
 #[proto_query(
@@ -627,7 +624,7 @@ pub struct QueryPostAttachmentsRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryPostAttachmentsResponse")]
 pub struct QueryPostAttachmentsResponse {
@@ -646,7 +643,7 @@ pub struct QueryPostAttachmentsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryPollAnswersRequest")]
 #[proto_query(
@@ -692,7 +689,7 @@ pub struct QueryPollAnswersRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryPollAnswersResponse")]
 pub struct QueryPollAnswersResponse {
@@ -710,7 +707,7 @@ pub struct QueryPollAnswersResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryParamsRequest")]
 #[proto_query(
@@ -726,7 +723,7 @@ pub struct QueryParamsRequest {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.QueryParamsResponse")]
 pub struct QueryParamsResponse {
@@ -741,7 +738,7 @@ pub struct QueryParamsResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgCreatePost")]
 pub struct MsgCreatePost {
@@ -803,7 +800,7 @@ pub struct MsgCreatePost {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgCreatePostResponse")]
 pub struct MsgCreatePostResponse {
@@ -826,7 +823,7 @@ pub struct MsgCreatePostResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgEditPost")]
 pub struct MsgEditPost {
@@ -868,7 +865,7 @@ pub struct MsgEditPost {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgEditPostResponse")]
 pub struct MsgEditPostResponse {
@@ -884,7 +881,7 @@ pub struct MsgEditPostResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgDeletePost")]
 pub struct MsgDeletePost {
@@ -914,7 +911,7 @@ pub struct MsgDeletePost {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgDeletePostResponse")]
 pub struct MsgDeletePostResponse {}
@@ -927,7 +924,7 @@ pub struct MsgDeletePostResponse {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgAddPostAttachment")]
 pub struct MsgAddPostAttachment {
@@ -960,7 +957,7 @@ pub struct MsgAddPostAttachment {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgAddPostAttachmentResponse")]
 pub struct MsgAddPostAttachmentResponse {
@@ -984,7 +981,7 @@ pub struct MsgAddPostAttachmentResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgRemovePostAttachment")]
 pub struct MsgRemovePostAttachment {
@@ -1022,7 +1019,7 @@ pub struct MsgRemovePostAttachment {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgRemovePostAttachmentResponse")]
 pub struct MsgRemovePostAttachmentResponse {
@@ -1038,7 +1035,7 @@ pub struct MsgRemovePostAttachmentResponse {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgAnswerPoll")]
 pub struct MsgAnswerPoll {
@@ -1078,7 +1075,7 @@ pub struct MsgAnswerPoll {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.MsgAnswerPollResponse")]
 pub struct MsgAnswerPollResponse {}

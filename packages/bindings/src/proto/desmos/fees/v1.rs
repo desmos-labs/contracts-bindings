@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// MinFee contains the minimum amount of coins that should be paid as a fee for
 /// each message of the specific type sent
 #[derive(
@@ -8,7 +7,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.MinFee")]
 pub struct MinFee {
@@ -25,7 +24,7 @@ pub struct MinFee {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.Params")]
 pub struct Params {
@@ -40,7 +39,7 @@ pub struct Params {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.QueryParamsRequest")]
 #[proto_query(
@@ -56,7 +55,7 @@ pub struct QueryParamsRequest {}
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.QueryParamsResponse")]
 pub struct QueryParamsResponse {

@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// PageRequest is to be embedded in gRPC request messages for efficient
 /// pagination. Ex:
 ///
@@ -13,7 +12,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.query.v1beta1.PageRequest")]
 pub struct PageRequest {
@@ -65,7 +64,7 @@ pub struct PageRequest {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.query.v1beta1.PageResponse")]
 pub struct PageResponse {

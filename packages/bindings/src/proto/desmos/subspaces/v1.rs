@@ -1,4 +1,3 @@
-use std_derive::CosmwasmExt;
 /// Subspace contains all the data of a Desmos subspace
 #[derive(
     Clone,
@@ -7,7 +6,7 @@ use std_derive::CosmwasmExt;
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v1.Subspace")]
 pub struct Subspace {
@@ -46,7 +45,7 @@ pub struct Subspace {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v1.UserGroup")]
 pub struct UserGroup {
@@ -86,7 +85,7 @@ pub struct UserGroup {
     serde::Serialize,
     serde::Deserialize,
     schemars::JsonSchema,
-    CosmwasmExt,
+    std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v1.PermissionDetail")]
 pub struct PermissionDetail {
@@ -97,7 +96,6 @@ pub struct PermissionDetail {
 }
 /// Nested message and enum types in `PermissionDetail`.
 pub mod permission_detail {
-    use std_derive::CosmwasmExt;
     /// User is a permission that has been set to a specific user
     #[derive(
         Clone,
@@ -106,7 +104,7 @@ pub mod permission_detail {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v1.PermissionDetail.User")]
     pub struct User {
@@ -129,7 +127,7 @@ pub mod permission_detail {
         serde::Serialize,
         serde::Deserialize,
         schemars::JsonSchema,
-        CosmwasmExt,
+        std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v1.PermissionDetail.Group")]
     pub struct Group {

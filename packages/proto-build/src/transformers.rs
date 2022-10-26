@@ -67,14 +67,13 @@ pub fn append_struct_attrs(
     let type_url = get_type_url(src, &s.ident, descriptor);
 
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema, CosmwasmExt)] },
+        syn::parse_quote! { #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema, std_derive::CosmwasmExt,)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
     ]);
 
     if let Some(attr) = get_query_attr(src, &s.ident, &query_services) {
         s.attrs.append(&mut vec![attr])
     }
-
     s
 }
 
