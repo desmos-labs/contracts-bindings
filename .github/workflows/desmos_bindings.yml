@@ -42,49 +42,6 @@ jobs:
         env:
           RUST_BACKTRACE: 1
 
-  coverage:
-    name: Upload coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-
-      - name: Verify .rs files 👀
-        uses: technote-space/get-diff-action@v6.1.0
-        id: git_diff
-        with:
-          PATTERNS: |
-            **/**.rs
-
-      - name: Setup Rust ⚙
-        if: env.GIT_DIFF
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.61.0
-          override: true
-
-      - name: Prepare rust cache 🗄️
-        if: env.GIT_DIFF
-        uses: Swatinem/rust-cache@v2
-
-      - name: Install cargo-tarpaulin ⚙
-        if: env.GIT_DIFF
-        run: cargo install cargo-tarpaulin
-
-      - name: Generate coverage report 🧪
-        if: env.GIT_DIFF
-        working-directory: ./packages/bindings
-        run: cargo tarpaulin --avoid-cfg-tarpaulin --all-features --out xml
-        env:
-          RUST_BACKTRACE: 1
-
-      - name: Upload coverage 📤
-        if: env.GIT_DIFF
-        uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./packages/bindings/cobertura.xml
-
   lints:
     name: Lints
     runs-on: ubuntu-latest
