@@ -1,10 +1,10 @@
 /// PageRequest is to be embedded in gRPC request messages for efficient
 /// pagination. Ex:
 ///
-///  message SomeRequest {
-///          Foo some_parameter = 1;
-///          PageRequest pagination = 2;
-///  }
+///   message SomeRequest {
+///           Foo some_parameter = 1;
+///           PageRequest pagination = 2;
+///   }
 #[derive(
     Clone,
     PartialEq,
@@ -53,10 +53,10 @@ pub struct PageRequest {
 /// PageResponse is to be embedded in gRPC response messages where the
 /// corresponding request message has used PageRequest.
 ///
-///  message SomeResponse {
-///          repeated Bar results = 1;
-///          PageResponse page = 2;
-///  }
+///   message SomeResponse {
+///           repeated Bar results = 1;
+///           PageResponse page = 2;
+///   }
 #[derive(
     Clone,
     PartialEq,

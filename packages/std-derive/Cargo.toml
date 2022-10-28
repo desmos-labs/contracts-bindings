@@ -1,5 +1,5 @@
 [package]
-description = "Procedural macro for desmos-bindings"
+description = "Procedural macro for desmos-std"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 name = "std-derive"

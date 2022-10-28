@@ -1,3 +1,50 @@
+/// Relationship is the struct of a relationship.
+/// It represent the concept of "follow" of traditional social networks.
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Relationship")]
+pub struct Relationship {
+    #[prost(string, tag = "1")]
+    pub creator: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub recipient: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub subspace_id: ::prost::alloc::string::String,
+}
+/// UserBlock represents the fact that the Blocker has blocked the given Blocked
+/// user.
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.UserBlock")]
+pub struct UserBlock {
+    /// Blocker represents the address of the user blocking another one
+    #[prost(string, tag = "1")]
+    pub blocker: ::prost::alloc::string::String,
+    /// Blocked represents the address of the blocked user
+    #[prost(string, tag = "2")]
+    pub blocked: ::prost::alloc::string::String,
+    /// Reason represents the optional reason the user has been blocked for.
+    #[prost(string, tag = "3")]
+    pub reason: ::prost::alloc::string::String,
+    /// SubspaceID represents the ID of the subspace inside which the user should
+    /// be blocked
+    #[prost(string, tag = "4")]
+    pub subspace_id: ::prost::alloc::string::String,
+}
 /// ApplicationLink contains the data of a link to a centralized application
 #[derive(
     Clone,
@@ -8,9 +55,9 @@
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.ApplicationLink")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.ApplicationLink")]
 pub struct ApplicationLink {
-    ///  User to which the link is associated
+    ///   User to which the link is associated
     #[prost(string, tag = "1")]
     pub user: ::prost::alloc::string::String,
     /// Data contains the details of this specific link
@@ -45,7 +92,7 @@ pub struct ApplicationLink {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Data")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Data")]
 pub struct Data {
     /// The application name (eg. Twitter, GitHub, etc)
     #[prost(string, tag = "1")]
@@ -65,7 +112,7 @@ pub struct Data {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.OracleRequest")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.OracleRequest")]
 pub struct OracleRequest {
     /// ID is the ID of the request
     #[prost(uint64, tag = "1")]
@@ -101,7 +148,7 @@ pub mod oracle_request {
         schemars::JsonSchema,
         std_derive::CosmwasmExt,
     )]
-    #[proto_message(type_url = "/desmos.profiles.v2.OracleRequest.CallData")]
+    #[proto_message(type_url = "/desmos.profiles.v1beta1.OracleRequest.CallData")]
     pub struct CallData {
         /// The application for which the ownership should be verified
         #[prost(string, tag = "1")]
@@ -122,7 +169,7 @@ pub mod oracle_request {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Result")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Result")]
 pub struct AppResult {
     /// sum is the oneof that specifies whether this represents a success or
     /// failure result
@@ -142,7 +189,7 @@ pub mod result {
         schemars::JsonSchema,
         std_derive::CosmwasmExt,
     )]
-    #[proto_message(type_url = "/desmos.profiles.v2.Result.Success")]
+    #[proto_message(type_url = "/desmos.profiles.v1beta1.Result.Success")]
     pub struct Success {
         /// Hex-encoded value that has be signed by the profile
         #[prost(string, tag = "1")]
@@ -162,7 +209,7 @@ pub mod result {
         schemars::JsonSchema,
         std_derive::CosmwasmExt,
     )]
-    #[proto_message(type_url = "/desmos.profiles.v2.Result.Failed")]
+    #[proto_message(type_url = "/desmos.profiles.v1beta1.Result.Failed")]
     pub struct Failed {
         /// Error that is associated with the failure
         #[prost(string, tag = "1")]
@@ -199,6 +246,27 @@ pub enum ApplicationLinkState {
     /// A link has timed out while waiting for the verification
     TimedOut = 4,
 }
+impl ApplicationLinkState {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ApplicationLinkState::InitializedUnspecified => {
+                "APPLICATION_LINK_STATE_INITIALIZED_UNSPECIFIED"
+            }
+            ApplicationLinkState::VerificationStarted => {
+                "APPLICATION_LINK_STATE_VERIFICATION_STARTED"
+            }
+            ApplicationLinkState::VerificationError => "APPLICATION_LINK_STATE_VERIFICATION_ERROR",
+            ApplicationLinkState::VerificationSuccess => {
+                "APPLICATION_LINK_STATE_VERIFICATION_SUCCESS"
+            }
+            ApplicationLinkState::TimedOut => "APPLICATION_LINK_STATE_TIMED_OUT",
+        }
+    }
+}
 /// Profile represents a generic first on Desmos, containing the information of a
 /// single user
 #[derive(
@@ -210,7 +278,7 @@ pub enum ApplicationLinkState {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Profile")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Profile")]
 pub struct Profile {
     /// Account represents the base Cosmos account associated with this profile
     #[prost(message, optional, tag = "1")]
@@ -241,7 +309,7 @@ pub struct Profile {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Pictures")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Pictures")]
 pub struct Pictures {
     /// Profile contains the URL to the profile picture
     #[prost(string, tag = "1")]
@@ -261,7 +329,7 @@ pub struct Pictures {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.ChainLink")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.ChainLink")]
 pub struct ChainLink {
     /// User defines the destination profile address to link
     #[prost(string, tag = "1")]
@@ -290,7 +358,7 @@ pub struct ChainLink {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.ChainConfig")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.ChainConfig")]
 pub struct ChainConfig {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
@@ -306,15 +374,15 @@ pub struct ChainConfig {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Proof")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Proof")]
 pub struct Proof {
     /// PubKey represents the public key associated with the address for which to
     /// prove the ownership
     #[prost(message, optional, tag = "1")]
     pub pub_key: ::core::option::Option<crate::shim::Any>,
     /// Signature represents the hex-encoded signature of the PlainText value
-    #[prost(message, optional, tag = "2")]
-    pub signature: ::core::option::Option<crate::shim::Any>,
+    #[prost(string, tag = "2")]
+    pub signature: ::prost::alloc::string::String,
     /// PlainText represents the hex-encoded value signed in order to produce the
     /// Signature
     #[prost(string, tag = "3")]
@@ -330,7 +398,7 @@ pub struct Proof {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Bech32Address")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Bech32Address")]
 pub struct Bech32Address {
     /// Value represents the Bech-32 encoded address value
     #[prost(string, tag = "1")]
@@ -349,7 +417,7 @@ pub struct Bech32Address {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.Base58Address")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Base58Address")]
 pub struct Base58Address {
     /// Value contains the Base58-encoded address
     #[prost(string, tag = "1")]
@@ -366,7 +434,7 @@ pub struct Base58Address {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.HexAddress")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.HexAddress")]
 pub struct HexAddress {
     /// Value represents the hex address value
     #[prost(string, tag = "1")]
@@ -375,53 +443,6 @@ pub struct HexAddress {
     /// 0x)
     #[prost(string, tag = "2")]
     pub prefix: ::prost::alloc::string::String,
-}
-/// SingleSignatureData is the signature data for a single signer
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.SingleSignatureData")]
-pub struct SingleSignatureData {
-    /// Mode is the signing mode of the single signer
-    #[prost(
-        enumeration = "super::super::super::cosmos::tx::signing::v1beta1::SignMode",
-        tag = "1"
-    )]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub mode: i32,
-    /// Signature is the raw signature bytes
-    #[prost(bytes = "vec", tag = "2")]
-    pub signature: ::prost::alloc::vec::Vec<u8>,
-}
-/// MultiSignatureData is the signature data for a multisig public key
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.MultiSignatureData")]
-pub struct MultiSignatureData {
-    /// Bitarray specifies which keys within the multisig are signing
-    #[prost(message, optional, tag = "1")]
-    pub bit_array: ::core::option::Option<
-        super::super::super::cosmos::crypto::multisig::v1beta1::CompactBitArray,
-    >,
-    /// Signatures is the signatures of the multi-signature
-    #[prost(message, repeated, tag = "2")]
-    pub signatures: ::prost::alloc::vec::Vec<crate::shim::Any>,
 }
 /// DTagTransferRequest represent a DTag transfer request between two users
 #[derive(
@@ -433,7 +454,7 @@ pub struct MultiSignatureData {
     schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.profiles.v2.DTagTransferRequest")]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.DTagTransferRequest")]
 pub struct DTagTransferRequest {
     /// DTagToTrade contains the value of the DTag that should be transferred from
     /// the receiver of the request to the sender
@@ -446,134 +467,4 @@ pub struct DTagTransferRequest {
     /// give to the sender their DTag
     #[prost(string, tag = "3")]
     pub receiver: ::prost::alloc::string::String,
-}
-/// Params contains the parameters for the profiles module
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.Params")]
-pub struct Params {
-    #[prost(message, optional, tag = "1")]
-    pub nickname: ::core::option::Option<NicknameParams>,
-    #[prost(message, optional, tag = "2")]
-    pub dtag: ::core::option::Option<DTagParams>,
-    #[prost(message, optional, tag = "3")]
-    pub bio: ::core::option::Option<BioParams>,
-    #[prost(message, optional, tag = "4")]
-    pub oracle: ::core::option::Option<OracleParams>,
-}
-/// NicknameParams defines the parameters related to the profiles nicknames
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.NicknameParams")]
-pub struct NicknameParams {
-    #[prost(bytes = "vec", tag = "1")]
-    pub min_length: ::prost::alloc::vec::Vec<u8>,
-    #[prost(bytes = "vec", tag = "2")]
-    pub max_length: ::prost::alloc::vec::Vec<u8>,
-}
-/// DTagParams defines the parameters related to profile DTags
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.DTagParams")]
-pub struct DTagParams {
-    #[prost(string, tag = "1")]
-    pub reg_ex: ::prost::alloc::string::String,
-    #[prost(bytes = "vec", tag = "2")]
-    pub min_length: ::prost::alloc::vec::Vec<u8>,
-    #[prost(bytes = "vec", tag = "3")]
-    pub max_length: ::prost::alloc::vec::Vec<u8>,
-}
-/// BioParams defines the parameters related to profile biography
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.BioParams")]
-pub struct BioParams {
-    #[prost(bytes = "vec", tag = "3")]
-    pub max_length: ::prost::alloc::vec::Vec<u8>,
-}
-/// OracleParams defines the parameters related to the oracle
-/// that will be used to verify the ownership of a centralized
-/// application account by a Desmos profile
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.OracleParams")]
-pub struct OracleParams {
-    /// ScriptID represents the ID of the oracle script to be called to verify the
-    /// data
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub script_id: u64,
-    /// AskCount represents the number of oracles to which ask to verify the data
-    #[prost(uint64, tag = "2")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub ask_count: u64,
-    /// MinCount represents the minimum count of oracles that should complete the
-    /// verification successfully
-    #[prost(uint64, tag = "3")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub min_count: u64,
-    /// PrepareGas represents the amount of gas to be used during the preparation
-    /// stage of the oracle script
-    #[prost(uint64, tag = "4")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub prepare_gas: u64,
-    /// ExecuteGas represents the amount of gas to be used during the execution of
-    /// the oracle script
-    #[prost(uint64, tag = "5")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub execute_gas: u64,
-    /// FeeAmount represents the amount of fees to be payed in order to execute the
-    /// oracle script
-    #[prost(message, repeated, tag = "6")]
-    pub fee_amount: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }

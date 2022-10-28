@@ -16,7 +16,7 @@ const DESMOS_REV: &str = "v4.6.1";
 const DESMOS_DIR: &str = "../../dependencies/desmos/";
 
 /// The directory generated proto files go into in this repo
-const OUT_DIR: &str = "../bindings/src/proto/";
+const OUT_DIR: &str = "../std/src/proto/";
 
 /// A temporary directory for proto building
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";

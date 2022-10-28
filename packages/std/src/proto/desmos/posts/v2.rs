@@ -417,6 +417,20 @@ pub enum PostReferenceType {
     /// This reference represents a repost of the specified post
     Repost = 3,
 }
+impl PostReferenceType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            PostReferenceType::Unspecified => "POST_REFERENCE_TYPE_UNSPECIFIED",
+            PostReferenceType::Reply => "POST_REFERENCE_TYPE_REPLY",
+            PostReferenceType::Quote => "POST_REFERENCE_TYPE_QUOTE",
+            PostReferenceType::Repost => "POST_REFERENCE_TYPE_REPOST",
+        }
+    }
+}
 /// ReplySetting contains the possible reply settings that a post can have
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -432,6 +446,21 @@ pub enum ReplySetting {
     Mutual = 3,
     /// Only people mentioned inside this post will be able to reply
     Mentions = 4,
+}
+impl ReplySetting {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ReplySetting::Unspecified => "REPLY_SETTING_UNSPECIFIED",
+            ReplySetting::Everyone => "REPLY_SETTING_EVERYONE",
+            ReplySetting::Followers => "REPLY_SETTING_FOLLOWERS",
+            ReplySetting::Mutual => "REPLY_SETTING_MUTUAL",
+            ReplySetting::Mentions => "REPLY_SETTING_MENTIONS",
+        }
+    }
 }
 /// QuerySubspacePostsRequest is the request type for the Query/SubspacePosts RPC
 /// method

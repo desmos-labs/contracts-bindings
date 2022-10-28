@@ -477,6 +477,21 @@ pub enum SignatureValueType {
     /// has been encoded following the EVM personal_sign specification
     EvmPersonalSign = 4,
 }
+impl SignatureValueType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            SignatureValueType::Unspecified => "SIGNATURE_VALUE_TYPE_UNSPECIFIED",
+            SignatureValueType::Raw => "SIGNATURE_VALUE_TYPE_RAW",
+            SignatureValueType::CosmosDirect => "SIGNATURE_VALUE_TYPE_COSMOS_DIRECT",
+            SignatureValueType::CosmosAmino => "SIGNATURE_VALUE_TYPE_COSMOS_AMINO",
+            SignatureValueType::EvmPersonalSign => "SIGNATURE_VALUE_TYPE_EVM_PERSONAL_SIGN",
+        }
+    }
+}
 /// QueryChainLinksRequest represents the request that should be used in order
 /// to retrieve the link associated with the provided user, for the given chain
 /// and having the given target address
@@ -668,7 +683,7 @@ pub struct QueryDefaultExternalAddressesResponse {
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ApplicationLink")]
 pub struct ApplicationLink {
-    ///  User to which the link is associated
+    ///   User to which the link is associated
     #[prost(string, tag = "1")]
     pub user: ::prost::alloc::string::String,
     /// Data contains the details of this specific link
@@ -859,6 +874,27 @@ pub enum ApplicationLinkState {
     VerificationSuccess = 3,
     /// A link has timed out while waiting for the verification
     TimedOut = 4,
+}
+impl ApplicationLinkState {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            ApplicationLinkState::InitializedUnspecified => {
+                "APPLICATION_LINK_STATE_INITIALIZED_UNSPECIFIED"
+            }
+            ApplicationLinkState::VerificationStarted => {
+                "APPLICATION_LINK_STATE_VERIFICATION_STARTED"
+            }
+            ApplicationLinkState::VerificationError => "APPLICATION_LINK_STATE_VERIFICATION_ERROR",
+            ApplicationLinkState::VerificationSuccess => {
+                "APPLICATION_LINK_STATE_VERIFICATION_SUCCESS"
+            }
+            ApplicationLinkState::TimedOut => "APPLICATION_LINK_STATE_TIMED_OUT",
+        }
+    }
 }
 /// QueryUserApplicationLinkRequest represents the request used when querying an
 /// application link using an application name and username for a given user
