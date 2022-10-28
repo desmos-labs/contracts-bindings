@@ -19,7 +19,7 @@ impl TryFrom<Any> for AttachmentContent {
         }
         Err(StdError::ParseErr {
             target_type: "AttachmentContent".to_string(),
-            msg: "Unmatched address data: must be either `Poll`, `Media` or `Base58Address`.".to_string(),
+            msg: "Unmatched type: must be either `Poll`, `Media` or `Base58Address`.".to_string(),
         })
     }
 }

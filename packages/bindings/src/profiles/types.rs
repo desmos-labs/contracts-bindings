@@ -23,7 +23,7 @@ impl TryFrom<Any> for AddressData {
         }
         Err(StdError::ParseErr {
             target_type: "AddressData".to_string(),
-            msg: "Unmatched address data: must be either `Bech32Address`, `HexAddress` or `Base58Address`.".to_string(),
+            msg: "Unmatched type: must be either `Bech32Address`, `HexAddress` or `Base58Address`.".to_string(),
         })
     }
 }
