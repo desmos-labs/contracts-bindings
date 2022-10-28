@@ -466,6 +466,7 @@ dependencies = [
  "cosmwasm-schema",
  "cosmwasm-std",
  "cw-multi-test",
+ "desmos-std",
  "prost 0.11.0",
  "prost-types",
  "schemars",

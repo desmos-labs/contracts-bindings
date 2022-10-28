@@ -1,4 +1,4 @@
-use desmos_std::proto::desmos::profiles::v3::{Base58Address, Bech32Address, HexAddress};
+use crate::profiles::proto::{Base58Address, Bech32Address, HexAddress};
 use desmos_std::shim::Any;
 use cosmwasm_std::StdError;
 use prost::Message;

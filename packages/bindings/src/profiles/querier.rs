@@ -5,7 +5,7 @@ use crate::iter::page_iterator::{Page, PageIterator};
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use desmos_std::proto::desmos::profiles::v3::*;
+use crate::profiles::proto::*;
 use crate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
@@ -24,12 +24,12 @@ impl<'a> ProfilesQuerier<'a> {
     /// use desmos_bindings::profiles::querier::ProfilesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = ProfilesQuerier::new(&deps.querier());
+    ///     let querier = ProfilesQuerier::new(&deps.querier);
     /// }
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: desmos_std::proto::desmos::profiles::v3::ProfilesQuerier::new(querier),
+            querier: crate::profiles::proto::ProfilesQuerier::new(querier),
         }
     }
 
