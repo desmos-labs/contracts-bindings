@@ -41,10 +41,10 @@ impl PostsMsgBuilder {
             text: text.unwrap_or_default().into(),
             entities,
             attachments: attachments
-                .drain(..)
+                .into_iter()
                 .map(Into::into)
                 .collect(),
-            tags: tags.drain(..).map(Into::into).collect(),
+            tags: tags.into_iter().map(Into::into).collect(),
             author: author.into(),
             conversation_id: conversation_id.unwrap_or_default(),
             reply_settings: reply_settings.into(),
@@ -72,7 +72,7 @@ impl PostsMsgBuilder {
             post_id,
             text: text.unwrap_or("[do-not-modify]").to_string(),
             entities,
-            tags: tags.drain(..).map(Into::into).collect(),
+            tags: tags.into_iter().map(Into::into).collect(),
             editor: editor.into(),
         }
     }

@@ -172,8 +172,8 @@ impl SubspacesMsgBuilder {
             section_id: section_id.unwrap_or_default(),
             name: name.into(),
             description: description.unwrap_or_default().into(),
-            default_permissions: default_permissions.drain(..).map(Into::into).collect(),
-            initial_members: initial_members.drain(..).map(Into::into).collect(),
+            default_permissions: default_permissions.into_iter().map(Into::into).collect(),
+            initial_members: initial_members.into_iter().map(Into::into).collect(),
             creator: creator.into(),
         }
     }
@@ -236,7 +236,7 @@ impl SubspacesMsgBuilder {
         MsgSetUserGroupPermissions {
             subspace_id,
             group_id,
-            permissions: permissions.drain(..).map(Into::into).collect(),
+            permissions: permissions.into_iter().map(Into::into).collect(),
             signer: signer.into(),
         }
     }
@@ -312,7 +312,7 @@ impl SubspacesMsgBuilder {
             subspace_id,
             section_id,
             user: user.into(),
-            permissions: permissions.drain(..).map(Into::into).collect(),
+            permissions: permissions.into_iter().map(Into::into).collect(),
             signer: signer.into(),
         }
     }
