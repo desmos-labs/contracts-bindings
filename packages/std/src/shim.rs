@@ -305,7 +305,9 @@ expand_as_any!(
     // reactions module
     crate::proto::desmos::reactions::v1::FreeTextValue,
     crate::proto::desmos::reactions::v1::RegisteredReactionValue,
-
+    // reports module
+    crate::proto::desmos::reports::v1::UserTarget,
+    crate::proto::desmos::reports::v1::PostTarget,
 );
 
 macro_rules! impl_prost_types_exact_conversion {
