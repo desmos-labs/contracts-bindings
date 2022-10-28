@@ -299,6 +299,13 @@ expand_as_any!(
     crate::proto::desmos::profiles::v3::Base58Address,
     crate::proto::desmos::profiles::v3::SingleSignature,
     crate::proto::desmos::profiles::v3::CosmosMultiSignature,
+    // posts module
+    crate::proto::desmos::posts::v2::Poll,
+    crate::proto::desmos::posts::v2::Media,
+    // reactions module
+    crate::proto::desmos::reactions::v1::FreeTextValue,
+    crate::proto::desmos::reactions::v1::RegisteredReactionValue,
+
 );
 
 macro_rules! impl_prost_types_exact_conversion {
