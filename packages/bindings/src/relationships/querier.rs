@@ -27,7 +27,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = RelationshipsQuerier::new(deps.querier.deref());
+    ///     let querier = RelationshipsQuerier::new(&deps.querier);
     /// }
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {

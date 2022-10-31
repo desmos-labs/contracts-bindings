@@ -40,10 +40,7 @@ impl PostsMsgBuilder {
             external_id: external_id.unwrap_or_default().into(),
             text: text.unwrap_or_default().into(),
             entities,
-            attachments: attachments
-                .into_iter()
-                .map(Into::into)
-                .collect(),
+            attachments: attachments.into_iter().map(Into::into).collect(),
             tags: tags.into_iter().map(Into::into).collect(),
             author: author.into(),
             conversation_id: conversation_id.unwrap_or_default(),
@@ -70,7 +67,7 @@ impl PostsMsgBuilder {
         MsgEditPost {
             subspace_id,
             post_id,
-            text: text.unwrap_or("[do-not-modify]").to_string(),
+            text: text.unwrap_or("[do-not-modify]").into(),
             entities,
             tags: tags.into_iter().map(Into::into).collect(),
             editor: editor.into(),
@@ -99,13 +96,13 @@ impl PostsMsgBuilder {
     pub fn add_post_attachment(
         subspace_id: u64,
         post_id: u64,
-        content: Option<AttachmentContent>,
+        content: AttachmentContent,
         editor: Addr,
     ) -> MsgAddPostAttachment {
         MsgAddPostAttachment {
             subspace_id,
             post_id,
-            content: content.map(Into::into),
+            content: Some(content.into()),
             editor: editor.into(),
         }
     }
@@ -154,4 +151,174 @@ impl PostsMsgBuilder {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+    use chrono::DateTime;
+    use desmos_std::shim::Timestamp;
+
+    #[test]
+    fn test_create_post() {
+        let msg = PostsMsgBuilder::create_post(
+            1,
+            1,
+            Some("1"),
+            Some("test"),
+            None,
+            vec![],
+            vec![
+                AttachmentContent::Media(Media {
+                    uri: "ftp://domain.io/image.png".into(),
+                    mime_type: "image/png".into(),
+                }),
+                AttachmentContent::Poll(Poll {
+                    question: "questions?".into(),
+                    provided_answers: vec![poll::ProvidedAnswer {
+                        text: "Answer 1".into(),
+                        attachments: vec![],
+                    }],
+                    end_date: Some(Timestamp::from(DateTime::from(
+                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                    ))),
+                    allows_multiple_answers: false,
+                    allows_answer_edits: false,
+                    final_tally_results: None,
+                }),
+            ],
+            Addr::unchecked("user"),
+            Some(1),
+            ReplySetting::Everyone,
+            vec![],
+        );
+        let expected = MsgCreatePost {
+            subspace_id: 1,
+            section_id: 1,
+            external_id: "1".into(),
+            text: "test".into(),
+            entities: None,
+            tags: vec![],
+            attachments: vec![
+                AttachmentContent::Media(Media {
+                    uri: "ftp://domain.io/image.png".into(),
+                    mime_type: "image/png".into(),
+                })
+                .into(),
+                AttachmentContent::Poll(Poll {
+                    question: "questions?".into(),
+                    provided_answers: vec![poll::ProvidedAnswer {
+                        text: "Answer 1".into(),
+                        attachments: vec![],
+                    }],
+                    end_date: Some(Timestamp::from(DateTime::from(
+                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                    ))),
+                    allows_multiple_answers: false,
+                    allows_answer_edits: false,
+                    final_tally_results: None,
+                })
+                .into(),
+            ],
+            author: "user".into(),
+            conversation_id: 1,
+            reply_settings: ReplySetting::Everyone.into(),
+            referenced_posts: vec![],
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_edit_post_with_new_text() {
+        let msg = PostsMsgBuilder::edit_post(
+            1,
+            1,
+            Some("new text"),
+            None,
+            vec![],
+            Addr::unchecked("user"),
+        );
+        let expected = MsgEditPost {
+            subspace_id: 1,
+            post_id: 1,
+            text: "new text".into(),
+            entities: None,
+            tags: vec![],
+            editor: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_edit_post_without_new_text() {
+        let msg = PostsMsgBuilder::edit_post(1, 1, None, None, vec![], Addr::unchecked("user"));
+        let expected = MsgEditPost {
+            subspace_id: 1,
+            post_id: 1,
+            text: "[do-not-modify]".into(),
+            entities: None,
+            tags: vec![],
+            editor: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_delete_post() {
+        let msg = PostsMsgBuilder::delete_post(1, 1, Addr::unchecked("user"));
+        let expected = MsgDeletePost {
+            subspace_id: 1,
+            post_id: 1,
+            signer: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_add_post_attachment() {
+        let msg = PostsMsgBuilder::add_post_attachment(
+            1,
+            1,
+            AttachmentContent::Media(Media {
+                uri: "ftp://domain.io/image.png".into(),
+                mime_type: "image/png".into(),
+            }),
+            Addr::unchecked("user"),
+        );
+        let expected = MsgAddPostAttachment {
+            subspace_id: 1,
+            post_id: 1,
+            content: Some(
+                AttachmentContent::Media(Media {
+                    uri: "ftp://domain.io/image.png".into(),
+                    mime_type: "image/png".into(),
+                })
+                .into(),
+            ),
+            editor: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_remove_post_attachment() {
+        let msg = PostsMsgBuilder::remove_post_attachment(1, 1, 1, Addr::unchecked("user"));
+        let expected = MsgRemovePostAttachment {
+            subspace_id: 1,
+            post_id: 1,
+            attachment_id: 1,
+            editor: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_answer_poll() {
+        let msg = PostsMsgBuilder::answer_poll(1, 1, 1, vec![1], Addr::unchecked("user"));
+        let expected = MsgAnswerPoll {
+            subspace_id: 1,
+            post_id: 1,
+            poll_id: 1,
+            answers_indexes: vec![1],
+            signer: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+}

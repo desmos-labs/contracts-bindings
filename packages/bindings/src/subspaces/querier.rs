@@ -26,7 +26,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = SubspacesQuerier::new(deps.querier.deref());
+    ///     let querier = SubspacesQuerier::new(&deps.querier);
     ///     let subspaces_response = querier.query_subspaces(None);
     /// }
     /// ```
