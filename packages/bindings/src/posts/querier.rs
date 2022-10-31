@@ -73,7 +73,8 @@ impl<'a> PostsQuerier<'a> {
                 .map(|response| Page {
                     items: response.posts,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -124,7 +125,8 @@ impl<'a> PostsQuerier<'a> {
                 .map(|response| Page {
                     items: response.posts,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -183,7 +185,8 @@ impl<'a> PostsQuerier<'a> {
                 .map(|response| Page {
                     items: response.attachments,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -246,7 +249,8 @@ impl<'a> PostsQuerier<'a> {
                 .map(|response| Page {
                     items: response.answers,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -256,25 +260,57 @@ impl<'a> PostsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    // use super::*;
-    // use cosmwasm_std::testing::mock_dependencies;
+    use super::*;
+    use crate::mocks::mock_queriers::{
+        mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier,
+    };
+    use chrono::DateTime;
+    use cosmwasm_std::{Binary, ContractResult};
+    use desmos_std::shim::Timestamp;
 
-    // #[test]
-    // fn test_query_subspace_posts() {
-    //     let owned_deps = mock_dependencies();
-    //     let deps = owned_deps.as_ref();
-    //     let querier = PostsQuerier::new(&deps.querier);
+    #[test]
+    fn test_query_subspace_posts() {
+        let owned_deps = mock_desmos_dependencies_with_custom_querier(
+            MockDesmosQuerier::default().with_custom_query(
+                QuerySubspacePostsRequest::get_query_path(),
+                |data: &Binary| -> ContractResult<Binary> {
+                    println!("{}", data);
+                    match QuerySubspacePostsRequest::try_from(data.clone()) {
+                        Ok(request) => ContractResult::Ok(
+                            QuerySubspacePostsResponse {
+                                posts: vec![Post {
+                                    subspace_id: request.subspace_id,
+                                    section_id: 0,
+                                    id: 1,
+                                    external_id: "".into(),
+                                    text: "test".into(),
+                                    entities: None,
+                                    tags: vec![],
+                                    author: "author".into(),
+                                    conversation_id: 0,
+                                    referenced_posts: vec![],
+                                    reply_settings: ReplySetting::Everyone.into(),
+                                    creation_date:  Some(Timestamp::from(DateTime::from(
+                                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                                    ))),
+                                    last_edited_date: None,
+                                }],
+                                pagination: None,
+                            }
+                            .into(),
+                        ),
+                        Err(err) => ContractResult::Err(err.to_string()),
+                    }
+                }
+            ),
+        );
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(&deps.querier);
 
-    //     let result = querier.query_subspace_posts(0, None);
-    //     let response = result.unwrap();
+        let result = querier.query_subspace_posts(0, None);
+        let response = result.unwrap();
 
-    //     assert!(response.pagination.is_none());
-    //     assert_eq!(2, response.posts.len());
-
-    //     let posts = response.posts;
-    //     assert_eq!(
-    //         MockPostsQueries::get_mocked_subspace_posts(&Uint64::zero()),
-    //         posts
-    //     );
-    // }
+        assert!(response.pagination.is_none());
+        assert_eq!(1, response.posts.len());
+    }
 }
