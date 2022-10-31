@@ -1,9 +1,9 @@
 //! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
 
 use crate::profiles::proto::*;
-use desmos_std::proto::ibc::core::client::v1::Height;
 use crate::profiles::types::AddressData;
 use cosmwasm_std::Addr;
+use desmos_std::proto::ibc::core::client::v1::Height;
 
 /// Represents the messages to interact with the profiles module.
 pub struct ProfilesMsgBuilder {}
@@ -31,14 +31,16 @@ impl ProfilesMsgBuilder {
             bio: bio.into(),
             profile_picture: profile_picture.into(),
             cover_picture: cover_picture.into(),
-       }
+        }
     }
 
     /// Creates an instance of [`ProfilesMsg::DeleteProfile`].
     ///
     /// * `creator` - Address of the profile to delete.
     pub fn delete_profile(creator: Addr) -> MsgDeleteProfile {
-        MsgDeleteProfile { creator: creator.into() }
+        MsgDeleteProfile {
+            creator: creator.into(),
+        }
     }
 
     /// Creates an instance of [`ProfilesMsg::RequestDtagTransfer`].
@@ -46,7 +48,10 @@ impl ProfilesMsgBuilder {
     /// * `sender` - Address of who is going to send the DTag.
     /// * `receiver` - Address of who is going to receive the DTag
     pub fn request_dtag_transfer(sender: Addr, receiver: Addr) -> MsgRequestDTagTransfer {
-        MsgRequestDTagTransfer { receiver: receiver.into(), sender: sender.into() }
+        MsgRequestDTagTransfer {
+            receiver: receiver.into(),
+            sender: sender.into(),
+        }
     }
 
     /// Creates an instance of [`ProfilesMsg::AcceptDtagTransferRequest`].
@@ -70,16 +75,28 @@ impl ProfilesMsgBuilder {
     ///
     /// * `sender` - Address of who has started the DTag transfer.
     /// * `receiver` - Address of who was supposed to receive the DTag.
-    pub fn refuse_dtag_transfer_request(sender: Addr, receiver: Addr) -> MsgRefuseDTagTransferRequest {
-        MsgRefuseDTagTransferRequest { sender: sender.into(), receiver: receiver.into() }
+    pub fn refuse_dtag_transfer_request(
+        sender: Addr,
+        receiver: Addr,
+    ) -> MsgRefuseDTagTransferRequest {
+        MsgRefuseDTagTransferRequest {
+            sender: sender.into(),
+            receiver: receiver.into(),
+        }
     }
 
     /// Creates an instance of [`ProfilesMsg::CancelDtagTransferRequest`].
     ///
     /// * `receiver` - Address of who was supposed to receive the DTag.
     /// * `sender` - Address of who has started the DTag transfer.
-    pub fn cancel_dtag_transfer_request(receiver: Addr, sender: Addr) -> MsgCancelDTagTransferRequest {
-        MsgCancelDTagTransferRequest { receiver: receiver.into(), sender: sender.into()}
+    pub fn cancel_dtag_transfer_request(
+        receiver: Addr,
+        sender: Addr,
+    ) -> MsgCancelDTagTransferRequest {
+        MsgCancelDTagTransferRequest {
+            receiver: receiver.into(),
+            sender: sender.into(),
+        }
     }
 
     /// Creates an instance of [`ProfilesMsg::LinkChainAccount`].
@@ -108,11 +125,15 @@ impl ProfilesMsgBuilder {
     /// * `owner` - The profile address from which to remove the link.
     /// * `chain_name` - The chain name associated with the link to be removed.
     /// * `target` - The external address to be removed.
-    pub fn unlink_chain_account(owner: Addr, chain_name: &str, target: &str) -> MsgUnlinkChainAccount {
+    pub fn unlink_chain_account(
+        owner: Addr,
+        chain_name: &str,
+        target: &str,
+    ) -> MsgUnlinkChainAccount {
         MsgUnlinkChainAccount {
             owner: owner.into(),
             chain_name: chain_name.into(),
-            target: target.to_owned(),
+            target: target.into(),
         }
     }
 
@@ -127,8 +148,8 @@ impl ProfilesMsgBuilder {
         signer: Addr,
     ) -> MsgSetDefaultExternalAddress {
         MsgSetDefaultExternalAddress {
-            chain_name: chain_name.to_owned(),
-            target: target.to_owned(),
+            chain_name: chain_name.into(),
+            target: target.into(),
             signer: signer.into(),
         }
     }
@@ -170,11 +191,186 @@ impl ProfilesMsgBuilder {
     /// * `application` - The name of the application to unlink.
     /// * `username` - The username inside the application to unlink.
     /// * `signer` - The Desmos account from which the application should be unlinked.
-    pub fn unlink_application(application: &str, username: &str, signer: Addr) -> MsgUnlinkApplication {
+    pub fn unlink_application(
+        application: &str,
+        username: &str,
+        signer: Addr,
+    ) -> MsgUnlinkApplication {
         MsgUnlinkApplication {
             application: application.into(),
             username: username.into(),
             signer: signer.into(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_save_profile() {
+        let msg = ProfilesMsgBuilder::save_profile("test", Addr::unchecked("user"), "", "", "", "");
+        let expected = MsgSaveProfile {
+            dtag: "test".into(),
+            nickname: "".into(),
+            bio: "".into(),
+            profile_picture: "".into(),
+            cover_picture: "".into(),
+            creator: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_delete_profile() {
+        let msg = ProfilesMsgBuilder::delete_profile(Addr::unchecked("user"));
+        let expected = MsgDeleteProfile {
+            creator: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_request_dtag_transfer() {
+        let msg = ProfilesMsgBuilder::request_dtag_transfer(
+            Addr::unchecked("user"),
+            Addr::unchecked("reciever"),
+        );
+        let expected = MsgRequestDTagTransfer {
+            sender: "user".into(),
+            receiver: "reciever".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_accept_dtag_transfer_request() {
+        let msg = ProfilesMsgBuilder::accept_dtag_transfer_request(
+            "test",
+            Addr::unchecked("reciever"),
+            Addr::unchecked("user"),
+        );
+        let expected = MsgAcceptDTagTransferRequest {
+            new_dtag: "test".into(),
+            sender: "reciever".into(),
+            receiver: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_refuse_dtag_transfer_request() {
+        let msg = ProfilesMsgBuilder::refuse_dtag_transfer_request(
+            Addr::unchecked("reciever"),
+            Addr::unchecked("user"),
+        );
+        let expected = MsgRefuseDTagTransferRequest {
+            sender: "reciever".into(),
+            receiver: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_cancel_dtag_transfer_request() {
+        let msg = ProfilesMsgBuilder::cancel_dtag_transfer_request(
+            Addr::unchecked("reciever"),
+            Addr::unchecked("user"),
+        );
+        let expected = MsgCancelDTagTransferRequest {
+            receiver: "reciever".into(),
+            sender: "user".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    //TODO: re-add link chain account test
+
+    #[test]
+    fn test_unlink_chain_account() {
+        let msg = ProfilesMsgBuilder::unlink_chain_account(
+            Addr::unchecked("owner"),
+            "cosmos",
+            "target",
+        );
+        let expected = MsgUnlinkChainAccount {
+            owner: "owner".into(),
+            chain_name: "cosmos".into(),
+            target: "target".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_set_default_external_address() {
+        let msg = ProfilesMsgBuilder::set_default_external_address(
+            "cosmos",
+            "target",
+            Addr::unchecked("owner"),
+        );
+        let expected = MsgSetDefaultExternalAddress {
+            chain_name: "cosmos".into(),
+            target: "target".into(),
+            signer: "owner".into(),
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_link_application() {
+        let data = Data {
+            application: "twitter".into(),
+            username: "goldrake".into(),
+        };
+        let oracle_req = OracleRequest {
+            id: 537807,
+            oracle_script_id: 32,
+            call_data: Some(oracle_request::CallData {
+                application: "twitter".into(),
+                call_data: "7b22757365726e616d65223a224c756361675f5f2335323337227d".into(),
+            }),
+            client_id: "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake".into(),
+        };
+
+        let timeout_height = Height {
+            revision_number: 0,
+            revision_height: 0,
+        };
+
+        let msg = ProfilesMsgBuilder::link_application(
+            Addr::unchecked("owner"),
+            data.clone(),
+            oracle_req.call_data.clone().unwrap().call_data,
+            "123".into(),
+            "123".into(),
+            timeout_height.clone(),
+            1,
+        );
+        let expected = MsgLinkApplication {
+            sender: "owner".into(),
+            link_data: Some(data),
+            call_data: oracle_req.call_data.unwrap().call_data,
+            source_port: "123".into(),
+            source_channel: "123".into(),
+            timeout_height: Some(timeout_height),
+            timeout_timestamp: 1,
+        };
+        assert_eq!(expected, msg);
+    }
+
+    #[test]
+    fn test_unlink_application() {
+        let msg = ProfilesMsgBuilder::unlink_application(
+            "twitter",
+            "gawrgura",
+            Addr::unchecked("owner"),
+        );
+        let expected = MsgUnlinkApplication {
+            application: "twitter".into(),
+            username: "gawrgura".into(),
+            signer: "owner".into(),
+        };
+        assert_eq!(expected, msg)
     }
 }
