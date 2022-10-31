@@ -98,7 +98,6 @@ impl ReportsMsgBuilder {
 #[cfg(test)]
 mod test {
     use super::*;
-    use cosmwasm_std::Addr;
 
     #[test]
     fn test_create_report() {

@@ -78,7 +78,6 @@ impl RelationshipsMsgBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use cosmwasm_std::Addr;
 
     #[test]
     fn test_create_relationship() {
