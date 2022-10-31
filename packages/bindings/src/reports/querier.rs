@@ -7,7 +7,7 @@ use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::reports::models::{Reason, Report},
+    crate::reports::proto::{Reason, Report},
     cosmwasm_std::Binary,
 };
 
@@ -90,7 +90,8 @@ impl<'a> ReportsQuerier<'a> {
                     items: response.reports,
                     next_page_key: response
                         .pagination
-                        .and_then(|page_response| page_response.next_key),
+                        .and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -143,7 +144,8 @@ impl<'a> ReportsQuerier<'a> {
                     items: response.reasons,
                     next_page_key: response
                         .pagination
-                        .and_then(|page_response| page_response.next_key),
+                        .and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,

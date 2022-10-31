@@ -6,7 +6,7 @@ use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::posts::models::{Attachment, Post, UserAnswer},
+    crate::posts::proto::{Attachment, Post, UserAnswer},
     cosmwasm_std::Binary,
 };
 
@@ -72,7 +72,8 @@ impl<'a> PostsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.posts,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -122,7 +123,8 @@ impl<'a> PostsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.posts,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -180,7 +182,8 @@ impl<'a> PostsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.attachments,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -242,7 +245,8 @@ impl<'a> PostsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.answers,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -251,4 +255,26 @@ impl<'a> PostsQuerier<'a> {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    // use super::*;
+    // use cosmwasm_std::testing::mock_dependencies;
+
+    // #[test]
+    // fn test_query_subspace_posts() {
+    //     let owned_deps = mock_dependencies();
+    //     let deps = owned_deps.as_ref();
+    //     let querier = PostsQuerier::new(&deps.querier);
+
+    //     let result = querier.query_subspace_posts(0, None);
+    //     let response = result.unwrap();
+
+    //     assert!(response.pagination.is_none());
+    //     assert_eq!(2, response.posts.len());
+
+    //     let posts = response.posts;
+    //     assert_eq!(
+    //         MockPostsQueries::get_mocked_subspace_posts(&Uint64::zero()),
+    //         posts
+    //     );
+    // }
+}

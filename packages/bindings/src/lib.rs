@@ -6,6 +6,9 @@
 extern crate core;
 #[cfg(feature = "iterators")]
 pub mod iter;
+#[cfg(all(not(target_arch = "wasm32"), feature = "mocks"))]
+pub mod mocks;
+
 #[cfg(feature = "posts")]
 pub mod posts;
 #[cfg(feature = "profiles")]

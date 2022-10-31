@@ -3,6 +3,7 @@ use desmos_std::shim::Any;
 use cosmwasm_std::StdError;
 use prost::Message;
 
+#[derive(Clone)]
 pub enum ReportTarget {
     UserTarget(UserTarget),
     PostTarget(PostTarget),

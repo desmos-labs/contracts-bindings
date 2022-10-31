@@ -3,7 +3,7 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    relationships::models::{Relationship, UserBlock},
+    relationships::proto::{Relationship, UserBlock},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
@@ -89,7 +89,8 @@ impl<'a> RelationshipsQuerier<'a> {
                     items: response.relationships,
                     next_page_key: response
                         .pagination
-                        .and_then(|pagination| pagination.next_key),
+                        .and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -149,7 +150,8 @@ impl<'a> RelationshipsQuerier<'a> {
                     items: response.blocks,
                     next_page_key: response
                         .pagination
-                        .and_then(|pagination| pagination.next_key),
+                        .and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,

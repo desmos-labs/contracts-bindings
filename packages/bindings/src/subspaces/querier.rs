@@ -6,8 +6,7 @@ use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::subspaces::models::Section,
-    crate::subspaces::models::{Subspace, UserGroup},
+    crate::subspaces::proto::{Section, Subspace, UserGroup},
     cosmwasm_std::Binary,
 };
 
@@ -64,7 +63,9 @@ impl<'a> SubspacesQuerier<'a> {
                 }))
                 .map(|response| Page {
                     items: response.subspaces,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -116,7 +117,9 @@ impl<'a> SubspacesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.sections,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -180,7 +183,9 @@ impl<'a> SubspacesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.groups,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -226,7 +231,7 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         group_id: u32,
         page_size: u64,
-    ) -> PageIterator<Addr, Binary> {
+    ) -> PageIterator<String, Binary> {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_user_group_members(
@@ -242,7 +247,9 @@ impl<'a> SubspacesQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.members,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,

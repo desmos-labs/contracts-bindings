@@ -3,7 +3,7 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    reactions::models::{Reaction, RegisteredReaction},
+    reactions::proto::{Reaction, RegisteredReaction},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
@@ -92,7 +92,8 @@ impl<'a> ReactionsQuerier<'a> {
                     items: response.reactions,
                     next_page_key: response
                         .pagination
-                        .and_then(|pagination| pagination.next_key),
+                        .and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
@@ -154,7 +155,8 @@ impl<'a> ReactionsQuerier<'a> {
                     items: response.registered_reactions,
                     next_page_key: response
                         .pagination
-                        .and_then(|pagination| pagination.next_key),
+                        .and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
                 })
             }),
             page_size,
