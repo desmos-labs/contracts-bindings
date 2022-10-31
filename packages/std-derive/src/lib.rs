@@ -48,6 +48,12 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
                     }
                 }
             }
+
+            impl #ident {
+                pub fn get_query_path() -> String {
+                    #path.to_string()
+                }
+            }
         };
 
         let cosmwasm_query = quote! {
