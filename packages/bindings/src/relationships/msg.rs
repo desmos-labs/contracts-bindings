@@ -76,4 +76,69 @@ impl RelationshipsMsgBuilder {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+    use cosmwasm_std::Addr;
+
+    #[test]
+    fn test_create_relationship() {
+        let msg = RelationshipsMsgBuilder::create_relationship(
+            Addr::unchecked("user"),
+            Addr::unchecked("conterparty"),
+            1,
+        );
+        let expected = MsgCreateRelationship {
+            signer:"user".into(),
+            counterparty: "conterparty".into(),
+            subspace_id: 1,
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_delete_relationship() {
+        let msg = RelationshipsMsgBuilder::delete_relationship(
+            Addr::unchecked("user"),
+            Addr::unchecked("conterparty"),
+            1,
+        );
+        let expected = MsgDeleteRelationship {
+            signer: "user".into(),
+            counterparty: "conterparty".into(),
+            subspace_id: 1,
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_block_user() {
+        let msg = RelationshipsMsgBuilder::block_user(
+            Addr::unchecked("user"),
+            Addr::unchecked("counterparty"),
+            "test".to_string(),
+            1,
+        );
+        let expected = MsgBlockUser {
+            blocker: "user".into(),
+            blocked: "counterparty".into(),
+            reason: "test".to_string(),
+            subspace_id: 1,
+        };
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_unblock_user() {
+        let msg = RelationshipsMsgBuilder::unblock_user(
+            Addr::unchecked("user"),
+            Addr::unchecked("counterparty"),
+            1,
+        );
+        let expected = MsgUnblockUser {
+            blocker: "user".into(),
+            blocked: "counterparty".into(),
+            subspace_id: 1,
+        };
+        assert_eq!(expected, msg)
+    }
+}
