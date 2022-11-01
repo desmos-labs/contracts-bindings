@@ -90,10 +90,9 @@ impl<'a> ReactionsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.reactions,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -153,10 +152,9 @@ impl<'a> ReactionsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.registered_reactions,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,

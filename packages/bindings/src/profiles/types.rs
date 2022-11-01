@@ -1,6 +1,6 @@
 use crate::profiles::proto::{Base58Address, Bech32Address, HexAddress};
-use desmos_std::shim::Any;
 use cosmwasm_std::StdError;
+use desmos_std::shim::Any;
 use prost::Message;
 
 pub enum AddressData {
@@ -23,7 +23,8 @@ impl TryFrom<Any> for AddressData {
         }
         Err(StdError::ParseErr {
             target_type: "AddressData".to_string(),
-            msg: "Unmatched type: must be either `Bech32Address`, `HexAddress` or `Base58Address`.".to_string(),
+            msg: "Unmatched type: must be either `Bech32Address`, `HexAddress` or `Base58Address`."
+                .to_string(),
         })
     }
 }

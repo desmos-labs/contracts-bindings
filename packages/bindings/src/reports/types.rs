@@ -1,6 +1,6 @@
-use crate::reports::proto::{UserTarget, PostTarget};
-use desmos_std::shim::Any;
+use crate::reports::proto::{PostTarget, UserTarget};
 use cosmwasm_std::StdError;
+use desmos_std::shim::Any;
 use prost::Message;
 
 #[derive(Clone)]
@@ -20,7 +20,8 @@ impl TryFrom<Any> for ReportTarget {
         }
         Err(StdError::ParseErr {
             target_type: "ReportTarget".to_string(),
-            msg: "Unmatched type: must be either `UserTarget`, `PostTarget` or `Base58Address`.".to_string(),
+            msg: "Unmatched type: must be either `UserTarget`, `PostTarget` or `Base58Address`."
+                .to_string(),
         })
     }
 }

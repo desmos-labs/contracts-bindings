@@ -5,7 +5,6 @@ pub mod msg;
 #[cfg(feature = "query")]
 pub mod querier;
 #[cfg(feature = "query")]
-
 pub mod types;
 
 pub mod proto {

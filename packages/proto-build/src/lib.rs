@@ -36,12 +36,7 @@ pub fn run() {
         project_dir: DESMOS_DIR.to_string(),
     };
 
-    let code_generator = CodeGenerator::new(
-        out_dir,
-        tmp_build_dir,
-        desmos_project,
-        vec![],
-    );
+    let code_generator = CodeGenerator::new(out_dir, tmp_build_dir, desmos_project, vec![]);
 
     code_generator.generate();
 }

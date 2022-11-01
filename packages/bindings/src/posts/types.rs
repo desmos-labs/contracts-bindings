@@ -1,6 +1,6 @@
-use crate::posts::proto::{Poll, Media};
-use desmos_std::shim::Any;
+use crate::posts::proto::{Media, Poll};
 use cosmwasm_std::StdError;
+use desmos_std::shim::Any;
 use prost::Message;
 
 pub enum AttachmentContent {

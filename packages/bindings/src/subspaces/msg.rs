@@ -352,7 +352,7 @@ mod tests {
             Addr::unchecked("signer"),
         );
         let expected = MsgEditSubspace {
-            subspace_id:42,
+            subspace_id: 42,
             name: "test".into(),
             description: "test".into(),
             treasury: "treasury".into(),
@@ -364,10 +364,7 @@ mod tests {
 
     #[test]
     fn test_delete_subspace() {
-        let msg = SubspacesMsgBuilder::delete_subspace(
-            1,
-            Addr::unchecked("signer"),
-        );
+        let msg = SubspacesMsgBuilder::delete_subspace(1, Addr::unchecked("signer"));
         let expected = MsgDeleteSubspace {
             subspace_id: 1,
             signer: "signer".into(),
@@ -415,12 +412,7 @@ mod tests {
 
     #[test]
     fn test_move_section() {
-        let msg = SubspacesMsgBuilder::move_section(
-            1,
-            1,
-            2,
-            Addr::unchecked("signer"),
-        );
+        let msg = SubspacesMsgBuilder::move_section(1, 1, 2, Addr::unchecked("signer"));
         let expected = MsgMoveSection {
             subspace_id: 1,
             section_id: 1,
@@ -432,11 +424,7 @@ mod tests {
 
     #[test]
     fn test_delete_section() {
-        let msg = SubspacesMsgBuilder::delete_section(
-            1,
-            1,
-            Addr::unchecked("signer"),
-        );
+        let msg = SubspacesMsgBuilder::delete_section(1, 1, Addr::unchecked("signer"));
         let expected = MsgDeleteSection {
             subspace_id: 1,
             section_id: 1,
@@ -489,12 +477,7 @@ mod tests {
 
     #[test]
     fn test_move_user_group() {
-        let msg = SubspacesMsgBuilder::move_user_group(
-            1,
-            1,
-            2,
-            Addr::unchecked("signer"),
-        );
+        let msg = SubspacesMsgBuilder::move_user_group(1, 1, 2, Addr::unchecked("signer"));
         let expected = MsgMoveUserGroup {
             subspace_id: 1,
             group_id: 1,
@@ -523,11 +506,7 @@ mod tests {
 
     #[test]
     fn test_delete_user_group() {
-        let msg = SubspacesMsgBuilder::delete_user_group(
-            1,
-            1,
-            Addr::unchecked("signer"),
-        );
+        let msg = SubspacesMsgBuilder::delete_user_group(1, 1, Addr::unchecked("signer"));
         let expected = MsgDeleteUserGroup {
             subspace_id: 1,
             group_id: 1,

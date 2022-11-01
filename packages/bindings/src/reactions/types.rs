@@ -1,6 +1,6 @@
 use crate::reactions::proto::{FreeTextValue, RegisteredReactionValue};
-use desmos_std::shim::Any;
 use cosmwasm_std::StdError;
+use desmos_std::shim::Any;
 use prost::Message;
 
 pub enum ReactionValue {
@@ -19,7 +19,8 @@ impl TryFrom<Any> for ReactionValue {
         }
         Err(StdError::ParseErr {
             target_type: "ReactionValue".to_string(),
-            msg: "Unmatched type: must be either `FreeTextValue` or `RegisteredReactionValue`.".to_string(),
+            msg: "Unmatched type: must be either `FreeTextValue` or `RegisteredReactionValue`."
+                .to_string(),
         })
     }
 }

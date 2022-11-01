@@ -88,10 +88,9 @@ impl<'a> ReportsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.reports,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -115,7 +114,9 @@ impl<'a> ReportsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReasonsResponse> {
-        Ok(self.querier.reasons(subspace_id, pagination.map(Into::into))?)
+        Ok(self
+            .querier
+            .reasons(subspace_id, pagination.map(Into::into))?)
     }
 
     /// Gives an iterator to scan over the supported reporting reasons for a subspace.
@@ -142,10 +143,9 @@ impl<'a> ReportsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.reasons,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,

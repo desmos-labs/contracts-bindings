@@ -289,11 +289,8 @@ mod tests {
 
     #[test]
     fn test_unlink_chain_account() {
-        let msg = ProfilesMsgBuilder::unlink_chain_account(
-            Addr::unchecked("owner"),
-            "cosmos",
-            "target",
-        );
+        let msg =
+            ProfilesMsgBuilder::unlink_chain_account(Addr::unchecked("owner"), "cosmos", "target");
         let expected = MsgUnlinkChainAccount {
             owner: "owner".into(),
             chain_name: "cosmos".into(),
@@ -361,11 +358,8 @@ mod tests {
 
     #[test]
     fn test_unlink_application() {
-        let msg = ProfilesMsgBuilder::unlink_application(
-            "twitter",
-            "gawrgura",
-            Addr::unchecked("owner"),
-        );
+        let msg =
+            ProfilesMsgBuilder::unlink_application("twitter", "gawrgura", Addr::unchecked("owner"));
         let expected = MsgUnlinkApplication {
             application: "twitter".into(),
             username: "gawrgura".into(),

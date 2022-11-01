@@ -1,8 +1,8 @@
 //! Contains some basic types of a cosmos sdk based chain.
 
-use desmos_std::proto::cosmos::base::query::v1beta1::PageRequest as ProtoPageRequest;
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Binary, Uint64};
+use desmos_std::proto::cosmos::base::query::v1beta1::PageRequest as ProtoPageRequest;
 
 /// Represents the configurations that tell the application which page of data to fetch.
 #[cw_serde]
@@ -25,7 +25,7 @@ pub struct PageRequest {
 }
 
 impl Into<ProtoPageRequest> for PageRequest {
-    fn into(self) ->  ProtoPageRequest {
+    fn into(self) -> ProtoPageRequest {
         ProtoPageRequest {
             key: self.key.unwrap_or_default().to_vec(),
             offset: self.offset.unwrap_or_default().into(),

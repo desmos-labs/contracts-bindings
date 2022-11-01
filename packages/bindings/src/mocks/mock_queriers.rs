@@ -1,7 +1,10 @@
 //! Contains some useful functions to perform unit testing of smart contracts.
 
-use cosmwasm_std::testing::{MockQuerier, MockApi, MockStorage};
-use cosmwasm_std::{Binary, Coin, Empty, QuerierResult, QueryRequest, SystemError, SystemResult, OwnedDeps, from_slice, Querier, ContractResult};
+use cosmwasm_std::testing::{MockApi, MockQuerier, MockStorage};
+use cosmwasm_std::{
+    from_slice, Binary, Coin, ContractResult, Empty, OwnedDeps, Querier, QuerierResult,
+    QueryRequest, SystemError, SystemResult,
+};
 use std::collections::HashMap;
 use std::marker::PhantomData;
 
@@ -25,15 +28,13 @@ impl MockDesmosQuerier {
         }
     }
 
-    pub fn with_custom_query<CH>(
-        mut self,
-        path: String,
-        response_fn: CH,
-    ) -> Self 
-    where CH : Fn(&Binary) -> ContractResult<Binary> + 'static {
+    pub fn with_custom_query<CH>(mut self, path: String, response_fn: CH) -> Self
+    where
+        CH: Fn(&Binary) -> ContractResult<Binary> + 'static,
+    {
         self.registered_custom_queries
             .insert(path, Self::wrap_handler(response_fn));
-        return self
+        return self;
     }
 
     /// Handle the query request.
@@ -41,8 +42,7 @@ impl MockDesmosQuerier {
         match request {
             QueryRequest::Stargate { path, data } => {
                 if let Some(response_fn) = self.registered_custom_queries.get(path) {
-                    println!("{}:{}", path, data);
-                   return response_fn(data);
+                    return response_fn(data);
                 }
                 SystemResult::Err(SystemError::UnsupportedRequest { kind: path.into() })
             }
@@ -52,9 +52,7 @@ impl MockDesmosQuerier {
 
     /// Utility function to wrap the handler that returns a ContractResult<Binary>
     /// to make it return a SystemResult<ContractResult<Binary>>
-    fn wrap_handler<'f, CH>(
-        handler: CH,
-    ) -> Box<dyn Fn(&Binary) -> QuerierResult>
+    fn wrap_handler<'f, CH>(handler: CH) -> Box<dyn Fn(&Binary) -> QuerierResult>
     where
         CH: Fn(&Binary) -> ContractResult<Binary> + 'static,
     {
@@ -130,7 +128,6 @@ pub fn mock_desmos_dependencies_with_custom_querier(
 
 /// Creates an instance of [`OwnedDeps`](cosmwasm_std::OwnedDeps) that is capable of
 /// handling queries towards Desmos's modules.
-pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, Empty>
-{
+pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, Empty> {
     mock_desmos_dependencies_with_custom_querier(MockDesmosQuerier::default())
 }

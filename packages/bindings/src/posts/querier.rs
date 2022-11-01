@@ -265,7 +265,7 @@ mod tests {
         mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier,
     };
     use chrono::DateTime;
-    use cosmwasm_std::{Binary, ContractResult};
+    use cosmwasm_std::{from_binary, Binary, ContractResult};
     use desmos_std::shim::Timestamp;
 
     #[test]
@@ -274,7 +274,6 @@ mod tests {
             MockDesmosQuerier::default().with_custom_query(
                 QuerySubspacePostsRequest::get_query_path(),
                 |data: &Binary| -> ContractResult<Binary> {
-                    println!("{}", data);
                     match QuerySubspacePostsRequest::try_from(data.clone()) {
                         Ok(request) => ContractResult::Ok(
                             QuerySubspacePostsResponse {
@@ -290,8 +289,9 @@ mod tests {
                                     conversation_id: 0,
                                     referenced_posts: vec![],
                                     reply_settings: ReplySetting::Everyone.into(),
-                                    creation_date:  Some(Timestamp::from(DateTime::from(
-                                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                                    creation_date: Some(Timestamp::from(DateTime::from(
+                                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z")
+                                            .unwrap(),
                                     ))),
                                     last_edited_date: None,
                                 }],
@@ -301,13 +301,13 @@ mod tests {
                         ),
                         Err(err) => ContractResult::Err(err.to_string()),
                     }
-                }
+                },
             ),
         );
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
 
-        let result = querier.query_subspace_posts(0, None);
+        let result = querier.query_subspace_posts(1, None);
         let response = result.unwrap();
 
         assert!(response.pagination.is_none());

@@ -87,10 +87,9 @@ impl<'a> RelationshipsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.relationships,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -148,10 +147,9 @@ impl<'a> RelationshipsQuerier<'a> {
                 )
                 .map(|response| Page {
                     items: response.blocks,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,

@@ -87,7 +87,7 @@ mod tests {
             1,
         );
         let expected = MsgCreateRelationship {
-            signer:"user".into(),
+            signer: "user".into(),
             counterparty: "conterparty".into(),
             subspace_id: 1,
         };

@@ -79,7 +79,8 @@ impl<'a> ProfilesQuerier<'a> {
                 .map(|response| Page {
                     items: response.requests,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -144,7 +145,8 @@ impl<'a> ProfilesQuerier<'a> {
                 .map(|response| Page {
                     items: response.links,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -199,7 +201,8 @@ impl<'a> ProfilesQuerier<'a> {
                 .map(|response| Page {
                     items: response.owners,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -254,7 +257,8 @@ impl<'a> ProfilesQuerier<'a> {
                 .map(|response| Page {
                     items: response.links,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -319,7 +323,8 @@ impl<'a> ProfilesQuerier<'a> {
                 .map(|response| Page {
                     items: response.links,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -370,7 +375,8 @@ impl<'a> ProfilesQuerier<'a> {
         application: Option<String>,
         username: Option<String>,
         page_size: u64,
-    ) -> PageIterator<query_application_link_owners_response::ApplicationLinkOwnerDetails, Binary> {
+    ) -> PageIterator<query_application_link_owners_response::ApplicationLinkOwnerDetails, Binary>
+    {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_application_link_owners(
@@ -387,7 +393,8 @@ impl<'a> ProfilesQuerier<'a> {
                 .map(|response| Page {
                     items: response.owners,
                     next_page_key: response.pagination.and_then(|response| {
-                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))}),
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
