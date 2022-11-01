@@ -98,6 +98,7 @@ mod tests {
                 section_id: None,
                 name: "test_user_group".to_string(),
                 description: None,
+                initial_members: vec![],
                 default_permissions: vec![Permission::EditSubspace],
                 creator: Addr::unchecked(contract_address),
             }
