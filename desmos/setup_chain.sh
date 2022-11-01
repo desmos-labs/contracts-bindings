@@ -82,7 +82,7 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Create a test user group owned by the smart contract
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"subspaces\":{\"create_user_group\":{\"subspace_id\":\"1\",\"section_id\":null,\"name\":\"Test user group\",\"description\":null,\"default_permissions\":[\"EDIT_SUBSPACE\"],\"creator\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"subspaces\":{\"create_user_group\":{\"subspace_id\":\"1\",\"section_id\":null,\"name\":\"Test user group\",\"description\":null,\"initial_members\":[],\"default_permissions\":[\"EDIT_SUBSPACE\"],\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create test user group"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \

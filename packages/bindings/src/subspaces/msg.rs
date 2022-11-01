@@ -102,6 +102,8 @@ pub enum SubspacesMsg {
         name: String,
         /// Description of the user group.
         description: Option<String>,
+        /// Initial members to be put inside the group.
+        initial_members: Vec<Addr>,
         /// Permissions that all the members will inherit.
         default_permissions: Vec<Permission>,
         /// Address of who wants create the user group.
@@ -345,6 +347,7 @@ impl SubspacesMsg {
         name: String,
         description: Option<String>,
         default_permissions: Vec<Permission>,
+        initial_members: Vec<Addr>,
         creator: Addr,
     ) -> SubspacesMsg {
         SubspacesMsg::CreateUserGroup {
@@ -352,6 +355,7 @@ impl SubspacesMsg {
             section_id,
             name,
             description,
+            initial_members,
             default_permissions,
             creator,
         }
@@ -633,6 +637,7 @@ mod tests {
             "test".to_string(),
             Some("test".to_string()),
             vec![],
+            vec![],
             Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         );
         let expected = SubspacesMsg::CreateUserGroup {
@@ -640,6 +645,7 @@ mod tests {
             section_id: Some(1),
             name: "test".to_string(),
             description: Some("test".to_string()),
+            initial_members: vec![],
             default_permissions: vec![],
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
