@@ -13,7 +13,7 @@ use std::marker::PhantomData;
 pub struct MockDesmosQuerier {
     /// Default CosmWASM mock querier.
     pub mock_querier: MockQuerier,
-
+    /// Registered custom queries using proto request for testing.
     pub registered_custom_queries: HashMap<String, Box<dyn Fn(&Binary) -> QuerierResult>>,
 }
 
@@ -93,28 +93,6 @@ impl Default for MockDesmosQuerier {
 /// Creates an instance of [`OwnedDeps`](cosmwasm_std::OwnedDeps) with a custom [`MockDesmosQuerier`]
 /// to allow the user to mock the query responses of one or more Desmos's modules.
 ///
-/// # Example
-/// ```
-/// use cosmwasm_std::{ContractResult, SystemError, SystemResult, to_binary};
-/// use desmos_bindings::mocks::mock_queriers::{mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier};
-/// use desmos_bindings::profiles::mocks::MockProfilesQueries;
-/// use desmos_bindings::profiles::models_profile::Profile;
-/// use desmos_bindings::profiles::models_query::QueryProfileResponse;
-/// use desmos_bindings::profiles::query::ProfilesQuery;
-///
-/// // Querier with a custom profile query handler to mock responses toward the profile module
-/// let querier =
-///     MockDesmosQuerier::default().with_custom_profiles_handler(|query| match query {
-///         ProfilesQuery::Profile { user } => to_binary(&QueryProfileResponse {
-///             profile: MockProfilesQueries::get_mock_profile(),
-///         })
-///         .into(),
-///         _ => ContractResult::Err("not supported".to_string()),
-///     });
-///
-/// // Create the OwnedDeps instance with the custom querier
-/// let deps =  mock_desmos_dependencies_with_custom_querier(querier);
-/// ```
 pub fn mock_desmos_dependencies_with_custom_querier(
     querier: MockDesmosQuerier,
 ) -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, Empty> {
