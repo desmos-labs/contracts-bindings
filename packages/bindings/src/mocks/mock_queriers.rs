@@ -5,9 +5,9 @@ use cosmwasm_std::{
     from_slice, Binary, Coin, ContractResult, Empty, OwnedDeps, Querier, QuerierResult,
     QueryRequest, SystemError, SystemResult,
 };
+use mock::MockableQuerier;
 use std::collections::HashMap;
 use std::marker::PhantomData;
-use mock::MockableQuerier;
 
 /// Custom querier that can be used during unit testing to simulate what a contract receive when
 /// perform a query toward Desmos’s modules.
