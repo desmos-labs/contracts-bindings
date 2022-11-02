@@ -28,15 +28,14 @@ impl MockDesmosQuerier {
         }
     }
 
-    pub fn with_custom_query<CH>(mut self, path: String, response_fn: CH) -> Self
-    where
-        CH: Fn(&Binary) -> ContractResult<Binary> + 'static,
-    {
-        self.registered_custom_queries
-            .insert(path, Self::wrap_handler(response_fn));
+    pub fn with_custom_query(
+        mut self,
+        path: String,
+        response_fn: Box<dyn Fn(&Binary) -> QuerierResult>,
+    ) -> Self {
+        self.registered_custom_queries.insert(path, response_fn);
         return self;
     }
-
     /// Handle the query request.
     pub fn handle_query(&self, request: &QueryRequest<Empty>) -> QuerierResult {
         match request {
@@ -48,24 +47,6 @@ impl MockDesmosQuerier {
             }
             _ => self.mock_querier.handle_query(request),
         }
-    }
-
-    /// Utility function to wrap the handler that returns a ContractResult<Binary>
-    /// to make it return a SystemResult<ContractResult<Binary>>
-    fn wrap_handler<'f, CH>(handler: CH) -> Box<dyn Fn(&Binary) -> QuerierResult>
-    where
-        CH: Fn(&Binary) -> ContractResult<Binary> + 'static,
-    {
-        Box::new(move |data| {
-            let result = handler(data);
-            if result.is_ok() {
-                SystemResult::Ok(result)
-            } else {
-                SystemResult::Err(SystemError::UnsupportedRequest {
-                    kind: result.unwrap_err(),
-                })
-            }
-        })
     }
 }
 

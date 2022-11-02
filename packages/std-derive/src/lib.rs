@@ -48,17 +48,32 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
                     }
                 }
             }
-
-            impl #ident {
-                pub fn get_query_path() -> String {
-                    #path.to_string()
-                }
-            }
         };
 
         let cosmwasm_query = quote! {
             pub fn query(self, querier: &cosmwasm_std::QuerierWrapper<impl cosmwasm_std::CustomQuery>) -> cosmwasm_std::StdResult<#res> {
                 querier.query::<#res>(&self.into())
+            }
+            pub fn get_query_path() -> String {
+                #path.to_string()
+            }
+            pub fn get_mock_query(response: #res) -> Box<dyn Fn(&cosmwasm_std::Binary) -> cosmwasm_std::QuerierResult> {
+                Box::new(move |data| {
+                    let result = match #ident::try_from(data.clone()) {
+                        Ok(_) => cosmwasm_std::ContractResult::Ok(
+                            cosmwasm_std::to_binary(&response)
+                            .unwrap(),
+                        ),
+                        Err(err) => cosmwasm_std::ContractResult::Err(err.to_string()),
+                    };
+                    if result.is_ok() {
+                        cosmwasm_std::SystemResult::Ok(result)
+                    } else {
+                        cosmwasm_std::SystemResult::Err(cosmwasm_std::SystemError::UnsupportedRequest {
+                            kind: result.unwrap_err(),
+                        })
+                    }
+                })
             }
         };
 

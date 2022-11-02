@@ -293,18 +293,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies_with_custom_querier(
             MockDesmosQuerier::default().with_custom_query(
                 QuerySubspacePostsRequest::get_query_path(),
-                |data: &Binary| -> ContractResult<Binary> {
-                    match QuerySubspacePostsRequest::try_from(data.clone()) {
-                        Ok(_) => ContractResult::Ok(
-                            to_binary(&QuerySubspacePostsResponse {
-                                posts: vec![get_post(1, 0, 1)],
-                                pagination: None,
-                            })
-                            .unwrap(),
-                        ),
-                        Err(err) => ContractResult::Err(err.to_string()),
-                    }
-                },
+                QuerySubspacePostsRequest::get_mock_query(QuerySubspacePostsResponse {
+                    posts: vec![get_post(1, 0, 1)],
+                    pagination: None,
+                }),
             ),
         );
         let deps = owned_deps.as_ref();
@@ -320,36 +312,19 @@ mod tests {
         let owned_deps = mock_desmos_dependencies_with_custom_querier(
             MockDesmosQuerier::default().with_custom_query(
                 QuerySubspacePostsRequest::get_query_path(),
-                |data: &Binary| -> ContractResult<Binary> {
-                    match QuerySubspacePostsRequest::try_from(data.clone()) {
-                        Ok(_) => ContractResult::Ok(
-                            to_binary(&QuerySubspacePostsResponse {
-                                posts: vec![
-                                    get_post(1, 0, 1),
-                                    get_post(1, 0, 2),
-                                ],
-                                pagination: None,
-                            })
-                            .unwrap(),
-                        ),
-                        Err(err) => ContractResult::Err(err.to_string()),
-                    }
-                },
+                QuerySubspacePostsRequest::get_mock_query(QuerySubspacePostsResponse {
+                    posts: vec![get_post(1, 0, 1), get_post(1, 0, 2)],
+                    pagination: None,
+                }),
             ),
         );
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let mut iterator = querier.iterate_subspace_posts(1, 32);
         // The first item returned from the iterators should be the first item returned from the mock function.
-        assert_eq!(
-            get_post(1, 0, 1),
-            iterator.next().unwrap().unwrap()
-        );
+        assert_eq!(get_post(1, 0, 1), iterator.next().unwrap().unwrap());
         // The second item returned from the iterators should be the second item returned from the mock function.
-        assert_eq!(
-            get_post(1, 0, 2),
-            iterator.next().unwrap().unwrap()
-        );
+        assert_eq!(get_post(1, 0, 2), iterator.next().unwrap().unwrap());
         // The third item should be none since it provides only 2 posts.
         assert!(iterator.next().is_none())
     }
