@@ -325,8 +325,8 @@ mod tests {
                         Ok(_) => ContractResult::Ok(
                             to_binary(&QuerySubspacePostsResponse {
                                 posts: vec![
-                                    MockPostsQueries::get_mocked_post(1, 0, 1),
-                                    MockPostsQueries::get_mocked_post(1, 0, 2),
+                                    get_post(1, 0, 1),
+                                    get_post(1, 0, 2),
                                 ],
                                 pagination: None,
                             })
@@ -342,12 +342,12 @@ mod tests {
         let mut iterator = querier.iterate_subspace_posts(1, 32);
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
-            MockPostsQueries::get_mocked_post(1, 0, 1),
+            get_post(1, 0, 1),
             iterator.next().unwrap().unwrap()
         );
         // The second item returned from the iterators should be the second item returned from the mock function.
         assert_eq!(
-            MockPostsQueries::get_mocked_post(1, 0, 2),
+            get_post(1, 0, 2),
             iterator.next().unwrap().unwrap()
         );
         // The third item should be none since it provides only 2 posts.
