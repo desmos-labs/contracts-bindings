@@ -290,15 +290,12 @@ mod tests {
 
     #[test]
     fn test_query_subspace_posts() {
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(
-            MockDesmosQuerier::default().with_custom_query(
-                QuerySubspacePostsRequest::get_query_path(),
-                QuerySubspacePostsRequest::get_mock_query(QuerySubspacePostsResponse {
-                    posts: vec![get_post(1, 0, 1)],
-                    pagination: None,
-                }),
-            ),
-        );
+        let mut querier = MockDesmosQuerier::default();
+        QuerySubspacePostsRequest::get_mock_query(&mut querier, QuerySubspacePostsResponse {
+            posts: vec![get_post(1, 0, 1)],
+            pagination: None,
+        });
+        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let result = querier.query_subspace_posts(1, None);
@@ -309,15 +306,12 @@ mod tests {
     }
     #[test]
     fn test_iterate_subspace_posts() {
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(
-            MockDesmosQuerier::default().with_custom_query(
-                QuerySubspacePostsRequest::get_query_path(),
-                QuerySubspacePostsRequest::get_mock_query(QuerySubspacePostsResponse {
-                    posts: vec![get_post(1, 0, 1), get_post(1, 0, 2)],
-                    pagination: None,
-                }),
-            ),
-        );
+        let mut querier = MockDesmosQuerier::default();
+        QuerySubspacePostsRequest::get_mock_query(&mut querier, QuerySubspacePostsResponse {
+            posts: vec![get_post(1, 0, 1), get_post(1, 0, 2)],
+            pagination: None,
+        });
+        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let mut iterator = querier.iterate_subspace_posts(1, 32);

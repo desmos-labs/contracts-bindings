@@ -7,6 +7,7 @@ use cosmwasm_std::{
 };
 use std::collections::HashMap;
 use std::marker::PhantomData;
+use mock::MockableQuerier;
 
 /// Custom querier that can be used during unit testing to simulate what a contract receive when
 /// perform a query toward Desmos’s modules.
@@ -27,15 +28,6 @@ impl MockDesmosQuerier {
             registered_custom_queries: HashMap::new(),
         }
     }
-
-    pub fn with_custom_query(
-        mut self,
-        path: String,
-        response_fn: Box<dyn Fn(&Binary) -> QuerierResult>,
-    ) -> Self {
-        self.registered_custom_queries.insert(path, response_fn);
-        return self;
-    }
     /// Handle the query request.
     pub fn handle_query(&self, request: &QueryRequest<Empty>) -> QuerierResult {
         match request {
@@ -47,6 +39,16 @@ impl MockDesmosQuerier {
             }
             _ => self.mock_querier.handle_query(request),
         }
+    }
+}
+
+impl MockableQuerier for MockDesmosQuerier {
+    fn register_custom_query(
+        &mut self,
+        path: String,
+        response_fn: Box<dyn Fn(&Binary) -> QuerierResult>,
+    ) {
+        self.registered_custom_queries.insert(path, response_fn);
     }
 }
 

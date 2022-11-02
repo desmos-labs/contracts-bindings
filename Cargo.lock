@@ -467,6 +467,7 @@ dependencies = [
  "cosmwasm-std",
  "cw-multi-test",
  "desmos-std",
+ "mock",
  "prost 0.11.0",
  "prost-types",
  "schemars",
@@ -482,6 +483,7 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "cosmwasm-std",
+ "mock",
  "prost 0.11.0",
  "prost-types",
  "schemars",
@@ -948,6 +950,13 @@ dependencies = [
  "log",
  "wasi 0.11.0+wasi-snapshot-preview1",
  "windows-sys",
+]
+
+[[package]]
+name = "mock"
+version = "0.1.0"
+dependencies = [
+ "cosmwasm-std",
 ]
 
 [[package]]

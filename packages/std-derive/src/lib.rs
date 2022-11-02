@@ -54,11 +54,8 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
             pub fn query(self, querier: &cosmwasm_std::QuerierWrapper<impl cosmwasm_std::CustomQuery>) -> cosmwasm_std::StdResult<#res> {
                 querier.query::<#res>(&self.into())
             }
-            pub fn get_query_path() -> String {
-                #path.to_string()
-            }
-            pub fn get_mock_query(response: #res) -> Box<dyn Fn(&cosmwasm_std::Binary) -> cosmwasm_std::QuerierResult> {
-                Box::new(move |data| {
+            pub fn get_mock_query<T: mock::MockableQuerier>(querier: &mut T ,response: #res) {
+                querier.register_custom_query(#path.to_string(), Box::new(move |data| {
                     let result = match #ident::try_from(data.clone()) {
                         Ok(_) => cosmwasm_std::ContractResult::Ok(
                             cosmwasm_std::to_binary(&response)
@@ -73,7 +70,7 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
                             kind: result.unwrap_err(),
                         })
                     }
-                })
+                }))
             }
         };
 
