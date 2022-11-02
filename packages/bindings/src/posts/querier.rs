@@ -264,7 +264,6 @@ mod tests {
     use crate::mocks::mock_queriers::{
         mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier,
     };
-    use crate::posts::mocks::MockPostsQueries;
     use chrono::DateTime;
     use cosmwasm_std::{to_binary, Binary, ContractResult};
     use desmos_std::shim::Timestamp;
