@@ -99,14 +99,14 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_chain_links(
         &self,
         user: Option<Addr>,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&str>,
+        target: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryChainLinksResponse> {
         Ok(self.querier.chain_links(
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
-            chain_name.unwrap_or_default(),
-            target.unwrap_or_default(),
+            chain_name.unwrap_or_default().into(),
+            target.unwrap_or_default().into(),
             pagination.map(Into::into),
         )?)
     }
@@ -124,8 +124,8 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn iterate_chain_links(
         &self,
         user: Option<Addr>,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&str>,
+        target: Option<&str>,
         page_size: u64,
     ) -> PageIterator<ChainLink, Binary> {
         PageIterator::new(
@@ -161,13 +161,13 @@ impl<'a> ProfilesQuerier<'a> {
     /// * `pagination` - Optional pagination configs.
     pub fn query_chain_link_owners(
         &self,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&str>,
+        target: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryChainLinkOwnersResponse> {
         Ok(self.querier.chain_link_owners(
-            chain_name.unwrap_or_default(),
-            target.unwrap_or_default(),
+            chain_name.unwrap_or_default().into(),
+            target.unwrap_or_default().into(),
             pagination.map(Into::into),
         )?)
     }
@@ -181,8 +181,8 @@ impl<'a> ProfilesQuerier<'a> {
     #[cfg(feature = "iterators")]
     pub fn iterate_chain_link_owners(
         &self,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&str>,
+        target: Option<&str>,
         page_size: u64,
     ) -> PageIterator<query_chain_link_owners_response::ChainLinkOwnerDetails, Binary> {
         PageIterator::new(
@@ -218,12 +218,12 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_default_external_addresses(
         &self,
         owner: Option<Addr>,
-        chain_name: Option<String>,
+        chain_name: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryDefaultExternalAddressesResponse> {
         Ok(self.querier.default_external_addresses(
             owner.unwrap_or_else(|| Addr::unchecked("")).into(),
-            chain_name.unwrap_or_default(),
+            chain_name.unwrap_or_default().into(),
             pagination.map(Into::into),
         )?)
     }
@@ -238,7 +238,7 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn iterate_default_external_addresses(
         &self,
         owner: Option<Addr>,
-        chain_name: Option<String>,
+        chain_name: Option<&str>,
         page_size: u64,
     ) -> PageIterator<ChainLink, Binary> {
         PageIterator::new(
@@ -277,14 +277,14 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_application_links(
         &self,
         user: Option<Addr>,
-        application: Option<String>,
-        username: Option<String>,
+        application: Option<&str>,
+        username: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinksResponse> {
         Ok(self.querier.application_links(
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
-            application.unwrap_or_default(),
-            username.unwrap_or_default(),
+            application.unwrap_or_default().into(),
+            username.unwrap_or_default().into(),
             pagination.map(Into::into),
         )?)
     }
@@ -302,8 +302,8 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn iterate_application_links(
         &self,
         user: Option<Addr>,
-        application: Option<String>,
-        username: Option<String>,
+        application: Option<&str>,
+        username: Option<&str>,
         page_size: u64,
     ) -> PageIterator<ApplicationLink, Binary> {
         PageIterator::new(
@@ -352,12 +352,12 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_application_link_owners(
         &self,
         application: Option<String>,
-        username: Option<String>,
+        username: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinkOwnersResponse> {
         Ok(self.querier.application_link_owners(
-            application.unwrap_or_default(),
-            username.unwrap_or_default(),
+            application.unwrap_or_default().into(),
+            username.unwrap_or_default().into(),
             pagination.map(Into::into),
         )?)
     }
@@ -372,16 +372,16 @@ impl<'a> ProfilesQuerier<'a> {
     #[cfg(feature = "iterators")]
     pub fn iterate_application_link_owners(
         &self,
-        application: Option<String>,
-        username: Option<String>,
+        application: Option<&str>,
+        username: Option<&str>,
         page_size: u64,
     ) -> PageIterator<query_application_link_owners_response::ApplicationLinkOwnerDetails, Binary>
     {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_application_link_owners(
-                    application.clone(),
-                    username.clone(),
+                    application.map(Into::into).clone(),
+                    username.map(Into::into).clone(),
                     Some(PageRequest {
                         key,
                         limit: limit.into(),

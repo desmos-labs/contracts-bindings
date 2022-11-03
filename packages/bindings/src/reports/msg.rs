@@ -154,7 +154,7 @@ mod test {
         );
         let expected = MsgAddReason {
             subspace_id: 1,
-            title: "test reason".to_string(),
+            title: "test reason".into(),
             description: "Test description".into(),
             signer: "reporter".into(),
         };

@@ -50,13 +50,13 @@ impl RelationshipsMsgBuilder {
     pub fn block_user(
         blocker: Addr,
         blocked: Addr,
-        reason: String,
+        reason: &str,
         subspace_id: u64,
     ) -> MsgBlockUser {
         MsgBlockUser {
             blocker: blocker.into(),
             blocked: blocked.into(),
-            reason,
+            reason: reason.into(),
             subspace_id,
         }
     }
@@ -114,13 +114,13 @@ mod tests {
         let msg = RelationshipsMsgBuilder::block_user(
             Addr::unchecked("user"),
             Addr::unchecked("counterparty"),
-            "test".to_string(),
+            "test".into(),
             1,
         );
         let expected = MsgBlockUser {
             blocker: "user".into(),
             blocked: "counterparty".into(),
-            reason: "test".to_string(),
+            reason: "test".into(),
             subspace_id: 1,
         };
         assert_eq!(expected, msg)
