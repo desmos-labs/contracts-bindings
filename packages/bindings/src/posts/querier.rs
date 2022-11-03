@@ -291,7 +291,7 @@ mod tests {
     #[test]
     fn test_query_subspace_posts() {
         let mut querier = MockDesmosQuerier::default();
-        QuerySubspacePostsRequest::get_mock_query(
+        QuerySubspacePostsRequest::mock_response(
             &mut querier,
             QuerySubspacePostsResponse {
                 posts: vec![get_post(1, 0, 1)],
@@ -310,7 +310,7 @@ mod tests {
     #[test]
     fn test_iterate_subspace_posts() {
         let mut querier = MockDesmosQuerier::default();
-        QuerySubspacePostsRequest::get_mock_query(
+        QuerySubspacePostsRequest::mock_response(
             &mut querier,
             QuerySubspacePostsResponse {
                 posts: vec![get_post(1, 0, 1), get_post(1, 0, 2)],

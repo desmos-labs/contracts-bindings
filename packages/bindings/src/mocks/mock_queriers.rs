@@ -2,7 +2,7 @@
 
 use cosmwasm_std::testing::{MockApi, MockQuerier, MockStorage};
 use cosmwasm_std::{
-    from_slice, Binary, Coin, ContractResult, Empty, OwnedDeps, Querier, QuerierResult,
+    from_slice, Binary, Coin, Empty, OwnedDeps, Querier, QuerierResult,
     QueryRequest, SystemError, SystemResult,
 };
 use mock::MockableQuerier;
