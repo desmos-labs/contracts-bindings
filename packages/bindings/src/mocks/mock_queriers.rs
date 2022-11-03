@@ -2,8 +2,8 @@
 
 use cosmwasm_std::testing::{MockApi, MockQuerier, MockStorage};
 use cosmwasm_std::{
-    from_slice, Binary, Coin, Empty, OwnedDeps, Querier, QuerierResult,
-    QueryRequest, SystemError, SystemResult,
+    from_slice, Binary, Coin, Empty, OwnedDeps, Querier, QuerierResult, QueryRequest, SystemError,
+    SystemResult,
 };
 use mock::MockableQuerier;
 use std::collections::HashMap;
@@ -95,17 +95,31 @@ pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQ
     mock_desmos_dependencies_with_custom_querier(MockDesmosQuerier::default())
 }
 
-
 fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     #[cfg(feature = "posts")]
     {
-        use crate::posts::proto::{QuerySubspacePostsRequest, QuerySectionPostsRequest, QueryPostRequest, QueryPostAttachmentsRequest, QueryPollAnswersRequest};
         use crate::posts::mocks::MockPostsQueries;
+        use crate::posts::proto::{
+            QueryPollAnswersRequest, QueryPostAttachmentsRequest, QueryPostRequest,
+            QuerySectionPostsRequest, QuerySubspacePostsRequest,
+        };
 
-        QuerySubspacePostsRequest::mock_response(querier, MockPostsQueries::get_mocked_subspace_posts_response());
-        QuerySectionPostsRequest::mock_response(querier, MockPostsQueries::get_mocked_section_posts_response());
+        QuerySubspacePostsRequest::mock_response(
+            querier,
+            MockPostsQueries::get_mocked_subspace_posts_response(),
+        );
+        QuerySectionPostsRequest::mock_response(
+            querier,
+            MockPostsQueries::get_mocked_section_posts_response(),
+        );
         QueryPostRequest::mock_response(querier, MockPostsQueries::get_mocked_post_response());
-        QueryPostAttachmentsRequest::mock_response(querier, MockPostsQueries::get_mocked_post_attachments_response());
-        QueryPollAnswersRequest::mock_response(querier, MockPostsQueries::get_mocked_poll_answers_response());
+        QueryPostAttachmentsRequest::mock_response(
+            querier,
+            MockPostsQueries::get_mocked_post_attachments_response(),
+        );
+        QueryPollAnswersRequest::mock_response(
+            querier,
+            MockPostsQueries::get_mocked_poll_answers_response(),
+        );
     }
 }

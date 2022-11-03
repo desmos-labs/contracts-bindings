@@ -1,8 +1,12 @@
-use crate::posts::proto::{Post, ReplySetting, Attachment, Media, UserAnswer, QuerySubspacePostsResponse, QuerySectionPostsResponse, QueryPostResponse, QueryPostAttachmentsResponse, QueryPollAnswersResponse};
+use crate::posts::proto::{
+    Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
+    QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
+    UserAnswer,
+};
 use crate::posts::types::AttachmentContent;
 use chrono::DateTime;
-use desmos_std::shim::Timestamp;
 use cosmwasm_std::Addr;
+use desmos_std::shim::Timestamp;
 
 pub const AUTHOR: &str = "author";
 pub const ANSWERER: &str = "answerer";
@@ -37,10 +41,13 @@ impl MockPostsQueries {
             subspace_id,
             post_id,
             id: attachment_id,
-            content: Some(AttachmentContent::Media(Media{
-                uri: "ftp://domain.io/image.png".into(),
+            content: Some(
+                AttachmentContent::Media(Media {
+                    uri: "ftp://domain.io/image.png".into(),
                     mime_type: "image/png".into(),
-            }).into()),
+                })
+                .into(),
+            ),
         }
     }
     /// Function that mocks a poll answers.
@@ -50,12 +57,12 @@ impl MockPostsQueries {
         poll_id: u32,
         user: Addr,
     ) -> UserAnswer {
-      UserAnswer {
+        UserAnswer {
             subspace_id,
             post_id,
             poll_id,
             answers_indexes: vec![0],
-            user: user.into()
+            user: user.into(),
         }
     }
     /// Function that mocks the posts inside a subspace.
@@ -83,7 +90,7 @@ impl MockPostsQueries {
     pub fn get_mocked_section_posts_response() -> QuerySectionPostsResponse {
         QuerySectionPostsResponse {
             posts: Self::get_mocked_section_posts(1, 1),
-            pagination: None
+            pagination: None,
         }
     }
     /// Function that mocks a post response.
@@ -106,8 +113,17 @@ impl MockPostsQueries {
             pagination: None,
         }
     }
-    pub fn get_mocked_poll_answers(subspace_id: u64, post_id: u64, poll_id: u32) -> Vec<UserAnswer> {
-        vec![Self::get_mocked_user_answer(subspace_id, post_id, poll_id, Addr::unchecked(ANSWERER))]
+    pub fn get_mocked_poll_answers(
+        subspace_id: u64,
+        post_id: u64,
+        poll_id: u32,
+    ) -> Vec<UserAnswer> {
+        vec![Self::get_mocked_user_answer(
+            subspace_id,
+            post_id,
+            poll_id,
+            Addr::unchecked(ANSWERER),
+        )]
     }
     pub fn get_mocked_poll_answers_response() -> QueryPollAnswersResponse {
         QueryPollAnswersResponse {

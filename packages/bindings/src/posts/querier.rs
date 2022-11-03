@@ -269,7 +269,7 @@ mod tests {
 
     #[test]
     fn test_query_subspace_posts() {
-       let querier = MockDesmosQuerier::default();
+        let querier = MockDesmosQuerier::default();
         let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
@@ -280,7 +280,7 @@ mod tests {
     }
     #[test]
     fn test_iterate_subspace_posts() {
-       let querier = MockDesmosQuerier::default();
+        let querier = MockDesmosQuerier::default();
         let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
@@ -295,7 +295,7 @@ mod tests {
     }
     #[test]
     fn test_query_section_posts() {
-       let querier = MockDesmosQuerier::default();
+        let querier = MockDesmosQuerier::default();
         let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
@@ -306,7 +306,7 @@ mod tests {
     }
     #[test]
     fn test_iterate_section_posts() {
-       let querier = MockDesmosQuerier::default();
+        let querier = MockDesmosQuerier::default();
         let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
