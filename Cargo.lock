@@ -1479,6 +1479,7 @@ version = "0.1.0"
 dependencies = [
  "cosmwasm-std",
  "itertools",
+ "mock",
  "proc-macro2",
  "prost 0.11.0",
  "quote",
