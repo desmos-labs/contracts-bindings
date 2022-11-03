@@ -23,10 +23,12 @@ impl MockDesmosQuerier {
     /// * `balances` - Slice of balances passed to the `bank` module, where the first element
     /// is the user address and the second element is the user's balance.
     pub fn new(balances: &[(&str, &[Coin])]) -> Self {
-        MockDesmosQuerier {
+        let mut querier = MockDesmosQuerier {
             mock_querier: MockQuerier::new(balances),
             registered_custom_queries: HashMap::new(),
-        }
+        };
+        register_default_mock_queries(&mut querier);
+        querier
     }
     /// Handle the query request.
     pub fn handle_query(&self, request: &QueryRequest<Empty>) -> QuerierResult {
@@ -91,4 +93,19 @@ pub fn mock_desmos_dependencies_with_custom_querier(
 /// handling queries towards Desmos's modules.
 pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, Empty> {
     mock_desmos_dependencies_with_custom_querier(MockDesmosQuerier::default())
+}
+
+
+fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
+    #[cfg(feature = "posts")]
+    {
+        use crate::posts::proto::{QuerySubspacePostsRequest, QuerySectionPostsRequest, QueryPostRequest, QueryPostAttachmentsRequest, QueryPollAnswersRequest};
+        use crate::posts::mocks::MockPostsQueries;
+
+        QuerySubspacePostsRequest::mock_response(querier, MockPostsQueries::get_mocked_subspace_posts_response());
+        QuerySectionPostsRequest::mock_response(querier, MockPostsQueries::get_mocked_section_posts_response());
+        QueryPostRequest::mock_response(querier, MockPostsQueries::get_mocked_post_response());
+        QueryPostAttachmentsRequest::mock_response(querier, MockPostsQueries::get_mocked_post_attachments_response());
+        QueryPollAnswersRequest::mock_response(querier, MockPostsQueries::get_mocked_poll_answers_response());
+    }
 }
