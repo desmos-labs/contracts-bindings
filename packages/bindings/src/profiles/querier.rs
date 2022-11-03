@@ -121,11 +121,11 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if chain_name is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_chain_links(
-        &self,
+    pub fn iterate_chain_links<'b>(
+        &'b self,
         user: Option<Addr>,
-        chain_name: Option<&str>,
-        target: Option<&str>,
+        chain_name: Option<&'b str>,
+        target: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<ChainLink, Binary> {
         PageIterator::new(
@@ -179,10 +179,10 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if chain_name is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_chain_link_owners(
-        &self,
-        chain_name: Option<&str>,
-        target: Option<&str>,
+    pub fn iterate_chain_link_owners<'b>(
+        &'b self,
+        chain_name: Option<&'b str>,
+        target: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<query_chain_link_owners_response::ChainLinkOwnerDetails, Binary> {
         PageIterator::new(
@@ -235,10 +235,10 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if owner is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_default_external_addresses(
-        &self,
+    pub fn iterate_default_external_addresses<'b>(
+        &'b self,
         owner: Option<Addr>,
-        chain_name: Option<&str>,
+        chain_name: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<ChainLink, Binary> {
         PageIterator::new(
@@ -299,11 +299,11 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if application is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_application_links(
-        &self,
+    pub fn iterate_application_links<'b>(
+        &'b self,
         user: Option<Addr>,
-        application: Option<&str>,
-        username: Option<&str>,
+        application: Option<&'b str>,
+        username: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<ApplicationLink, Binary> {
         PageIterator::new(
@@ -370,10 +370,10 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if application is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_application_link_owners(
-        &self,
-        application: Option<&str>,
-        username: Option<&str>,
+    pub fn iterate_application_link_owners<'b>(
+        &'b self,
+        application: Option<&'b str>,
+        username: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<query_application_link_owners_response::ApplicationLinkOwnerDetails, Binary>
     {
