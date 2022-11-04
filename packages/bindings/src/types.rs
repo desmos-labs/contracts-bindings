@@ -3,6 +3,7 @@
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Binary, Uint64};
 use desmos_std::proto::cosmos::base::query::v1beta1::PageRequest as ProtoPageRequest;
+use desmos_std::public_keys::{Ed25519PublicKey, Secp256k1PublicKey, Secp256r1PublicKey};
 
 /// Represents the configurations that tell the application which page of data to fetch.
 #[cw_serde]
@@ -38,4 +39,19 @@ impl Into<ProtoPageRequest> for PageRequest {
 
 pub use desmos_std::proto::ibc::core::client::v1::Height;
 pub use desmos_std::shim::Any;
-pub use desmos_std::public_keys::*;
+
+pub enum PublicKey {
+    Ed25519(Ed25519PublicKey),
+    Secp256k1(Secp256k1PublicKey),
+    Secp256r1(Secp256r1PublicKey),
+}
+
+impl Into<Any> for PublicKey {
+    fn into(self) -> Any {
+        match self {
+            PublicKey::Ed25519(key) => key.into(),
+            PublicKey::Secp256k1(key) => key.into(),
+            PublicKey::Secp256r1(key) => key.into(),
+        }
+    }
+}
