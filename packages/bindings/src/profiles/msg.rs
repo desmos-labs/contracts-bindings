@@ -3,7 +3,7 @@
 use crate::profiles::proto::*;
 use crate::profiles::types::AddressData;
 use cosmwasm_std::Addr;
-use desmos_std::proto::ibc::core::client::v1::Height;
+use crate::types::Height;
 
 /// Represents the messages to interact with the profiles module.
 pub struct ProfilesMsgBuilder {}

@@ -10,7 +10,7 @@ mod transform;
 mod transformers;
 
 /// The desmos commit or tag to be cloned and used to build the proto files
-const DESMOS_REV: &str = "v4.6.1";
+const DESMOS_REV: &str = "v4.6.3";
 
 /// Directory where the desmos submodule is located
 const DESMOS_DIR: &str = "../../dependencies/desmos/";
@@ -31,9 +31,9 @@ pub fn run() {
     let out_dir: PathBuf = OUT_DIR.parse().unwrap();
 
     let desmos_project = CosmosProject {
-        name: "desmos".to_string(),
-        version: DESMOS_REV.to_string(),
-        project_dir: DESMOS_DIR.to_string(),
+        name: "desmos".into(),
+        version: DESMOS_REV.into(),
+        project_dir: DESMOS_DIR.into(),
     };
 
     let code_generator = CodeGenerator::new(out_dir, tmp_build_dir, desmos_project, vec![]);

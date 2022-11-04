@@ -2,10 +2,8 @@ use ::serde::{ser, Deserialize, Deserializer, Serialize, Serializer};
 use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::de;
 use serde::de::Visitor;
-
 use std::fmt;
 use std::str::FromStr;
-
 use prost::Message;
 
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
@@ -292,6 +290,10 @@ macro_rules! expand_as_any {
 // work correctly. Since after serialization, it currently loses @type tag.
 // And deserialization works by trying to iteratively match the structure.
 expand_as_any!(
+    // public keys
+    crate::public_keys::Ed25519PublicKey,
+    crate::public_keys::Secp256k1PublicKey,
+    crate::public_keys::Secp256r1PublicKey,
     // profiles module
     crate::proto::desmos::profiles::v3::Profile,
     crate::proto::desmos::profiles::v3::Bech32Address,

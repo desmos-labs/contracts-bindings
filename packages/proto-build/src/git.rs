@@ -21,7 +21,7 @@ fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
 pub fn update_submodules() {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
-    info!("Updating osmosis submodule...");
+    info!("Updating desmos submodule...");
     run_git(&["submodule", "update", "--init"]);
     run_git(&["-C", full_path(DESMOS_DIR).to_str().unwrap(), "fetch"]);
     run_git(&[

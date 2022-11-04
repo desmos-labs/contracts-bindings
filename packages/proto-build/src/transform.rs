@@ -150,7 +150,7 @@ fn transform_items(
                 s = transformers::replace_result_into_app_result(&s);
                 transformers::allow_serde_int_as_str(s)
             }),
-            Item::Enum(s) => Item::Enum({ transformers::append_enum_attrs(&s) }),
+            Item::Enum(s) => Item::Enum(transformers::append_enum_attrs(&s)),
             _ => i,
         })
         // TODO: Remove this temporary hack when cosmos & tendermint code gen is supported
