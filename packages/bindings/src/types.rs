@@ -35,3 +35,7 @@ impl Into<ProtoPageRequest> for PageRequest {
         }
     }
 }
+
+pub use desmos_std::proto::ibc::core::client::v1::Height;
+pub use desmos_std::shim::Any;
+pub use desmos_std::public_keys::*;

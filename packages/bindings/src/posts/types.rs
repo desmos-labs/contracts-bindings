@@ -1,6 +1,6 @@
 use crate::posts::proto::{Media, Poll};
 use cosmwasm_std::StdError;
-use desmos_std::shim::Any;
+use crate::types::Any;
 use prost::Message;
 
 pub enum AttachmentContent {
@@ -31,4 +31,8 @@ impl Into<Any> for AttachmentContent {
             AttachmentContent::Media(content) => content.into(),
         }
     }
+}
+
+pub enum PublicKey {
+    Ed25519PublicKey()
 }

@@ -1,6 +1,6 @@
 use crate::reactions::proto::{FreeTextValue, RegisteredReactionValue};
 use cosmwasm_std::StdError;
-use desmos_std::shim::Any;
+use crate::types::Any;
 use prost::Message;
 
 pub enum ReactionValue {

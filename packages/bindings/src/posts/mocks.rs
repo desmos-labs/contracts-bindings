@@ -113,6 +113,7 @@ impl MockPostsQueries {
             pagination: None,
         }
     }
+    /// Function that mocks poll answers list.
     pub fn get_mocked_poll_answers(
         subspace_id: u64,
         post_id: u64,
@@ -125,6 +126,7 @@ impl MockPostsQueries {
             Addr::unchecked(ANSWERER),
         )]
     }
+    /// Function that mocks a poll answers response.
     pub fn get_mocked_poll_answers_response() -> QueryPollAnswersResponse {
         QueryPollAnswersResponse {
             answers: Self::get_mocked_poll_answers(1, 1, 1),

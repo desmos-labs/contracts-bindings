@@ -1,6 +1,6 @@
 use crate::reports::proto::{PostTarget, UserTarget};
 use cosmwasm_std::StdError;
-use desmos_std::shim::Any;
+use crate::types::Any;
 use prost::Message;
 
 #[derive(Clone)]

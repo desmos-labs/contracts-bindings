@@ -1,6 +1,6 @@
 use crate::profiles::proto::{Base58Address, Bech32Address, HexAddress};
 use cosmwasm_std::StdError;
-use desmos_std::shim::Any;
+use crate::types::Any;
 use prost::Message;
 
 pub enum AddressData {
