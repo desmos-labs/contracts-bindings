@@ -3,6 +3,7 @@ use cosmwasm_std::StdError;
 use desmos_std::shim::Any;
 use prost::Message;
 
+#[derive(Clone)]
 pub enum AddressData {
     Bech32Address(Bech32Address),
     HexAddress(HexAddress),

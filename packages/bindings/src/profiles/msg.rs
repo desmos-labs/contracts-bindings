@@ -2,8 +2,8 @@
 
 use crate::profiles::proto::*;
 use crate::profiles::types::AddressData;
-use cosmwasm_std::Addr;
 use crate::types::Height;
+use cosmwasm_std::Addr;
 
 /// Represents the messages to interact with the profiles module.
 pub struct ProfilesMsgBuilder {}
@@ -207,6 +207,8 @@ impl ProfilesMsgBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use cosmwasm_std::Binary;
+    use desmos_std::public_keys::Secp256k1PublicKey;
 
     #[test]
     fn test_save_profile() {
@@ -285,7 +287,39 @@ mod tests {
         assert_eq!(expected, msg)
     }
 
-    //TODO: re-add link chain account test
+    #[test]
+    fn test_link_chain_account() {
+        let chain_addr = AddressData::Bech32Address(Bech32Address {
+            value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
+            prefix: "cosmos".to_string(),
+        });
+        let proof = Proof {
+            pub_key: Some(Secp256k1PublicKey{
+                key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y").unwrap().to_vec(),
+            }.into()),
+            signature: Some(SingleSignature{
+                value_type: SignatureValueType::Raw.into(),
+                signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap().to_vec(),
+            }.into()),
+            plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
+        };
+        let chain_config = ChainConfig {
+            name: "cosmos".to_string(),
+        };
+        let msg = ProfilesMsgBuilder::link_chain_account(
+            chain_addr.clone(),
+            proof.clone(),
+            chain_config.clone(),
+            Addr::unchecked("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2"),
+        );
+        let expected = MsgLinkChainAccount {
+            chain_address: Some(chain_addr.clone().into()),
+            proof: Some(proof),
+            chain_config: Some(chain_config),
+            signer: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".into(),
+        };
+        assert_eq!(expected, msg)
+    }
 
     #[test]
     fn test_unlink_chain_account() {
