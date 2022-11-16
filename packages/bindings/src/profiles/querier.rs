@@ -37,7 +37,7 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// * `user` - Address of the user to query the profile for.
     pub fn query_profile(&self, user: Addr) -> StdResult<QueryProfileResponse> {
-        Ok(self.querier.profile(user.into())?)
+        self.querier.profile(user.into())
     }
 
     /// Queries the user's dtag transfer requests.
@@ -49,9 +49,9 @@ impl<'a> ProfilesQuerier<'a> {
         receiver: Addr,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryIncomingDTagTransferRequestsResponse> {
-        Ok(self
+        self
             .querier
-            .incoming_d_tag_transfer_requests(receiver.into(), pagination.map(Into::into))?)
+            .incoming_d_tag_transfer_requests(receiver.into(), pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over a user's dtag transfer requests.
@@ -103,12 +103,12 @@ impl<'a> ProfilesQuerier<'a> {
         target: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryChainLinksResponse> {
-        Ok(self.querier.chain_links(
+        self.querier.chain_links(
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
             chain_name.unwrap_or_default().into(),
             target.unwrap_or_default().into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over a user's chain links or all the performed chain links.
@@ -165,11 +165,11 @@ impl<'a> ProfilesQuerier<'a> {
         target: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryChainLinkOwnersResponse> {
-        Ok(self.querier.chain_link_owners(
+        self.querier.chain_link_owners(
             chain_name.unwrap_or_default().into(),
             target.unwrap_or_default().into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over chain link owners.
@@ -221,11 +221,11 @@ impl<'a> ProfilesQuerier<'a> {
         chain_name: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryDefaultExternalAddressesResponse> {
-        Ok(self.querier.default_external_addresses(
+        self.querier.default_external_addresses(
             owner.unwrap_or_else(|| Addr::unchecked("")).into(),
             chain_name.unwrap_or_default().into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over chain link owners.
@@ -281,12 +281,12 @@ impl<'a> ProfilesQuerier<'a> {
         username: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinksResponse> {
-        Ok(self.querier.application_links(
+        self.querier.application_links(
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
             application.unwrap_or_default().into(),
             username.unwrap_or_default().into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over a user's app links or all the performed app links.
@@ -338,9 +338,9 @@ impl<'a> ProfilesQuerier<'a> {
         &self,
         client_id: &str,
     ) -> StdResult<QueryApplicationLinkByClientIdResponse> {
-        Ok(self
+        self
             .querier
-            .application_link_by_client_id(client_id.into())?)
+            .application_link_by_client_id(client_id.into())
     }
 
     /// Queries app link owners.
@@ -355,11 +355,11 @@ impl<'a> ProfilesQuerier<'a> {
         username: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinkOwnersResponse> {
-        Ok(self.querier.application_link_owners(
+        self.querier.application_link_owners(
             application.unwrap_or_default().into(),
             username.unwrap_or_default().into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over app link owners.
@@ -399,5 +399,25 @@ impl<'a> ProfilesQuerier<'a> {
             }),
             page_size,
         )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::mocks::mock_queriers::{
+        mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier,
+    };
+    use crate::profiles::mocks::{MOCK_USER,MockProfilesQueries};
+    use cosmwasm_std::{to_binary, Binary, ContractResult};
+    #[test]
+    fn test_query_profile() {
+        let querier = MockDesmosQuerier::default();
+        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let deps = owned_deps.as_ref();
+        let querier = ProfilesQuerier::new(&deps.querier);
+        let response = querier.query_profile(Addr::unchecked(MOCK_USER)).unwrap();
+        let expected = MockProfilesQueries::get_mocked_profile_response();
+        assert_eq!(expected, response)
     }
 }

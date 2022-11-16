@@ -6,14 +6,15 @@ use cosmwasm_std::{
     SystemResult,
 };
 use mock::MockableQuerier;
+use serde::de::DeserializeOwned;
 use std::collections::HashMap;
 use std::marker::PhantomData;
 
 /// Custom querier that can be used during unit testing to simulate what a contract receive when
 /// perform a query toward Desmos’s modules.
-pub struct MockDesmosQuerier {
+pub struct MockDesmosQuerier<C: DeserializeOwned = Empty> {
     /// Default CosmWASM mock querier.
-    pub mock_querier: MockQuerier,
+    pub mock_querier: MockQuerier<C>,
     /// Registered custom queries using proto request for testing.
     pub registered_custom_queries: HashMap<String, Box<dyn Fn(&Binary) -> QuerierResult>>,
 }
@@ -77,7 +78,6 @@ impl Default for MockDesmosQuerier {
 
 /// Creates an instance of [`OwnedDeps`](cosmwasm_std::OwnedDeps) with a custom [`MockDesmosQuerier`]
 /// to allow the user to mock the query responses of one or more Desmos's modules.
-///
 pub fn mock_desmos_dependencies_with_custom_querier(
     querier: MockDesmosQuerier,
 ) -> OwnedDeps<MockStorage, MockApi, MockDesmosQuerier, Empty> {
@@ -120,6 +120,48 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
         QueryPollAnswersRequest::mock_response(
             querier,
             MockPostsQueries::get_mocked_poll_answers_response(),
+        );
+    }
+    #[cfg(feature = "profiles")]
+    {
+        use crate::profiles::mocks::MockProfilesQueries;
+        use crate::profiles::proto::{
+            QueryApplicationLinkByClientIdRequest, QueryApplicationLinkOwnersRequest,
+            QueryApplicationLinksRequest, QueryChainLinkOwnersRequest, QueryChainLinksRequest,
+            QueryDefaultExternalAddressesRequest, QueryIncomingDTagTransferRequestsRequest,
+            QueryProfileRequest,
+        };
+        QueryProfileRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_profile_response(),
+        );
+        QueryIncomingDTagTransferRequestsRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response(),
+        );
+        QueryChainLinksRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_chain_links_response(),
+        );
+        QueryChainLinkOwnersRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_chain_link_owners_response(),
+        );
+        QueryDefaultExternalAddressesRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_default_external_addresses_response(),
+        );
+        QueryApplicationLinksRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_application_links_response(),
+        );
+        QueryApplicationLinkByClientIdRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_application_link_by_client_id_response(),
+        );
+        QueryApplicationLinkOwnersRequest::mock_response(
+            querier,
+            MockProfilesQueries::get_mocked_application_link_owners_response(),
         );
     }
 }

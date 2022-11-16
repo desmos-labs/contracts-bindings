@@ -8,8 +8,8 @@ use chrono::DateTime;
 use cosmwasm_std::Addr;
 use desmos_std::shim::Timestamp;
 
-pub const AUTHOR: &str = "author";
-pub const ANSWERER: &str = "answerer";
+pub const MOCK_AUTHOR: &str = "author";
+pub const MOCK_ANSWERER: &str = "answerer";
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/posts module.
@@ -25,7 +25,7 @@ impl MockPostsQueries {
             text: "test".into(),
             entities: None,
             tags: vec!["hello".into(), "world".into()],
-            author: "author".into(),
+            author: MOCK_AUTHOR.into(),
             conversation_id: 0,
             referenced_posts: vec![],
             reply_settings: ReplySetting::Everyone.into(),
@@ -72,7 +72,7 @@ impl MockPostsQueries {
             Self::get_mocked_post(subspace_id, 0, 2),
         ]
     }
-    /// Function that mocks a subspace posts response.
+    /// Function that mocks a [`QuerySubspacePostsResponse`].
     pub fn get_mocked_subspace_posts_response() -> QuerySubspacePostsResponse {
         QuerySubspacePostsResponse {
             posts: Self::get_mocked_subspace_posts(1),
@@ -86,14 +86,14 @@ impl MockPostsQueries {
             Self::get_mocked_post(subspace_id, section_id, 2),
         ]
     }
-    /// Function that mocks a section posts response.
+    /// Function that mocks a [`QuerySectionPostsResponse`].
     pub fn get_mocked_section_posts_response() -> QuerySectionPostsResponse {
         QuerySectionPostsResponse {
             posts: Self::get_mocked_section_posts(1, 1),
             pagination: None,
         }
     }
-    /// Function that mocks a post response.
+    /// Function that mocks a [`QueryPostResponse`].
     pub fn get_mocked_post_response() -> QueryPostResponse {
         QueryPostResponse {
             post: Some(Self::get_mocked_post(1, 0, 1)),
@@ -106,7 +106,7 @@ impl MockPostsQueries {
             Self::get_mocked_attachment(subspace_id, post_id, 2),
         ]
     }
-    /// Function that mocks a post attachments response
+    /// Function that mocks a [`QueryPostAttachmentsResponse`].
     pub fn get_mocked_post_attachments_response() -> QueryPostAttachmentsResponse {
         QueryPostAttachmentsResponse {
             attachments: Self::get_mocked_post_attachments(1, 1),
@@ -123,10 +123,10 @@ impl MockPostsQueries {
             subspace_id,
             post_id,
             poll_id,
-            Addr::unchecked(ANSWERER),
+            Addr::unchecked(MOCK_ANSWERER),
         )]
     }
-    /// Function that mocks a poll answers response.
+    /// Function that mocks a [`QueryPollAnswersResponse`].
     pub fn get_mocked_poll_answers_response() -> QueryPollAnswersResponse {
         QueryPollAnswersResponse {
             answers: Self::get_mocked_poll_answers(1, 1, 1),
