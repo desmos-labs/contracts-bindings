@@ -44,7 +44,7 @@ impl<'a> SubspacesQuerier<'a> {
         &self,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySubspacesResponse> {
-        Ok(self.querier.subspaces(pagination.map(Into::into))?)
+        self.querier.subspaces(pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over all the subspaces.
@@ -76,7 +76,7 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// * `subspace_id` - Subspace of interest.
     pub fn query_subspace(&self, subspace_id: u64) -> StdResult<QuerySubspaceResponse> {
-        Ok(self.querier.subspace(subspace_id)?)
+        self.querier.subspace(subspace_id)
     }
 
     /// Queries all the sections created inside a subspace.
@@ -88,9 +88,9 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySectionsResponse> {
-        Ok(self
+        self
             .querier
-            .sections(subspace_id, pagination.map(Into::into))?)
+            .sections(subspace_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over all the sections inside a subspace.
@@ -135,7 +135,7 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         section_id: u32,
     ) -> StdResult<QuerySectionResponse> {
-        Ok(self.querier.section(subspace_id, section_id)?)
+        self.querier.section(subspace_id, section_id)
     }
 
     /// Queries the user groups created in a subspace.
@@ -149,11 +149,11 @@ impl<'a> SubspacesQuerier<'a> {
         section_id: Option<u32>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryUserGroupsResponse> {
-        Ok(self.querier.user_groups(
+        self.querier.user_groups(
             subspace_id,
             section_id.unwrap_or_default(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over all the user groups created in a subspace.
@@ -201,7 +201,7 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         group_id: u32,
     ) -> StdResult<QueryUserGroupResponse> {
-        Ok(self.querier.user_group(subspace_id, group_id)?)
+        self.querier.user_group(subspace_id, group_id)
     }
 
     /// Queries the members of a group.
@@ -215,9 +215,9 @@ impl<'a> SubspacesQuerier<'a> {
         group_id: u32,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryUserGroupMembersResponse> {
-        Ok(self
+        self
             .querier
-            .user_group_members(subspace_id, group_id, pagination.map(Into::into))?)
+            .user_group_members(subspace_id, group_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over all the members of a user group created in a subspace.
@@ -266,11 +266,11 @@ impl<'a> SubspacesQuerier<'a> {
         section_id: Option<u32>,
         user: Addr,
     ) -> StdResult<QueryUserPermissionsResponse> {
-        Ok(self.querier.user_permissions(
+        self.querier.user_permissions(
             subspace_id,
             section_id.unwrap_or_default(),
             user.into(),
-        )?)
+        )
     }
 }
 

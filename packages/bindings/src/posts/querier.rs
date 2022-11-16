@@ -265,7 +265,6 @@ mod tests {
         mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier,
     };
     use crate::posts::mocks::MockPostsQueries;
-    use cosmwasm_std::{to_binary, Binary, ContractResult};
     #[test]
     fn test_query_subspace_posts() {
         let querier = MockDesmosQuerier::default();

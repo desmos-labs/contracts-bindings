@@ -12,14 +12,14 @@ pub enum AddressData {
 
 impl TryFrom<Any> for AddressData {
     type Error = StdError;
-    fn try_from(value: Any) -> Result<Self, Self::Error> {
-        if let Ok(address) = Bech32Address::decode(value.value.as_slice()) {
+    fn try_from(any: Any) -> Result<Self, Self::Error> {
+        if let Ok(address) = Bech32Address::decode(any.value.as_slice()) {
             return Ok(AddressData::Bech32Address(address));
         }
-        if let Ok(address) = HexAddress::decode(value.value.as_slice()) {
+        if let Ok(address) = HexAddress::decode(any.value.as_slice()) {
             return Ok(AddressData::HexAddress(address));
         }
-        if let Ok(address) = Base58Address::decode(value.value.as_slice()) {
+        if let Ok(address) = Base58Address::decode(any.value.as_slice()) {
             return Ok(AddressData::Base58Address(address));
         }
         Err(StdError::ParseErr {

@@ -24,8 +24,9 @@ pub const MOCK_CHAIN_LINK_ADDRESS_PREFIX: &str = "cosmos";
 pub const MOCK_CHAIN_LINK_CHAIN_NAME: &str = "cosmos";
 pub const MOCK_CHAIN_LINK_ADDRESS: &str = "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2";
 
-pub const MOCK_APP_LINK_APPLICATION: &str = "twitter";
-pub const MOCK_APP_LINK_USERNAME: &str = "goldrake";
+pub const MOCK_APPLICATION_LINK_APPLICATION: &str = "twitter";
+pub const MOCK_APPLICATION_LINK_USERNAME: &str = "goldrake";
+pub const MOCK_APPLICATION_LINK_CLIENT_ID: &str = "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake";
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/profiles module.
@@ -94,18 +95,18 @@ impl MockProfilesQueries {
         ApplicationLink {
             user: MOCK_USER.into(),
             data: Some(Data {
-                application: MOCK_APP_LINK_APPLICATION.into(),
-                username: MOCK_APP_LINK_USERNAME.into(),
+                application: MOCK_APPLICATION_LINK_APPLICATION.into(),
+                username: MOCK_APPLICATION_LINK_USERNAME.into(),
             }),
             state: ApplicationLinkState::VerificationSuccess.into(),
             oracle_request: Some(OracleRequest {
                 id: 537807,
                 oracle_script_id: 32,
                 call_data: Some(CallData {
-                    application: MOCK_APP_LINK_APPLICATION.into(),
+                    application: MOCK_APPLICATION_LINK_APPLICATION.into(),
                     call_data: "7b22757365726e616d65223a224c756361675f5f2335323337227d".into(),
                 }),
-                client_id: "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake".into(),
+                client_id: MOCK_APPLICATION_LINK_CLIENT_ID.into(),
             }),
             result: Some(AppResult {
                 sum: Some(Sum::Success(Success {
@@ -126,8 +127,8 @@ impl MockProfilesQueries {
     pub fn get_mocked_application_link_owner_details() -> ApplicationLinkOwnerDetails {
         ApplicationLinkOwnerDetails {
             user: MOCK_USER.into(),
-            application: MOCK_APP_LINK_APPLICATION.into(),
-            username: MOCK_APP_LINK_USERNAME.into(),
+            application: MOCK_APPLICATION_LINK_APPLICATION.into(),
+            username: MOCK_APPLICATION_LINK_USERNAME.into(),
         }
     }
     /// Function that mocks a [`QueryProfileResponse`].
