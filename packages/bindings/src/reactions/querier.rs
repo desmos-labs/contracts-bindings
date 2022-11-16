@@ -52,12 +52,12 @@ impl<'a> ReactionsQuerier<'a> {
         user: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReactionsResponse> {
-        Ok(self.querier.reactions(
+        self.querier.reactions(
             subspace_id,
             post_id,
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over a reactions created in a post
@@ -111,7 +111,7 @@ impl<'a> ReactionsQuerier<'a> {
         post_id: u64,
         reaction_id: u32,
     ) -> StdResult<QueryReactionResponse> {
-        Ok(self.querier.reaction(subspace_id, post_id, reaction_id)?)
+        self.querier.reaction(subspace_id, post_id, reaction_id)
     }
 
     /// Queries all the reactions registered inside a subspace.
@@ -123,9 +123,9 @@ impl<'a> ReactionsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryRegisteredReactionsResponse> {
-        Ok(self
+        self
             .querier
-            .registered_reactions(subspace_id, pagination.map(Into::into))?)
+            .registered_reactions(subspace_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over reactions registered in a subspace
@@ -170,7 +170,7 @@ impl<'a> ReactionsQuerier<'a> {
         subspace_id: u64,
         reaction_id: u32,
     ) -> StdResult<QueryRegisteredReactionResponse> {
-        Ok(self.querier.registered_reaction(subspace_id, reaction_id)?)
+        self.querier.registered_reaction(subspace_id, reaction_id)
     }
 
     /// Queries the reactions parameters inside the given subspace.
@@ -180,7 +180,7 @@ impl<'a> ReactionsQuerier<'a> {
         &self,
         subspace_id: u64,
     ) -> StdResult<QueryReactionsParamsResponse> {
-        Ok(self.querier.reactions_params(subspace_id)?)
+        self.querier.reactions_params(subspace_id)
     }
 }
 

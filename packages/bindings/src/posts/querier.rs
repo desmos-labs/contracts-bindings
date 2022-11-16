@@ -43,9 +43,9 @@ impl<'a> PostsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySubspacePostsResponse> {
-        Ok(self
+        self
             .querier
-            .subspace_posts(subspace_id, pagination.map(Into::into))?)
+            .subspace_posts(subspace_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over the posts created inside a subspace.
@@ -92,9 +92,9 @@ impl<'a> PostsQuerier<'a> {
         section_id: u32,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySectionPostsResponse> {
-        Ok(self
+        self
             .querier
-            .section_posts(subspace_id, section_id, pagination.map(Into::into))?)
+            .section_posts(subspace_id, section_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over the posts created inside a give section.
@@ -138,7 +138,7 @@ impl<'a> PostsQuerier<'a> {
     /// * `subspace_id` - Id of the subspace where the post is stored.
     /// * `post_id` - Id of the post to query for.
     pub fn query_post(&self, subspace_id: u64, post_id: u64) -> StdResult<QueryPostResponse> {
-        Ok(self.querier.post(subspace_id, post_id)?)
+        self.querier.post(subspace_id, post_id)
     }
 
     /// Queries the attachments of the post having the given `post_id`.
@@ -152,9 +152,9 @@ impl<'a> PostsQuerier<'a> {
         post_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryPostAttachmentsResponse> {
-        Ok(self
+        self
             .querier
-            .post_attachments(subspace_id, post_id, pagination.map(Into::into))?)
+            .post_attachments(subspace_id, post_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over the attachments of the post having the given `post_id`.
@@ -207,13 +207,13 @@ impl<'a> PostsQuerier<'a> {
         user: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryPollAnswersResponse> {
-        Ok(self.querier.poll_answers(
+        self.querier.poll_answers(
             subspace_id,
             post_id,
             poll_id,
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over the answers for the poll having the given `post_id`.

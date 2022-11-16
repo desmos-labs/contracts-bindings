@@ -49,12 +49,12 @@ impl<'a> ReportsQuerier<'a> {
         reporter: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReportsResponse> {
-        Ok(self.querier.reports(
+        self.querier.reports(
             subspace_id,
             target.map(Into::into),
             reporter.unwrap_or_else(|| Addr::unchecked("")).into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over the reports for a specific target.
@@ -102,7 +102,7 @@ impl<'a> ReportsQuerier<'a> {
     /// * `subspace_id` - Id of the subspace that holds the report to query for.
     /// * `report_id` - Id of the report to query for.
     pub fn query_report(&self, subspace_id: u64, report_id: u64) -> StdResult<QueryReportResponse> {
-        Ok(self.querier.report(subspace_id, report_id)?)
+        self.querier.report(subspace_id, report_id)
     }
 
     /// Queries the supported reporting reasons for a subspace.
@@ -114,9 +114,9 @@ impl<'a> ReportsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReasonsResponse> {
-        Ok(self
+        self
             .querier
-            .reasons(subspace_id, pagination.map(Into::into))?)
+            .reasons(subspace_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over the supported reporting reasons for a subspace.
@@ -157,7 +157,7 @@ impl<'a> ReportsQuerier<'a> {
     /// * `subspace_id` - Id of the subspace that holds the reason to query for.
     /// * `reason_id` - Id of the reason to query for.
     pub fn query_reason(&self, subspace_id: u64, reason_id: u32) -> StdResult<QueryReasonResponse> {
-        Ok(self.querier.reason(subspace_id, reason_id)?)
+        self.querier.reason(subspace_id, reason_id)
     }
 }
 

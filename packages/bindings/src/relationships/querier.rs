@@ -50,12 +50,12 @@ impl<'a> RelationshipsQuerier<'a> {
         counterparty: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryRelationshipsResponse> {
-        Ok(self.querier.relationships(
+        self.querier.relationships(
             subspace_id,
             user.unwrap_or_else(|| Addr::unchecked("")).into(),
             counterparty.unwrap_or_else(|| Addr::unchecked("")).into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over a user's relationships created in a subspace or
@@ -110,12 +110,12 @@ impl<'a> RelationshipsQuerier<'a> {
         blocked: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryBlocksResponse> {
-        Ok(self.querier.blocks(
+        self.querier.blocks(
             subspace_id,
             blocker.unwrap_or_else(|| Addr::unchecked("")).into(),
             blocked.unwrap_or_else(|| Addr::unchecked("")).into(),
             pagination.map(Into::into),
-        )?)
+        )
     }
 
     /// Gives an iterator to scan over the users blocked from a specific user in a subspace or
