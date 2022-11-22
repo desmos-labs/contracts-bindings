@@ -123,8 +123,7 @@ impl<'a> ReactionsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryRegisteredReactionsResponse> {
-        self
-            .querier
+        self.querier
             .registered_reactions(subspace_id, pagination.map(Into::into))
     }
 

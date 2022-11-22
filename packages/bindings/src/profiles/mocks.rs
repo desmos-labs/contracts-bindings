@@ -26,7 +26,8 @@ pub const MOCK_CHAIN_LINK_ADDRESS: &str = "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4x
 
 pub const MOCK_APPLICATION_LINK_APPLICATION: &str = "twitter";
 pub const MOCK_APPLICATION_LINK_USERNAME: &str = "goldrake";
-pub const MOCK_APPLICATION_LINK_CLIENT_ID: &str = "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake";
+pub const MOCK_APPLICATION_LINK_CLIENT_ID: &str =
+    "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake";
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/profiles module.

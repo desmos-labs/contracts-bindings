@@ -43,8 +43,7 @@ impl<'a> PostsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySubspacePostsResponse> {
-        self
-            .querier
+        self.querier
             .subspace_posts(subspace_id, pagination.map(Into::into))
     }
 
@@ -92,8 +91,7 @@ impl<'a> PostsQuerier<'a> {
         section_id: u32,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySectionPostsResponse> {
-        self
-            .querier
+        self.querier
             .section_posts(subspace_id, section_id, pagination.map(Into::into))
     }
 
@@ -152,8 +150,7 @@ impl<'a> PostsQuerier<'a> {
         post_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryPostAttachmentsResponse> {
-        self
-            .querier
+        self.querier
             .post_attachments(subspace_id, post_id, pagination.map(Into::into))
     }
 

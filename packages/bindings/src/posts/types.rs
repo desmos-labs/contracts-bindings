@@ -1,6 +1,6 @@
 use crate::posts::proto::{Media, Poll};
-use cosmwasm_std::StdError;
 use crate::types::Any;
+use cosmwasm_std::StdError;
 use prost::Message;
 
 pub enum AttachmentContent {
@@ -34,5 +34,5 @@ impl Into<Any> for AttachmentContent {
 }
 
 pub enum PublicKey {
-    Ed25519PublicKey()
+    Ed25519PublicKey(),
 }

@@ -88,8 +88,7 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySectionsResponse> {
-        self
-            .querier
+        self.querier
             .sections(subspace_id, pagination.map(Into::into))
     }
 
@@ -215,8 +214,7 @@ impl<'a> SubspacesQuerier<'a> {
         group_id: u32,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryUserGroupMembersResponse> {
-        self
-            .querier
+        self.querier
             .user_group_members(subspace_id, group_id, pagination.map(Into::into))
     }
 
@@ -266,11 +264,8 @@ impl<'a> SubspacesQuerier<'a> {
         section_id: Option<u32>,
         user: Addr,
     ) -> StdResult<QueryUserPermissionsResponse> {
-        self.querier.user_permissions(
-            subspace_id,
-            section_id.unwrap_or_default(),
-            user.into(),
-        )
+        self.querier
+            .user_permissions(subspace_id, section_id.unwrap_or_default(), user.into())
     }
 }
 

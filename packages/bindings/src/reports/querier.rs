@@ -114,8 +114,7 @@ impl<'a> ReportsQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryReasonsResponse> {
-        self
-            .querier
+        self.querier
             .reasons(subspace_id, pagination.map(Into::into))
     }
 
