@@ -460,7 +460,11 @@ mod tests {
             )
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_chain_links_response();
-        assert_eq!(expected, response)
+        assert_eq!(expected, response);
+        assert_eq!(
+            &MockProfilesQueries::get_mocked_chain_link(),
+            response.links.first().unwrap()
+        )
     }
     #[test]
     fn test_iterate_chain_links() {
