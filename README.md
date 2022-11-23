@@ -9,9 +9,10 @@ This repository contains the CosmWasm bindings packages that allows the interact
 Below the compatibility between the bindings and the Desmos chain
 
 | Bindings Version | Desmos Version |
-|---|---|
-| **v1.1.x** | **v4.3.0** |
-| **v1.0.0** | **v4.1.0** |
+|------------------|----------------|
+| **v1.2.x**       | **v4.6.x**     |
+| **v1.1.x**       | **v4.3.x**     |
+| **v1.0.0**       | **v4.1.x**     |
 
 # Create a new contract
 Assuming you have a recent version of rust and cargo (v1.58.1+) installed

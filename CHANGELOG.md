@@ -1,16 +1,21 @@
 # Changelog
 
+## Version 2.0.0
+### Bug Fixes
+- ([\#95](https://github.com/desmos-labs/desmos-bindings/pull/95)) Fix field namings of models and messages naming
+- ([\#101](https://github.com/desmos-labs/desmos-bindings/pull/101)) Added missing `initial_members` field of `CreateUserGroup` message
+
 ## Version 1.1.1
 ## Bug Fixes
-- ([\#68](https://github.com/desmos-labs/desmos-bindings.git/pull/68)) Added missing features tags to `MockDesmosQuerier`
+- ([\#68](https://github.com/desmos-labs/desmos-bindings/pull/68)) Added missing features tags to `MockDesmosQuerier`
 
 ## Version 1.1.0
 ### Bug Fixes
-- ([\#37](https://github.com/desmos-labs/desmos-bindings.git/pull/37)) Fixed mocks cfg tags
+- ([\#37](https://github.com/desmos-labs/desmos-bindings/pull/37)) Fixed mocks cfg tags
 
 ### Features
-- ([\#38](https://github.com/desmos-labs/desmos-bindings.git/pull/38)) Improve desmos mock apps lib
-- ([\#58](https://github.com/desmos-labs/desmos-bindings.git/pull/58)) Added MockDesmosQuerier utility to mock desmos query responses in unit tests
+- ([\#38](https://github.com/desmos-labs/desmos-bindings/pull/38)) Improve desmos mock apps lib
+- ([\#58](https://github.com/desmos-labs/desmos-bindings/pull/58)) Added MockDesmosQuerier utility to mock desmos query responses in unit tests
 
 ### Dependencies
 - ([\#41](https://github.com/desmos-labs/desmos-bindings/pull/41)) Bumped serde_json to 1.0.85
