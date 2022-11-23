@@ -222,9 +222,9 @@ dependencies = [
 
 [[package]]
 name = "cw-multi-test"
-version = "0.16.0"
+version = "0.16.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7192aec80d0c01a0e5941392eea7e2b7e212ee74ca7f430bfdc899420c055ef6"
+checksum = "2dc50fde3ad87ef4e3a3e57c73d11326333318761c7655cc8cae67c40382ac91"
 dependencies = [
  "anyhow",
  "cosmwasm-std",
@@ -232,6 +232,7 @@ dependencies = [
  "cw-utils",
  "derivative",
  "itertools",
+ "k256",
  "prost",
  "schemars",
  "serde",
@@ -300,7 +301,7 @@ dependencies = [
 
 [[package]]
 name = "desmos-bindings"
-version = "1.1.1"
+version = "1.2.0"
 dependencies = [
  "anyhow",
  "cosmwasm-schema",

@@ -53,4 +53,4 @@ desmos-bindings = { path = "../../packages/bindings", version = "1.2.0" }
 cosmwasm-schema = { version = "1.1.6" }
 
 [dev-dependencies]
-cw-multi-test = "0.16.0"
+cw-multi-test = "0.16.1"
