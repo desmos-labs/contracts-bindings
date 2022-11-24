@@ -5,7 +5,7 @@ use crate::mocks::mock_keeper::DesmosKeeper;
 use crate::msg::DesmosMsg;
 use crate::query::DesmosQuery;
 use cosmwasm_std::testing::{MockApi, MockStorage};
-use cosmwasm_std::{Addr, Api, Empty, Storage};
+use cosmwasm_std::{Addr, Api, Empty, GovMsg, IbcMsg, IbcQuery, Storage};
 use cw_multi_test::{
     App, BankKeeper, BasicAppBuilder, DistributionKeeper, FailingModule, Module, Router,
     StakeKeeper, WasmKeeper,
@@ -32,6 +32,8 @@ where
             WasmKeeper<DesmosMsg, DesmosQuery>,
             StakeKeeper,
             DistributionKeeper,
+            FailingModule<IbcMsg, IbcQuery, Empty>,
+            FailingModule<GovMsg, Empty, Empty>,
         >,
         &dyn Api,
         &mut dyn Storage,
