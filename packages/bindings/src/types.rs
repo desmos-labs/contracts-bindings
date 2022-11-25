@@ -49,6 +49,7 @@ pub struct PageRequest {
 
 /// Response returned from a query method that had used [PageRequest].
 #[cw_serde]
+#[derive(Default)]
 pub struct PageResponse {
     /// Key to be passed to [PageRequest::key] to query the next page most efficiently.
     pub next_key: Option<Binary>,
