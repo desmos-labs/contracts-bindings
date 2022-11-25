@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 2.0.0
+## Version 1.2.0
 ### Bug Fixes
 - ([\#95](https://github.com/desmos-labs/desmos-bindings/pull/95)) Fix field namings of models and messages naming
 - ([\#101](https://github.com/desmos-labs/desmos-bindings/pull/101)) Added missing `initial_members` field of `CreateUserGroup` message
