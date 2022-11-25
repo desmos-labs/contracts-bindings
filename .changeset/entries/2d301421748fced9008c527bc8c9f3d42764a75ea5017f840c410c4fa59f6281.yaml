@@ -1,6 +1,0 @@
-type: refactor
-module: none
-pull_request: 95
-description: Update message macro to cw serde
-backward_compatible: true
-date: 2022-10-21T07:51:17.2821212Z
