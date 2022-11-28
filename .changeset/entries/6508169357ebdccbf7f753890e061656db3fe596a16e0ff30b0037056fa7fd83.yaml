@@ -1,6 +1,0 @@
-type: fix
-module: none
-pull_request: 95
-description: Fix field namings of models and messages naming
-backward_compatible: false
-date: 2022-10-21T11:45:30.1291593Z

@@ -1,6 +1,0 @@
-type: fix
-module: none
-pull_request: 101
-description: Added missing `initial_members` field of `CreateUserGroup` message
-backward_compatible: false
-date: 2022-11-01T10:49:10.4867382Z
