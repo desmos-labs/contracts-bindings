@@ -45,18 +45,13 @@ jobs:
         working-directory: ./contracts/test-contract
         run: cargo optimize
 
-      - name: Checkout desmos source 🛎
-        if: env.GIT_DIFF
-        uses: actions/checkout@v3
+      - name: Spawn chain
+        uses: desmos-labs/start-chain@v1
         with:
-          repository: desmos-labs/desmos
-          #ref: refs/tags/v4.3.0
-          path: ./desmos-src
-  
-      - name: Build desmos chain ⚙
-        if: env.GIT_DIFF
-        run: make build-alpine && mv build/desmos ../desmos/desmos
-        working-directory: ./desmos-src
+          version: v4.6.3
+          genesis-file: ./desmos/genesis.json
+          pre-run: ./desmos/pre-run.sh
+          post-run: ./desmos/post-run.sh
 
       - name: Run tests 🧪
         if: env.GIT_DIFF

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-DESMOS_HOME="$SCRIPT_DIR/.desmos"
 KEYRING_PASS=pass1234
 # Smart contract dir
 SMART_CONTRACT="$SCRIPT_DIR/../artifacts/test_contract.wasm"
@@ -19,7 +18,7 @@ OSMOSIS_CHAIN_LINK_DATA="$SCRIPT_DIR/osmosis-chain-link-data.json"
 
 
 desmos() {
-	"$SCRIPT_DIR/desmos" --home="$DESMOS_HOME" "$@"
+	$DESMOS_BIN --home="$DESMOS_HOME" "$@"
 }
 
 # Force the script to exit at the first error
@@ -28,7 +27,7 @@ set -e
 # Upload the smart contract
 echo "Uploading contract..."
 echo $KEYRING_PASS | desmos tx wasm store "$SMART_CONTRACT" \
-  --from $USER1 --chain-id=testchain --keyring-backend=file -y --gas 3000000 \
+  --from $USER1 --chain-id=testchain --keyring-backend=file -y --gas 3000000 --gas-prices "0.01stake"\
   -b=block
 
 # Initialize the contract
