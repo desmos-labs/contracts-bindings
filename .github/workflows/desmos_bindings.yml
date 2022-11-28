@@ -102,41 +102,49 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Prepare rust cache 🗄️
+      - name: Prepare rust cache 🗄
         if: env.GIT_DIFF
         uses: Swatinem/rust-cache@v2
+
+      - name: Install wasm32-unknown-unknown target ⚙
+        run: rustup target add wasm32-unknown-unknown
 
       - name: Build No features 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features
+        run: cargo build --no-default-features --target wasm32-unknown-unknown
+
+      - name: Build all feature 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --target wasm32-unknown-unknown
 
       - name: Build feature (profiles) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features profiles
+        run: cargo build --no-default-features --features profiles --target wasm32-unknown-unknown
 
       - name: Build feature (subspaces) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features subspaces
+        run: cargo build --no-default-features --features subspaces --target wasm32-unknown-unknown
 
       - name: Build feature (relationships) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features relationships
+        run: cargo build --no-default-features --features relationships --target wasm32-unknown-unknown
 
       - name: Build feature (posts) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features posts
+        run: cargo build --no-default-features --features posts --target wasm32-unknown-unknown
 
       - name: Build feature (reactions) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features reactions
+        run: cargo build --no-default-features --features reactions --target wasm32-unknown-unknown
 
       - name: Build feature (reports) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
-        run: cargo build --no-default-features --features reports
+        run: cargo build --no-default-features --features reports --target wasm32-unknown-unknown
