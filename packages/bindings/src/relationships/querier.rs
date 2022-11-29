@@ -158,4 +158,65 @@ impl<'a> RelationshipsQuerier<'a> {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::relationships::mocks::{MockRelationshipsQueries, MOCK_TARGET, MOCK_USER};
+    use cosmwasm_std::Addr;
+
+    #[test]
+    fn test_query_relationships() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let response = querier
+            .query_relationships(
+                0,
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(Addr::unchecked(MOCK_TARGET)),
+                None,
+            )
+            .unwrap();
+        let expected = MockRelationshipsQueries::get_mocked_relationships_response();
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_iterate_relationships() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let mut it = querier.iterate_relationships(0, Some(Addr::unchecked("")), 10);
+        let expected = MockRelationshipsQueries::get_mocked_relationships_response();
+        assert_eq!(expected.relationships[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_blocks() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let response = querier
+            .query_blocks(
+                0,
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(Addr::unchecked(MOCK_TARGET)),
+                None,
+            )
+            .unwrap();
+        let expected = MockRelationshipsQueries::get_mocked_blocks_response();
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_iterate_blocks() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let mut it = querier.iterate_blocks(0, Some(Addr::unchecked("")), 10);
+        let expected = MockRelationshipsQueries::get_mocked_blocks_response();
+        assert_eq!(expected.blocks[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+}

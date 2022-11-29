@@ -226,7 +226,7 @@ mod tests {
         let querier = ReactionsQuerier::new(&deps.querier);
         let response = querier.query_registered_reaction(1, 1).unwrap();
         let expected = MockReactionsQueries::get_mocked_registered_reaction_response();
-        assert_eq!(response, expected);
+        assert_eq!(expected, response);
     }
 
     #[test]
@@ -236,7 +236,7 @@ mod tests {
         let querier = ReactionsQuerier::new(&deps.querier);
         let response = querier.query_reactions_params(1).unwrap();
         let expected = MockReactionsQueries::get_mocked_reactions_params_response();
-        assert_eq!(response, expected);
+        assert_eq!(expected, response);
     }
 
     #[test]

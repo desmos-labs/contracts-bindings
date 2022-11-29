@@ -166,11 +166,11 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     }
     #[cfg(feature = "reactions")]
     {
+        use crate::reactions::mocks::MockReactionsQueries;
         use crate::reactions::proto::{
             QueryReactionRequest, QueryReactionsParamsRequest, QueryReactionsRequest,
             QueryRegisteredReactionRequest, QueryRegisteredReactionsRequest,
         };
-        use crate::reactions::mocks::MockReactionsQueries;
         QueryReactionRequest::mock_response(
             querier,
             MockReactionsQueries::get_mocked_reaction_response(),
@@ -190,6 +190,19 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
         QueryReactionsParamsRequest::mock_response(
             querier,
             MockReactionsQueries::get_mocked_reactions_params_response(),
+        );
+    }
+    #[cfg(feature = "relationships")]
+    {
+        use crate::relationships::mocks::MockRelationshipsQueries;
+        use crate::relationships::proto::{QueryBlocksRequest, QueryRelationshipsRequest};
+        QueryRelationshipsRequest::mock_response(
+            querier,
+            MockRelationshipsQueries::get_mocked_relationships_response(),
+        );
+        QueryBlocksRequest::mock_response(
+            querier,
+            MockRelationshipsQueries::get_mocked_blocks_response(),
         );
     }
 }
