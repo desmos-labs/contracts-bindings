@@ -207,9 +207,9 @@ dependencies = [
 
 [[package]]
 name = "cw-controllers"
-version = "0.16.0"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "24bd6738c3fd59c87d2f84911c1cad1e4f2d1c58ecaa6e52549b4f78f4ed6f07"
+checksum = "343ee0fb235c63a37694b030b48461581d89e119bc37fb4cb456fad90766123b"
 dependencies = [
  "cosmwasm-schema",
  "cosmwasm-std",
