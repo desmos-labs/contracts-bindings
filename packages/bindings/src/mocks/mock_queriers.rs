@@ -211,9 +211,21 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
         use crate::reports::proto::{
             QueryReasonRequest, QueryReasonsRequest, QueryReportRequest, QueryReportsRequest,
         };
-        QueryReportsRequest::mock_response(querier, MockReportsQueries::get_mocked_reports_response());
-        QueryReportRequest::mock_response(querier, MockReportsQueries::get_mocked_report_response());
-        QueryReasonsRequest::mock_response(querier, MockReportsQueries::get_mocked_reasons_response());
-        QueryReasonRequest::mock_response(querier, MockReportsQueries::get_mocked_reason_response());
+        QueryReportsRequest::mock_response(
+            querier,
+            MockReportsQueries::get_mocked_reports_response(),
+        );
+        QueryReportRequest::mock_response(
+            querier,
+            MockReportsQueries::get_mocked_report_response(),
+        );
+        QueryReasonsRequest::mock_response(
+            querier,
+            MockReportsQueries::get_mocked_reasons_response(),
+        );
+        QueryReasonRequest::mock_response(
+            querier,
+            MockReportsQueries::get_mocked_reason_response(),
+        );
     }
 }
