@@ -12,7 +12,7 @@ pub const MOCK_USER: &'static str = "user";
 pub const MOCK_TARGET: &'static str = "target";
 
 impl MockRelationshipsQueries {
-    /// Get a mocked [`Relationship`].
+    /// Gets a mocked [`Relationship`].
     pub fn get_mocked_relationship(subspace_id: u64) -> Relationship {
         Relationship {
             creator: MOCK_USER.into(),
@@ -21,7 +21,7 @@ impl MockRelationshipsQueries {
         }
     }
 
-    /// Get a mocked [`UserBlock`].
+    /// Gets a mocked [`UserBlock`].
     pub fn get_mocked_user_block(subspace_id: u64) -> UserBlock {
         UserBlock {
             blocker: MOCK_USER.into(),
@@ -30,14 +30,14 @@ impl MockRelationshipsQueries {
             subspace_id,
         }
     }
-    /// Get a mocked [`QueryRelationshipsResponse`].
+    /// Gets a mocked [`QueryRelationshipsResponse`].
     pub fn get_mocked_relationships_response() -> QueryRelationshipsResponse {
         QueryRelationshipsResponse {
             relationships: vec![Self::get_mocked_relationship(1)],
             pagination: None,
         }
     }
-    /// Get a mocked [`QueryBlocksResponse`].
+    /// Gets a mocked [`QueryBlocksResponse`].
     pub fn get_mocked_blocks_response() -> QueryBlocksResponse {
         QueryBlocksResponse {
             blocks: vec![Self::get_mocked_user_block(1)],

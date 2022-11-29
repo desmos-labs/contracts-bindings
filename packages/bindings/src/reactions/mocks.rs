@@ -13,7 +13,7 @@ pub const MOCK_REACTION_AUTHOR: &str = "author";
 pub struct MockReactionsQueries {}
 
 impl MockReactionsQueries {
-    /// Get a mocked [`Reaction`].
+    /// Gets a mocked [`Reaction`].
     pub fn get_mocked_reaction(subspace_id: u64, post_id: u64, id: u32) -> Reaction {
         Reaction {
             subspace_id,
@@ -28,7 +28,7 @@ impl MockReactionsQueries {
             author: MOCK_REACTION_AUTHOR.into(),
         }
     }
-    /// Get a mocked [`RegisteredReaction`].
+    /// Gets a mocked [`RegisteredReaction`].
     pub fn get_mocked_registered_reaction(subspace_id: u64, id: u32) -> RegisteredReaction {
         RegisteredReaction {
             subspace_id,
@@ -37,7 +37,7 @@ impl MockReactionsQueries {
             display_value: "value".into(),
         }
     }
-    /// Get a mocked [`SubspaceReactionsParams`].
+    /// Gets a mocked [`SubspaceReactionsParams`].
     pub fn get_mocked_subspace_reactions_params(subspace_id: u64) -> SubspaceReactionsParams {
         SubspaceReactionsParams {
             subspace_id,
