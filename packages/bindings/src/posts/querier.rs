@@ -258,14 +258,11 @@ impl<'a> PostsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::{
-        mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier,
-    };
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
     use crate::posts::mocks::MockPostsQueries;
     #[test]
     fn test_query_subspace_posts() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let result = querier.query_subspace_posts(1, None);
@@ -275,8 +272,7 @@ mod tests {
     }
     #[test]
     fn test_iterate_subspace_posts() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let mut iterator = querier.iterate_subspace_posts(1, 32);
@@ -290,8 +286,7 @@ mod tests {
     }
     #[test]
     fn test_query_section_posts() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let result = querier.query_section_posts(1, 1, None);
@@ -301,8 +296,7 @@ mod tests {
     }
     #[test]
     fn test_iterate_section_posts() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let mut iterator = querier.iterate_section_posts(1, 1, 32);
@@ -316,8 +310,7 @@ mod tests {
     }
     #[test]
     fn test_query_post() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let result = querier.query_post(1, 1);
@@ -327,8 +320,7 @@ mod tests {
     }
     #[test]
     fn test_query_post_attachments() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let result = querier.query_post_attachments(1, 1, None);
@@ -338,8 +330,7 @@ mod tests {
     }
     #[test]
     fn test_iterate_post_attachments() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let mut iterator = querier.iterate_post_attachments(1, 1, 32);
@@ -353,8 +344,7 @@ mod tests {
     }
     #[test]
     fn test_query_poll_answers() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let result = querier.query_poll_answers(1, 1, 1, None, None);
@@ -364,8 +354,7 @@ mod tests {
     }
     #[test]
     fn test_iterate_poll_answers() {
-        let querier = MockDesmosQuerier::default();
-        let owned_deps = mock_desmos_dependencies_with_custom_querier(querier);
+        let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
         let mut iterator = querier.iterate_poll_answers(1, 1, 1, None, 32);

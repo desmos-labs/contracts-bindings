@@ -14,7 +14,7 @@ pub struct MockReactionsQueries {}
 
 impl MockReactionsQueries {
     /// Get a mocked [`Reaction`].
-    pub fn get_mock_reaction(subspace_id: u64, post_id: u64, id: u32) -> Reaction {
+    pub fn get_mocked_reaction(subspace_id: u64, post_id: u64, id: u32) -> Reaction {
         Reaction {
             subspace_id,
             post_id,
@@ -29,7 +29,7 @@ impl MockReactionsQueries {
         }
     }
     /// Get a mocked [`RegisteredReaction`].
-    pub fn get_mock_registered_reaction(subspace_id: u64, id: u32) -> RegisteredReaction {
+    pub fn get_mocked_registered_reaction(subspace_id: u64, id: u32) -> RegisteredReaction {
         RegisteredReaction {
             subspace_id: 1,
             id: 1,
@@ -38,7 +38,7 @@ impl MockReactionsQueries {
         }
     }
     /// Get a mocked [`SubspaceReactionsParams`].
-    pub fn get_mock_subspace_reactions_params(subspace_id: u64) -> SubspaceReactionsParams {
+    pub fn get_mocked_subspace_reactions_params(subspace_id: u64) -> SubspaceReactionsParams {
         SubspaceReactionsParams {
             subspace_id,
             registered_reaction: Some(RegisteredReactionValueParams { enabled: true }),
@@ -50,35 +50,35 @@ impl MockReactionsQueries {
         }
     }
     /// Function that mocks a [`QueryReactionsResponse`].
-    pub fn get_mock_reactions_response() -> QueryReactionsResponse {
+    pub fn get_mocked_reactions_response() -> QueryReactionsResponse {
         QueryReactionsResponse {
-            reactions: vec![Self::get_mock_reaction(1, 1, 1)],
+            reactions: vec![Self::get_mocked_reaction(1, 1, 1)],
             pagination: None,
         }
     }
     /// Function that mocks a [`QueryReactionResponse`].
-    pub fn get_mock_reaction_response() -> QueryReactionResponse {
+    pub fn get_mocked_reaction_response() -> QueryReactionResponse {
         QueryReactionResponse {
-            reaction: Some(Self::get_mock_reaction(1, 1, 1)),
+            reaction: Some(Self::get_mocked_reaction(1, 1, 1)),
         }
     }
     /// Function that mocks a [`QueryRegisteredReactionsResponse`].
-    pub fn get_mock_registered_reactions_response() -> QueryRegisteredReactionsResponse {
+    pub fn get_mocked_registered_reactions_response() -> QueryRegisteredReactionsResponse {
         QueryRegisteredReactionsResponse {
-            registered_reactions: vec![Self::get_mock_registered_reaction(1, 1)],
+            registered_reactions: vec![Self::get_mocked_registered_reaction(1, 1)],
             pagination: None,
         }
     }
     /// Function that mocks a [`QueryRegisteredReactionResponse`].
-    pub fn get_mock_registered_reaction_response() -> QueryRegisteredReactionResponse {
+    pub fn get_mocked_registered_reaction_response() -> QueryRegisteredReactionResponse {
         QueryRegisteredReactionResponse {
-            registered_reaction: Some(Self::get_mock_registered_reaction(1, 1)),
+            registered_reaction: Some(Self::get_mocked_registered_reaction(1, 1)),
         }
     }
     /// Function that mocks a [`QueryReactionsParamsResponse`].
-    pub fn get_mock_reactions_params_response() -> QueryReactionsParamsResponse {
+    pub fn get_mocked_reactions_params_response() -> QueryReactionsParamsResponse {
         QueryReactionsParamsResponse {
-            params: Some(Self::get_mock_subspace_reactions_params(1)),
+            params: Some(Self::get_mocked_subspace_reactions_params(1)),
         }
     }
 }

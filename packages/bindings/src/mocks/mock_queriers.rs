@@ -164,4 +164,32 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
             MockProfilesQueries::get_mocked_application_link_owners_response(),
         );
     }
+    #[cfg(feature = "reactions")]
+    {
+        use crate::reactions::proto::{
+            QueryReactionRequest, QueryReactionsParamsRequest, QueryReactionsRequest,
+            QueryRegisteredReactionRequest, QueryRegisteredReactionsRequest,
+        };
+        use crate::reactions::mocks::MockReactionsQueries;
+        QueryReactionRequest::mock_response(
+            querier,
+            MockReactionsQueries::get_mocked_reaction_response(),
+        );
+        QueryReactionsRequest::mock_response(
+            querier,
+            MockReactionsQueries::get_mocked_reactions_response(),
+        );
+        QueryRegisteredReactionRequest::mock_response(
+            querier,
+            MockReactionsQueries::get_mocked_registered_reaction_response(),
+        );
+        QueryRegisteredReactionsRequest::mock_response(
+            querier,
+            MockReactionsQueries::get_mocked_registered_reactions_response(),
+        );
+        QueryReactionsParamsRequest::mock_response(
+            querier,
+            MockReactionsQueries::get_mocked_reactions_params_response(),
+        );
+    }
 }
