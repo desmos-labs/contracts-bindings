@@ -22,7 +22,7 @@ cosmwasm-std = "1.1.8"
 cosmwasm-schema = "1.1.8"
 anyhow = "1.0.66"
 schemars = "0.8.11"
-serde = { version = "1.0.147", default-features = false, features = ["derive"] }
+serde = { version = "1.0.148", default-features = false, features = ["derive"] }
 thiserror = "1.0.37"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
