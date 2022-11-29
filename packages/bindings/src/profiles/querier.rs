@@ -435,10 +435,8 @@ mod tests {
         let querier = ProfilesQuerier::new(&deps.querier);
         let mut it =
             querier.iterate_incoming_dtag_transfer_requests(Addr::unchecked(MOCK_USER), 10);
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mocked_dtag_transfer_request()
-        );
+        let expected = MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response();
+        assert_eq!(expected.requests[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
     #[test]
@@ -472,10 +470,8 @@ mod tests {
             Some(MOCK_CHAIN_LINK_ADDRESS),
             10,
         );
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mocked_chain_link()
-        );
+        let expected = MockProfilesQueries::get_mocked_chain_links_response();
+        assert_eq!(expected.links[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
     #[test]
@@ -503,10 +499,8 @@ mod tests {
             Some(MOCK_CHAIN_LINK_ADDRESS),
             10,
         );
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mocked_chain_link_owner_details()
-        );
+        let expected = MockProfilesQueries::get_mocked_chain_link_owners_response();
+        assert_eq!(expected.owners[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
     #[test]
@@ -534,10 +528,8 @@ mod tests {
             Some(MOCK_CHAIN_LINK_CHAIN_NAME),
             10,
         );
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mocked_chain_link()
-        );
+        let expected = MockProfilesQueries::get_mocked_default_external_addresses_response();
+        assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
     #[test]
@@ -567,10 +559,8 @@ mod tests {
             Some(MOCK_APPLICATION_LINK_USERNAME),
             10,
         );
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mocked_application_link()
-        );
+        let expected = MockProfilesQueries::get_mocked_application_links_response();
+        assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
     #[test]
@@ -609,10 +599,8 @@ mod tests {
             Some(MOCK_APPLICATION_LINK_USERNAME),
             10,
         );
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mocked_application_link_owner_details()
-        );
+        let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
+        assert_eq!(expected.owners[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none())
     }
 }

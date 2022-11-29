@@ -31,8 +31,8 @@ impl MockReactionsQueries {
     /// Get a mocked [`RegisteredReaction`].
     pub fn get_mocked_registered_reaction(subspace_id: u64, id: u32) -> RegisteredReaction {
         RegisteredReaction {
-            subspace_id: 1,
-            id: 1,
+            subspace_id,
+            id,
             shorthand_code: "code".into(),
             display_value: "value".into(),
         }

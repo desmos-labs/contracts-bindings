@@ -187,7 +187,7 @@ impl<'a> ReactionsQuerier<'a> {
 mod tests {
     use super::*;
     use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::reactions::mocks::{MockReactionsQueries, MOCK_REACTION_AUTHOR};
+    use crate::reactions::mocks::MockReactionsQueries;
 
     #[test]
     fn test_query_reactions() {
@@ -244,14 +244,12 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
-        let mut iterator = querier.iterate_reactions(1, 1, None, 32);
+        let mut it = querier.iterate_reactions(1, 1, None, 32);
+        let expected = MockReactionsQueries::get_mocked_reactions_response();
         // The first item returned from the iterators should be the first item returned from the mock function.
-        assert_eq!(
-            &MockReactionsQueries::get_mocked_reaction(1, 1, 1),
-            &iterator.next().unwrap().unwrap()
-        );
+        assert_eq!(expected.reactions[0], it.next().unwrap().unwrap());
         // The second item should be none since the mock function provides only 1 reactions.
-        assert!(iterator.next().is_none())
+        assert!(it.next().is_none())
     }
 
     #[test]
@@ -259,13 +257,14 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
-        let mut iterator = querier.iterate_registered_reactions(1, 32);
+        let mut it = querier.iterate_registered_reactions(1, 32);
+        let expected = MockReactionsQueries::get_mocked_registered_reactions_response();
         // The first item returned from the iterators should be the first item returned from the mock function.
         assert_eq!(
-            &MockReactionsQueries::get_mocked_registered_reaction(1, 1),
-            &iterator.next().unwrap().unwrap()
+            expected.registered_reactions[0],
+            it.next().unwrap().unwrap()
         );
         // The second item should be none since the mock function provides only 1 reactions.
-        assert!(iterator.next().is_none())
+        assert!(it.next().is_none())
     }
 }
