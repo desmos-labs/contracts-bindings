@@ -32,6 +32,8 @@ where
             WasmKeeper<DesmosMsg, DesmosQuery>,
             StakeKeeper,
             DistributionKeeper,
+            FailingModule<IbcMsg, IbcQuery, Empty>,
+            FailingModule<GovMsg, Empty, Empty>,
         >,
         &dyn Api,
         &mut dyn Storage,

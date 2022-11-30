@@ -1,6 +1,6 @@
 [package]
 name = "desmos-bindings"
-version = "1.1.1"
+version = "1.2.0"
 authors = [
     "Leonardo Bragagnolo <leonardo@forbole.com>",
     "Paul Chen <paul@forbole.com>",
@@ -19,12 +19,12 @@ all-features = true
 
 [dependencies]
 chrono = {version = "0.4.22", default-features = false}
+cosmwasm-std = { version = "1.1.8", features = ["stargate"]}
+cosmwasm-schema = "1.1.8"
 anyhow = "1.0.66"
-cosmwasm-std = { version = "1.1.5", features = ["stargate"]}
 schemars = "0.8.11"
-serde = { version = "1.0.147", default-features = false, features = ["derive"] }
+serde = { version = "1.0.148", default-features = false, features = ["derive"] }
 thiserror = "1.0.37"
-cosmwasm-schema = { version = "1.1.5" }
 std-derive = { version = "0.1.0", path = "../std-derive" }
 prost = {version = "0.11.0", default-features = false, features = ["prost-derive"]}
 prost-types = {version = "0.11.1", default-features = false}
@@ -33,7 +33,7 @@ desmos-std = { version = "0.1.0", path = "../std" }
 mock = { version = "0.1.0", path = "../mock" }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-cw-multi-test = { version = "0.15.1"}
+cw-multi-test = { version = "0.16.1" }
 
 [features]
 default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "legacy"]
@@ -43,7 +43,6 @@ posts = []
 relationships = []
 reports = []
 reactions = []
-query = []
 iterators = []
 stargate = []
 legacy = []
