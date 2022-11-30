@@ -3,8 +3,8 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER2_ADDRESS};
     use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::subspaces::models::Permission;
-    use desmos_bindings::subspaces::msg::SubspacesMsg;
+    use desmos_bindings::legacy::subspaces::models::Permission;
+    use desmos_bindings::legacy::subspaces::msg::SubspacesMsg;
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 

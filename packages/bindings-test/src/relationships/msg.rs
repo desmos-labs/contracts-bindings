@@ -3,7 +3,7 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, USER1_ADDRESS};
     use cosmwasm_std::Addr;
-    use desmos_bindings::relationships::msg::RelationshipsMsg;
+    use desmos_bindings::legacy::relationships::msg::RelationshipsMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
     #[test]

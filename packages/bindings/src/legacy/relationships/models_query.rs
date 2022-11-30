@@ -1,12 +1,12 @@
 //! Contains the types definitions of all the responses to the x/relationships query messages.
 
-use crate::{
+use crate::legacy::{
     relationships::models::{Relationship, UserBlock},
     types::PageResponse,
 };
 use cosmwasm_schema::cw_serde;
 
-/// Response to the [`RelationshipsQuery::Relationships`](crate::relationships::query::RelationshipsQuery::Relationships).
+/// Response to the [`RelationshipsQuery::Relationships`](crate::legacy::relationships::query::RelationshipsQuery::Relationships).
 #[cw_serde]
 pub struct QueryRelationshipsResponse {
     /// The queried relationships.
@@ -15,7 +15,7 @@ pub struct QueryRelationshipsResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to the [`RelationshipsQuery::Blocks`](crate::relationships::query::RelationshipsQuery::Blocks).
+/// Response to the [`RelationshipsQuery::Blocks`](crate::legacy::relationships::query::RelationshipsQuery::Blocks).
 #[cw_serde]
 pub struct QueryBlocksResponse {
     /// The queried blocks.

@@ -98,8 +98,8 @@ pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQ
 fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     #[cfg(feature = "posts")]
     {
-        use crate::posts::mocks::MockPostsQueries;
-        use crate::posts::proto::{
+        use crate::stargate::posts::mocks::MockPostsQueries;
+        use crate::stargate::posts::proto::{
             QueryPollAnswersRequest, QueryPostAttachmentsRequest, QueryPostRequest,
             QuerySectionPostsRequest, QuerySubspacePostsRequest,
         };
@@ -124,8 +124,8 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     }
     #[cfg(feature = "profiles")]
     {
-        use crate::profiles::mocks::MockProfilesQueries;
-        use crate::profiles::proto::{
+        use crate::stargate::profiles::mocks::MockProfilesQueries;
+        use crate::stargate::profiles::proto::{
             QueryApplicationLinkByClientIdRequest, QueryApplicationLinkOwnersRequest,
             QueryApplicationLinksRequest, QueryChainLinkOwnersRequest, QueryChainLinksRequest,
             QueryDefaultExternalAddressesRequest, QueryIncomingDTagTransferRequestsRequest,
@@ -166,8 +166,8 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     }
     #[cfg(feature = "reactions")]
     {
-        use crate::reactions::mocks::MockReactionsQueries;
-        use crate::reactions::proto::{
+        use crate::stargate::reactions::mocks::MockReactionsQueries;
+        use crate::stargate::reactions::proto::{
             QueryReactionRequest, QueryReactionsParamsRequest, QueryReactionsRequest,
             QueryRegisteredReactionRequest, QueryRegisteredReactionsRequest,
         };
@@ -194,8 +194,8 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     }
     #[cfg(feature = "relationships")]
     {
-        use crate::relationships::mocks::MockRelationshipsQueries;
-        use crate::relationships::proto::{QueryBlocksRequest, QueryRelationshipsRequest};
+        use crate::stargate::relationships::mocks::MockRelationshipsQueries;
+        use crate::stargate::relationships::proto::{QueryBlocksRequest, QueryRelationshipsRequest};
         QueryRelationshipsRequest::mock_response(
             querier,
             MockRelationshipsQueries::get_mocked_relationships_response(),
@@ -207,8 +207,8 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     }
     #[cfg(feature = "reports")]
     {
-        use crate::reports::mocks::MockReportsQueries;
-        use crate::reports::proto::{
+        use crate::stargate::reports::mocks::MockReportsQueries;
+        use crate::stargate::reports::proto::{
             QueryReasonRequest, QueryReasonsRequest, QueryReportRequest, QueryReportsRequest,
         };
         QueryReportsRequest::mock_response(
@@ -230,8 +230,8 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     }
     #[cfg(feature = "subspaces")]
     {
-        use crate::subspaces::mocks::MockSubspacesQueries;
-        use crate::subspaces::proto::{
+        use crate::stargate::subspaces::mocks::MockSubspacesQueries;
+        use crate::stargate::subspaces::proto::{
             QuerySectionRequest, QuerySectionsRequest, QuerySubspaceRequest, QuerySubspacesRequest,
             QueryUserGroupMembersRequest, QueryUserGroupRequest, QueryUserGroupsRequest,
             QueryUserPermissionsRequest,

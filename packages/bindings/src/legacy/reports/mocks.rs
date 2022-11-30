@@ -1,10 +1,10 @@
 //! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
 
-use crate::reports::models::{Reason, Report, ReportTarget};
-use crate::reports::models_query::{
+use crate::legacy::reports::models::{Reason, Report, ReportTarget};
+use crate::legacy::reports::models_query::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
 };
-use crate::reports::query::ReportsQuery;
+use crate::legacy::reports::query::ReportsQuery;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
 /// Struct that contains some utility methods to mock data of the Desmos

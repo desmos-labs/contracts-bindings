@@ -6,11 +6,11 @@ mod tests {
         TEST_SUBSPACE_EDITABLE_POST_ID, USER1_ADDRESS,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::reports::models::{RawReportTarget, ReportTarget};
-    use desmos_bindings::reports::models_query::{
+    use desmos_bindings::legacy::reports::models::{RawReportTarget, ReportTarget};
+    use desmos_bindings::legacy::reports::models_query::{
         QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
     };
-    use desmos_bindings::reports::query::ReportsQuery;
+    use desmos_bindings::legacy::reports::query::ReportsQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]

@@ -1,9 +1,9 @@
-use crate::posts::proto::{
+use crate::stargate::posts::proto::{
     Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
     UserAnswer,
 };
-use crate::posts::types::AttachmentContent;
+use crate::stargate::posts::types::AttachmentContent;
 use chrono::DateTime;
 use cosmwasm_std::Addr;
 use desmos_std::shim::Timestamp;

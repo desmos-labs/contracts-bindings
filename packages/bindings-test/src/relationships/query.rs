@@ -3,10 +3,10 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, USER1_ADDRESS, USER2_ADDRESS};
     use cosmwasm_std::Addr;
-    use desmos_bindings::relationships::models_query::{
+    use desmos_bindings::legacy::relationships::models_query::{
         QueryBlocksResponse, QueryRelationshipsResponse,
     };
-    use desmos_bindings::relationships::query::RelationshipsQuery;
+    use desmos_bindings::legacy::relationships::query::RelationshipsQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]

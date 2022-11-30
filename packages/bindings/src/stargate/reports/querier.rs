@@ -1,19 +1,19 @@
 //! Contains the querier that can be used to query data related to the x/reports module.
 
-use crate::reports::proto::*;
-use crate::reports::types::ReportTarget;
-use crate::types::PageRequest;
+use crate::stargate::reports::proto::*;
+use crate::stargate::reports::types::ReportTarget;
+use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::reports::proto::{Reason, Report},
+    crate::stargate::reports::proto::{Reason, Report},
     cosmwasm_std::Binary,
 };
 
 /// Querier able to query data from the Desmos x/reports module.
 pub struct ReportsQuerier<'a> {
-    querier: crate::reports::proto::ReportsQuerier<'a, Empty>,
+    querier: crate::stargate::reports::proto::ReportsQuerier<'a, Empty>,
 }
 
 impl<'a> ReportsQuerier<'a> {
@@ -21,7 +21,6 @@ impl<'a> ReportsQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::reports::querier::ReportsQuerier;
     ///
@@ -31,7 +30,7 @@ impl<'a> ReportsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::reports::proto::ReportsQuerier::new(querier),
+            querier: crate::stargate::reports::proto::ReportsQuerier::new(querier),
         }
     }
 
@@ -162,10 +161,9 @@ impl<'a> ReportsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::reports::mocks::MockReportsQueries;
-    use crate::reports::querier::ReportsQuerier;
+    use crate::stargate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::stargate::reports::mocks::MockReportsQueries;
+    use crate::stargate::reports::querier::ReportsQuerier;
 
     #[test]
     fn test_query_reports() {

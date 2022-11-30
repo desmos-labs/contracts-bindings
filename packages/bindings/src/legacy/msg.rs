@@ -1,17 +1,17 @@
 //! Implementations of [cosmwasm_std::CustomMsg] for [DesmosMsg].
 
 #[cfg(feature = "posts")]
-use crate::posts::msg::PostsMsg;
+use crate::legacy::posts::msg::PostsMsg;
 #[cfg(feature = "profiles")]
-use crate::profiles::msg::ProfilesMsg;
+use crate::legacy::profiles::msg::ProfilesMsg;
 #[cfg(feature = "reactions")]
-use crate::reactions::msg::ReactionsMsg;
+use crate::legacy::reactions::msg::ReactionsMsg;
 #[cfg(feature = "relationships")]
-use crate::relationships::msg::RelationshipsMsg;
+use crate::legacy::relationships::msg::RelationshipsMsg;
 #[cfg(feature = "reports")]
-use crate::reports::msg::ReportsMsg;
+use crate::legacy::reports::msg::ReportsMsg;
 #[cfg(feature = "subspaces")]
-use crate::subspaces::msg::SubspacesMsg;
+use crate::legacy::subspaces::msg::SubspacesMsg;
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{CosmosMsg, CustomMsg};
 
@@ -138,7 +138,7 @@ impl Into<CosmosMsg<DesmosMsg>> for ReportsMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::reactions::models::ReactionValue;
+    use crate::legacy::reactions::models::ReactionValue;
     use cosmwasm_std::{Addr, Uint64};
     #[test]
     fn test_from_profile_msg() {

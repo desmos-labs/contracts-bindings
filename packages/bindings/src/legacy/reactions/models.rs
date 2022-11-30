@@ -1,6 +1,6 @@
 //! Contains structs and enums related to the x/reactions module.
 
-use crate::reactions::models::UnwrapReactionValueError::{
+use crate::legacy::reactions::models::UnwrapReactionValueError::{
     InvalidFreeTextValue, InvalidRegisteredReactionValue,
 };
 use cosmwasm_schema::cw_serde;

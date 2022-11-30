@@ -6,10 +6,10 @@ mod tests {
         TEST_POST_DELETABLE_REACTION_ID, TEST_REACTIONS_POST_ID, TEST_SUBSPACE,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::reactions::models::{
+    use desmos_bindings::legacy::reactions::models::{
         FreeTextValueParams, ReactionValue, RegisteredReactionValueParams,
     };
-    use desmos_bindings::reactions::msg::ReactionsMsg;
+    use desmos_bindings::legacy::reactions::msg::ReactionsMsg;
     use test_contract::msg::ExecuteMsg;
 
     #[test]

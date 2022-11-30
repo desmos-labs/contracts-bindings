@@ -1,17 +1,17 @@
 //! Implementations of [cosmwasm_std::CustomQuery] for [DesmosQuery].
 
 #[cfg(feature = "posts")]
-use crate::posts::query::PostsQuery;
+use crate::legacy::posts::query::PostsQuery;
 #[cfg(feature = "profiles")]
-use crate::profiles::query::ProfilesQuery;
+use crate::legacy::profiles::query::ProfilesQuery;
 #[cfg(feature = "reactions")]
-use crate::reactions::query::ReactionsQuery;
+use crate::legacy::reactions::query::ReactionsQuery;
 #[cfg(feature = "relationships")]
-use crate::relationships::query::RelationshipsQuery;
+use crate::legacy::relationships::query::RelationshipsQuery;
 #[cfg(feature = "reports")]
-use crate::reports::query::ReportsQuery;
+use crate::legacy::reports::query::ReportsQuery;
 #[cfg(feature = "subspaces")]
-use crate::subspaces::query::SubspacesQuery;
+use crate::legacy::subspaces::query::SubspacesQuery;
 use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{CustomQuery, QueryRequest};
 

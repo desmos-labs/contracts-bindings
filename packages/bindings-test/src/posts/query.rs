@@ -3,15 +3,15 @@ mod test {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_EDITABLE_POST_ID};
     use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::posts::models::{
+    use desmos_bindings::legacy::posts::models::{
         Entities, Post, PostAttachment, ProvidedAnswer, ReplySetting, UrlEntity,
     };
-    use desmos_bindings::posts::models_query::{
+    use desmos_bindings::legacy::posts::models_query::{
         QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
         QuerySectionPostsResponse, QuerySubspacePostsResponse,
     };
-    use desmos_bindings::posts::msg::PostsMsg;
-    use desmos_bindings::posts::query::PostsQuery;
+    use desmos_bindings::legacy::posts::msg::PostsMsg;
+    use desmos_bindings::legacy::posts::query::PostsQuery;
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::QueryMsg::DesmosChain;
 

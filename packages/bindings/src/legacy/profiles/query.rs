@@ -1,8 +1,8 @@
 //! Contains the query actions that can be sent to the chain in order to query data related
 //! to the x/profiles module.
 
-use crate::profiles::models_query::*;
-use crate::types::PageRequest;
+use crate::legacy::profiles::models_query::*;
+use crate::legacy::types::PageRequest;
 use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::Addr;
 

@@ -5,8 +5,8 @@ mod tests {
         TEST_DELETABLE_REASON_ID, TEST_DELETABLE_REPORT_ID, TEST_REASON_ID, TEST_SUBSPACE,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::reports::models::ReportTarget;
-    use desmos_bindings::reports::msg::ReportsMsg;
+    use desmos_bindings::legacy::reports::models::ReportTarget;
+    use desmos_bindings::legacy::reports::msg::ReportsMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
     #[test]

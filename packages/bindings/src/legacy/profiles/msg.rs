@@ -1,8 +1,8 @@
 //! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
 
-use crate::profiles::models_app_links::Data;
-use crate::profiles::models_chain_links::{Address, ChainConfig, Proof};
-use crate::types::Height;
+use crate::legacy::profiles::models_app_links::Data;
+use crate::legacy::profiles::models_chain_links::{Address, ChainConfig, Proof};
+use crate::legacy::types::Height;
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
 
@@ -296,12 +296,12 @@ impl ProfilesMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::profiles::models_chain_links::{Address, SignatureValueType};
-    use crate::profiles::{
+    use crate::legacy::profiles::models_chain_links::{Address, SignatureValueType};
+    use crate::legacy::profiles::{
         models_app_links::{CallData, Data, OracleRequest},
         models_chain_links::{ChainConfig, Proof, Signature},
     };
-    use crate::types::{Height, PubKey};
+    use crate::legacy::types::{Height, PubKey};
     use cosmwasm_std::{Addr, Binary, Uint64};
 
     #[test]

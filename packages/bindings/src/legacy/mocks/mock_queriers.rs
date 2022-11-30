@@ -1,18 +1,18 @@
 //! Contains some useful functions to perform unit testing of smart contracts.
 
 #[cfg(feature = "posts")]
-use crate::posts::{mocks::mock_posts_query_response, query::PostsQuery};
+use crate::legacy::posts::{mocks::mock_posts_query_response, query::PostsQuery};
 #[cfg(feature = "profiles")]
-use crate::profiles::{mocks::mock_profiles_query_response, query::ProfilesQuery};
-use crate::query::DesmosQuery;
+use crate::legacy::profiles::{mocks::mock_profiles_query_response, query::ProfilesQuery};
+use crate::legacy::query::DesmosQuery;
 #[cfg(feature = "reactions")]
-use crate::reactions::{mocks::mock_reactions_query_response, query::ReactionsQuery};
+use crate::legacy::reactions::{mocks::mock_reactions_query_response, query::ReactionsQuery};
 #[cfg(feature = "relationships")]
-use crate::relationships::{mocks::mock_relationships_query_response, query::RelationshipsQuery};
+use crate::legacy::relationships::{mocks::mock_relationships_query_response, query::RelationshipsQuery};
 #[cfg(feature = "reports")]
-use crate::reports::{mocks::mock_reports_query_response, query::ReportsQuery};
+use crate::legacy::reports::{mocks::mock_reports_query_response, query::ReportsQuery};
 #[cfg(feature = "subspaces")]
-use crate::subspaces::{mocks::mock_subspaces_query_response, query::SubspacesQuery};
+use crate::legacy::subspaces::{mocks::mock_subspaces_query_response, query::SubspacesQuery};
 use cosmwasm_std::testing::MockQuerierCustomHandlerResult;
 use cosmwasm_std::{
     from_slice,
@@ -370,19 +370,19 @@ pub fn mock_desmos_dependencies() -> OwnedDeps<MockStorage, MockApi, MockDesmosQ
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::{mock_desmos_dependencies, MockDesmosQuerier};
-    use crate::posts::mocks::MockPostsQueries;
-    use crate::posts::models_query::QueryPostResponse;
-    use crate::posts::querier::PostsQuerier;
-    use crate::posts::query::PostsQuery;
-    use crate::profiles::query::ProfilesQuery;
-    use crate::reactions::models::ReactionValue;
-    use crate::reactions::models_query::QueryReactionResponse;
-    use crate::reactions::query::ReactionsQuery;
-    use crate::relationships::query::RelationshipsQuery;
-    use crate::reports::query::ReportsQuery;
-    use crate::subspaces::query::SubspacesQuery;
-    use crate::{
+    use crate::legacy::mocks::mock_queriers::{mock_desmos_dependencies, MockDesmosQuerier};
+    use crate::legacy::posts::mocks::MockPostsQueries;
+    use crate::legacy::posts::models_query::QueryPostResponse;
+    use crate::legacy::posts::querier::PostsQuerier;
+    use crate::legacy::posts::query::PostsQuery;
+    use crate::legacy::profiles::query::ProfilesQuery;
+    use crate::legacy::reactions::models::ReactionValue;
+    use crate::legacy::reactions::models_query::QueryReactionResponse;
+    use crate::legacy::reactions::query::ReactionsQuery;
+    use crate::legacy::relationships::query::RelationshipsQuery;
+    use crate::legacy::reports::query::ReportsQuery;
+    use crate::legacy::subspaces::query::SubspacesQuery;
+    use crate::legacy::{
         profiles::{
             mocks::MockProfilesQueries, models_query::QueryProfileResponse,
             querier::ProfilesQuerier,

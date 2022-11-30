@@ -3,12 +3,12 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
-    use desmos_bindings::profiles::models_chain_links::{
+    use desmos_bindings::legacy::profiles::models_chain_links::{
         Address, ChainConfig, Proof, Signature, SignatureValueType,
     };
-    use desmos_bindings::profiles::msg::ProfilesMsg;
-    use desmos_bindings::profiles::msg::ProfilesMsg::{DeleteProfile, SaveProfile};
-    use desmos_bindings::types::PubKey;
+    use desmos_bindings::legacy::profiles::msg::ProfilesMsg;
+    use desmos_bindings::legacy::profiles::msg::ProfilesMsg::{DeleteProfile, SaveProfile};
+    use desmos_bindings::legacy::types::PubKey;
     use test_contract::msg::ExecuteMsg;
 
     fn build_save_profile_msg(contract_address: &str) -> ExecuteMsg {

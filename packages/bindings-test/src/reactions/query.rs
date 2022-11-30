@@ -6,8 +6,8 @@ mod tests {
         TEST_POST_REGISTERED_REACTION_ID, TEST_REACTIONS_POST_ID, TEST_SUBSPACE,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::reactions::query::ReactionsQuery;
-    use desmos_bindings::reactions::{
+    use desmos_bindings::legacy::reactions::query::ReactionsQuery;
+    use desmos_bindings::legacy::reactions::{
         models::{
             FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
             RegisteredReactionValueParams, SubspaceReactionsParams,

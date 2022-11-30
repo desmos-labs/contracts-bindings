@@ -5,13 +5,13 @@ use crate::iter::page_iterator::{Page, PageIterator};
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::profiles::proto::*;
-use crate::types::PageRequest;
+use crate::stargate::profiles::proto::*;
+use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {
-    querier: crate::profiles::proto::ProfilesQuerier<'a, Empty>,
+    querier: crate::stargate::profiles::proto::ProfilesQuerier<'a, Empty>,
 }
 
 impl<'a> ProfilesQuerier<'a> {
@@ -19,7 +19,6 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::profiles::querier::ProfilesQuerier;
     ///
@@ -29,7 +28,7 @@ impl<'a> ProfilesQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::profiles::proto::ProfilesQuerier::new(querier),
+            querier: crate::stargate::profiles::proto::ProfilesQuerier::new(querier),
         }
     }
 
@@ -402,8 +401,8 @@ impl<'a> ProfilesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::profiles::mocks::{
+    use crate::stargate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::stargate::profiles::mocks::{
         MockProfilesQueries, MOCK_APPLICATION_LINK_APPLICATION, MOCK_APPLICATION_LINK_CLIENT_ID,
         MOCK_APPLICATION_LINK_USERNAME, MOCK_CHAIN_LINK_ADDRESS, MOCK_CHAIN_LINK_CHAIN_NAME,
         MOCK_USER,

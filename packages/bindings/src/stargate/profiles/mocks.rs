@@ -1,5 +1,5 @@
 //! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
-use crate::profiles::proto::{
+use crate::stargate::profiles::proto::{
     oracle_request::CallData,
     query_application_link_owners_response::ApplicationLinkOwnerDetails,
     query_chain_link_owners_response::ChainLinkOwnerDetails,
@@ -11,7 +11,7 @@ use crate::profiles::proto::{
     QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
     QueryProfileResponse, SignatureValueType, SingleSignature,
 };
-use crate::types::Secp256k1PublicKey;
+use crate::stargate::types::Secp256k1PublicKey;
 use chrono::DateTime;
 use cosmwasm_std::Binary;
 use desmos_std::shim::Timestamp;

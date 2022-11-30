@@ -1,5 +1,5 @@
-use crate::reactions::proto::{FreeTextValue, RegisteredReactionValue};
-use crate::types::Any;
+use crate::stargate::reactions::proto::{FreeTextValue, RegisteredReactionValue};
+use crate::stargate::types::Any;
 use cosmwasm_std::StdError;
 use prost::Message;
 

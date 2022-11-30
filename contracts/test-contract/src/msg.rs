@@ -1,7 +1,7 @@
 use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::{Binary, CosmosMsg, QueryRequest};
-use desmos_bindings::msg::DesmosMsg;
-use desmos_bindings::query::DesmosQuery;
+use desmos_bindings::legacy::msg::DesmosMsg;
+use desmos_bindings::legacy::query::DesmosQuery;
 
 #[cw_serde]
 pub struct InstantiateMsg {}

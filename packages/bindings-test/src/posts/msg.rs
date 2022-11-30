@@ -6,11 +6,11 @@ mod test {
         TEST_SUBSPACE_EDITABLE_POST_ID,
     };
     use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::posts::models::{
+    use desmos_bindings::legacy::posts::models::{
         Entities, PostAttachment, PostReference, PostReferenceType, ProvidedAnswer, ReplySetting,
         UrlEntity,
     };
-    use desmos_bindings::posts::msg::PostsMsg;
+    use desmos_bindings::legacy::posts::msg::PostsMsg;
     use test_contract::msg::ExecuteMsg;
 
     #[test]

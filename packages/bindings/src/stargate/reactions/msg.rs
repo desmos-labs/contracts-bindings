@@ -1,7 +1,7 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
-use crate::reactions::proto::*;
-use crate::reactions::types::ReactionValue;
+use crate::stargate::reactions::proto::*;
+use crate::stargate::reactions::types::ReactionValue;
 use cosmwasm_std::Addr;
 
 /// Represents the messages to interact with the reactions module.
@@ -106,8 +106,8 @@ impl ReactionsMsgBuilder {
     /// Creates a new instance of [`ReactionsMsgBuilder::SetReactionsParams`].
     ///
     /// * `subspace_id` - Id of the subspace for which to set the params.
-    /// * `registered_reaction` - Params related to [`ReactionValue::Registered`](crate::reactions::models::ReactionValue::Registered) reactions.
-    /// * `value` - Params related to [`ReactionValue::FreeText`](crate::reactions::models::ReactionValue::FreeText) reactions.
+    /// * `registered_reaction` - Params related to [`ReactionValue::Registered`](crate::stargate::reactions::models::ReactionValue::Registered) reactions.
+    /// * `value` - Params related to [`ReactionValue::FreeText`](crate::stargate::reactions::models::ReactionValue::FreeText) reactions.
     /// * `user` - User setting the params.
     pub fn set_reactions_params(
         subspace_id: u64,

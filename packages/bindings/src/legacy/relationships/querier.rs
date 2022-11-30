@@ -3,12 +3,12 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    relationships::models::{Relationship, UserBlock},
+    legacy::relationships::models::{Relationship, UserBlock},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::{
+use crate::legacy::{
     query::DesmosQuery,
     relationships::{
         models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
@@ -171,8 +171,8 @@ impl<'a> RelationshipsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::relationships::{
+    use crate::legacy::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::legacy::relationships::{
         mocks::MockRelationshipsQueries,
         models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
         querier::RelationshipsQuerier,

@@ -117,7 +117,7 @@ impl RelationshipsMsg {
 
 #[cfg(test)]
 mod tests {
-    use crate::relationships::msg::RelationshipsMsg;
+    use crate::legacy::relationships::msg::RelationshipsMsg;
     use cosmwasm_std::{Addr, Uint64};
 
     #[test]

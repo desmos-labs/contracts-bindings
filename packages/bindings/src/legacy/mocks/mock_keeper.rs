@@ -2,21 +2,21 @@
 //! when performing integration tests.
 
 #![cfg(not(tarpaulin_include))]
-use crate::mocks::mock_queriers::MockDesmosQuerier;
-use crate::msg::DesmosMsg;
+use crate::legacy::mocks::mock_queriers::MockDesmosQuerier;
+use crate::legacy::msg::DesmosMsg;
 #[cfg(feature = "posts")]
-use crate::posts::msg::PostsMsg;
+use crate::legacy::posts::msg::PostsMsg;
 #[cfg(feature = "profiles")]
-use crate::profiles::msg::ProfilesMsg;
-use crate::query::DesmosQuery;
+use crate::legacy::profiles::msg::ProfilesMsg;
+use crate::legacy::query::DesmosQuery;
 #[cfg(feature = "reactions")]
-use crate::reactions::msg::ReactionsMsg;
+use crate::legacy::reactions::msg::ReactionsMsg;
 #[cfg(feature = "relationships")]
-use crate::relationships::msg::RelationshipsMsg;
+use crate::legacy::relationships::msg::RelationshipsMsg;
 #[cfg(feature = "reports")]
-use crate::reports::{models::ReportTarget, msg::ReportsMsg};
+use crate::legacy::reports::{models::ReportTarget, msg::ReportsMsg};
 #[cfg(feature = "subspaces")]
-use crate::subspaces::msg::SubspacesMsg;
+use crate::legacy::subspaces::msg::SubspacesMsg;
 use anyhow::Result as AnyResult;
 use cosmwasm_std::{
     Addr, Api, Binary, BlockInfo, ContractResult, Empty, Event, Querier, QueryRequest, Storage,
@@ -44,7 +44,7 @@ impl DesmosKeeper {
         DesmosKeeper { querier }
     }
 
-    /// Handles [`ProfilesMsg`](crate::profiles::msg::ProfilesMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/profiles/spec/05-events.md).
+    /// Handles [`ProfilesMsg`](crate::legacy::profiles::msg::ProfilesMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/profiles/spec/05-events.md).
     #[cfg(feature = "profiles")]
     pub fn handle_profiles_msg(block: &BlockInfo, msg: ProfilesMsg) -> AnyResult<AppResponse> {
         match msg {
@@ -161,7 +161,7 @@ impl DesmosKeeper {
         }
     }
 
-    /// Handles [`SubspacesMsg`](crate::subspaces::msg::SubspacesMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/subspaces/spec/05-events.md).
+    /// Handles [`SubspacesMsg`](crate::legacy::subspaces::msg::SubspacesMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/subspaces/spec/05-events.md).
     #[cfg(feature = "subspaces")]
     pub fn handle_subspaces_msg(block: &BlockInfo, msg: SubspacesMsg) -> AnyResult<AppResponse> {
         match msg {
@@ -300,7 +300,7 @@ impl DesmosKeeper {
         }
     }
 
-    /// Handles [`RelationshipsMsg`](crate::relationships::msg::RelationshipsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/relationships/spec/05-events.md).
+    /// Handles [`RelationshipsMsg`](crate::legacy::relationships::msg::RelationshipsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/relationships/spec/05-events.md).
     #[cfg(feature = "relationships")]
     pub fn handle_relationships_msg(
         _block: &BlockInfo,
@@ -355,7 +355,7 @@ impl DesmosKeeper {
         }
     }
 
-    /// Handles [`PostsMsg`](crate::posts::msg::PostsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/posts/spec/05-events.md).
+    /// Handles [`PostsMsg`](crate::legacy::posts::msg::PostsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/posts/spec/05-events.md).
     #[cfg(feature = "posts")]
     pub fn handle_posts_msg(block: &BlockInfo, msg: PostsMsg) -> AnyResult<AppResponse> {
         match msg {
@@ -434,7 +434,7 @@ impl DesmosKeeper {
         }
     }
 
-    /// Handles [`ReportsMsg`](crate::reports::msg::ReportsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/reports/spec/05-events.md).
+    /// Handles [`ReportsMsg`](crate::legacy::reports::msg::ReportsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/reports/spec/05-events.md).
     #[cfg(feature = "reports")]
     pub fn handle_reports_msg(block: &BlockInfo, msg: ReportsMsg) -> AnyResult<AppResponse> {
         match msg {
@@ -510,7 +510,7 @@ impl DesmosKeeper {
         }
     }
 
-    /// Handles [`ReactionsMsg`](crate::reactions::msg::ReactionsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/reactions/spec/05-events.md).
+    /// Handles [`ReactionsMsg`](crate::legacy::reactions::msg::ReactionsMsg) then returns the response with proper [events](https://github.com/desmos-labs/desmos/blob/master/x/reactions/spec/05-events.md).
     #[cfg(feature = "reactions")]
     pub fn handle_reactions_msg(_block: &BlockInfo, msg: ReactionsMsg) -> AnyResult<AppResponse> {
         match msg {

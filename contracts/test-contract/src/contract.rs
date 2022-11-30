@@ -7,8 +7,8 @@ use cosmwasm_std::{
     QueryResponse, Response, StdError, StdResult, SystemResult,
 };
 use cw2::set_contract_version;
-use desmos_bindings::msg::DesmosMsg;
-use desmos_bindings::query::DesmosQuery;
+use desmos_bindings::legacy::msg::DesmosMsg;
+use desmos_bindings::legacy::query::DesmosQuery;
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:desmos-tip";

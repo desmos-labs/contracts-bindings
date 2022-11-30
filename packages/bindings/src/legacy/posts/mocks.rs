@@ -1,11 +1,11 @@
 //! Contains some useful mocks of the Desmos x/posts module's types made to be used in any test.
 
-use crate::posts::models::{Attachment, Post, PostAttachment, ReplySetting, UserAnswer};
-use crate::posts::models_query::{
+use crate::legacy::posts::models::{Attachment, Post, PostAttachment, ReplySetting, UserAnswer};
+use crate::legacy::posts::models_query::{
     QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
     QuerySectionPostsResponse, QuerySubspacePostsResponse,
 };
-use crate::posts::query::PostsQuery;
+use crate::legacy::posts::query::PostsQuery;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
 /// Struct that contains some utility methods to mock data of the Desmos

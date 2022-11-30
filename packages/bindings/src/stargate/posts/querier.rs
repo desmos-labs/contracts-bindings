@@ -1,18 +1,18 @@
 //! Contains the querier that can be used to query data related to the x/posts module.
 
-use crate::posts::proto::*;
-use crate::types::PageRequest;
+use crate::stargate::posts::proto::*;
+use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::posts::proto::{Attachment, Post, UserAnswer},
+    crate::stargate::posts::proto::{Attachment, Post, UserAnswer},
     cosmwasm_std::Binary,
 };
 
 /// Querier able to query data from the Desmos x/posts module.
 pub struct PostsQuerier<'a> {
-    querier: crate::posts::proto::PostsQuerier<'a, Empty>,
+    querier: crate::stargate::posts::proto::PostsQuerier<'a, Empty>,
 }
 
 impl<'a> PostsQuerier<'a> {
@@ -20,7 +20,6 @@ impl<'a> PostsQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::posts::querier::PostsQuerier;
     ///
@@ -30,7 +29,7 @@ impl<'a> PostsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::posts::proto::PostsQuerier::new(querier),
+            querier: crate::stargate::posts::proto::PostsQuerier::new(querier),
         }
     }
 
@@ -258,8 +257,8 @@ impl<'a> PostsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::posts::mocks::MockPostsQueries;
+    use crate::stargate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::stargate::posts::mocks::MockPostsQueries;
     #[test]
     fn test_query_subspace_posts() {
         let owned_deps = mock_desmos_dependencies();

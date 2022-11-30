@@ -1,18 +1,18 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
-use crate::subspaces::proto::*;
-use crate::types::PageRequest;
+use crate::stargate::subspaces::proto::*;
+use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::subspaces::proto::{Section, Subspace, UserGroup},
+    crate::stargate::subspaces::proto::{Section, Subspace, UserGroup},
     cosmwasm_std::Binary,
 };
 
 /// Querier able to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
-    querier: crate::subspaces::proto::SubspacesQuerier<'a, Empty>,
+    querier: crate::stargate::subspaces::proto::SubspacesQuerier<'a, Empty>,
 }
 
 impl<'a> SubspacesQuerier<'a> {
@@ -20,7 +20,6 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
     ///
@@ -31,7 +30,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::subspaces::proto::SubspacesQuerier::new(querier),
+            querier: crate::stargate::subspaces::proto::SubspacesQuerier::new(querier),
         }
     }
 }
@@ -272,8 +271,8 @@ impl<'a> SubspacesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::subspaces::mocks::MockSubspacesQueries;
+    use crate::stargate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::stargate::subspaces::mocks::MockSubspacesQueries;
 
     #[test]
     fn test_query_subspaces() {

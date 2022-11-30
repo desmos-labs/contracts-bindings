@@ -3,14 +3,14 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    profiles::models_app_links::{ApplicationLink, ApplicationLinkOwnerDetails},
-    profiles::models_chain_links::{ChainLink, ChainLinkOwnerDetails},
-    profiles::models_dtag_requests::DtagTransferRequest,
+    legacy::profiles::models_app_links::{ApplicationLink, ApplicationLinkOwnerDetails},
+    legacy::profiles::models_chain_links::{ChainLink, ChainLinkOwnerDetails},
+    legacy::profiles::models_dtag_requests::DtagTransferRequest,
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::{
+use crate::legacy::{
     profiles::{
         models_query::{
             QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
@@ -434,8 +434,8 @@ impl<'a> ProfilesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::profiles::mocks::MockProfilesQueries;
+    use crate::legacy::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::legacy::profiles::mocks::MockProfilesQueries;
     use cosmwasm_std::Addr;
     use std::ops::Deref;
 

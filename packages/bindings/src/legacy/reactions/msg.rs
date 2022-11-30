@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
-use crate::reactions::models::{
+use crate::legacy::reactions::models::{
     FreeTextValueParams, RawReactionValue, ReactionValue, RegisteredReactionValueParams,
 };
 
@@ -69,9 +69,9 @@ pub enum ReactionsMsg {
     SetReactionsParams {
         /// Id of the subspace for which to set the params.
         subspace_id: Uint64,
-        /// Params related to [`ReactionValue::Registered`](crate::reactions::models::ReactionValue::Registered) reactions.
+        /// Params related to [`ReactionValue::Registered`](crate::legacy::reactions::models::ReactionValue::Registered) reactions.
         registered_reaction: RegisteredReactionValueParams,
-        /// Params related to [`ReactionValue::FreeText`](crate::reactions::models::ReactionValue::FreeText) reactions.
+        /// Params related to [`ReactionValue::FreeText`](crate::legacy::reactions::models::ReactionValue::FreeText) reactions.
         free_text: FreeTextValueParams,
         /// User setting the params.
         user: Addr,
@@ -167,8 +167,8 @@ impl ReactionsMsg {
     /// Creates a new instance of [`ReactionsMsg::SetReactionsParams`].
     ///
     /// * `subspace_id` - Id of the subspace for which to set the params.
-    /// * `registered_reaction` - Params related to [`ReactionValue::Registered`](crate::reactions::models::ReactionValue::Registered) reactions.
-    /// * `value` - Params related to [`ReactionValue::FreeText`](crate::reactions::models::ReactionValue::FreeText) reactions.
+    /// * `registered_reaction` - Params related to [`ReactionValue::Registered`](crate::legacy::reactions::models::ReactionValue::Registered) reactions.
+    /// * `value` - Params related to [`ReactionValue::FreeText`](crate::legacy::reactions::models::ReactionValue::FreeText) reactions.
     /// * `user` - User setting the params.
     pub fn set_reactions_params(
         subspace_id: u64,

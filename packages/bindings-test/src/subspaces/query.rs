@@ -3,14 +3,14 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
     use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::subspaces::models::{
+    use desmos_bindings::legacy::subspaces::models::{
         GroupPermissions, Permission, PermissionDetail, UserPermissions,
     };
-    use desmos_bindings::subspaces::models_query::{
+    use desmos_bindings::legacy::subspaces::models_query::{
         QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
         QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
     };
-    use desmos_bindings::subspaces::query::SubspacesQuery;
+    use desmos_bindings::legacy::subspaces::query::SubspacesQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]

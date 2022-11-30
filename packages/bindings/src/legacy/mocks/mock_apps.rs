@@ -1,9 +1,9 @@
 //! Contains integration test utils for desmos custom modules.
 
 #![cfg(not(tarpaulin_include))]
-use crate::mocks::mock_keeper::DesmosKeeper;
-use crate::msg::DesmosMsg;
-use crate::query::DesmosQuery;
+use crate::legacy::mocks::mock_keeper::DesmosKeeper;
+use crate::legacy::msg::DesmosMsg;
+use crate::legacy::query::DesmosQuery;
 use cosmwasm_std::testing::{MockApi, MockStorage};
 use cosmwasm_std::{Addr, Api, Empty, GovMsg, IbcMsg, IbcQuery, Storage};
 use cw_multi_test::{
@@ -60,7 +60,7 @@ pub fn mock_desmos_app() -> DesmosApp {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
+    use crate::legacy::{
         posts::{
             mocks::MockPostsQueries, models_query::QueryPostResponse, msg::PostsMsg,
             querier::PostsQuerier,

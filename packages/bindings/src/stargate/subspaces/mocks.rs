@@ -1,12 +1,12 @@
 //! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
-use crate::subspaces::proto::{
+use crate::stargate::subspaces::proto::{
     permission_detail::{Sum, User},
     PermissionDetail, QuerySectionResponse, QuerySectionsResponse, QuerySubspaceResponse,
     QuerySubspacesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
     QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
-use crate::subspaces::types::Permission;
+use crate::stargate::subspaces::types::Permission;
 use chrono::DateTime;
 use desmos_std::shim::Timestamp;
 

@@ -1,7 +1,7 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
-use crate::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
-use crate::{
+use crate::legacy::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
+use crate::legacy::{
     query::DesmosQuery,
     subspaces::{
         models_query::{
@@ -16,8 +16,8 @@ use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::subspaces::models::Section,
-    crate::subspaces::models::{Subspace, UserGroup},
+    crate::legacy::subspaces::models::Section,
+    crate::legacy::subspaces::models::{Subspace, UserGroup},
     cosmwasm_std::Binary,
 };
 
@@ -307,8 +307,8 @@ impl<'a> SubspacesQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::subspaces::mocks::MockSubspacesQueries;
+    use crate::legacy::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::legacy::subspaces::mocks::MockSubspacesQueries;
     use std::ops::Deref;
 
     #[test]

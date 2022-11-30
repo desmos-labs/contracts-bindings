@@ -1,6 +1,6 @@
 //! Contains some useful mocks of the Desmos x/reactions module's types made to be used in any test.
 
-use crate::reactions::{
+use crate::legacy::reactions::{
     models::{
         FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
         RegisteredReactionValueParams, SubspaceReactionsParams,

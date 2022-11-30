@@ -3,12 +3,12 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    reactions::models::{Reaction, RegisteredReaction},
+    legacy::reactions::models::{Reaction, RegisteredReaction},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::{
+use crate::legacy::{
     query::DesmosQuery,
     reactions::{
         models_query::{
@@ -216,8 +216,8 @@ impl<'a> ReactionsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::reactions::mocks::MockReactionsQueries;
+    use crate::legacy::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::legacy::reactions::mocks::MockReactionsQueries;
     use std::ops::Deref;
 
     #[test]

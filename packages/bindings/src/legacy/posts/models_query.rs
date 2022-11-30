@@ -1,10 +1,10 @@
-//! Contains structures returned from the [PostsQuerier<'a>](crate::posts::querier::PostsQuerier).
+//! Contains structures returned from the [PostsQuerier<'a>](crate::legacy::posts::querier::PostsQuerier).
 
-use crate::posts::models::{Attachment, Post, UserAnswer};
-use crate::types::PageResponse;
+use crate::legacy::posts::models::{Attachment, Post, UserAnswer};
+use crate::legacy::types::PageResponse;
 use cosmwasm_schema::cw_serde;
 
-/// Response to [`PostsQuery::SubspacePosts`](crate::posts::query::PostsQuery::SubspacePosts).
+/// Response to [`PostsQuery::SubspacePosts`](crate::legacy::posts::query::PostsQuery::SubspacePosts).
 #[cw_serde]
 pub struct QuerySubspacePostsResponse {
     /// Queried posts.
@@ -13,7 +13,7 @@ pub struct QuerySubspacePostsResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`PostsQuery::SectionPosts`](crate::posts::query::PostsQuery::SectionPosts).
+/// Response to [`PostsQuery::SectionPosts`](crate::legacy::posts::query::PostsQuery::SectionPosts).
 #[cw_serde]
 pub struct QuerySectionPostsResponse {
     /// Queried posts.
@@ -22,14 +22,14 @@ pub struct QuerySectionPostsResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`PostsQuery::Post`](crate::posts::query::PostsQuery::Post).
+/// Response to [`PostsQuery::Post`](crate::legacy::posts::query::PostsQuery::Post).
 #[cw_serde]
 pub struct QueryPostResponse {
     /// Queried post.
     pub post: Post,
 }
 
-/// Response to [`PostsQuery::PostAttachments`](crate::posts::query::PostsQuery::PostAttachments).
+/// Response to [`PostsQuery::PostAttachments`](crate::legacy::posts::query::PostsQuery::PostAttachments).
 #[cw_serde]
 pub struct QueryPostAttachmentsResponse {
     /// Queried attachments.
@@ -38,7 +38,7 @@ pub struct QueryPostAttachmentsResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`PostsQuery::PollAnswers`](crate::posts::query::PostsQuery::PollAnswers).
+/// Response to [`PostsQuery::PollAnswers`](crate::legacy::posts::query::PostsQuery::PollAnswers).
 #[cw_serde]
 pub struct QueryPollAnswersResponse {
     /// Queried answers.

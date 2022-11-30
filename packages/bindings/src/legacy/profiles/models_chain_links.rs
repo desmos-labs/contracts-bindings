@@ -1,6 +1,6 @@
 //! Contains structs and enums related to the chain links.
 
-use crate::types::PubKey;
+use crate::legacy::types::PubKey;
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Binary};
 

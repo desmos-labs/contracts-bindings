@@ -1,6 +1,6 @@
 //! Contains some useful mocks of the Desmos x/relationships module's types made to be used in any test.
 
-use crate::relationships::proto::{
+use crate::stargate::relationships::proto::{
     QueryBlocksResponse, QueryRelationshipsResponse, Relationship, UserBlock,
 };
 

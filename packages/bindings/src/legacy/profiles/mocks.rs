@@ -1,8 +1,8 @@
 //! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
-use crate::profiles::models_app_links::ApplicationLinkState;
-use crate::profiles::models_chain_links::{Address, SignatureValueType};
-use crate::profiles::{
+use crate::legacy::profiles::models_app_links::ApplicationLinkState;
+use crate::legacy::profiles::models_chain_links::{Address, SignatureValueType};
+use crate::legacy::profiles::{
     models_app_links::{
         AppLinkResult, ApplicationLink, ApplicationLinkOwnerDetails, CallData, Data, OracleRequest,
     },
@@ -17,7 +17,7 @@ use crate::profiles::{
     },
     query::ProfilesQuery,
 };
-use crate::types::PubKey;
+use crate::legacy::types::PubKey;
 use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
 /// Struct that contains some utility methods to mock data of the Desmos

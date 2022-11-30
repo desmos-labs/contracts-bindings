@@ -1,17 +1,17 @@
 //! Contains the querier that can be used to query data related to the x/reports module.
 
-use crate::query::DesmosQuery;
-use crate::reports::models::{RawReportTarget, ReportTarget};
-use crate::reports::models_query::{
+use crate::legacy::query::DesmosQuery;
+use crate::legacy::reports::models::{RawReportTarget, ReportTarget};
+use crate::legacy::reports::models_query::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
 };
-use crate::reports::query::ReportsQuery;
-use crate::types::PageRequest;
+use crate::legacy::reports::query::ReportsQuery;
+use crate::legacy::types::PageRequest;
 use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::reports::models::{Reason, Report},
+    crate::legacy::reports::models::{Reason, Report},
     cosmwasm_std::Binary,
 };
 
@@ -182,9 +182,9 @@ impl<'a> ReportsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::reports::mocks::MockReportsQueries;
-    use crate::reports::querier::ReportsQuerier;
+    use crate::legacy::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::legacy::reports::mocks::MockReportsQueries;
+    use crate::legacy::reports::querier::ReportsQuerier;
     use cosmwasm_std::Uint64;
     use std::ops::Deref;
 

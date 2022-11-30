@@ -1,5 +1,5 @@
-use crate::reports::proto::{PostTarget, UserTarget};
-use crate::types::Any;
+use crate::stargate::reports::proto::{PostTarget, UserTarget};
+use crate::stargate::types::Any;
 use cosmwasm_std::StdError;
 use prost::Message;
 

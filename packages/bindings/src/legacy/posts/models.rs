@@ -1,6 +1,6 @@
 //! Contains structs and enums related to the x/posts module.
 
-use crate::posts::models::UnwrapPostAttachmentError::{InvalidMedia, InvalidPoll};
+use crate::legacy::posts::models::UnwrapPostAttachmentError::{InvalidMedia, InvalidPoll};
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
 use std::convert::TryFrom;

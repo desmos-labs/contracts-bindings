@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/posts module.
 
-use crate::posts::models::{
+use crate::legacy::posts::models::{
     Entities, PostAttachment, PostReference, RawPostAttachment, ReplySetting,
 };
 use cosmwasm_schema::cw_serde;
@@ -244,7 +244,7 @@ impl PostsMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::posts::models::ProvidedAnswer;
+    use crate::legacy::posts::models::ProvidedAnswer;
 
     #[test]
     fn test_create_post() {

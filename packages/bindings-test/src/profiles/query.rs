@@ -3,14 +3,14 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{USER1_ADDRESS, USER2_ADDRESS};
     use cosmwasm_std::Addr;
-    use desmos_bindings::profiles::models_chain_links::ChainLinkOwnerDetails;
-    use desmos_bindings::profiles::models_profile::Pictures;
-    use desmos_bindings::profiles::models_query::{
+    use desmos_bindings::legacy::profiles::models_chain_links::ChainLinkOwnerDetails;
+    use desmos_bindings::legacy::profiles::models_profile::Pictures;
+    use desmos_bindings::legacy::profiles::models_query::{
         QueryChainLinkOwnersResponse, QueryChainLinksResponse,
         QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestsResponse,
         QueryProfileResponse,
     };
-    use desmos_bindings::profiles::query::ProfilesQuery;
+    use desmos_bindings::legacy::profiles::query::ProfilesQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]

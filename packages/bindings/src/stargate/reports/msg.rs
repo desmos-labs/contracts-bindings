@@ -1,7 +1,7 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reports module.
 
-use crate::reports::proto::*;
-use crate::reports::types::ReportTarget;
+use crate::stargate::reports::proto::*;
+use crate::stargate::reports::types::ReportTarget;
 use cosmwasm_std::Addr;
 
 /// Represents the messages to interact with the reports module.

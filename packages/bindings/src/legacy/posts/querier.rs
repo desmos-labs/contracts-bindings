@@ -1,17 +1,17 @@
 //! Contains the querier that can be used to query data related to the x/posts module.
 
-use crate::posts::models_query::{
+use crate::legacy::posts::models_query::{
     QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
     QuerySectionPostsResponse, QuerySubspacePostsResponse,
 };
-use crate::posts::query::PostsQuery;
-use crate::query::DesmosQuery;
-use crate::types::PageRequest;
+use crate::legacy::posts::query::PostsQuery;
+use crate::legacy::query::DesmosQuery;
+use crate::legacy::types::PageRequest;
 use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::posts::models::{Attachment, Post, UserAnswer},
+    crate::legacy::posts::models::{Attachment, Post, UserAnswer},
     cosmwasm_std::Binary,
 };
 
@@ -279,9 +279,9 @@ impl<'a> PostsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::posts::mocks::MockPostsQueries;
-    use crate::posts::querier::PostsQuerier;
+    use crate::legacy::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::legacy::posts::mocks::MockPostsQueries;
+    use crate::legacy::posts::querier::PostsQuerier;
     use cosmwasm_std::Uint64;
     use std::ops::Deref;
 

@@ -1,14 +1,14 @@
 //! Contains the types definitions of all the responses to the x/subspaces query messages.
 
-use crate::subspaces::models::{Permission, Section};
-use crate::{
+use crate::legacy::subspaces::models::{Permission, Section};
+use crate::legacy::{
     subspaces::models::{PermissionDetail, Subspace, UserGroup},
     types::PageResponse,
 };
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::Addr;
 
-/// Response to [`Subspaces`](crate::subspaces::query::SubspacesQuery::Subspaces).
+/// Response to [`Subspaces`](crate::legacy::subspaces::query::SubspacesQuery::Subspaces).
 #[cw_serde]
 pub struct QuerySubspacesResponse {
     /// Queried subspaces.
@@ -17,14 +17,14 @@ pub struct QuerySubspacesResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`Subspace`](crate::subspaces::query::SubspacesQuery::Subspace).
+/// Response to [`Subspace`](crate::legacy::subspaces::query::SubspacesQuery::Subspace).
 #[cw_serde]
 pub struct QuerySubspaceResponse {
     /// Queried subspace.
     pub subspace: Subspace,
 }
 
-/// Response to [`Sections`](crate::subspaces::query::SubspacesQuery::Sections).
+/// Response to [`Sections`](crate::legacy::subspaces::query::SubspacesQuery::Sections).
 #[cw_serde]
 pub struct QuerySectionsResponse {
     /// Queried sections.
@@ -33,14 +33,14 @@ pub struct QuerySectionsResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`Section`](crate::subspaces::query::SubspacesQuery::Section).
+/// Response to [`Section`](crate::legacy::subspaces::query::SubspacesQuery::Section).
 #[cw_serde]
 pub struct QuerySectionResponse {
     /// Queried section.
     pub section: Section,
 }
 
-/// Response to [`UserGroups`](crate::subspaces::query::SubspacesQuery::UserGroups).
+/// Response to [`UserGroups`](crate::legacy::subspaces::query::SubspacesQuery::UserGroups).
 #[cw_serde]
 pub struct QueryUserGroupsResponse {
     /// Queried user groups.
@@ -49,14 +49,14 @@ pub struct QueryUserGroupsResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`UserGroup`](crate::subspaces::query::SubspacesQuery::UserGroup).
+/// Response to [`UserGroup`](crate::legacy::subspaces::query::SubspacesQuery::UserGroup).
 #[cw_serde]
 pub struct QueryUserGroupResponse {
     /// Queried user group.
     pub group: UserGroup,
 }
 
-/// Response to [`UserGroupMembers`](crate::subspaces::query::SubspacesQuery::UserGroupMembers).
+/// Response to [`UserGroupMembers`](crate::legacy::subspaces::query::SubspacesQuery::UserGroupMembers).
 #[cw_serde]
 pub struct QueryUserGroupMembersResponse {
     /// Members of the queried group.
@@ -65,7 +65,7 @@ pub struct QueryUserGroupMembersResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`UserPermissions`](crate::subspaces::query::SubspacesQuery::UserPermissions).
+/// Response to [`UserPermissions`](crate::legacy::subspaces::query::SubspacesQuery::UserPermissions).
 #[cw_serde]
 pub struct QueryUserPermissionsResponse {
     /// The user's permissions that is the combination of [details](QueryUserPermissionsResponse::details).

@@ -1,6 +1,6 @@
 //! Contains some useful mocks of the Desmos x/relationships module's types made to be used in any test.
 
-use crate::relationships::{
+use crate::legacy::relationships::{
     models::{Relationship, UserBlock},
     models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
     query::RelationshipsQuery,
@@ -55,7 +55,7 @@ pub fn mock_relationships_query_response(query: &RelationshipsQuery) -> Contract
 
 #[cfg(test)]
 mod tests {
-    use crate::relationships::{
+    use crate::legacy::relationships::{
         mocks::{mock_relationships_query_response, MockRelationshipsQueries},
         models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
         query::RelationshipsQuery,

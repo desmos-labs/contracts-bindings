@@ -3,18 +3,18 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    reactions::proto::{Reaction, RegisteredReaction},
+    stargate::reactions::proto::{Reaction, RegisteredReaction},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::reactions::proto::*;
-use crate::types::PageRequest;
+use crate::stargate::reactions::proto::*;
+use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/reactions module.
 pub struct ReactionsQuerier<'a> {
-    querier: crate::reactions::proto::ReactionsQuerier<'a, Empty>,
+    querier: crate::stargate::reactions::proto::ReactionsQuerier<'a, Empty>,
 }
 
 impl<'a> ReactionsQuerier<'a> {
@@ -22,7 +22,6 @@ impl<'a> ReactionsQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::reactions::querier::ReactionsQuerier;
     ///
@@ -33,7 +32,7 @@ impl<'a> ReactionsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::reactions::proto::ReactionsQuerier::new(querier),
+            querier: crate::stargate::reactions::proto::ReactionsQuerier::new(querier),
         }
     }
 }
@@ -186,8 +185,8 @@ impl<'a> ReactionsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::reactions::mocks::MockReactionsQueries;
+    use crate::stargate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::stargate::reactions::mocks::MockReactionsQueries;
 
     #[test]
     fn test_query_reactions() {

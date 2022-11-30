@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reports module.
 
-use crate::reports::models::{RawReportTarget, ReportTarget};
+use crate::legacy::reports::models::{RawReportTarget, ReportTarget};
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
 
@@ -150,8 +150,8 @@ impl ReportsMsg {
 
 #[cfg(test)]
 mod test {
-    use crate::reports::models::ReportTarget;
-    use crate::reports::msg::ReportsMsg;
+    use crate::legacy::reports::models::ReportTarget;
+    use crate::legacy::reports::msg::ReportsMsg;
     use cosmwasm_std::{Addr, Uint64};
 
     #[test]

@@ -1,7 +1,7 @@
 //! Contains the messages that can be sent to the chain to interact with the x/posts module.
 
-use crate::posts::proto::*;
-use crate::posts::types::AttachmentContent;
+use crate::stargate::posts::proto::*;
+use crate::stargate::posts::types::AttachmentContent;
 use cosmwasm_std::Addr;
 
 /// Represents the messages to interact with the posts module.

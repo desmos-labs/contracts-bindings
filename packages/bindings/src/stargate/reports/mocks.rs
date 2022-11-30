@@ -1,10 +1,10 @@
 //! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
 
-use crate::reports::proto::{
+use crate::stargate::reports::proto::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
     Report, UserTarget,
 };
-use crate::reports::types::ReportTarget;
+use crate::stargate::reports::types::ReportTarget;
 use chrono::DateTime;
 use desmos_std::shim::Timestamp;
 

@@ -3,18 +3,18 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    relationships::proto::{Relationship, UserBlock},
+    stargate::relationships::proto::{Relationship, UserBlock},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::relationships::proto::*;
-use crate::types::PageRequest;
+use crate::stargate::relationships::proto::*;
+use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {
-    querier: crate::relationships::proto::RelationshipsQuerier<'a, Empty>,
+    querier: crate::stargate::relationships::proto::RelationshipsQuerier<'a, Empty>,
 }
 
 impl<'a> RelationshipsQuerier<'a> {
@@ -22,7 +22,6 @@ impl<'a> RelationshipsQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
     ///
@@ -32,7 +31,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::relationships::proto::RelationshipsQuerier::new(querier),
+            querier: crate::stargate::relationships::proto::RelationshipsQuerier::new(querier),
         }
     }
 
@@ -160,8 +159,8 @@ impl<'a> RelationshipsQuerier<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::relationships::mocks::{MockRelationshipsQueries, MOCK_TARGET, MOCK_USER};
+    use crate::stargate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::stargate::relationships::mocks::{MockRelationshipsQueries, MOCK_TARGET, MOCK_USER};
     use cosmwasm_std::Addr;
 
     #[test]

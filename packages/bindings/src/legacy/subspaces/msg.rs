@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
-use crate::subspaces::models::Permission;
+use crate::legacy::subspaces::models::Permission;
 use cosmwasm_schema::cw_serde;
 use cosmwasm_std::{Addr, Uint64};
 

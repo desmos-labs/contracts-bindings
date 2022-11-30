@@ -1,5 +1,5 @@
-use crate::posts::proto::{Media, Poll};
-use crate::types::Any;
+use crate::stargate::posts::proto::{Media, Poll};
+use crate::stargate::types::Any;
 use cosmwasm_std::StdError;
 use prost::Message;
 
