@@ -3,15 +3,15 @@
 //! Crate that provides the bindings to interact with the Desmos blockchain custom modules from a CosmWasm
 //! smart contract.
 
-#[cfg(feature = "stargate")]
-mod stargate;
 #[cfg(feature = "legacy")]
 mod legacy;
+#[cfg(feature = "stargate")]
+mod stargate;
 
 extern crate core;
 #[cfg(feature = "iterators")]
 pub mod iter;
-#[cfg(feature = "stargate")]
-pub use crate::stargate::*;
 #[cfg(feature = "legacy")]
 pub use crate::legacy::*;
+#[cfg(feature = "stargate")]
+pub use crate::stargate::*;

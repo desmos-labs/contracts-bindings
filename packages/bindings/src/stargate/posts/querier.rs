@@ -270,6 +270,7 @@ mod tests {
         let expected = MockPostsQueries::get_mocked_subspace_posts_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_subspace_posts() {
         let owned_deps = mock_desmos_dependencies();
@@ -284,6 +285,7 @@ mod tests {
         // The third item should be none since it provides only 2 posts.
         assert!(iterator.next().is_none())
     }
+
     #[test]
     fn test_query_section_posts() {
         let owned_deps = mock_desmos_dependencies();
@@ -294,6 +296,7 @@ mod tests {
         let expected = MockPostsQueries::get_mocked_section_posts_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_section_posts() {
         let owned_deps = mock_desmos_dependencies();
@@ -308,6 +311,7 @@ mod tests {
         // The third item should be none since it provides only 2 items.
         assert!(iterator.next().is_none())
     }
+
     #[test]
     fn test_query_post() {
         let owned_deps = mock_desmos_dependencies();
@@ -318,6 +322,7 @@ mod tests {
         let expected = MockPostsQueries::get_mocked_post_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_query_post_attachments() {
         let owned_deps = mock_desmos_dependencies();
@@ -328,6 +333,7 @@ mod tests {
         let expected = MockPostsQueries::get_mocked_post_attachments_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_post_attachments() {
         let owned_deps = mock_desmos_dependencies();
@@ -342,6 +348,7 @@ mod tests {
         // The third item should be none since it provides only 2 items.
         assert!(iterator.next().is_none())
     }
+
     #[test]
     fn test_query_poll_answers() {
         let owned_deps = mock_desmos_dependencies();
@@ -352,6 +359,7 @@ mod tests {
         let expected = MockPostsQueries::get_mocked_poll_answers_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_poll_answers() {
         let owned_deps = mock_desmos_dependencies();

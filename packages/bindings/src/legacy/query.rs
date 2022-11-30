@@ -151,6 +151,7 @@ mod tests {
         let expected = DesmosQuery::Profiles(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
     }
+
     #[test]
     fn test_profiles_query_into_query_request() {
         let query = ProfilesQuery::Profile {
@@ -161,6 +162,7 @@ mod tests {
             query.into()
         )
     }
+
     #[test]
     fn test_from_subspaces_query() {
         let query = SubspacesQuery::Subspaces {
@@ -169,6 +171,7 @@ mod tests {
         let expected = DesmosQuery::Subspaces(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
     }
+
     #[test]
     fn test_subspaces_query_into_query_request() {
         let query = SubspacesQuery::Subspaces {
@@ -179,6 +182,7 @@ mod tests {
             query.into()
         )
     }
+
     #[test]
     fn test_from_relationships_query() {
         let query = RelationshipsQuery::Relationships {
@@ -194,6 +198,7 @@ mod tests {
         let expected = DesmosQuery::Relationships(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
+
     #[test]
     fn test_relationships_query_into_query_request() {
         let query = RelationshipsQuery::Relationships {
@@ -211,6 +216,7 @@ mod tests {
             query.into()
         )
     }
+
     #[test]
     fn test_from_posts_query() {
         let query = PostsQuery::Post {
@@ -220,6 +226,7 @@ mod tests {
         let expected = DesmosQuery::Posts(query.clone());
         assert_eq!(expected, DesmosQuery::from(query));
     }
+
     #[test]
     fn test_posts_query_into_query_request() {
         let query = PostsQuery::Post {
@@ -231,6 +238,7 @@ mod tests {
             query.into()
         )
     }
+
     #[test]
     fn test_from_reactions_query() {
         let query = ReactionsQuery::Reactions {
@@ -242,6 +250,7 @@ mod tests {
         let expected = DesmosQuery::Reactions(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
+
     #[test]
     fn test_reactions_query_into_query_request() {
         let query = ReactionsQuery::Reactions {
@@ -255,6 +264,7 @@ mod tests {
             query.into()
         )
     }
+
     #[test]
     fn test_from_reports_query() {
         let query = ReportsQuery::Report {
@@ -264,6 +274,7 @@ mod tests {
         let expected = DesmosQuery::Reports(query.clone());
         assert_eq!(expected, DesmosQuery::from(query))
     }
+
     #[test]
     fn test_reports_query_into_query_request() {
         let query = ReportsQuery::Report {

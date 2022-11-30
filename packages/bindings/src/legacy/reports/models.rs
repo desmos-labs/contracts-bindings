@@ -136,6 +136,7 @@ mod tests {
             ReportTarget::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn user_report_target_try_from_wrong_raw_error() {
         let raw = RawReportTarget {
@@ -148,6 +149,7 @@ mod tests {
             ReportTarget::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn user_report_target_try_from_raw_properly() {
         let raw = RawReportTarget {
@@ -162,6 +164,7 @@ mod tests {
             ReportTarget::try_from(raw).unwrap()
         )
     }
+
     #[test]
     fn post_report_target_try_from_wrong_raw_error() {
         let raw = RawReportTarget {
@@ -174,6 +177,7 @@ mod tests {
             ReportTarget::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_report_target_try_from_raw_properly() {
         let raw = RawReportTarget {

@@ -160,6 +160,7 @@ mod tests {
         );
         assert!(result.is_ok());
     }
+
     #[test]
     fn test_profiles_query_properly() {
         let app = mock_desmos_app();

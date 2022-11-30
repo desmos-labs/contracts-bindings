@@ -149,6 +149,7 @@ mod tests {
         let expected = DesmosMsg::Profiles(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg))
     }
+
     #[test]
     fn test_profiles_msg_into_cosmos_msg() {
         let msg = ProfilesMsg::RequestDtagTransfer {
@@ -160,6 +161,7 @@ mod tests {
             msg.into()
         )
     }
+
     #[test]
     fn test_from_relationships_msg() {
         let msg = RelationshipsMsg::CreateRelationship {
@@ -170,6 +172,7 @@ mod tests {
         let expected = DesmosMsg::Relationships(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg))
     }
+
     #[test]
     fn test_realationships_msg_into_cosmos_msg() {
         let msg = RelationshipsMsg::CreateRelationship {
@@ -182,6 +185,7 @@ mod tests {
             msg.into()
         )
     }
+
     #[test]
     fn test_from_subspaces_msg() {
         let msg = SubspacesMsg::CreateSubspace {
@@ -194,6 +198,7 @@ mod tests {
         let expected = DesmosMsg::Subspaces(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
+
     #[test]
     fn test_subspaces_msg_into_cosmos_msg() {
         let msg = SubspacesMsg::CreateSubspace {
@@ -208,6 +213,7 @@ mod tests {
             msg.into()
         )
     }
+
     #[test]
     fn test_from_posts_msg() {
         let msg = PostsMsg::DeletePost {
@@ -218,6 +224,7 @@ mod tests {
         let expected = DesmosMsg::Posts(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
+
     #[test]
     fn test_posts_msg_into_cosmos_msg() {
         let msg = PostsMsg::DeletePost {
@@ -230,6 +237,7 @@ mod tests {
             msg.into()
         )
     }
+
     #[test]
     fn test_from_reactions_msg() {
         let msg = ReactionsMsg::AddReaction {
@@ -244,6 +252,7 @@ mod tests {
         let expected = DesmosMsg::Reactions(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
+
     #[test]
     fn test_reactions_msg_into_cosmos_msg() {
         let msg = ReactionsMsg::AddReaction {
@@ -260,6 +269,7 @@ mod tests {
             msg.into()
         )
     }
+
     #[test]
     fn test_from_reports_msg() {
         let msg = ReportsMsg::DeleteReport {
@@ -270,6 +280,7 @@ mod tests {
         let expected = DesmosMsg::Reports(msg.clone());
         assert_eq!(expected, DesmosMsg::from(msg));
     }
+
     #[test]
     fn test_reports_msg_into_cosmos_msg() {
         let msg = ReportsMsg::DeleteReport {

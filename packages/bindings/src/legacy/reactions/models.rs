@@ -179,6 +179,7 @@ mod tests {
             ReactionValue::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn registered_reaction_value_try_from_wrong_raw_error() {
         let raw = RawReactionValue {
@@ -193,6 +194,7 @@ mod tests {
             ReactionValue::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn registered_reaction_value_try_from_raw_properly() {
         let raw = RawReactionValue {
@@ -207,6 +209,7 @@ mod tests {
             ReactionValue::try_from(raw).unwrap()
         )
     }
+
     #[test]
     fn free_text_value_try_from_wrong_raw_error() {
         let raw = RawReactionValue {
@@ -219,6 +222,7 @@ mod tests {
             ReactionValue::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn free_text_reaction_value_try_from_raw_properly() {
         let raw = RawReactionValue {

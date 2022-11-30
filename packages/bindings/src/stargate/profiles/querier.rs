@@ -417,6 +417,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_profile_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_query_incoming_dtag_transfer_requests() {
         let owned_deps = mock_desmos_dependencies();
@@ -428,6 +429,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_incoming_dtag_transfer_requests() {
         let owned_deps = mock_desmos_dependencies();
@@ -439,6 +441,7 @@ mod tests {
         assert_eq!(expected.requests[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
+
     #[test]
     fn test_query_chain_links() {
         let owned_deps = mock_desmos_dependencies();
@@ -459,6 +462,7 @@ mod tests {
             response.links.first().unwrap()
         )
     }
+
     #[test]
     fn test_iterate_chain_links() {
         let owned_deps = mock_desmos_dependencies();
@@ -474,6 +478,7 @@ mod tests {
         assert_eq!(expected.links[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
+
     #[test]
     fn test_query_chain_link_owners() {
         let owned_deps = mock_desmos_dependencies();
@@ -489,6 +494,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_chain_link_owners_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_chain_link_owners() {
         let owned_deps = mock_desmos_dependencies();
@@ -503,6 +509,7 @@ mod tests {
         assert_eq!(expected.owners[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
+
     #[test]
     fn test_query_default_external_addresses() {
         let owned_deps = mock_desmos_dependencies();
@@ -518,6 +525,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_default_external_addresses_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_default_external_addresses() {
         let owned_deps = mock_desmos_dependencies();
@@ -532,6 +540,7 @@ mod tests {
         assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
+
     #[test]
     fn test_query_query_application_links() {
         let owned_deps = mock_desmos_dependencies();
@@ -548,6 +557,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_application_links_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_application_links() {
         let owned_deps = mock_desmos_dependencies();
@@ -563,6 +573,7 @@ mod tests {
         assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
+
     #[test]
     fn test_query_application_link_by_client_id() {
         let owned_deps = mock_desmos_dependencies();
@@ -574,6 +585,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_application_link_by_client_id_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_query_app_link_owners() {
         let owned_deps = mock_desmos_dependencies();
@@ -589,6 +601,7 @@ mod tests {
         let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
         assert_eq!(expected, response)
     }
+
     #[test]
     fn test_iterate_app_link_owners() {
         let owned_deps = mock_desmos_dependencies();

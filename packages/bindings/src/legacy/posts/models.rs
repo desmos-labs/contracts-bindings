@@ -360,6 +360,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_media_attachment_try_from_raw_without_mime_type_error() {
         let raw = RawPostAttachment {
@@ -378,6 +379,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_media_attachment_try_from_raw_without_uri_error() {
         let raw = RawPostAttachment {
@@ -396,6 +398,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_media_attachment_try_from_valid_raw_properly() {
         let raw = RawPostAttachment {
@@ -417,6 +420,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap()
         )
     }
+
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_question_error() {
         let raw = RawPostAttachment {
@@ -435,6 +439,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_provided_answers_error() {
         let raw = RawPostAttachment {
@@ -453,6 +458,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_end_date_error() {
         let raw = RawPostAttachment {
@@ -474,6 +480,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_allows_multiple_answers_error() {
         let raw = RawPostAttachment {
@@ -495,6 +502,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_allows_answer_edits_error() {
         let raw = RawPostAttachment {
@@ -516,6 +524,7 @@ mod tests {
             PostAttachment::try_from(raw).unwrap_err()
         )
     }
+
     #[test]
     fn post_poll_attachment_try_from_valid_raw_properly() {
         let raw = RawPostAttachment {
