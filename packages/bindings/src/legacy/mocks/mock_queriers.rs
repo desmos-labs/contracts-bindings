@@ -8,7 +8,9 @@ use crate::legacy::query::DesmosQuery;
 #[cfg(feature = "reactions")]
 use crate::legacy::reactions::{mocks::mock_reactions_query_response, query::ReactionsQuery};
 #[cfg(feature = "relationships")]
-use crate::legacy::relationships::{mocks::mock_relationships_query_response, query::RelationshipsQuery};
+use crate::legacy::relationships::{
+    mocks::mock_relationships_query_response, query::RelationshipsQuery,
+};
 #[cfg(feature = "reports")]
 use crate::legacy::reports::{mocks::mock_reports_query_response, query::ReportsQuery};
 #[cfg(feature = "subspaces")]

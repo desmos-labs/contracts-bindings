@@ -195,7 +195,9 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     #[cfg(feature = "relationships")]
     {
         use crate::stargate::relationships::mocks::MockRelationshipsQueries;
-        use crate::stargate::relationships::proto::{QueryBlocksRequest, QueryRelationshipsRequest};
+        use crate::stargate::relationships::proto::{
+            QueryBlocksRequest, QueryRelationshipsRequest,
+        };
         QueryRelationshipsRequest::mock_response(
             querier,
             MockRelationshipsQueries::get_mocked_relationships_response(),
