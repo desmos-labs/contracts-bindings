@@ -270,4 +270,138 @@ impl<'a> SubspacesQuerier<'a> {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::subspaces::mocks::MockSubspacesQueries;
+
+    #[test]
+    fn test_query_subspaces() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_subspaces(None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_subspaces_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_iterate_subspaces() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_subspaces(10);
+        let expected = MockSubspacesQueries::get_mocked_subspaces_response();
+        assert_eq!(expected.subspaces[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_subspace() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_subspace(1).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_subspace_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_query_sections() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_sections(1, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_sections_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_iterate_sections() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_sections(1, 10);
+        let expected = MockSubspacesQueries::get_mocked_sections_response();
+        assert_eq!(expected.sections[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_section() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_section(1, 1).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_section_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_query_user_groups() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_groups(1, None, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_groups_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_iterate_user_groups() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_user_groups(1, None, 10);
+        let expected = MockSubspacesQueries::get_mocked_user_groups_response();
+        assert_eq!(expected.groups[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_user_group() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_group(1, 1).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_group_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_query_user_group_members() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_group_members(1, 1, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_group_members_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_iterate_user_group_members() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_user_group_members(1, 1, 10);
+        let expected = MockSubspacesQueries::get_mocked_user_group_members_response();
+        assert_eq!(expected.members[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_user_permissions() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier
+            .query_user_permissions(
+                1,
+                None,
+                Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            )
+            .unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_permissions_response();
+        assert_eq!(expected, response);
+    }
+}

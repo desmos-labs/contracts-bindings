@@ -228,4 +228,45 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
             MockReportsQueries::get_mocked_reason_response(),
         );
     }
+    #[cfg(feature = "subspaces")]
+    {
+        use crate::subspaces::mocks::MockSubspacesQueries;
+        use crate::subspaces::proto::{
+            QuerySectionRequest, QuerySectionsRequest, QuerySubspaceRequest, QuerySubspacesRequest,
+            QueryUserGroupMembersRequest, QueryUserGroupRequest, QueryUserGroupsRequest,
+            QueryUserPermissionsRequest,
+        };
+        QuerySubspacesRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_subspaces_response(),
+        );
+        QuerySubspaceRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_subspace_response(),
+        );
+        QuerySectionsRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_sections_response(),
+        );
+        QuerySectionRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_section_response(),
+        );
+        QueryUserGroupsRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_user_groups_response(),
+        );
+        QueryUserGroupRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_user_group_response(),
+        );
+        QueryUserGroupMembersRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_user_group_members_response(),
+        );
+        QueryUserPermissionsRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_user_permissions_response(),
+        );
+    }
 }
