@@ -2,10 +2,9 @@
 
 use crate::subspaces::proto::{
     permission_detail::{Sum, User},
-    PermissionDetail, QuerySectionResponse, QuerySectionsResponse,
-    QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
-    QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse, Section,
-    Subspace, UserGroup,
+    PermissionDetail, QuerySectionResponse, QuerySectionsResponse, QuerySubspaceResponse,
+    QuerySubspacesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
+    QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
 use crate::subspaces::types::Permission;
 use chrono::DateTime;

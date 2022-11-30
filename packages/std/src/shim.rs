@@ -1,10 +1,10 @@
 use ::serde::{ser, Deserialize, Deserializer, Serialize, Serializer};
 use chrono::{DateTime, NaiveDateTime, Utc};
+use prost::Message;
 use serde::de;
 use serde::de::Visitor;
 use std::fmt;
 use std::str::FromStr;
-use prost::Message;
 
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
 pub struct Timestamp {
