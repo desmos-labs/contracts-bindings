@@ -5,7 +5,7 @@ use crate::legacy::mocks::mock_keeper::DesmosKeeper;
 use crate::legacy::msg::DesmosMsg;
 use crate::legacy::query::DesmosQuery;
 use cosmwasm_std::testing::{MockApi, MockStorage};
-use cosmwasm_std::{Addr, Api, Empty, GovMsg, IbcMsg, IbcQuery, Storage};
+use cosmwasm_std::{Api, Empty, GovMsg, IbcMsg, IbcQuery, Storage};
 use cw_multi_test::{
     App, BankKeeper, BasicAppBuilder, DistributionKeeper, FailingModule, Module, Router,
     StakeKeeper, WasmKeeper,
@@ -86,6 +86,7 @@ mod tests {
             querier::SubspacesQuerier,
         },
     };
+    use cosmwasm_std::Addr;
     use cw_multi_test::Executor;
     use std::ops::Deref;
     const SENDER: &str = "sender";

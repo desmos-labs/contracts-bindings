@@ -63,7 +63,7 @@ pub struct QueryApplicationLinksResponse {
     pub pagination: Option<PageResponse>,
 }
 
-/// Response to [`ProfilesQuery::ApplicationLinkByChainID`](crate::legacy::profiles::query::ProfilesQuery::ApplicationLinkByChainID).
+/// Response to [`ProfilesQuery::ApplicationLinkByClientID`](crate::legacy::profiles::query::ProfilesQuery::ApplicationLinkByClientID).
 #[cw_serde]
 pub struct QueryApplicationLinkByClientIDResponse {
     /// Queried application link.

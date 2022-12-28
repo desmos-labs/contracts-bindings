@@ -1,4 +1,4 @@
-use ::serde::{ser, Deserialize, Deserializer, Serialize, Serializer};
+use ::serde::{ser, ser::SerializeMap, Deserialize, Deserializer, Serialize, Serializer};
 use chrono::{DateTime, NaiveDateTime, Utc};
 use prost::Message;
 use serde::de;
@@ -31,8 +31,8 @@ impl Serialize for Timestamp {
             nanos: self.nanos,
         };
         ts.normalize();
-        let dt = NaiveDateTime::from_timestamp(ts.seconds, ts.nanos as u32);
-        let dt: DateTime<Utc> = DateTime::from_utc(dt, Utc);
+        let dt = NaiveDateTime::from_timestamp_opt(ts.seconds, ts.nanos as u32);
+        let dt: DateTime<Utc> = DateTime::from_utc(dt.unwrap_or_default(), Utc);
         serializer.serialize_str(format!("{:?}", dt).as_str())
     }
 }
@@ -174,7 +174,6 @@ pub struct Any {
 macro_rules! expand_as_any {
     ($($ty:path,)*) => {
 
-        // TODO: make serialized data contains `@type` (https://github.com/osmosis-labs/osmosis-rust/issues/43)
         impl Serialize for Any {
             fn serialize<S>(
                 &self,
@@ -189,7 +188,10 @@ macro_rules! expand_as_any {
                             prost::Message::decode(self.value.as_slice()).map_err(ser::Error::custom);
 
                         if let Ok(value) = value {
-                            return value.serialize(serializer);
+                            let mut map = serializer.serialize_map(Some(2))?;
+                            map.serialize_entry("@type".into(), &self.type_url)?;
+                            map.serialize_entry("value".into(), &value)?;
+                            return map.end();
                         }
                     }
                 )*
@@ -269,8 +271,11 @@ macro_rules! expand_as_any {
             impl TryFrom<Any> for $ty {
                 type Error = prost::DecodeError;
 
-                fn try_from(value: Any) -> Result<Self, Self::Error> {
-                    prost::Message::decode(value.value.as_slice())
+                fn try_from(any: Any) -> Result<Self, Self::Error> {
+                    if any.type_url != <$ty>::TYPE_URL {
+                        return Err(prost::DecodeError::new("type url does not match".to_string()));
+                    }
+                    prost::Message::decode(any.value.as_slice())
                 }
             }
             impl Into<Any> for $ty {

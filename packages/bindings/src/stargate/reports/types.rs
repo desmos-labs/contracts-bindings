@@ -12,17 +12,15 @@ pub enum ReportTarget {
 impl TryFrom<Any> for ReportTarget {
     type Error = StdError;
     fn try_from(value: Any) -> Result<Self, Self::Error> {
-        if let Ok(content) = UserTarget::decode(value.value.as_slice()) {
-            return Ok(ReportTarget::UserTarget(content));
+        match any.type_url {
+            UserTarget::TYPE_URL => UserTarget::try_from(any),
+            PostTarget::TYPE_URL => PostTarget::try_from(any),
+            _ => Err(StdError::ParseErr {
+                target_type: "AddressData".to_string(),
+                msg: "Unmatched type: must be either `UserTarget`, `PostTarget` or `Base58Address`."
+                    .to_string(),
+            })
         }
-        if let Ok(content) = PostTarget::decode(value.value.as_slice()) {
-            return Ok(ReportTarget::PostTarget(content));
-        }
-        Err(StdError::ParseErr {
-            target_type: "ReportTarget".to_string(),
-            msg: "Unmatched type: must be either `UserTarget`, `PostTarget` or `Base58Address`."
-                .to_string(),
-        })
     }
 }
 

@@ -10,17 +10,15 @@ pub enum AttachmentContent {
 
 impl TryFrom<Any> for AttachmentContent {
     type Error = StdError;
-    fn try_from(value: Any) -> Result<Self, Self::Error> {
-        if let Ok(content) = Poll::decode(value.value.as_slice()) {
-            return Ok(AttachmentContent::Poll(content));
+    fn try_from(any: Any) -> Result<Self, Self::Error> {
+        match any.type_url {
+            Poll::TYPE_URL => Poll::from(any),
+            Media::TYPE_URL => Media::from(any),
+            _ =>  Err(StdError::ParseErr {
+                target_type: "AttachmentContent".to_string(),
+                msg: "Unmatched type: must be either `Poll`, `Media` or `Base58Address`.".to_string(),
+            })
         }
-        if let Ok(content) = Media::decode(value.value.as_slice()) {
-            return Ok(AttachmentContent::Media(content));
-        }
-        Err(StdError::ParseErr {
-            target_type: "AttachmentContent".to_string(),
-            msg: "Unmatched type: must be either `Poll`, `Media` or `Base58Address`.".to_string(),
-        })
     }
 }
 
