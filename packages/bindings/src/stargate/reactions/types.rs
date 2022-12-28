@@ -17,11 +17,10 @@ impl TryFrom<Any> for ReactionValue {
         if let Ok(address) = RegisteredReactionValue::decode(value.value.as_slice()) {
             return Ok(ReactionValue::RegisteredReactionValue(address));
         }
-        Err(StdError::ParseErr {
-            target_type: "ReactionValue".to_string(),
-            msg: "Unmatched type: must be either `FreeTextValue` or `RegisteredReactionValue`."
-                .to_string(),
-        })
+        Err(StdError::parse_err(
+            "ReactionValue",
+            "Unmatched type: must be either `FreeTextValue` or `RegisteredReactionValue`.",
+        ))
     }
 }
 

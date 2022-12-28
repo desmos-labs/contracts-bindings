@@ -15,11 +15,10 @@ impl TryFrom<Any> for ReportTarget {
         match any.type_url {
             UserTarget::TYPE_URL => UserTarget::try_from(any),
             PostTarget::TYPE_URL => PostTarget::try_from(any),
-            _ => Err(StdError::ParseErr {
-                target_type: "AddressData".to_string(),
-                msg: "Unmatched type: must be either `UserTarget`, `PostTarget` or `Base58Address`."
-                    .to_string(),
-            })
+            _ => Err(StdError::parse_err(
+                "ReportTarget",
+                "Unmatched type: must be either `UserTarget`, `PostTarget` or `Base58Address`.",
+            )),
         }
     }
 }

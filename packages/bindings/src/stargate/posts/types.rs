@@ -14,10 +14,10 @@ impl TryFrom<Any> for AttachmentContent {
         match any.type_url {
             Poll::TYPE_URL => Poll::from(any),
             Media::TYPE_URL => Media::from(any),
-            _ =>  Err(StdError::ParseErr {
-                target_type: "AttachmentContent".to_string(),
-                msg: "Unmatched type: must be either `Poll`, `Media` or `Base58Address`.".to_string(),
-            })
+            _ =>  Err(StdError::parse_err(
+                "AttachmentContent",
+                "Unmatched type: must be either `Poll`, `Media` or `Base58Address`."
+            ))
         }
     }
 }

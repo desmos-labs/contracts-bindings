@@ -17,11 +17,7 @@ impl TryFrom<Any> for AddressData {
             Bech32Address::TYPE_URL => Bech32Address::try_from(any),
             HexAddress::TYPE_URL =>HexAddress::try_from(any),
             Base58Address::TYPE_URL =>  Base58Address::try_from(any),
-            _ => Err(StdError::ParseErr {
-                target_type: "AddressData".to_string(),
-                msg: "Unmatched type: must be either `Bech32Address`, `HexAddress` or `Base58Address`."
-                    .to_string(),
-            })
+            _ => Err(StdError::parse_err("AddressData",  "Unmatched type: must be either `Bech32Address`, `HexAddress` or `Base58Address`."))
         }
     }
 }
