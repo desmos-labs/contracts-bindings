@@ -1,6 +1,0 @@
-type: feat
-module: none
-pull_request: 110
-description: removed msg,query and mocks features
-backward_compatible: false
-date: 2022-11-25T15:09:43.222898026Z
