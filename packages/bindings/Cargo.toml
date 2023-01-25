@@ -1,6 +1,6 @@
 [package]
 name = "desmos-bindings"
-version = "1.2.0"
+version = "1.2.1"
 authors = [
     "Leonardo Bragagnolo <leonardo@forbole.com>",
     "Paul Chen <paul@forbole.com>",
