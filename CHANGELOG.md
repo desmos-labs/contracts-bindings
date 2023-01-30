@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 1.2.1
+### Features
+- ([\#110](https://github.com/desmos-labs/desmos-bindings.git/pull/110)) Removed msg,query and mocks features
+
+### Dependencies
+- ([\#119](https://github.com/desmos-labs/desmos-bindings/pull/119)) Bumped cosmwasm-std to 1.1.9
+
 ## Version 1.2.0
 ### Bug Fixes
 - ([\#95](https://github.com/desmos-labs/desmos-bindings/pull/95)) Fix field namings of models and messages naming
