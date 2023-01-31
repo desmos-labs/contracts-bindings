@@ -20,7 +20,7 @@ impl<'a> ProfilesQuerier<'a> {
     /// # Example
     /// ```
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::profiles::querier::ProfilesQuerier;
+    /// use desmos_bindings::stargate::profiles::querier::ProfilesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ProfilesQuerier::new(&deps.querier);
@@ -412,8 +412,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let response = querier.query_profile(Addr::unchecked(MOCK_USER)).unwrap();
         let expected = MockProfilesQueries::get_mocked_profile_response();
+
         assert_eq!(expected, response)
     }
 
@@ -422,10 +424,12 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let response = querier
             .query_incoming_dtag_transfer_requests(Addr::unchecked(MOCK_USER), None)
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response();
+
         assert_eq!(expected, response)
     }
 
@@ -434,9 +438,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let mut it =
             querier.iterate_incoming_dtag_transfer_requests(Addr::unchecked(MOCK_USER), 10);
         let expected = MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response();
+
         assert_eq!(expected.requests[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
@@ -446,6 +452,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let response = querier
             .query_chain_links(
                 Some(Addr::unchecked(MOCK_USER)),
@@ -455,11 +462,8 @@ mod tests {
             )
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_chain_links_response();
+
         assert_eq!(expected, response);
-        assert_eq!(
-            &MockProfilesQueries::get_mocked_chain_link(),
-            response.links.first().unwrap()
-        )
     }
 
     #[test]
@@ -467,6 +471,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let mut it = querier.iterate_chain_links(
             Some(Addr::unchecked(MOCK_USER)),
             Some(MOCK_CHAIN_LINK_CHAIN_NAME),
@@ -474,6 +479,7 @@ mod tests {
             10,
         );
         let expected = MockProfilesQueries::get_mocked_chain_links_response();
+
         assert_eq!(expected.links[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
@@ -483,6 +489,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let response = querier
             .query_chain_link_owners(
                 Some(MOCK_CHAIN_LINK_CHAIN_NAME),
@@ -491,6 +498,7 @@ mod tests {
             )
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_chain_link_owners_response();
+
         assert_eq!(expected, response)
     }
 
@@ -499,12 +507,14 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let mut it = querier.iterate_chain_link_owners(
             Some(MOCK_CHAIN_LINK_CHAIN_NAME),
             Some(MOCK_CHAIN_LINK_ADDRESS),
             10,
         );
         let expected = MockProfilesQueries::get_mocked_chain_link_owners_response();
+
         assert_eq!(expected.owners[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
@@ -514,6 +524,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let response = querier
             .query_default_external_addresses(
                 Some(Addr::unchecked(MOCK_USER)),
@@ -522,6 +533,7 @@ mod tests {
             )
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_default_external_addresses_response();
+
         assert_eq!(expected, response)
     }
 
@@ -530,12 +542,14 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let mut it = querier.iterate_default_external_addresses(
             Some(Addr::unchecked(MOCK_USER)),
             Some(MOCK_CHAIN_LINK_CHAIN_NAME),
             10,
         );
         let expected = MockProfilesQueries::get_mocked_default_external_addresses_response();
+
         assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
@@ -545,6 +559,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let response = querier
             .query_application_links(
                 Some(Addr::unchecked(MOCK_USER)),
@@ -553,6 +568,7 @@ mod tests {
                 Default::default(),
             )
             .unwrap();
+
         let expected = MockProfilesQueries::get_mocked_application_links_response();
         assert_eq!(expected, response)
     }
@@ -562,6 +578,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+
         let mut it = querier.iterate_application_links(
             Some(Addr::unchecked(MOCK_USER)),
             Some(MOCK_APPLICATION_LINK_APPLICATION),
@@ -569,6 +586,7 @@ mod tests {
             10,
         );
         let expected = MockProfilesQueries::get_mocked_application_links_response();
+        
         assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
@@ -578,10 +596,12 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+       
         let response = querier
             .query_application_link_by_client_id(MOCK_APPLICATION_LINK_CLIENT_ID)
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_application_link_by_client_id_response();
+        
         assert_eq!(expected, response)
     }
 
@@ -590,6 +610,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
+        
         let response = querier
             .query_application_link_owners(
                 Some(MOCK_APPLICATION_LINK_APPLICATION),
@@ -598,6 +619,7 @@ mod tests {
             )
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
+       
         assert_eq!(expected, response)
     }
 
@@ -605,6 +627,7 @@ mod tests {
     fn test_iterate_app_link_owners() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
+        
         let querier = ProfilesQuerier::new(&deps.querier);
         let mut it = querier.iterate_application_link_owners(
             Some(MOCK_APPLICATION_LINK_APPLICATION),
@@ -612,6 +635,7 @@ mod tests {
             10,
         );
         let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
+        
         assert_eq!(expected.owners[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none())
     }

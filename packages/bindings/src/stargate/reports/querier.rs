@@ -22,7 +22,7 @@ impl<'a> ReportsQuerier<'a> {
     /// # Example
     /// ```
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::reports::querier::ReportsQuerier;
+    /// use desmos_bindings::stargate::reports::querier::ReportsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ReportsQuerier::new(&deps.querier);
@@ -170,8 +170,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
+        
         let response = querier.query_reports(1, None, None, None).unwrap();
         let expected = MockReportsQueries::get_mocked_reports_response();
+
         assert_eq!(expected, response)
     }
 
@@ -180,11 +182,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
+
         let mut it = querier.iterate_reports(1, None, None, 32);
         let expected = MockReportsQueries::get_mocked_reports_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+
         assert_eq!(expected.reports[0], it.next().unwrap().unwrap());
-        // The second item should be none since the mock function provides only 1 reactions.
         assert!(it.next().is_none())
     }
 
@@ -193,8 +195,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
+
         let response = querier.query_report(1, 1).unwrap();
         let expected = MockReportsQueries::get_mocked_report_response();
+
         assert_eq!(expected, response)
     }
 
@@ -203,8 +207,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
+
         let response = querier.query_reasons(1, None).unwrap();
         let expected = MockReportsQueries::get_mocked_reasons_response();
+
         assert_eq!(expected, response)
     }
 
@@ -213,11 +219,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
+
         let mut it = querier.iterate_reasons(1, 32);
         let expected = MockReportsQueries::get_mocked_reasons_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+
         assert_eq!(expected.reasons[0], it.next().unwrap().unwrap());
-        // The second item should be none since the mock function provides only 1 reactions.
         assert!(it.next().is_none())
     }
 
@@ -226,8 +232,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
+
         let response = querier.query_reason(1, 1).unwrap();
         let expected = MockReportsQueries::get_mocked_reason_response();
+
         assert_eq!(expected, response);
     }
 }

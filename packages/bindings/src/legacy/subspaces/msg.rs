@@ -522,7 +522,7 @@ mod tests {
             owner: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -543,7 +543,7 @@ mod tests {
             owner: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -556,7 +556,7 @@ mod tests {
             subspace_id: Uint64::new(1),
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -575,7 +575,7 @@ mod tests {
             parent_id: Some(1),
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -594,7 +594,7 @@ mod tests {
             description: Some("test description".to_string()),
             editor: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -611,7 +611,7 @@ mod tests {
             new_parent_id: 2,
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -626,7 +626,7 @@ mod tests {
             section_id: 1,
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -649,7 +649,7 @@ mod tests {
             default_permissions: vec![],
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -668,7 +668,7 @@ mod tests {
             description: Some("test".to_string()),
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -685,7 +685,7 @@ mod tests {
             new_section_id: 2,
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -702,7 +702,7 @@ mod tests {
             permissions: vec![],
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -717,7 +717,7 @@ mod tests {
             group_id: 1,
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -734,7 +734,7 @@ mod tests {
             user: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
             signer: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -751,7 +751,7 @@ mod tests {
             user: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
             signer: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -770,6 +770,6 @@ mod tests {
             permissions: vec![],
             signer: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 }

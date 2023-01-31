@@ -33,7 +33,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// ```
     /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
+    /// use desmos_bindings::legacy::subspaces::querier::SubspacesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = SubspacesQuerier::new(deps.querier.deref());

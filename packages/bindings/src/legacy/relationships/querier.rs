@@ -30,7 +30,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// ```
     /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
+    /// use desmos_bindings::legacy::relationships::querier::RelationshipsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = RelationshipsQuerier::new(deps.querier.deref());

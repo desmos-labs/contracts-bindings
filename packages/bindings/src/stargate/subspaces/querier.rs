@@ -21,7 +21,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// # Example
     /// ```
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
+    /// use desmos_bindings::stargate::subspaces::querier::SubspacesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = SubspacesQuerier::new(&deps.querier);

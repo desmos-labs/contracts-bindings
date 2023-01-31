@@ -23,7 +23,7 @@ impl<'a> ReactionsQuerier<'a> {
     /// # Example
     /// ```
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::reactions::querier::ReactionsQuerier;
+    /// use desmos_bindings::stargate::reactions::querier::ReactionsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ReactionsQuerier::new(&deps.querier);
@@ -193,8 +193,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+        
         let response = querier.query_reactions(1, 1, None, None).unwrap();
         let expected = MockReactionsQueries::get_mocked_reactions_response();
+        
         assert_eq!(expected, response)
     }
 
@@ -203,8 +205,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+        
         let response = querier.query_reaction(1, 1, 1).unwrap();
         let expected = MockReactionsQueries::get_mocked_reaction_response();
+       
         assert_eq!(expected, response)
     }
 
@@ -213,8 +217,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+        
         let response = querier.query_registered_reactions(1, None).unwrap();
         let expected = MockReactionsQueries::get_mocked_registered_reactions_response();
+       
         assert_eq!(expected, response)
     }
 
@@ -223,8 +229,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+       
         let response = querier.query_registered_reaction(1, 1).unwrap();
         let expected = MockReactionsQueries::get_mocked_registered_reaction_response();
+        
         assert_eq!(expected, response);
     }
 
@@ -233,8 +241,10 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+        
         let response = querier.query_reactions_params(1).unwrap();
         let expected = MockReactionsQueries::get_mocked_reactions_params_response();
+        
         assert_eq!(expected, response);
     }
 
@@ -243,11 +253,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+       
         let mut it = querier.iterate_reactions(1, 1, None, 32);
         let expected = MockReactionsQueries::get_mocked_reactions_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+        
         assert_eq!(expected.reactions[0], it.next().unwrap().unwrap());
-        // The second item should be none since the mock function provides only 1 reactions.
         assert!(it.next().is_none())
     }
 
@@ -256,14 +266,14 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReactionsQuerier::new(&deps.querier);
+        
         let mut it = querier.iterate_registered_reactions(1, 32);
         let expected = MockReactionsQueries::get_mocked_registered_reactions_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+       
         assert_eq!(
             expected.registered_reactions[0],
             it.next().unwrap().unwrap()
         );
-        // The second item should be none since the mock function provides only 1 reactions.
         assert!(it.next().is_none())
     }
 }

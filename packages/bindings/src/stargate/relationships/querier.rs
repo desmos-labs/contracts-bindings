@@ -23,7 +23,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// # Example
     /// ```
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
+    /// use desmos_bindings::stargate::relationships::querier::RelationshipsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = RelationshipsQuerier::new(&deps.querier);

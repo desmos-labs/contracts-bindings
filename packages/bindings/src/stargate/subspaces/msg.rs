@@ -338,7 +338,7 @@ mod tests {
             owner: "owner".into(),
             creator: "signer".into(),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -359,17 +359,19 @@ mod tests {
             owner: "owner".into(),
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_delete_subspace() {
         let msg = SubspacesMsgBuilder::delete_subspace(1, Addr::unchecked("signer"));
+        
         let expected = MsgDeleteSubspace {
             subspace_id: 1,
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -381,6 +383,7 @@ mod tests {
             Some(1),
             Addr::unchecked("signer"),
         );
+
         let expected = MsgCreateSection {
             subspace_id: 1,
             name: "test_section".into(),
@@ -388,7 +391,8 @@ mod tests {
             parent_id: 1,
             creator: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -400,6 +404,7 @@ mod tests {
             Some("test description".into()),
             Addr::unchecked("signer"),
         );
+
         let expected = MsgEditSection {
             subspace_id: 1,
             section_id: 1,
@@ -407,30 +412,35 @@ mod tests {
             description: "test description".into(),
             editor: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_move_section() {
         let msg = SubspacesMsgBuilder::move_section(1, 1, 2, Addr::unchecked("signer"));
+
         let expected = MsgMoveSection {
             subspace_id: 1,
             section_id: 1,
             new_parent_id: 2,
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_delete_section() {
         let msg = SubspacesMsgBuilder::delete_section(1, 1, Addr::unchecked("signer"));
+
         let expected = MsgDeleteSection {
             subspace_id: 1,
             section_id: 1,
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -444,6 +454,7 @@ mod tests {
             vec![],
             Addr::unchecked("signer"),
         );
+
         let expected = MsgCreateUserGroup {
             subspace_id: 1,
             section_id: 1,
@@ -453,7 +464,8 @@ mod tests {
             initial_members: vec![],
             creator: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -465,6 +477,7 @@ mod tests {
             Some("test".into()),
             Addr::unchecked("signer"),
         );
+
         let expected = MsgEditUserGroup {
             subspace_id: 1,
             group_id: 1,
@@ -472,19 +485,22 @@ mod tests {
             description: "test".into(),
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_move_user_group() {
         let msg = SubspacesMsgBuilder::move_user_group(1, 1, 2, Addr::unchecked("signer"));
+
         let expected = MsgMoveUserGroup {
             subspace_id: 1,
             group_id: 1,
             new_section_id: 2,
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -495,24 +511,28 @@ mod tests {
             vec![],
             Addr::unchecked("signer"),
         );
+
         let expected = MsgSetUserGroupPermissions {
             subspace_id: 1,
             group_id: 1,
             permissions: vec![],
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_delete_user_group() {
         let msg = SubspacesMsgBuilder::delete_user_group(1, 1, Addr::unchecked("signer"));
+
         let expected = MsgDeleteUserGroup {
             subspace_id: 1,
             group_id: 1,
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -523,13 +543,15 @@ mod tests {
             Addr::unchecked("user"),
             Addr::unchecked("signer"),
         );
+
         let expected = MsgAddUserToUserGroup {
             subspace_id: 1,
             group_id: 1,
             user: "user".into(),
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -540,13 +562,15 @@ mod tests {
             Addr::unchecked("user"),
             Addr::unchecked("signer"),
         );
+
         let expected = MsgRemoveUserFromUserGroup {
             subspace_id: 1,
             group_id: 1,
             user: "user".into(),
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -558,6 +582,7 @@ mod tests {
             vec![],
             Addr::unchecked("signer"),
         );
+
         let expected = MsgSetUserPermissions {
             subspace_id: 1,
             section_id: 1,
@@ -565,6 +590,7 @@ mod tests {
             permissions: vec![],
             signer: "signer".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 }

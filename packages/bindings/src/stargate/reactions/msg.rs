@@ -139,6 +139,7 @@ mod tests {
             .into(),
             Addr::unchecked("user"),
         );
+        
         let expected = MsgAddReaction {
             subspace_id: 1,
             post_id: 1,
@@ -150,19 +151,22 @@ mod tests {
             ),
             user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_remove_reaction() {
         let msg = ReactionsMsgBuilder::remove_reaction(1, 1, 1, Addr::unchecked("user"));
+        
         let expected = MsgRemoveReaction {
             subspace_id: 1,
             post_id: 1,
             reaction_id: 1,
             user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -173,13 +177,15 @@ mod tests {
             "test_value",
             Addr::unchecked("user"),
         );
+       
         let expected = MsgAddRegisteredReaction {
             subspace_id: 1,
             shorthand_code: "test_code".into(),
             display_value: "test_value".into(),
             user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -191,6 +197,7 @@ mod tests {
             "test_value",
             Addr::unchecked("user"),
         );
+       
         let expected = MsgEditRegisteredReaction {
             subspace_id: 1,
             registered_reaction_id: 1,
@@ -198,18 +205,21 @@ mod tests {
             display_value: "test_value".into(),
             user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_remove_registered_reaction() {
         let msg = ReactionsMsgBuilder::remove_registered_reaction(1, 1, Addr::unchecked("user"));
+        
         let expected = MsgRemoveRegisteredReaction {
             subspace_id: 1,
             registered_reaction_id: 1,
             user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -224,6 +234,7 @@ mod tests {
             }),
             Addr::unchecked("user"),
         );
+
         let expected = MsgSetReactionsParams {
             subspace_id: 1,
             registered_reaction: Some(RegisteredReactionValueParams { enabled: true }),
@@ -234,6 +245,7 @@ mod tests {
             }),
             user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 }

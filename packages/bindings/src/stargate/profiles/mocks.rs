@@ -51,6 +51,7 @@ impl MockProfilesQueries {
             ))),
         }
     }
+
     /// Gets a mocked instance of [`DtagTransferRequest`].
     pub fn get_mocked_dtag_transfer_request() -> DTagTransferRequest {
         DTagTransferRequest {
@@ -59,6 +60,7 @@ impl MockProfilesQueries {
             receiver: MOCK_RECEIVER.into(),
         }
     }
+
     /// Gets a mocked instance of [`ChainLink`].
     pub fn get_mocked_chain_link() -> ChainLink {
         ChainLink {
@@ -83,6 +85,7 @@ impl MockProfilesQueries {
             ))),
         }
     }
+
     /// Gets a mocked instance of [`ChainLinkOwnerDetails`].
     pub fn get_mocked_chain_link_owner_details() -> ChainLinkOwnerDetails {
         ChainLinkOwnerDetails {
@@ -91,6 +94,7 @@ impl MockProfilesQueries {
             target: MOCK_CHAIN_LINK_ADDRESS.into(),
         }
     }
+
     /// Gets a mocked instance of [`ApplicationLink`].
     pub fn get_mocked_application_link() -> ApplicationLink {
         ApplicationLink {
@@ -124,6 +128,7 @@ impl MockProfilesQueries {
             ))),
         }
     }
+
     /// Gets a mocked instance of [`ApplicationLinkOwnerDetails`].
     pub fn get_mocked_application_link_owner_details() -> ApplicationLinkOwnerDetails {
         ApplicationLinkOwnerDetails {
@@ -132,12 +137,14 @@ impl MockProfilesQueries {
             username: MOCK_APPLICATION_LINK_USERNAME.into(),
         }
     }
+
     /// Function that mocks a [`QueryProfileResponse`].
     pub fn get_mocked_profile_response() -> QueryProfileResponse {
         QueryProfileResponse {
             profile: Some(Self::get_mocked_profile().into()),
         }
     }
+
     /// Function that mocks a [`QueryIncomingDTagTransferRequestsResponse`].
     pub fn get_mocked_incoming_dtag_transfer_requests_response(
     ) -> QueryIncomingDTagTransferRequestsResponse {
@@ -146,6 +153,7 @@ impl MockProfilesQueries {
             pagination: None,
         }
     }
+
     /// Function that mocks a [`QueryChainLinksResponse`].
     pub fn get_mocked_chain_links_response() -> QueryChainLinksResponse {
         QueryChainLinksResponse {
@@ -153,6 +161,7 @@ impl MockProfilesQueries {
             pagination: None,
         }
     }
+
     /// Function that mocks a [`QueryChainLinkOwnersResponse`].
     pub fn get_mocked_chain_link_owners_response() -> QueryChainLinkOwnersResponse {
         QueryChainLinkOwnersResponse {
@@ -160,6 +169,7 @@ impl MockProfilesQueries {
             pagination: None,
         }
     }
+
     /// Function that mocks a [`QueryDefaultExternalAddressesResponse`].
     pub fn get_mocked_default_external_addresses_response() -> QueryDefaultExternalAddressesResponse
     {
@@ -168,6 +178,7 @@ impl MockProfilesQueries {
             pagination: None,
         }
     }
+
     /// Function that mocks a [`QueryApplicationLinksResponse`]
     pub fn get_mocked_application_links_response() -> QueryApplicationLinksResponse {
         QueryApplicationLinksResponse {
@@ -175,6 +186,7 @@ impl MockProfilesQueries {
             pagination: None,
         }
     }
+
     /// Function that mocks a [`QueryApplicationLinkByClientIdResponse`]
     pub fn get_mocked_application_link_by_client_id_response(
     ) -> QueryApplicationLinkByClientIdResponse {
@@ -182,6 +194,7 @@ impl MockProfilesQueries {
             link: Some(Self::get_mocked_application_link()),
         }
     }
+    
     /// Function that mocks a [`QueryApplicationLinkOwnersResponse`]
     pub fn get_mocked_application_link_owners_response() -> QueryApplicationLinkOwnersResponse {
         QueryApplicationLinkOwnersResponse {

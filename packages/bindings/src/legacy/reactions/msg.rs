@@ -208,7 +208,7 @@ mod tests {
             .into(),
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -225,7 +225,7 @@ mod tests {
             reaction_id: 1,
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -242,7 +242,7 @@ mod tests {
             display_value: "test_value".to_string(),
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -261,7 +261,7 @@ mod tests {
             display_value: "test_value".to_string(),
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -276,7 +276,7 @@ mod tests {
             registered_reaction_id: 1,
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -301,6 +301,6 @@ mod tests {
             },
             user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
         };
-        assert_eq!(msg, expected)
+        assert_eq!(expected, msg)
     }
 }

@@ -37,7 +37,7 @@ impl<'a> ProfilesQuerier<'a> {
     /// ```
     /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::profiles::querier::ProfilesQuerier;
+    /// use desmos_bindings::legacy::profiles::querier::ProfilesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ProfilesQuerier::new(deps.querier.deref());

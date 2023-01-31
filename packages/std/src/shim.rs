@@ -1,5 +1,6 @@
-use ::serde::{ser, ser::SerializeMap, Deserialize, Deserializer, Serialize, Serializer};
+use ::serde::{ser::SerializeMap, Deserialize, Deserializer, Serialize, Serializer};
 use chrono::{DateTime, NaiveDateTime, Utc};
+use cosmwasm_std::Binary;
 use prost::Message;
 use serde::de;
 use serde::de::Visitor;
@@ -171,102 +172,73 @@ pub struct Any {
     pub value: ::prost::alloc::vec::Vec<u8>,
 }
 
+impl Serialize for Any {
+    fn serialize<S>(
+        &self,
+        serializer: S,
+    ) -> Result<<S as ::serde::Serializer>::Ok, <S as ::serde::Serializer>::Error>
+    where
+        S: ::serde::Serializer,
+    {
+        let mut map = serializer.serialize_map(Some(2))?;
+        map.serialize_entry("@type".into(), &self.type_url)?;
+        map.serialize_entry("value".into(), &Binary::from(self.value.clone()))?;
+        return map.end();
+    }
+}
+
+impl<'de> Deserialize<'de> for Any {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        // Get raw value from deserializer
+        let raw = match serde_cw_value::Value::deserialize(deserializer) {
+            Ok(raw) => raw,
+            Err(err) => {
+                return Err(err);
+            }
+        };
+
+        // Turn raw value into deserialize map value
+        let map = match raw.clone() {
+            serde_cw_value::Value::Map(m) => Ok(m),
+            _ => Err(serde::de::Error::custom("data must have map structure")),
+        }?;
+
+        // Get type url from map
+        let type_url = map
+            .get(&serde_cw_value::Value::String("@type".to_string()))
+            .map(|t| match t.to_owned() {
+                serde_cw_value::Value::String(s) => Ok(s),
+                _ => Err(serde::de::Error::custom("type_url must be String")),
+            })
+            .transpose()?
+            .unwrap_or_default();
+
+        // Get base64 encoded value from deserialize map
+        let value_in_base64 = map
+            .get(&serde_cw_value::Value::String("value".to_string()))
+            .map(|t| match t.to_owned() {
+                serde_cw_value::Value::String(s) => Ok(s),
+                _ => Err(serde::de::Error::custom("type_url must be String")),
+            })
+            .transpose()?
+            .unwrap_or_default();
+
+        // Convert base64 encoded value into vector
+        let value = match Binary::from_base64(&value_in_base64) {
+            Ok(v) => Ok(v),
+            _ => Err(serde::de::Error::custom("value must be base64 encoded")),
+        }?
+        .to_vec();
+
+        return Ok(Any { type_url, value });
+    }
+}
+
 macro_rules! expand_as_any {
     ($($ty:path,)*) => {
-
-        impl Serialize for Any {
-            fn serialize<S>(
-                &self,
-                serializer: S,
-            ) -> Result<<S as ::serde::Serializer>::Ok, <S as ::serde::Serializer>::Error>
-            where
-                S: ::serde::Serializer,
-            {
-                $(
-                    if self.type_url == <$ty>::TYPE_URL {
-                        let value: Result<$ty, <S as ::serde::Serializer>::Error> =
-                            prost::Message::decode(self.value.as_slice()).map_err(ser::Error::custom);
-
-                        if let Ok(value) = value {
-                            let mut map = serializer.serialize_map(Some(2))?;
-                            map.serialize_entry("@type".into(), &self.type_url)?;
-                            map.serialize_entry("value".into(), &value)?;
-                            return map.end();
-                        }
-                    }
-                )*
-
-                Err(serde::ser::Error::custom(
-                    "data did not match any type that supports serialization as `Any`",
-                ))
-            }
-        }
-
-        impl<'de> Deserialize<'de> for Any {
-            fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-            where
-                D: serde::Deserializer<'de>,
-            {
-                let value = match serde_cw_value::Value::deserialize(deserializer) {
-                    Ok(value) => value,
-                    Err(err) => {
-                        return Err(err);
-                    }
-                };
-
-                // must be map er else error
-                let type_url = if let serde_cw_value::Value::Map(m) = value.clone() {
-                    m.get(&serde_cw_value::Value::String("@type".to_string()))
-                        .map(|t| match t.to_owned() {
-                            serde_cw_value::Value::String(s) => Ok(s),
-                            _ => Err(serde::de::Error::custom("type_url must be String")),
-                        })
-                        .transpose()
-                } else {
-                    Err(serde::de::Error::custom("data must have map structure"))
-                }?;
-
-                match type_url {
-                    // @type found
-                    Some(t) => {
-                        $(
-                            if t == <$ty>::TYPE_URL {
-                                return <$ty>::deserialize(
-                                    serde_cw_value::ValueDeserializer::<serde_cw_value::DeserializerError>::new(
-                                        value.clone(),
-                                    ),
-                                )
-                                .map(|v| Any {
-                                    type_url: <$ty>::TYPE_URL.to_string(),
-                                    value: v.encode_to_vec(),
-                                })
-                                .map_err(serde::de::Error::custom);
-                            }
-                        )*
-                    }
-                    // @type not found, try match the type structure
-                    None => {
-                        $(
-                            if let Ok(v) = <$ty>::deserialize(
-                                serde_cw_value::ValueDeserializer::<serde_cw_value::DeserializerError>::new(
-                                    value.clone(),
-                                ),
-                            ) {
-                                return Ok(Any {
-                                    type_url: <$ty>::TYPE_URL.to_string(),
-                                    value: v.encode_to_vec(),
-                                });
-                            }
-                        )*
-                    }
-                };
-
-                Err(serde::de::Error::custom(
-                    "data did not match any type that supports deserialization as `Any`",
-                ))
-            }
-        }
-
         $(
             impl TryFrom<Any> for $ty {
                 type Error = prost::DecodeError;
@@ -278,6 +250,7 @@ macro_rules! expand_as_any {
                     prost::Message::decode(any.value.as_slice())
                 }
             }
+
             impl Into<Any> for $ty {
                 fn into(self) -> Any {
                     Any {
@@ -291,9 +264,6 @@ macro_rules! expand_as_any {
 }
 
 // [HACK] Register all types that can serde as Any manually for now.
-// must order by type that has more information for Any deserialization to
-// work correctly. Since after serialization, it currently loses @type tag.
-// And deserialization works by trying to iteratively match the structure.
 expand_as_any!(
     // public keys
     crate::public_keys::Ed25519PublicKey,

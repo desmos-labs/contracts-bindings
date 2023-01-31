@@ -21,7 +21,7 @@ impl<'a> PostsQuerier<'a> {
     /// # Example
     /// ```
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::posts::querier::PostsQuerier;
+    /// use desmos_bindings::stargate::posts::querier::PostsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = PostsQuerier::new(&deps.querier);
@@ -264,9 +264,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let result = querier.query_subspace_posts(1, None);
         let response = result.unwrap();
         let expected = MockPostsQueries::get_mocked_subspace_posts_response();
+
         assert_eq!(expected, response)
     }
 
@@ -275,13 +277,13 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let mut iterator = querier.iterate_subspace_posts(1, 32);
         let expected = MockPostsQueries::get_mocked_subspace_posts_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+
+        
         assert_eq!(expected.posts[0], iterator.next().unwrap().unwrap());
-        // The second item returned from the iterators should be the second item returned from the mock function.
         assert_eq!(expected.posts[1], iterator.next().unwrap().unwrap());
-        // The third item should be none since it provides only 2 posts.
         assert!(iterator.next().is_none())
     }
 
@@ -290,9 +292,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let result = querier.query_section_posts(1, 1, None);
         let response = result.unwrap();
         let expected = MockPostsQueries::get_mocked_section_posts_response();
+
         assert_eq!(expected, response)
     }
 
@@ -301,13 +305,13 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let mut iterator = querier.iterate_section_posts(1, 1, 32);
         let expected = MockPostsQueries::get_mocked_section_posts_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+
+        
         assert_eq!(expected.posts[0], iterator.next().unwrap().unwrap());
-        // The second item returned from the iterators should be the second item returned from the mock function.
         assert_eq!(expected.posts[1], iterator.next().unwrap().unwrap());
-        // The third item should be none since it provides only 2 items.
         assert!(iterator.next().is_none())
     }
 
@@ -316,9 +320,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let result = querier.query_post(1, 1);
         let response = result.unwrap();
         let expected = MockPostsQueries::get_mocked_post_response();
+
         assert_eq!(expected, response)
     }
 
@@ -327,9 +333,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let result = querier.query_post_attachments(1, 1, None);
         let response = result.unwrap();
         let expected = MockPostsQueries::get_mocked_post_attachments_response();
+
         assert_eq!(expected, response)
     }
 
@@ -338,13 +346,12 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let mut iterator = querier.iterate_post_attachments(1, 1, 32);
         let expected = MockPostsQueries::get_mocked_post_attachments_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+
         assert_eq!(expected.attachments[0], iterator.next().unwrap().unwrap());
-        // The second item returned from the iterators should be the second item returned from the mock function.
         assert_eq!(expected.attachments[1], iterator.next().unwrap().unwrap());
-        // The third item should be none since it provides only 2 items.
         assert!(iterator.next().is_none())
     }
 
@@ -353,9 +360,11 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let result = querier.query_poll_answers(1, 1, 1, None, None);
         let response = result.unwrap();
         let expected = MockPostsQueries::get_mocked_poll_answers_response();
+
         assert_eq!(expected, response)
     }
 
@@ -364,11 +373,12 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = PostsQuerier::new(&deps.querier);
+
         let mut iterator = querier.iterate_poll_answers(1, 1, 1, None, 32);
         let expected = MockPostsQueries::get_mocked_poll_answers_response();
-        // The first item returned from the iterators should be the first item returned from the mock function.
+        
+        
         assert_eq!(expected.answers[0], iterator.next().unwrap().unwrap());
-        // The third item should be none since it provides only 1 item.
         assert!(iterator.next().is_none())
     }
 }

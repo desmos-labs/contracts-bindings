@@ -4,7 +4,6 @@ use crate::stargate::reports::proto::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
     Report, UserTarget,
 };
-use crate::stargate::reports::types::ReportTarget;
 use chrono::DateTime;
 use desmos_std::shim::Timestamp;
 
@@ -25,9 +24,9 @@ impl MockReportsQueries {
             message: "mock report".into(),
             reporter: MOCK_REPORTER.into(),
             target: Some(
-                ReportTarget::UserTarget(UserTarget {
+                UserTarget {
                     user: MOCK_USER_TARGET.into(),
-                })
+                }
                 .into(),
             ),
             creation_date: Some(Timestamp::from(DateTime::from(

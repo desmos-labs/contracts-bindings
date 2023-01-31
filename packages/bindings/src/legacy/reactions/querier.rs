@@ -33,7 +33,7 @@ impl<'a> ReactionsQuerier<'a> {
     /// ```
     /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::reactions::querier::ReactionsQuerier;
+    /// use desmos_bindings::legacy::reactions::querier::ReactionsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ReactionsQuerier::new(deps.querier.deref());

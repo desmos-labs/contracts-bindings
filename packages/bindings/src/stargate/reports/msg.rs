@@ -101,13 +101,14 @@ mod test {
 
     #[test]
     fn test_create_report() {
-        let reports_msg = ReportsMsgBuilder::create_report(
+        let msg = ReportsMsgBuilder::create_report(
             1,
             vec![0],
             Some("test"),
             Addr::unchecked("reporter"),
             ReportTarget::PostTarget(PostTarget { post_id: 1 }),
         );
+        
         let expected = MsgCreateReport {
             subspace_id: 1,
             reasons_ids: vec![0],
@@ -116,42 +117,45 @@ mod test {
             target: Some(ReportTarget::PostTarget(PostTarget { post_id: 1 }).into()),
         };
 
-        assert_eq!(expected, reports_msg);
+        assert_eq!(expected, msg);
     }
 
     #[test]
     fn test_delete_report() {
-        let reports_msg = ReportsMsgBuilder::delete_report(1, 2, Addr::unchecked("reporter"));
+        let msg = ReportsMsgBuilder::delete_report(1, 2, Addr::unchecked("reporter"));
+
         let expected = MsgDeleteReport {
             subspace_id: 1,
             report_id: 2,
             signer: "reporter".into(),
         };
 
-        assert_eq!(expected, reports_msg);
+        assert_eq!(expected, msg);
     }
 
     #[test]
     fn support_standard_reason() {
-        let reports_msg =
+        let msg =
             ReportsMsgBuilder::support_standard_reason(1, 2, Addr::unchecked("reporter"));
+
         let expected = MsgSupportStandardReason {
             subspace_id: 1,
             standard_reason_id: 2,
             signer: "reporter".into(),
         };
 
-        assert_eq!(expected, reports_msg);
+        assert_eq!(expected, msg);
     }
 
     #[test]
     fn test_add_reason() {
-        let reports_msg = ReportsMsgBuilder::add_reason(
+        let msg = ReportsMsgBuilder::add_reason(
             1,
             "test reason",
             Some("Test description"),
             Addr::unchecked("reporter"),
         );
+
         let expected = MsgAddReason {
             subspace_id: 1,
             title: "test reason".into(),
@@ -159,18 +163,19 @@ mod test {
             signer: "reporter".into(),
         };
 
-        assert_eq!(expected, reports_msg);
+        assert_eq!(expected, msg);
     }
 
     #[test]
     fn test_remove_reason() {
-        let reports_msg = ReportsMsgBuilder::remove_reason(1, 2, Addr::unchecked("reporter"));
+        let msg = ReportsMsgBuilder::remove_reason(1, 2, Addr::unchecked("reporter"));
+
         let expected = MsgRemoveReason {
             subspace_id: 1,
             reason_id: 2,
             signer: "reporter".into(),
         };
 
-        assert_eq!(expected, reports_msg);
+        assert_eq!(expected, msg);
     }
 }

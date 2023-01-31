@@ -27,7 +27,7 @@ impl<'a> ReportsQuerier<'a> {
     /// ```
     /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
-    /// use desmos_bindings::reports::querier::ReportsQuerier;
+    /// use desmos_bindings::legacy::reports::querier::ReportsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ReportsQuerier::new(deps.querier.deref());

@@ -125,11 +125,11 @@ impl MockDesmosQuerier {
     /// # Example
     /// ```
     /// use cosmwasm_std::{ContractResult, SystemError, SystemResult, to_binary};
-    /// use desmos_bindings::mocks::mock_queriers::MockDesmosQuerier;
-    /// use desmos_bindings::profiles::mocks::MockProfilesQueries;
-    /// use desmos_bindings::profiles::models_profile::Profile;
-    /// use desmos_bindings::profiles::models_query::QueryProfileResponse;
-    /// use desmos_bindings::profiles::query::ProfilesQuery;
+    /// use desmos_bindings::legacy::mocks::mock_queriers::MockDesmosQuerier;
+    /// use desmos_bindings::legacy::profiles::mocks::MockProfilesQueries;
+    /// use desmos_bindings::legacy::profiles::models_profile::Profile;
+    /// use desmos_bindings::legacy::profiles::models_query::QueryProfileResponse;
+    /// use desmos_bindings::legacy::profiles::query::ProfilesQuery;
     ///
     /// let querier =
     ///     MockDesmosQuerier::default().with_custom_profiles_handler(|query| match query {
@@ -157,10 +157,10 @@ impl MockDesmosQuerier {
     /// # Example
     /// ```
     /// use cosmwasm_std::{ContractResult, to_binary};
-    /// use desmos_bindings::mocks::mock_queriers::MockDesmosQuerier;
-    /// use desmos_bindings::subspaces::mocks::MockSubspacesQueries;
-    /// use desmos_bindings::subspaces::models_query::QuerySubspaceResponse;
-    /// use desmos_bindings::subspaces::query::SubspacesQuery;
+    /// use desmos_bindings::legacy::mocks::mock_queriers::MockDesmosQuerier;
+    /// use desmos_bindings::legacy::subspaces::mocks::MockSubspacesQueries;
+    /// use desmos_bindings::legacy::subspaces::models_query::QuerySubspaceResponse;
+    /// use desmos_bindings::legacy::subspaces::query::SubspacesQuery;
     ///
     /// let querier =
     ///     MockDesmosQuerier::default().with_custom_subspaces_handler(|query| match query {
@@ -188,10 +188,10 @@ impl MockDesmosQuerier {
     /// # Example
     /// ```
     /// use cosmwasm_std::{ContractResult, to_binary};
-    /// use desmos_bindings::mocks::mock_queriers::MockDesmosQuerier;
-    /// use desmos_bindings::posts::mocks::MockPostsQueries;
-    /// use desmos_bindings::posts::models_query::QueryPostResponse;
-    /// use desmos_bindings::posts::query::PostsQuery;
+    /// use desmos_bindings::legacy::mocks::mock_queriers::MockDesmosQuerier;
+    /// use desmos_bindings::legacy::posts::mocks::MockPostsQueries;
+    /// use desmos_bindings::legacy::posts::models_query::QueryPostResponse;
+    /// use desmos_bindings::legacy::posts::query::PostsQuery;
     ///
     /// let querier =
     ///     MockDesmosQuerier::default().with_custom_posts_handler(|query| match query {
@@ -219,10 +219,10 @@ impl MockDesmosQuerier {
     /// # Example
     /// ```
     /// use cosmwasm_std::{ContractResult, to_binary};
-    /// use desmos_bindings::mocks::mock_queriers::MockDesmosQuerier;
-    /// use desmos_bindings::relationships::mocks::MockRelationshipsQueries;
-    /// use desmos_bindings::relationships::models_query::QueryRelationshipsResponse;
-    /// use desmos_bindings::relationships::query::RelationshipsQuery;
+    /// use desmos_bindings::legacy::mocks::mock_queriers::MockDesmosQuerier;
+    /// use desmos_bindings::legacy::relationships::mocks::MockRelationshipsQueries;
+    /// use desmos_bindings::legacy::relationships::models_query::QueryRelationshipsResponse;
+    /// use desmos_bindings::legacy::relationships::query::RelationshipsQuery;
     ///
     /// let querier =
     ///     MockDesmosQuerier::default().with_custom_relationships_handler(|query| match query {
@@ -251,10 +251,10 @@ impl MockDesmosQuerier {
     /// # Example
     /// ```
     /// use cosmwasm_std::{ContractResult, to_binary};
-    /// use desmos_bindings::mocks::mock_queriers::MockDesmosQuerier;
-    /// use desmos_bindings::reports::mocks::MockReportsQueries;
-    /// use desmos_bindings::reports::models_query::QueryReportResponse;
-    /// use desmos_bindings::reports::query::ReportsQuery;
+    /// use desmos_bindings::legacy::mocks::mock_queriers::MockDesmosQuerier;
+    /// use desmos_bindings::legacy::reports::mocks::MockReportsQueries;
+    /// use desmos_bindings::legacy::reports::models_query::QueryReportResponse;
+    /// use desmos_bindings::legacy::reports::query::ReportsQuery;
     ///
     /// let querier =
     ///     MockDesmosQuerier::default().with_custom_reports_handler(|query| match query {
@@ -282,10 +282,10 @@ impl MockDesmosQuerier {
     /// # Example
     /// ```
     /// use cosmwasm_std::{ContractResult, to_binary};
-    /// use desmos_bindings::mocks::mock_queriers::MockDesmosQuerier;
-    /// use desmos_bindings::reactions::mocks::MockReactionsQueries;
-    /// use desmos_bindings::reactions::models_query::QueryReactionResponse;
-    /// use desmos_bindings::reactions::query::ReactionsQuery;
+    /// use desmos_bindings::legacy::mocks::mock_queriers::MockDesmosQuerier;
+    /// use desmos_bindings::legacy::reactions::mocks::MockReactionsQueries;
+    /// use desmos_bindings::legacy::reactions::models_query::QueryReactionResponse;
+    /// use desmos_bindings::legacy::reactions::query::ReactionsQuery;
     ///
     /// let querier =
     ///     MockDesmosQuerier::default().with_custom_reactions_handler(|query| match query {
@@ -333,11 +333,11 @@ impl Default for MockDesmosQuerier {
 /// # Example
 /// ```
 /// use cosmwasm_std::{ContractResult, SystemError, SystemResult, to_binary};
-/// use desmos_bindings::mocks::mock_queriers::{mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier};
-/// use desmos_bindings::profiles::mocks::MockProfilesQueries;
-/// use desmos_bindings::profiles::models_profile::Profile;
-/// use desmos_bindings::profiles::models_query::QueryProfileResponse;
-/// use desmos_bindings::profiles::query::ProfilesQuery;
+/// use desmos_bindings::legacy::mocks::mock_queriers::{mock_desmos_dependencies_with_custom_querier, MockDesmosQuerier};
+/// use desmos_bindings::legacy::profiles::mocks::MockProfilesQueries;
+/// use desmos_bindings::legacy::profiles::models_profile::Profile;
+/// use desmos_bindings::legacy::profiles::models_query::QueryProfileResponse;
+/// use desmos_bindings::legacy::profiles::query::ProfilesQuery;
 ///
 /// // Querier with a custom profile query handler to mock responses toward the profile module
 /// let querier =
