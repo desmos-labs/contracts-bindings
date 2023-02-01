@@ -25,7 +25,7 @@ use crate::legacy::{
 };
 use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/profiles module.
+/// Querier allows to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }

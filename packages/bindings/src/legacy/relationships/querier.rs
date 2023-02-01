@@ -18,7 +18,7 @@ use crate::legacy::{
 };
 use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/relationships module.
+/// Querier allows to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }

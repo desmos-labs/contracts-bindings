@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/reports module's types made to be used in any test.
 
 use crate::stargate::reports::types::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
@@ -7,7 +7,10 @@ use crate::stargate::reports::types::{
 use chrono::DateTime;
 use desmos_std::shim::Timestamp;
 
+/// Represents the mock reporter for unit test.
 pub const MOCK_REPORTER: &str = "reporter";
+
+/// Represents the mock user target of the report for unit test.
 pub const MOCK_USER_TARGET: &str = "user_target";
 
 /// Struct that contains some utility methods to mock data of the Desmos

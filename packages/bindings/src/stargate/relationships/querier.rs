@@ -12,7 +12,7 @@ use crate::stargate::relationships::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/relationships module.
+/// Querier allows to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {
     querier: crate::stargate::relationships::types::RelationshipsQuerier<'a, Empty>,
 }

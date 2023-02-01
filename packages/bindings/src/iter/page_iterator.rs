@@ -116,6 +116,7 @@ impl<'a, T: Clone, K: Clone> Iterator for PageIterator<'a, T, K> {
                         Some(Ok(first_item))
                     }
                 }
+
                 // An error occurred, propagate it to the caller
                 Err(e) => {
                     // Set the iterator as consumed to prevent other invocations
@@ -127,8 +128,10 @@ impl<'a, T: Clone, K: Clone> Iterator for PageIterator<'a, T, K> {
             // A page is available and we don't have iterated over all the items
             let page = self.current_page.as_ref().unwrap();
             let result = Some(Ok(page.items[self.page_item_index].clone()));
+
             // Update the iterator index
             self.page_item_index += 1;
+
             result
         }
     }

@@ -1,10 +1,10 @@
 //! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
-use crate::stargate::subspaces::types::*;
 use crate::stargate::subspaces::types::Permission;
+use crate::stargate::subspaces::types::*;
 use cosmwasm_std::Addr;
 
-/// Represents the messages to interact with the x/subspaces module.
+/// SubspacesMsgBuilder is the builder to generate Desmos x/subspaces messages.
 pub struct SubspacesMsgBuilder {}
 
 impl SubspacesMsgBuilder {
@@ -39,8 +39,7 @@ impl SubspacesMsgBuilder {
     /// * `name` - New subspace name.
     /// * `description` - New subspace description.
     /// * `treasury` - New subspace treasury.
-    /// Represents the address that will pay for the fees
-    /// needed to performs application links.
+    /// * `owner` - Address of who will be the subspace owner.
     /// * `signer` - Address of who wants edit the subspace.
     pub fn edit_subspace(
         subspace_id: u64,

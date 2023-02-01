@@ -1,14 +1,19 @@
+//! Contains useful mocks of the Desmos x/posts module's types made to be used in any test.
+
+use crate::stargate::posts::types::AttachmentContent;
 use crate::stargate::posts::types::{
     Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
     UserAnswer,
 };
-use crate::stargate::posts::types::AttachmentContent;
 use chrono::DateTime;
 use cosmwasm_std::Addr;
 use desmos_std::shim::Timestamp;
 
+/// Represents the mock author of the post for unit test.
 pub const MOCK_AUTHOR: &str = "author";
+
+/// Represents the mock answerer to the poll for unit test.
 pub const MOCK_ANSWERER: &str = "answerer";
 
 /// Struct that contains some utility methods to mock data of the Desmos

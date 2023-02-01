@@ -9,7 +9,7 @@ use crate::stargate::profiles::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/profiles module.
+/// Querier allows to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {
     querier: crate::stargate::profiles::types::ProfilesQuerier<'a, Empty>,
 }

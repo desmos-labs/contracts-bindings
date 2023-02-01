@@ -15,7 +15,7 @@ use {
     cosmwasm_std::Binary,
 };
 
-/// Querier able to query data from the Desmos x/reports module.
+/// Querier allows to query data from the Desmos x/reports module.
 pub struct ReportsQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }

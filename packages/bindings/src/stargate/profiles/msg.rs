@@ -1,40 +1,43 @@
 //! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
 
-use crate::stargate::profiles::types::*;
 use crate::stargate::profiles::types::AddressData;
+use crate::stargate::profiles::types::*;
 use crate::stargate::types::Height;
 use cosmwasm_std::Addr;
 
-/// Represents the messages to interact with the profiles module.
+/// ProfilesMsgBuilder is the builder to generate Desmos x/profiles messages.
 pub struct ProfilesMsgBuilder {}
 
 impl ProfilesMsgBuilder {
-    /// Creates an instance of [`ProfilesMsg::SaveProfile`].
-    /// * `dtag` - Unique profile tag.
-    /// * `creator` - Address of which is creating the profile.
+    /// Creates an instance of [`MsgSaveProfile`].
+    /// * `dtag` - Unique profile tag, set None if editing the profile without modifying this field.
     /// * `nickname` - Human readable name of the profile.
-    /// * `bio` - Biography of the profile.
+    /// It will not change the current profile nickname if set this field to `None`.
+    /// * `bio` - Biography of the profile. It will not change the current profile bio if set this field to `None`.
     /// * `profile_picture` - URL to the profile picture.
+    /// It will not change the current profile profile picture if set this field to `None`.
     /// * `cover_picture` - URL to the cover cover picture.
+    /// It will not change the current profile cover picture if set this field to `None`.
+    /// * `creator` - Address of which is creating the profile.
     pub fn save_profile(
-        dtag: &str,
+        dtag: Option<&str>,
+        nickname: Option<&str>,
+        bio: Option<&str>,
+        profile_picture: Option<&str>,
+        cover_picture: Option<&str>,
         creator: Addr,
-        nickname: &str,
-        bio: &str,
-        profile_picture: &str,
-        cover_picture: &str,
     ) -> MsgSaveProfile {
         MsgSaveProfile {
-            dtag: dtag.into(),
+            dtag: dtag.unwrap_or("[do-not-modify]").into(),
             creator: creator.into(),
-            nickname: nickname.into(),
-            bio: bio.into(),
-            profile_picture: profile_picture.into(),
-            cover_picture: cover_picture.into(),
+            nickname: nickname.unwrap_or("[do-not-modify]").into(),
+            bio: bio.unwrap_or("[do-not-modify]").into(),
+            profile_picture: profile_picture.unwrap_or("[do-not-modify]").into(),
+            cover_picture: cover_picture.unwrap_or("[do-not-modify]").into(),
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::DeleteProfile`].
+    /// Creates an instance of [`MsgDeleteProfile`].
     ///
     /// * `creator` - Address of the profile to delete.
     pub fn delete_profile(creator: Addr) -> MsgDeleteProfile {
@@ -43,7 +46,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::RequestDtagTransfer`].
+    /// Creates an instance of [`MsgRequestDtagTransfer`].
     ///
     /// * `sender` - Address of who is going to send the DTag.
     /// * `receiver` - Address of who is going to receive the DTag
@@ -54,7 +57,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::AcceptDtagTransferRequest`].
+    /// Creates an instance of [`MsgAcceptDtagTransferRequest`].
     ///
     /// * `new_dtag` - The DTag to accept.
     /// * `sender` - Address of who has sent the DTag.
@@ -71,7 +74,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::RefuseDtagTransferRequest`].
+    /// Creates an instance of [`MsgRefuseDtagTransferRequest`].
     ///
     /// * `sender` - Address of who has started the DTag transfer.
     /// * `receiver` - Address of who was supposed to receive the DTag.
@@ -85,7 +88,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::CancelDtagTransferRequest`].
+    /// Creates an instance of [`MsgCancelDtagTransferRequest`].
     ///
     /// * `receiver` - Address of who was supposed to receive the DTag.
     /// * `sender` - Address of who has started the DTag transfer.
@@ -99,7 +102,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::LinkChainAccount`].
+    /// Creates an instance of [`MsgLinkChainAccount`].
     ///
     /// * `chain_address` - Data of the external chain address to be connected
     /// with the Desmos profile.
@@ -120,7 +123,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::UnlinkChainAccount`].
+    /// Creates an instance of [`MsgUnlinkChainAccount`].
     ///
     /// * `owner` - The profile address from which to remove the link.
     /// * `chain_name` - The chain name associated with the link to be removed.
@@ -137,7 +140,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::SetDefaultExternalAddress`].
+    /// Creates an instance of [`MsgSetDefaultExternalAddress`].
     ///
     /// * `chain_name` - The chain name associated with the link to be set as default one.
     /// * `target` - The external address to be set as default one.
@@ -154,7 +157,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::LinkApplication`].
+    /// Creates an instance of [`MsgLinkApplication`].
     ///
     /// * `sender` - Sender of the connection request.
     /// * `link_data` - The data related to the application to which connect.
@@ -186,7 +189,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`ProfilesMsg::UnlinkApplication`].
+    /// Creates an instance of [`MsgUnlinkApplication`].
     ///
     /// * `application` - The name of the application to unlink.
     /// * `username` - The username inside the application to unlink.
@@ -212,24 +215,35 @@ mod tests {
 
     #[test]
     fn test_save_profile() {
-        let msg = ProfilesMsgBuilder::save_profile("test", Addr::unchecked("user"), "", "", "", "");
+        let msg = ProfilesMsgBuilder::save_profile(
+            Some("test"),
+            None,
+            None,
+            None,
+            None,
+            Addr::unchecked("user"),
+        );
+
         let expected = MsgSaveProfile {
             dtag: "test".into(),
-            nickname: "".into(),
-            bio: "".into(),
-            profile_picture: "".into(),
-            cover_picture: "".into(),
+            nickname: "[do-not-modify]".into(),
+            bio: "[do-not-modify]".into(),
+            profile_picture: "[do-not-modify]".into(),
+            cover_picture: "[do-not-modify]".into(),
             creator: "user".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_delete_profile() {
         let msg = ProfilesMsgBuilder::delete_profile(Addr::unchecked("user"));
+
         let expected = MsgDeleteProfile {
             creator: "user".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
@@ -239,10 +253,12 @@ mod tests {
             Addr::unchecked("user"),
             Addr::unchecked("reciever"),
         );
+
         let expected = MsgRequestDTagTransfer {
             sender: "user".into(),
             receiver: "reciever".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
@@ -253,11 +269,13 @@ mod tests {
             Addr::unchecked("reciever"),
             Addr::unchecked("user"),
         );
+
         let expected = MsgAcceptDTagTransferRequest {
             new_dtag: "test".into(),
             sender: "reciever".into(),
             receiver: "user".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
@@ -267,10 +285,12 @@ mod tests {
             Addr::unchecked("reciever"),
             Addr::unchecked("user"),
         );
+
         let expected = MsgRefuseDTagTransferRequest {
             sender: "reciever".into(),
             receiver: "user".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
@@ -280,10 +300,12 @@ mod tests {
             Addr::unchecked("reciever"),
             Addr::unchecked("user"),
         );
+
         let expected = MsgCancelDTagTransferRequest {
             receiver: "reciever".into(),
             sender: "user".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
@@ -330,11 +352,13 @@ mod tests {
     fn test_unlink_chain_account() {
         let msg =
             ProfilesMsgBuilder::unlink_chain_account(Addr::unchecked("owner"), "cosmos", "target");
+
         let expected = MsgUnlinkChainAccount {
             owner: "owner".into(),
             chain_name: "cosmos".into(),
             target: "target".into(),
         };
+
         assert_eq!(expected, msg)
     }
 
@@ -345,11 +369,13 @@ mod tests {
             "target",
             Addr::unchecked("owner"),
         );
+
         let expected = MsgSetDefaultExternalAddress {
             chain_name: "cosmos".into(),
             target: "target".into(),
             signer: "owner".into(),
         };
+
         assert_eq!(expected, msg)
     }
 

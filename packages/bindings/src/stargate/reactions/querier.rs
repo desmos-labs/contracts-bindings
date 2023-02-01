@@ -12,7 +12,7 @@ use crate::stargate::reactions::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/reactions module.
+/// Querier allows to query data from the Desmos x/reactions module.
 pub struct ReactionsQuerier<'a> {
     querier: crate::stargate::reactions::types::ReactionsQuerier<'a, Empty>,
 }
@@ -103,7 +103,6 @@ impl<'a> ReactionsQuerier<'a> {
     /// * `subspace_id` - Id of the subspace where the post stored.
     /// * `post_id` - Id of the post to query the reactions for.
     /// * `reaction_id` - Id of the reaction to query.
-    /// * `pagination` - Optional pagination configs.
     pub fn query_reaction(
         &self,
         subspace_id: u64,

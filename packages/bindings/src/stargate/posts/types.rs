@@ -1,9 +1,15 @@
+//! Contains the types definitions of x/posts.
+
 pub use desmos_std::proto::desmos::posts::v2::*;
 
 use crate::stargate::types::Any;
 
+/// Represents a generic attachment content.
 pub enum AttachmentContent {
+    /// Represents the poll content.
     Poll(Poll),
+
+    /// Represents the media content.
     Media(Media),
 }
 
@@ -14,8 +20,4 @@ impl Into<Any> for AttachmentContent {
             AttachmentContent::Media(content) => content.into(),
         }
     }
-}
-
-pub enum PublicKey {
-    Ed25519PublicKey(),
 }

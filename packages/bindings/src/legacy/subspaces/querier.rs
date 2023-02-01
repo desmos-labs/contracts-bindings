@@ -21,7 +21,7 @@ use {
     cosmwasm_std::Binary,
 };
 
-/// Querier able to query data from the Desmos x/subspaces module.
+/// Querier allows to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
     querier: QuerierWrapper<'a, DesmosQuery>,
 }

@@ -1,14 +1,13 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
 use crate::stargate::reactions::types::*;
-use crate::stargate::reactions::types::ReactionValue;
 use cosmwasm_std::Addr;
 
-/// Represents the messages to interact with the reactions module.
+/// ReactionsMsgBuilder is the builder to generate Desmos x/reactions messages.
 pub struct ReactionsMsgBuilder {}
 
 impl ReactionsMsgBuilder {
-    /// Creates a new instance of [`ReactionsMsgBuilder::AddReaction`].
+    /// Creates a new instance of [`MsgAddReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the post to react to is.
     /// * `post_id` - Id of the post to react to.
@@ -27,7 +26,7 @@ impl ReactionsMsgBuilder {
             user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsgBuilder::RemoveReaction`].
+    /// Creates a new instance of [`MsgRemoveReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the reaction to remove is.
     /// * `post_id` - Id of the post from which to remove the reaction.
@@ -46,7 +45,7 @@ impl ReactionsMsgBuilder {
             user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsgBuilder::AddRegisteredReaction`].
+    /// Creates a new instance of [`MsgAddRegisteredReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which this reaction should be registered.
     /// * `shorthand_code` - Shorthand code of the reaction.
@@ -65,7 +64,7 @@ impl ReactionsMsgBuilder {
             user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsgBuilder::EditRegisteredReaction`].
+    /// Creates a new instance of [`MsgEditRegisteredReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the reaction to edit is.
     /// * `registered_reaction_id` - Id of the registered reaction to edit.
@@ -87,7 +86,7 @@ impl ReactionsMsgBuilder {
             user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsgBuilder::RemoveRegisteredReaction`].
+    /// Creates a new instance of [`MsgRemoveRegisteredReaction`].
     ///
     /// * `subspace_id` - Id of the registered reaction to be removed.
     /// * `registered_reaction_id` - Id of the registered reaction to be removed.
@@ -103,11 +102,11 @@ impl ReactionsMsgBuilder {
             user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsgBuilder::SetReactionsParams`].
+    /// Creates a new instance of [`MsgSetReactionsParams`].
     ///
     /// * `subspace_id` - Id of the subspace for which to set the params.
-    /// * `registered_reaction` - Params related to [`ReactionValue::Registered`](crate::stargate::reactions::models::ReactionValue::Registered) reactions.
-    /// * `value` - Params related to [`ReactionValue::FreeText`](crate::stargate::reactions::models::ReactionValue::FreeText) reactions.
+    /// * `registered_reaction` - Params related to [`FreeTextValue`].
+    /// * `free_text` - Params related to [`RegisteredReactionValue`].
     /// * `user` - User setting the params.
     pub fn set_reactions_params(
         subspace_id: u64,

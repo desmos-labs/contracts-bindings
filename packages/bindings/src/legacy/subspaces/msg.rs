@@ -196,8 +196,6 @@ impl SubspacesMsg {
     /// * `name` - Subspace name.
     /// * `description` - Subspace description.
     /// * `treasury` - Treasury address.
-    /// Represents the address that will pay for the fees
-    /// needed to performs application links.
     /// * `owner` - Address of who will be the subspace owner.
     /// * `creator` - Address of who wants to create the subspace.
     pub fn create_subspace(
@@ -222,8 +220,7 @@ impl SubspacesMsg {
     /// * `name` - New subspace name.
     /// * `description` - New subspace description.
     /// * `treasury` - New subspace treasury.
-    /// Represents the address that will pay for the fees
-    /// needed to performs application links.
+    /// * `owner` - Address of who will be the subspace owner.
     /// * `signer` - Address of who wants edit the subspace.
     pub fn edit_subspace(
         subspace_id: u64,

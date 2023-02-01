@@ -1,10 +1,10 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reports module.
 
-use crate::stargate::reports::types::*;
 use crate::stargate::reports::types::ReportTarget;
+use crate::stargate::reports::types::*;
 use cosmwasm_std::Addr;
 
-/// Represents the messages to interact with the reports module.
+/// ReportsMsgBuilder is the builder to generate Desmos x/reports messages.
 pub enum ReportsMsgBuilder {}
 
 impl ReportsMsgBuilder {

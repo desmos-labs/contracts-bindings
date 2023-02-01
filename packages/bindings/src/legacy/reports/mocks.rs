@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/reports module's types made to be used in any test.
 
 use crate::legacy::reports::models::{Reason, Report, ReportTarget};
 use crate::legacy::reports::models_query::{

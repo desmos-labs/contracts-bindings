@@ -1,7 +1,7 @@
 //! Contains the querier that can be used to query data related to the x/reports module.
 
-use crate::stargate::reports::types::*;
 use crate::stargate::reports::types::ReportTarget;
+use crate::stargate::reports::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
@@ -11,7 +11,7 @@ use {
     cosmwasm_std::Binary,
 };
 
-/// Querier able to query data from the Desmos x/reports module.
+/// Querier allows to query data from the Desmos x/reports module.
 pub struct ReportsQuerier<'a> {
     querier: crate::stargate::reports::types::ReportsQuerier<'a, Empty>,
 }
@@ -26,6 +26,7 @@ impl<'a> ReportsQuerier<'a> {
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = ReportsQuerier::new(&deps.querier);
+    ///     let response = querier.query_reports(1, None, None, None);
     /// }
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {

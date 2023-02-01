@@ -10,7 +10,7 @@ use {
     cosmwasm_std::Binary,
 };
 
-/// Querier able to query data from the Desmos x/posts module.
+/// Querier allows to query data from the Desmos x/posts module.
 pub struct PostsQuerier<'a> {
     querier: crate::stargate::posts::types::PostsQuerier<'a, Empty>,
 }

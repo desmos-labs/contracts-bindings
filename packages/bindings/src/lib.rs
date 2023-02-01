@@ -10,6 +10,5 @@ pub mod iter;
 #[cfg(feature = "legacy")]
 pub mod legacy;
 
-
 #[cfg(feature = "stargate")]
 pub mod stargate;

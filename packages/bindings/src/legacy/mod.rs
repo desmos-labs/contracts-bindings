@@ -2,6 +2,7 @@
 #![warn(rustdoc::missing_doc_code_examples)]
 //! Crate that provides the bindings to interact with the Desmos blockchain custom modules from a CosmWasm
 //! smart contract.
+//! It is the legacy version of desmos-bindings.
 
 #[cfg(not(target_arch = "wasm32"))]
 pub mod mocks;

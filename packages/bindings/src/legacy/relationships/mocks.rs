@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/relationships module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/relationships module's types made to be used in any test.
 
 use crate::legacy::relationships::{
     models::{Relationship, UserBlock},

@@ -10,7 +10,7 @@ use {
     cosmwasm_std::Binary,
 };
 
-/// Querier able to query data from the Desmos x/subspaces module.
+/// Querier allows to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
     querier: crate::stargate::subspaces::types::SubspacesQuerier<'a, Empty>,
 }
@@ -25,7 +25,7 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
     ///     let querier = SubspacesQuerier::new(&deps.querier);
-    ///     let subspaces_response = querier.query_subspaces(None);
+    ///     let response = querier.query_subspaces(None);
     /// }
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {

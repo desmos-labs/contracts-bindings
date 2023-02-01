@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/relationships module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/relationships module's types made to be used in any test.
 
 use crate::stargate::relationships::types::{
     QueryBlocksResponse, QueryRelationshipsResponse, Relationship, UserBlock,
@@ -8,7 +8,10 @@ use crate::stargate::relationships::types::{
 /// x/relationships module.
 pub struct MockRelationshipsQueries {}
 
+/// Represents the mock user of the relationship for unit test.
 pub const MOCK_USER: &'static str = "user";
+
+/// Represents the mock target of the relationship for unit test.
 pub const MOCK_TARGET: &'static str = "target";
 
 impl MockRelationshipsQueries {

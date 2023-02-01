@@ -3,7 +3,7 @@
 use crate::stargate::relationships::types::*;
 use cosmwasm_std::Addr;
 
-/// Represents the messages to interact with x/relatioships module.
+/// RelationshipsMsgBuilder is the builder to generate Desmos x/relationships messages.
 pub struct RelationshipsMsgBuilder {}
 
 impl RelationshipsMsgBuilder {

@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/reactions module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/reactions module's types made to be used in any test.
 
 use crate::stargate::reactions::types::{
     FreeTextValue, FreeTextValueParams, QueryReactionResponse, QueryReactionsParamsResponse,
@@ -6,6 +6,7 @@ use crate::stargate::reactions::types::{
     Reaction, RegisteredReaction, RegisteredReactionValueParams, SubspaceReactionsParams,
 };
 
+/// Represents the mock author of the reaction for unit test.
 pub const MOCK_REACTION_AUTHOR: &str = "author";
 
 // Struct that contains some utility methods to mock data of the Desmos

@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/posts module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/posts module's types made to be used in any test.
 
 use crate::legacy::posts::models::{Attachment, Post, PostAttachment, ReplySetting, UserAnswer};
 use crate::legacy::posts::models_query::{

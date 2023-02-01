@@ -1,14 +1,14 @@
 //! Contains the messages that can be sent to the chain to interact with the x/posts module.
 
-use crate::stargate::posts::types::*;
 use crate::stargate::posts::types::AttachmentContent;
+use crate::stargate::posts::types::*;
 use cosmwasm_std::Addr;
 
 /// Represents the messages to interact with the posts module.
 pub struct PostsMsgBuilder {}
 
 impl PostsMsgBuilder {
-    /// Creates an instance of [`PostsMsg::CreatePost`].
+    /// Creates an instance of [`MsgCreatePost`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the post must be created.
     /// * `section_id` - Id of the section inside which the post must be created.
@@ -49,11 +49,11 @@ impl PostsMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`PostsMsg::EditPost`].
+    /// Creates an instance of [`MsgEditPost`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the post is.
     /// * `post_id` - Id of the post to edit.
-    /// * `text` - New text of the post. If set to `[do-not-modify]` it will not change the current post's text.
+    /// * `text` - New text of the post. It will not change the current post's text if set this field to `None`.
     /// * `entities` - New entities connected to this post. These will always replace the current post's entities.
     /// * `editor` - Editor of the post.
     pub fn edit_post(
@@ -74,7 +74,7 @@ impl PostsMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`PostsMsg::DeletePost`].
+    /// Creates an instance of [`MsgDeletePost`].
     ///
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post to be deleted.
@@ -87,7 +87,7 @@ impl PostsMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`PostsMsg::AddPostAttachment`].
+    /// Creates an instance of [`MsgAddPostAttachment`].
     ///
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post from which to remove the attachment.
@@ -107,7 +107,7 @@ impl PostsMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`PostsMsg::RemovePostAttachment`].
+    /// Creates an instance of [`MsgRemovePostAttachment`].
     ///
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post from which to remove the attachment.
@@ -127,7 +127,7 @@ impl PostsMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`PostsMsg::AnswerPoll`].
+    /// Creates an instance of [`MsgAnswerPoll`].
     /// * `subspace_id` - Id of the subspace containing the post.
     /// * `post_id` - Id of the post that contains the poll to be answered.
     /// * `poll_id` - Id of the poll to be answered.

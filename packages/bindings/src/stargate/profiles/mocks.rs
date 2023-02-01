@@ -1,4 +1,5 @@
-//! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/profiles module's types made to be used in any test.
+
 use crate::stargate::profiles::types::{
     oracle_request::CallData,
     query_application_link_owners_response::ApplicationLinkOwnerDetails,
@@ -12,20 +13,36 @@ use crate::stargate::profiles::types::{
     QueryProfileResponse, SignatureValueType, SingleSignature,
 };
 use crate::stargate::types::Secp256k1PublicKey;
+
 use chrono::DateTime;
 use cosmwasm_std::Binary;
 use desmos_std::shim::Timestamp;
 
+/// Represents the mock dtag for unit test.
 pub const MOCK_DTAG: &str = "dtag";
+
+/// Represents the mock user for unit test.
 pub const MOCK_USER: &str = "user";
+
+/// Represents the mock receiver for unit test.
 pub const MOCK_RECEIVER: &str = "receiver";
 
+/// Represents the mock chain link address prefix for unit test.
 pub const MOCK_CHAIN_LINK_ADDRESS_PREFIX: &str = "cosmos";
+
+/// Represents the mock chain name of the chain link for unit test.
 pub const MOCK_CHAIN_LINK_CHAIN_NAME: &str = "cosmos";
+
+/// Represents the mock destination address of the chain link for unit test.
 pub const MOCK_CHAIN_LINK_ADDRESS: &str = "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2";
 
+/// Represents the mock application of the application link for unit test.
 pub const MOCK_APPLICATION_LINK_APPLICATION: &str = "twitter";
+
+/// Represents the mock username of the application link for unit test.
 pub const MOCK_APPLICATION_LINK_USERNAME: &str = "goldrake";
+
+/// Represents the mock client id of the application link for unit test.
 pub const MOCK_APPLICATION_LINK_CLIENT_ID: &str =
     "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake";
 

@@ -1,10 +1,11 @@
-//! Contains some useful functions to perform unit testing of smart contracts.
+//! Contains useful functions to perform unit testing of smart contracts.
 
 use cosmwasm_std::testing::{MockApi, MockQuerier, MockStorage};
 use cosmwasm_std::{
     from_slice, Binary, Coin, Empty, OwnedDeps, Querier, QuerierResult, QueryRequest, SystemError,
     SystemResult,
 };
+
 use mock::MockableQuerier;
 use serde::de::DeserializeOwned;
 use std::collections::HashMap;

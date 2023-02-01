@@ -1,18 +1,25 @@
-//! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
+use crate::stargate::subspaces::types::Permission;
 use crate::stargate::subspaces::types::{
     permission_detail::{Sum, User},
     PermissionDetail, QuerySectionResponse, QuerySectionsResponse, QuerySubspaceResponse,
     QuerySubspacesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
     QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
-use crate::stargate::subspaces::types::Permission;
 use chrono::DateTime;
 use desmos_std::shim::Timestamp;
 
+/// Represents the mock subspace owner for unit test.
 pub const MOCK_SUBSPACE_OWNER: &str = "owner";
+
+/// Represents the mock subspace treasury for unit test.
 pub const MOCK_SUBSPACE_TREASURY: &str = "treasury";
+
+/// Represents the mock subspace creator for unit test.
 pub const MOCK_SUBSPACE_CREATOR: &str = "creator";
+
+/// Represents the mock permissioned user in the subspace for unit test.
 pub const MOCK_PERMISSIONED_USER: &str = "permissioned_user";
 
 /// Struct that contains some utility methods to mock data of the Desmos

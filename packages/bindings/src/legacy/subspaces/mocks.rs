@@ -1,4 +1,4 @@
-//! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
 use crate::legacy::subspaces::models::{Permission, Section, UserPermissions};
 use crate::legacy::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
