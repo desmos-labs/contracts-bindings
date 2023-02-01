@@ -27,7 +27,7 @@ jobs:
         if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.61.0
+          toolchain: 1.66.0
           profile: minimal
           override: true
 
@@ -61,7 +61,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: 1.61.0
+          toolchain: 1.66.0
           override: true
           components: rustfmt, clippy
 
