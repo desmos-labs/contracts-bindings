@@ -69,7 +69,7 @@ impl MockProfilesQueries {
         }
     }
 
-    /// Gets a mocked instance of [`DtagTransferRequest`].
+    /// Gets a mocked instance of [`DTagTransferRequest`].
     pub fn get_mocked_dtag_transfer_request() -> DTagTransferRequest {
         DTagTransferRequest {
             dtag_to_trade: MOCK_DTAG.into(),

@@ -46,7 +46,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`MsgRequestDtagTransfer`].
+    /// Creates an instance of [`MsgRequestDTagTransfer`].
     ///
     /// * `sender` - Address of who is going to send the DTag.
     /// * `receiver` - Address of who is going to receive the DTag
@@ -57,7 +57,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`MsgAcceptDtagTransferRequest`].
+    /// Creates an instance of [`MsgAcceptDTagTransferRequest`].
     ///
     /// * `new_dtag` - The DTag to accept.
     /// * `sender` - Address of who has sent the DTag.
@@ -74,7 +74,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`MsgRefuseDtagTransferRequest`].
+    /// Creates an instance of [`MsgRefuseDTagTransferRequest`].
     ///
     /// * `sender` - Address of who has started the DTag transfer.
     /// * `receiver` - Address of who was supposed to receive the DTag.
@@ -88,7 +88,7 @@ impl ProfilesMsgBuilder {
         }
     }
 
-    /// Creates an instance of [`MsgCancelDtagTransferRequest`].
+    /// Creates an instance of [`MsgCancelDTagTransferRequest`].
     ///
     /// * `receiver` - Address of who was supposed to receive the DTag.
     /// * `sender` - Address of who has started the DTag transfer.
