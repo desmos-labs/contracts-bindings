@@ -365,7 +365,7 @@ mod tests {
     #[test]
     fn test_delete_subspace() {
         let msg = SubspacesMsgBuilder::delete_subspace(1, Addr::unchecked("signer"));
-        
+
         let expected = MsgDeleteSubspace {
             subspace_id: 1,
             signer: "signer".into(),

@@ -281,7 +281,6 @@ mod tests {
         let mut iterator = querier.iterate_subspace_posts(1, 32);
         let expected = MockPostsQueries::get_mocked_subspace_posts_response();
 
-        
         assert_eq!(expected.posts[0], iterator.next().unwrap().unwrap());
         assert_eq!(expected.posts[1], iterator.next().unwrap().unwrap());
         assert!(iterator.next().is_none())
@@ -309,7 +308,6 @@ mod tests {
         let mut iterator = querier.iterate_section_posts(1, 1, 32);
         let expected = MockPostsQueries::get_mocked_section_posts_response();
 
-        
         assert_eq!(expected.posts[0], iterator.next().unwrap().unwrap());
         assert_eq!(expected.posts[1], iterator.next().unwrap().unwrap());
         assert!(iterator.next().is_none())
@@ -376,8 +374,7 @@ mod tests {
 
         let mut iterator = querier.iterate_poll_answers(1, 1, 1, None, 32);
         let expected = MockPostsQueries::get_mocked_poll_answers_response();
-        
-        
+
         assert_eq!(expected.answers[0], iterator.next().unwrap().unwrap());
         assert!(iterator.next().is_none())
     }

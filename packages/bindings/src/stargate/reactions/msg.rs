@@ -139,7 +139,7 @@ mod tests {
             .into(),
             Addr::unchecked("user"),
         );
-        
+
         let expected = MsgAddReaction {
             subspace_id: 1,
             post_id: 1,
@@ -158,7 +158,7 @@ mod tests {
     #[test]
     fn test_remove_reaction() {
         let msg = ReactionsMsgBuilder::remove_reaction(1, 1, 1, Addr::unchecked("user"));
-        
+
         let expected = MsgRemoveReaction {
             subspace_id: 1,
             post_id: 1,
@@ -177,7 +177,7 @@ mod tests {
             "test_value",
             Addr::unchecked("user"),
         );
-       
+
         let expected = MsgAddRegisteredReaction {
             subspace_id: 1,
             shorthand_code: "test_code".into(),
@@ -197,7 +197,7 @@ mod tests {
             "test_value",
             Addr::unchecked("user"),
         );
-       
+
         let expected = MsgEditRegisteredReaction {
             subspace_id: 1,
             registered_reaction_id: 1,
@@ -212,7 +212,7 @@ mod tests {
     #[test]
     fn test_remove_registered_reaction() {
         let msg = ReactionsMsgBuilder::remove_registered_reaction(1, 1, Addr::unchecked("user"));
-        
+
         let expected = MsgRemoveRegisteredReaction {
             subspace_id: 1,
             registered_reaction_id: 1,

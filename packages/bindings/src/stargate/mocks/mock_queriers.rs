@@ -295,7 +295,7 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
             querier,
             MockSubspacesQueries::get_mocked_user_group_members_response(),
         );
-        
+
         QueryUserPermissionsRequest::mock_response(
             querier,
             MockSubspacesQueries::get_mocked_user_permissions_response(),

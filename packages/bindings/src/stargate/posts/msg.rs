@@ -189,7 +189,7 @@ mod tests {
             ReplySetting::Everyone,
             vec![],
         );
-        
+
         let expected = MsgCreatePost {
             subspace_id: 1,
             section_id: 1,
@@ -253,7 +253,7 @@ mod tests {
     #[test]
     fn test_edit_post_without_new_text() {
         let msg = PostsMsgBuilder::edit_post(1, 1, None, None, vec![], Addr::unchecked("user"));
-       
+
         let expected = MsgEditPost {
             subspace_id: 1,
             post_id: 1,
@@ -262,14 +262,14 @@ mod tests {
             tags: vec![],
             editor: "user".into(),
         };
-        
+
         assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_delete_post() {
         let msg = PostsMsgBuilder::delete_post(1, 1, Addr::unchecked("user"));
-       
+
         let expected = MsgDeletePost {
             subspace_id: 1,
             post_id: 1,
@@ -290,7 +290,7 @@ mod tests {
             }),
             Addr::unchecked("user"),
         );
-        
+
         let expected = MsgAddPostAttachment {
             subspace_id: 1,
             post_id: 1,
@@ -310,7 +310,7 @@ mod tests {
     #[test]
     fn test_remove_post_attachment() {
         let msg = PostsMsgBuilder::remove_post_attachment(1, 1, 1, Addr::unchecked("user"));
-        
+
         let expected = MsgRemovePostAttachment {
             subspace_id: 1,
             post_id: 1,

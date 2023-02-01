@@ -108,7 +108,7 @@ mod test {
             Addr::unchecked("reporter"),
             ReportTarget::PostTarget(PostTarget { post_id: 1 }),
         );
-        
+
         let expected = MsgCreateReport {
             subspace_id: 1,
             reasons_ids: vec![0],
@@ -135,8 +135,7 @@ mod test {
 
     #[test]
     fn support_standard_reason() {
-        let msg =
-            ReportsMsgBuilder::support_standard_reason(1, 2, Addr::unchecked("reporter"));
+        let msg = ReportsMsgBuilder::support_standard_reason(1, 2, Addr::unchecked("reporter"));
 
         let expected = MsgSupportStandardReason {
             subspace_id: 1,

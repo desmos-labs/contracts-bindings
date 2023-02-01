@@ -586,7 +586,7 @@ mod tests {
             10,
         );
         let expected = MockProfilesQueries::get_mocked_application_links_response();
-        
+
         assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
@@ -596,12 +596,12 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
-       
+
         let response = querier
             .query_application_link_by_client_id(MOCK_APPLICATION_LINK_CLIENT_ID)
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_application_link_by_client_id_response();
-        
+
         assert_eq!(expected, response)
     }
 
@@ -610,7 +610,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ProfilesQuerier::new(&deps.querier);
-        
+
         let response = querier
             .query_application_link_owners(
                 Some(MOCK_APPLICATION_LINK_APPLICATION),
@@ -619,7 +619,7 @@ mod tests {
             )
             .unwrap();
         let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
-       
+
         assert_eq!(expected, response)
     }
 
@@ -627,7 +627,7 @@ mod tests {
     fn test_iterate_app_link_owners() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        
+
         let querier = ProfilesQuerier::new(&deps.querier);
         let mut it = querier.iterate_application_link_owners(
             Some(MOCK_APPLICATION_LINK_APPLICATION),
@@ -635,7 +635,7 @@ mod tests {
             10,
         );
         let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
-        
+
         assert_eq!(expected.owners[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none())
     }

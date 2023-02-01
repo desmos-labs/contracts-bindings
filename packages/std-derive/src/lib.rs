@@ -62,7 +62,7 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
                         .unwrap()))
                 }))
             }
-            
+
             pub fn mock_failed_response<T: mock::MockableQuerier>(querier: &mut T, error: String) {
                 querier.register_custom_query(#path.to_string(), Box::new(move |data| {
                     cosmwasm_std::SystemResult::Err(cosmwasm_std::SystemError::InvalidResponse {

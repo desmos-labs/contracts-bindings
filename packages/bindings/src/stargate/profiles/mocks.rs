@@ -194,7 +194,7 @@ impl MockProfilesQueries {
             link: Some(Self::get_mocked_application_link()),
         }
     }
-    
+
     /// Function that mocks a [`QueryApplicationLinkOwnersResponse`]
     pub fn get_mocked_application_link_owners_response() -> QueryApplicationLinkOwnersResponse {
         QueryApplicationLinkOwnersResponse {

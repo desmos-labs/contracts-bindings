@@ -402,7 +402,7 @@ mod tests {
     fn test_unlink_application() {
         let msg =
             ProfilesMsgBuilder::unlink_application("twitter", "gawrgura", Addr::unchecked("owner"));
-            
+
         let expected = MsgUnlinkApplication {
             application: "twitter".into(),
             username: "gawrgura".into(),

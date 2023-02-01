@@ -170,7 +170,7 @@ mod tests {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
         let querier = ReportsQuerier::new(&deps.querier);
-        
+
         let response = querier.query_reports(1, None, None, None).unwrap();
         let expected = MockReportsQueries::get_mocked_reports_response();
 
