@@ -1,6 +1,6 @@
 //! Contains some useful mocks of the Desmos x/subspaces module's types made to be used in any test.
 
-use crate::stargate::subspaces::proto::{
+use crate::stargate::subspaces::types::{
     permission_detail::{Sum, User},
     PermissionDetail, QuerySectionResponse, QuerySectionsResponse, QuerySubspaceResponse,
     QuerySubspacesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,

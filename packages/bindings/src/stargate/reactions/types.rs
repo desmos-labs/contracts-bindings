@@ -1,4 +1,5 @@
-use crate::stargate::reactions::proto::{FreeTextValue, RegisteredReactionValue};
+pub use desmos_std::proto::desmos::reactions::v1::*;
+
 use crate::stargate::types::Any;
 
 pub enum ReactionValue {

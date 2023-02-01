@@ -1,4 +1,4 @@
-use crate::stargate::posts::proto::{
+use crate::stargate::posts::types::{
     Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
     UserAnswer,

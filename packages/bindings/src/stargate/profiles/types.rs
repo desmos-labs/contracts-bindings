@@ -1,4 +1,5 @@
-use crate::stargate::profiles::proto::{Base58Address, Bech32Address, HexAddress};
+pub use desmos_std::proto::desmos::profiles::v3::*;
+
 use desmos_std::shim::Any;
 
 #[derive(Clone)]

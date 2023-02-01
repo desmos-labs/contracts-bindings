@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
-use crate::stargate::subspaces::proto::*;
+use crate::stargate::subspaces::types::*;
 use crate::stargate::subspaces::types::Permission;
 use cosmwasm_std::Addr;
 

@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
 
-use crate::stargate::profiles::proto::*;
+use crate::stargate::profiles::types::*;
 use crate::stargate::profiles::types::AddressData;
 use crate::stargate::types::Height;
 use cosmwasm_std::Addr;

@@ -3,18 +3,18 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    stargate::reactions::proto::{Reaction, RegisteredReaction},
+    stargate::reactions::types::{Reaction, RegisteredReaction},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::stargate::reactions::proto::*;
+use crate::stargate::reactions::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/reactions module.
 pub struct ReactionsQuerier<'a> {
-    querier: crate::stargate::reactions::proto::ReactionsQuerier<'a, Empty>,
+    querier: crate::stargate::reactions::types::ReactionsQuerier<'a, Empty>,
 }
 
 impl<'a> ReactionsQuerier<'a> {
@@ -32,7 +32,7 @@ impl<'a> ReactionsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::stargate::reactions::proto::ReactionsQuerier::new(querier),
+            querier: crate::stargate::reactions::types::ReactionsQuerier::new(querier),
         }
     }
 }

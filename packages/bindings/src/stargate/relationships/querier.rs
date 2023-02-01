@@ -3,18 +3,18 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    stargate::relationships::proto::{Relationship, UserBlock},
+    stargate::relationships::types::{Relationship, UserBlock},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::stargate::relationships::proto::*;
+use crate::stargate::relationships::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {
-    querier: crate::stargate::relationships::proto::RelationshipsQuerier<'a, Empty>,
+    querier: crate::stargate::relationships::types::RelationshipsQuerier<'a, Empty>,
 }
 
 impl<'a> RelationshipsQuerier<'a> {
@@ -31,7 +31,7 @@ impl<'a> RelationshipsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::stargate::relationships::proto::RelationshipsQuerier::new(querier),
+            querier: crate::stargate::relationships::types::RelationshipsQuerier::new(querier),
         }
     }
 

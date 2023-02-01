@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/relationships module.
 
-use crate::stargate::relationships::proto::*;
+use crate::stargate::relationships::types::*;
 use cosmwasm_std::Addr;
 
 /// Represents the messages to interact with x/relatioships module.

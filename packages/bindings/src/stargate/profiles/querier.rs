@@ -5,13 +5,13 @@ use crate::iter::page_iterator::{Page, PageIterator};
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::stargate::profiles::proto::*;
+use crate::stargate::profiles::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier able to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {
-    querier: crate::stargate::profiles::proto::ProfilesQuerier<'a, Empty>,
+    querier: crate::stargate::profiles::types::ProfilesQuerier<'a, Empty>,
 }
 
 impl<'a> ProfilesQuerier<'a> {
@@ -28,7 +28,7 @@ impl<'a> ProfilesQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::stargate::profiles::proto::ProfilesQuerier::new(querier),
+            querier: crate::stargate::profiles::types::ProfilesQuerier::new(querier),
         }
     }
 

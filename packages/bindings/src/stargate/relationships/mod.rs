@@ -4,6 +4,4 @@
 pub mod mocks;
 pub mod msg;
 pub mod querier;
-pub mod proto {
-    pub use desmos_std::proto::desmos::relationships::v1::*;
-}
+pub mod types;

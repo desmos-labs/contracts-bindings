@@ -1,18 +1,18 @@
 //! Contains the querier that can be used to query data related to the x/posts module.
 
-use crate::stargate::posts::proto::*;
+use crate::stargate::posts::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::stargate::posts::proto::{Attachment, Post, UserAnswer},
+    crate::stargate::posts::types::{Attachment, Post, UserAnswer},
     cosmwasm_std::Binary,
 };
 
 /// Querier able to query data from the Desmos x/posts module.
 pub struct PostsQuerier<'a> {
-    querier: crate::stargate::posts::proto::PostsQuerier<'a, Empty>,
+    querier: crate::stargate::posts::types::PostsQuerier<'a, Empty>,
 }
 
 impl<'a> PostsQuerier<'a> {
@@ -29,7 +29,7 @@ impl<'a> PostsQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::stargate::posts::proto::PostsQuerier::new(querier),
+            querier: crate::stargate::posts::types::PostsQuerier::new(querier),
         }
     }
 

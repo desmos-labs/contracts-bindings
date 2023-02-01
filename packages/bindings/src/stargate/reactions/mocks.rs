@@ -1,6 +1,6 @@
 //! Contains some useful mocks of the Desmos x/reactions module's types made to be used in any test.
 
-use crate::stargate::reactions::proto::{
+use crate::stargate::reactions::types::{
     FreeTextValue, FreeTextValueParams, QueryReactionResponse, QueryReactionsParamsResponse,
     QueryReactionsResponse, QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
     Reaction, RegisteredReaction, RegisteredReactionValueParams, SubspaceReactionsParams,

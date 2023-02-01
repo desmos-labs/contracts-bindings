@@ -1,3 +1,5 @@
+pub use desmos_std::proto::desmos::subspaces::v3::*;
+
 pub enum Permission {
     /// Allows to change the information of the subspace.
     EditSubspace,

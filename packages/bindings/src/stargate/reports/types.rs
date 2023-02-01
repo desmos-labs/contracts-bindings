@@ -1,6 +1,8 @@
-use crate::stargate::reports::proto::{PostTarget, UserTarget};
 use crate::stargate::types::Any;
 
+pub use desmos_std::proto::desmos::reports::v1::*;
+
+// Represents the target of the report.
 #[derive(Clone)]
 pub enum ReportTarget {
     UserTarget(UserTarget),

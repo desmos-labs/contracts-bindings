@@ -1,0 +1,1 @@
+pub use desmos_std::proto::desmos::relationships::v1::*;

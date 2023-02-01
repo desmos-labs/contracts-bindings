@@ -1,6 +1,6 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
-use crate::stargate::reactions::proto::*;
+use crate::stargate::reactions::types::*;
 use crate::stargate::reactions::types::ReactionValue;
 use cosmwasm_std::Addr;
 

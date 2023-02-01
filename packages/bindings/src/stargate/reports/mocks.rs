@@ -1,6 +1,6 @@
 //! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
 
-use crate::stargate::reports::proto::{
+use crate::stargate::reports::types::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
     Report, UserTarget,
 };

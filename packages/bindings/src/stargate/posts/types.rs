@@ -1,4 +1,5 @@
-use crate::stargate::posts::proto::{Media, Poll};
+pub use desmos_std::proto::desmos::posts::v2::*;
+
 use crate::stargate::types::Any;
 
 pub enum AttachmentContent {

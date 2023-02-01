@@ -1,18 +1,18 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
-use crate::stargate::subspaces::proto::*;
+use crate::stargate::subspaces::types::*;
 use crate::stargate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::stargate::subspaces::proto::{Section, Subspace, UserGroup},
+    crate::stargate::subspaces::types::{Section, Subspace, UserGroup},
     cosmwasm_std::Binary,
 };
 
 /// Querier able to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
-    querier: crate::stargate::subspaces::proto::SubspacesQuerier<'a, Empty>,
+    querier: crate::stargate::subspaces::types::SubspacesQuerier<'a, Empty>,
 }
 
 impl<'a> SubspacesQuerier<'a> {
@@ -30,7 +30,7 @@ impl<'a> SubspacesQuerier<'a> {
     /// ```
     pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: crate::stargate::subspaces::proto::SubspacesQuerier::new(querier),
+            querier: crate::stargate::subspaces::types::SubspacesQuerier::new(querier),
         }
     }
 }
