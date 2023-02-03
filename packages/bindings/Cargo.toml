@@ -18,7 +18,7 @@ readme = "../../README.md"
 all-features = true
 
 [dependencies]
-cosmwasm-std = "1.1.9"
+cosmwasm-std = "1.2.1"
 cosmwasm-schema = "1.1.9"
 anyhow = "1.0.68"
 serde = { version = "1.0.152", default-features = false, features = ["derive"] }
