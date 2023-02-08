@@ -20,7 +20,7 @@ all-features = true
 [dependencies]
 cosmwasm-std = "1.2.1"
 cosmwasm-schema = "1.2.1"
-anyhow = "1.0.68"
+anyhow = "1.0.69"
 serde = { version = "1.0.152", default-features = false, features = ["derive"] }
 thiserror = "1.0.38"
 
