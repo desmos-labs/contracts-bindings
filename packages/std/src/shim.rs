@@ -221,7 +221,7 @@ impl<'de> Deserialize<'de> for Any {
             .get(&serde_cw_value::Value::String("value".to_string()))
             .map(|t| match t.to_owned() {
                 serde_cw_value::Value::String(s) => Ok(s),
-                _ => Err(serde::de::Error::custom("type_url must be String")),
+                _ => Err(serde::de::Error::custom("value must be String")),
             })
             .transpose()?
             .unwrap_or_default();
