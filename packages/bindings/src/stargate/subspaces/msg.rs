@@ -20,14 +20,12 @@ impl SubspacesMsgBuilder {
     pub fn create_subspace(
         name: &str,
         description: &str,
-        treasury: Addr,
         owner: Addr,
         creator: Addr,
     ) -> MsgCreateSubspace {
         MsgCreateSubspace {
             name: name.into(),
             description: description.into(),
-            treasury: treasury.into(),
             owner: owner.into(),
             creator: creator.into(),
         }
@@ -45,7 +43,6 @@ impl SubspacesMsgBuilder {
         subspace_id: u64,
         name: &str,
         description: &str,
-        treasury: Addr,
         owner: Addr,
         signer: Addr,
     ) -> MsgEditSubspace {
@@ -53,7 +50,6 @@ impl SubspacesMsgBuilder {
             subspace_id,
             name: name.into(),
             description: description.into(),
-            treasury: treasury.into(),
             owner: owner.into(),
             signer: signer.into(),
         }
@@ -326,14 +322,12 @@ mod tests {
         let msg = SubspacesMsgBuilder::create_subspace(
             "test",
             "test",
-            Addr::unchecked("treasury"),
             Addr::unchecked("owner"),
             Addr::unchecked("signer"),
         );
         let expected = MsgCreateSubspace {
             name: "test".into(),
             description: "test".into(),
-            treasury: "treasury".into(),
             owner: "owner".into(),
             creator: "signer".into(),
         };
@@ -346,7 +340,6 @@ mod tests {
             42,
             "test",
             "test",
-            Addr::unchecked("treasury"),
             Addr::unchecked("owner"),
             Addr::unchecked("signer"),
         );
@@ -354,7 +347,6 @@ mod tests {
             subspace_id: 42,
             name: "test".into(),
             description: "test".into(),
-            treasury: "treasury".into(),
             owner: "owner".into(),
             signer: "signer".into(),
         };

@@ -1,4 +1,5 @@
 /// QueryProfileRequest is the request type for the Query/Profile RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -19,6 +20,7 @@ pub struct QueryProfileRequest {
     pub user: ::prost::alloc::string::String,
 }
 /// QueryProfileResponse is the response type for the Query/Profile RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -34,6 +36,7 @@ pub struct QueryProfileResponse {
     pub profile: ::core::option::Option<crate::shim::Any>,
 }
 /// DTagTransferRequest represent a DTag transfer request between two users
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -59,6 +62,7 @@ pub struct DTagTransferRequest {
 }
 /// QueryIncomingDTagTransferRequestsRequest is the request type for the
 /// Query/IncomingDTagTransferRequests RPC endpoint
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -85,6 +89,7 @@ pub struct QueryIncomingDTagTransferRequestsRequest {
 }
 /// QueryIncomingDTagTransferRequestsResponse is the response type for the
 /// Query/IncomingDTagTransferRequests RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -106,6 +111,7 @@ pub struct QueryIncomingDTagTransferRequestsResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// Params contains the parameters for the profiles module
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -129,6 +135,7 @@ pub struct Params {
     pub app_links: ::core::option::Option<AppLinksParams>,
 }
 /// NicknameParams defines the parameters related to the profiles nicknames
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -146,6 +153,7 @@ pub struct NicknameParams {
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// DTagParams defines the parameters related to profile DTags
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -165,6 +173,7 @@ pub struct DTagParams {
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// BioParams defines the parameters related to profile biography
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -182,6 +191,7 @@ pub struct BioParams {
 /// OracleParams defines the parameters related to the oracle
 /// that will be used to verify the ownership of a centralized
 /// application account by a Desmos profile
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -238,6 +248,7 @@ pub struct OracleParams {
     pub fee_amount: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 /// AppLinksParams define the parameters related to the app links
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -254,6 +265,7 @@ pub struct AppLinksParams {
     pub validity_duration: ::core::option::Option<crate::shim::Duration>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC endpoint
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -270,6 +282,7 @@ pub struct AppLinksParams {
 )]
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -286,6 +299,7 @@ pub struct QueryParamsResponse {
 }
 /// ChainLink contains the data representing either an inter- or cross- chain
 /// link
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -315,6 +329,7 @@ pub struct ChainLink {
     pub creation_time: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// ChainConfig contains the data of the chain with which the link is made.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -331,6 +346,7 @@ pub struct ChainConfig {
 }
 /// Proof contains all the data used to verify a signature when linking an
 /// account to a profile
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -355,6 +371,7 @@ pub struct Proof {
     pub plain_text: ::prost::alloc::string::String,
 }
 /// Bech32Address represents a Bech32-encoded address
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -374,6 +391,7 @@ pub struct Bech32Address {
     pub prefix: ::prost::alloc::string::String,
 }
 /// Base58Address represents a Base58-encoded address
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -391,6 +409,7 @@ pub struct Base58Address {
 }
 /// HexAddress represents an Hex-encoded address
 /// NOTE: Currently it only supports keccak256-uncompressed addresses
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -411,6 +430,7 @@ pub struct HexAddress {
     pub prefix: ::prost::alloc::string::String,
 }
 /// SingleSignature is the signature data for a single signer
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -434,6 +454,7 @@ pub struct SingleSignature {
     pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 /// CosmosMultiSignature is the signature data for a multisig public key
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -491,10 +512,22 @@ impl SignatureValueType {
             SignatureValueType::EvmPersonalSign => "SIGNATURE_VALUE_TYPE_EVM_PERSONAL_SIGN",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "SIGNATURE_VALUE_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "SIGNATURE_VALUE_TYPE_RAW" => Some(Self::Raw),
+            "SIGNATURE_VALUE_TYPE_COSMOS_DIRECT" => Some(Self::CosmosDirect),
+            "SIGNATURE_VALUE_TYPE_COSMOS_AMINO" => Some(Self::CosmosAmino),
+            "SIGNATURE_VALUE_TYPE_EVM_PERSONAL_SIGN" => Some(Self::EvmPersonalSign),
+            _ => None,
+        }
+    }
 }
 /// QueryChainLinksRequest represents the request that should be used in order
 /// to retrieve the link associated with the provided user, for the given chain
 /// and having the given target address
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -529,6 +562,7 @@ pub struct QueryChainLinksRequest {
 }
 /// QueryChainLinksResponse is the response type for the
 /// Query/ChainLinks RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -549,6 +583,7 @@ pub struct QueryChainLinksResponse {
 }
 /// QueryChainLinkOwnersRequest contains the data of the request that can
 /// be used to get chain link owners
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -579,6 +614,7 @@ pub struct QueryChainLinkOwnersRequest {
 }
 /// QueryChainLinkOwnersResponse contains the data returned by the request
 /// allowing to get chain link owners.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -601,6 +637,7 @@ pub struct QueryChainLinkOwnersResponse {
 /// Nested message and enum types in `QueryChainLinkOwnersResponse`.
 pub mod query_chain_link_owners_response {
     /// ChainLinkOwnerDetails contains the details of a single chain link owner
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -624,6 +661,7 @@ pub mod query_chain_link_owners_response {
 }
 /// QueryDefaultExternalAddressesRequest is the request type for
 /// Query/DefaultExternalAddresses RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -652,6 +690,7 @@ pub struct QueryDefaultExternalAddressesRequest {
 }
 /// QueryDefaultExternalAddressesResponse is the response type for
 /// Query/DefaultExternalAddresses RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -672,6 +711,7 @@ pub struct QueryDefaultExternalAddressesResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// ApplicationLink contains the data of a link to a centralized application
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -712,6 +752,7 @@ pub struct ApplicationLink {
 }
 /// Data contains the data associated to a specific user of a
 /// generic centralized application
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -732,6 +773,7 @@ pub struct Data {
 }
 /// OracleRequest represents a generic oracle request used to
 /// verify the ownership of a centralized application account
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -768,6 +810,7 @@ pub struct OracleRequest {
 pub mod oracle_request {
     /// CallData contains the data sent to a single oracle request in order to
     /// verify the ownership of a centralized application by a Desmos profile
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -789,6 +832,7 @@ pub mod oracle_request {
     }
 }
 /// Result represents a verification result
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -809,6 +853,7 @@ pub struct AppResult {
 pub mod result {
     /// Success is the result of an application link that has been successfully
     /// verified
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -829,6 +874,7 @@ pub mod result {
     }
     /// Failed is the result of an application link that has not been verified
     /// successfully
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -846,6 +892,7 @@ pub mod result {
     }
     /// sum is the oneof that specifies whether this represents a success or
     /// failure result
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]
@@ -895,9 +942,21 @@ impl ApplicationLinkState {
             ApplicationLinkState::TimedOut => "APPLICATION_LINK_STATE_TIMED_OUT",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "APPLICATION_LINK_STATE_INITIALIZED_UNSPECIFIED" => Some(Self::InitializedUnspecified),
+            "APPLICATION_LINK_STATE_VERIFICATION_STARTED" => Some(Self::VerificationStarted),
+            "APPLICATION_LINK_STATE_VERIFICATION_ERROR" => Some(Self::VerificationError),
+            "APPLICATION_LINK_STATE_VERIFICATION_SUCCESS" => Some(Self::VerificationSuccess),
+            "APPLICATION_LINK_STATE_TIMED_OUT" => Some(Self::TimedOut),
+            _ => None,
+        }
+    }
 }
 /// QueryUserApplicationLinkRequest represents the request used when querying an
 /// application link using an application name and username for a given user
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -932,6 +991,7 @@ pub struct QueryApplicationLinksRequest {
 }
 /// QueryApplicationLinksResponse represents the response to the query used
 /// to get the application links for a specific user
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -952,6 +1012,7 @@ pub struct QueryApplicationLinksResponse {
 }
 /// QueryApplicationLinkByClientIDRequest contains the data of the request that
 /// can be used to get an application link based on a client id
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -973,6 +1034,7 @@ pub struct QueryApplicationLinkByClientIdRequest {
 }
 /// QueryApplicationLinkByClientIDResponse contains the data returned by the
 /// request allowing to get an application link using a client id
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -989,6 +1051,7 @@ pub struct QueryApplicationLinkByClientIdResponse {
 }
 /// QueryApplicationLinkOwnersRequest contains the data of the request that can
 /// be used to get application link owners
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1019,6 +1082,7 @@ pub struct QueryApplicationLinkOwnersRequest {
 }
 /// QueryApplicationLinkOwnersResponse contains the data returned by the request
 /// allowing to get application link owners.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1044,6 +1108,7 @@ pub struct QueryApplicationLinkOwnersResponse {
 pub mod query_application_link_owners_response {
     /// ApplicationLinkOwnerDetails contains the details of a single application
     /// link owner
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -1067,6 +1132,7 @@ pub mod query_application_link_owners_response {
 }
 /// Profile represents a generic first on Desmos, containing the information of a
 /// single user
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1098,6 +1164,7 @@ pub struct Profile {
     pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// Pictures contains the data of a user profile's related pictures
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1118,6 +1185,7 @@ pub struct Pictures {
 }
 /// MsgRequestDTagTransfer represents the message used to request the DTag
 /// transfer to another user.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1140,6 +1208,7 @@ pub struct MsgRequestDTagTransfer {
 }
 /// MsgRequestDTagTransferResponse defines the Msg/RequestDTagTransfer response
 /// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1153,6 +1222,7 @@ pub struct MsgRequestDTagTransfer {
 pub struct MsgRequestDTagTransferResponse {}
 /// MsgCancelDTagTransferRequest represents the message used to cancel a DTag
 /// transfer request.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1173,6 +1243,7 @@ pub struct MsgCancelDTagTransferRequest {
 }
 /// MsgCancelDTagTransferRequestResponse represents the
 /// Msg/CancelDTagTransferRequest response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1186,6 +1257,7 @@ pub struct MsgCancelDTagTransferRequest {
 pub struct MsgCancelDTagTransferRequestResponse {}
 /// MsgAcceptDTagTransferRequest represents the message used to accept a DTag
 /// transfer request.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1210,6 +1282,7 @@ pub struct MsgAcceptDTagTransferRequest {
 }
 /// MsgAcceptDTagTransferRequestResponse defines the
 /// Msg/AcceptDTagTransferRequest response.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1223,6 +1296,7 @@ pub struct MsgAcceptDTagTransferRequest {
 pub struct MsgAcceptDTagTransferRequestResponse {}
 /// MsgRefuseDTagTransferRequest represents the message used to refuse a DTag
 /// transfer request.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1243,6 +1317,7 @@ pub struct MsgRefuseDTagTransferRequest {
 }
 /// MsgRefuseDTagTransferRequestResponse defines the
 /// Msg/RefuseDTagTransferRequest response.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1255,6 +1330,7 @@ pub struct MsgRefuseDTagTransferRequest {
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRefuseDTagTransferRequestResponse")]
 pub struct MsgRefuseDTagTransferRequestResponse {}
 /// MsgSaveProfile represents a message to save a profile.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1291,6 +1367,7 @@ pub struct MsgSaveProfile {
     pub creator: ::prost::alloc::string::String,
 }
 /// MsgSaveProfileResponse defines the Msg/SaveProfile response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1303,6 +1380,7 @@ pub struct MsgSaveProfile {
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSaveProfileResponse")]
 pub struct MsgSaveProfileResponse {}
 /// MsgDeleteProfile represents the message used to delete an existing profile.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1319,6 +1397,7 @@ pub struct MsgDeleteProfile {
     pub creator: ::prost::alloc::string::String,
 }
 /// MsgDeleteProfileResponse defines the Msg/DeleteProfile response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1331,6 +1410,7 @@ pub struct MsgDeleteProfile {
 #[proto_message(type_url = "/desmos.profiles.v3.MsgDeleteProfileResponse")]
 pub struct MsgDeleteProfileResponse {}
 /// MsgLinkChainAccount represents a message to link an account to a profile.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1358,6 +1438,7 @@ pub struct MsgLinkChainAccount {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgLinkChainAccountResponse defines the Msg/LinkAccount response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1371,6 +1452,7 @@ pub struct MsgLinkChainAccount {
 pub struct MsgLinkChainAccountResponse {}
 /// MsgUnlinkChainAccount represents a message to unlink an account from a
 /// profile.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1394,6 +1476,7 @@ pub struct MsgUnlinkChainAccount {
     pub target: ::prost::alloc::string::String,
 }
 /// MsgUnlinkChainAccountResponse defines the Msg/UnlinkAccount response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1407,6 +1490,7 @@ pub struct MsgUnlinkChainAccount {
 pub struct MsgUnlinkChainAccountResponse {}
 /// MsgSetDefaultExternalAddress represents the message used to set a default
 /// address for a specific chain
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1430,6 +1514,7 @@ pub struct MsgSetDefaultExternalAddress {
 }
 /// MsgSetDefaultExternalAddressResponse represents the
 /// Msg/SetDefaultExternalAddress response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1443,6 +1528,7 @@ pub struct MsgSetDefaultExternalAddress {
 pub struct MsgSetDefaultExternalAddressResponse {}
 /// MsgLinkApplication defines a msg to connect a profile with a
 /// centralized application account (eg. Twitter, GitHub, etc).
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1485,6 +1571,7 @@ pub struct MsgLinkApplication {
 }
 /// MsgLinkApplicationResponse defines the Msg/LinkApplication
 /// response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1498,6 +1585,7 @@ pub struct MsgLinkApplication {
 pub struct MsgLinkApplicationResponse {}
 /// MsgUnlinkApplication defines a msg to delete an application link from a user
 /// profile
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1522,6 +1610,7 @@ pub struct MsgUnlinkApplication {
 }
 /// MsgUnlinkApplicationResponse defines the Msg/UnlinkApplication response
 /// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1536,6 +1625,7 @@ pub struct MsgUnlinkApplicationResponse {}
 /// LinkChainAccountPacketData defines the object that should be sent inside a
 /// MsgSendPacket when wanting to link an external chain to a Desmos profile
 /// using IBC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1565,6 +1655,7 @@ pub struct LinkChainAccountPacketData {
     pub destination_proof: ::core::option::Option<Proof>,
 }
 /// LinkChainAccountPacketAck defines a struct for the packet acknowledgment
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

@@ -5,6 +5,7 @@
 ///           Foo some_parameter = 1;
 ///           PageRequest pagination = 2;
 ///   }
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -57,6 +58,7 @@ pub struct PageRequest {
 ///           repeated Bar results = 1;
 ///           PageResponse page = 2;
 ///   }
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

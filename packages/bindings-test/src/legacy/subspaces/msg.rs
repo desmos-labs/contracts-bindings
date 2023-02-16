@@ -15,7 +15,6 @@ mod tests {
                 name: "test_subspace_create_delete".to_string(),
                 description: "".to_string(),
                 owner: Addr::unchecked(contract_address),
-                treasury: Addr::unchecked(contract_address),
             }
             .into()],
         }
@@ -44,7 +43,6 @@ mod tests {
             subspace_id,
             name: new_subspace_name.to_string(),
             description: "".to_string(),
-            treasury: Addr::unchecked(&contract_address),
             owner: Addr::unchecked(&contract_address),
             signer: Addr::unchecked(&contract_address),
         };

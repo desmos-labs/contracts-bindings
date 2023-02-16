@@ -13,10 +13,6 @@ pub enum SubspacesMsg {
         name: String,
         /// Subspace description.
         description: String,
-        /// Subspace treasury address.
-        /// Represents the address that will pay for the fees
-        /// needed to performs application links.
-        treasury: Addr,
         /// Subspace owner.
         owner: Addr,
         /// Subspace creator.
@@ -30,10 +26,6 @@ pub enum SubspacesMsg {
         name: String,
         /// New subspace description.
         description: String,
-        /// New subspace treasury address.
-        /// Represents the address that will pay for the fees
-        /// needed to performs application links.
-        treasury: Addr,
         /// New subspace owner.
         owner: Addr,
         /// Address of who wants to edit the subspace.
@@ -195,20 +187,17 @@ impl SubspacesMsg {
     ///
     /// * `name` - Subspace name.
     /// * `description` - Subspace description.
-    /// * `treasury` - Treasury address.
     /// * `owner` - Address of who will be the subspace owner.
     /// * `creator` - Address of who wants to create the subspace.
     pub fn create_subspace(
         name: &str,
         description: &str,
-        treasury: Addr,
         owner: Addr,
         creator: Addr,
     ) -> SubspacesMsg {
         SubspacesMsg::CreateSubspace {
             name: name.to_owned(),
             description: description.to_owned(),
-            treasury,
             owner,
             creator,
         }
@@ -219,14 +208,12 @@ impl SubspacesMsg {
     /// * `subspace_id` - Id of the subspace to edit.
     /// * `name` - New subspace name.
     /// * `description` - New subspace description.
-    /// * `treasury` - New subspace treasury.
     /// * `owner` - Address of who will be the subspace owner.
     /// * `signer` - Address of who wants edit the subspace.
     pub fn edit_subspace(
         subspace_id: u64,
         name: &str,
         description: &str,
-        treasury: Addr,
         owner: Addr,
         signer: Addr,
     ) -> SubspacesMsg {
@@ -234,7 +221,6 @@ impl SubspacesMsg {
             subspace_id: subspace_id.into(),
             name: name.to_owned(),
             description: description.to_owned(),
-            treasury,
             owner,
             signer,
         }
@@ -508,14 +494,12 @@ mod tests {
         let msg = SubspacesMsg::create_subspace(
             "test",
             "test",
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         );
         let expected = SubspacesMsg::CreateSubspace {
             name: "test".to_string(),
             description: "test".to_string(),
-            treasury: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             owner: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
@@ -528,7 +512,6 @@ mod tests {
             42,
             "test",
             "test",
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         );
@@ -536,7 +519,6 @@ mod tests {
             subspace_id: Uint64::new(42),
             name: "test".to_string(),
             description: "test".to_string(),
-            treasury: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             owner: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             signer: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };

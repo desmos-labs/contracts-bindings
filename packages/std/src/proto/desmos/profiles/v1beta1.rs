@@ -1,5 +1,6 @@
 /// Relationship is the struct of a relationship.
 /// It represent the concept of "follow" of traditional social networks.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -20,6 +21,7 @@ pub struct Relationship {
 }
 /// UserBlock represents the fact that the Blocker has blocked the given Blocked
 /// user.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -46,6 +48,7 @@ pub struct UserBlock {
     pub subspace_id: ::prost::alloc::string::String,
 }
 /// ApplicationLink contains the data of a link to a centralized application
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -83,6 +86,7 @@ pub struct ApplicationLink {
 }
 /// Data contains the data associated to a specific user of a
 /// generic centralized application
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -103,6 +107,7 @@ pub struct Data {
 }
 /// OracleRequest represents a generic oracle request used to
 /// verify the ownership of a centralized application account
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -139,6 +144,7 @@ pub struct OracleRequest {
 pub mod oracle_request {
     /// CallData contains the data sent to a single oracle request in order to
     /// verify the ownership of a centralized application by a Desmos profile
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -160,6 +166,7 @@ pub mod oracle_request {
     }
 }
 /// Result represents a verification result
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -180,6 +187,7 @@ pub struct AppResult {
 pub mod result {
     /// Success is the result of an application link that has been successfully
     /// verified
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -200,6 +208,7 @@ pub mod result {
     }
     /// Failed is the result of an application link that has not been verified
     /// successfully
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -217,6 +226,7 @@ pub mod result {
     }
     /// sum is the oneof that specifies whether this represents a success or
     /// failure result
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]
@@ -266,9 +276,21 @@ impl ApplicationLinkState {
             ApplicationLinkState::TimedOut => "APPLICATION_LINK_STATE_TIMED_OUT",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "APPLICATION_LINK_STATE_INITIALIZED_UNSPECIFIED" => Some(Self::InitializedUnspecified),
+            "APPLICATION_LINK_STATE_VERIFICATION_STARTED" => Some(Self::VerificationStarted),
+            "APPLICATION_LINK_STATE_VERIFICATION_ERROR" => Some(Self::VerificationError),
+            "APPLICATION_LINK_STATE_VERIFICATION_SUCCESS" => Some(Self::VerificationSuccess),
+            "APPLICATION_LINK_STATE_TIMED_OUT" => Some(Self::TimedOut),
+            _ => None,
+        }
+    }
 }
 /// Profile represents a generic first on Desmos, containing the information of a
 /// single user
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -300,6 +322,7 @@ pub struct Profile {
     pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// Pictures contains the data of a user profile's related pictures
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -320,6 +343,7 @@ pub struct Pictures {
 }
 /// ChainLink contains the data representing either an inter- or cross- chain
 /// link
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -349,6 +373,7 @@ pub struct ChainLink {
     pub creation_time: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// ChainConfig contains the data of the chain with which the link is made.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -365,6 +390,7 @@ pub struct ChainConfig {
 }
 /// Proof contains all the data used to verify a signature when linking an
 /// account to a profile
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -389,6 +415,7 @@ pub struct Proof {
     pub plain_text: ::prost::alloc::string::String,
 }
 /// Bech32Address represents a Bech32-encoded address
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -408,6 +435,7 @@ pub struct Bech32Address {
     pub prefix: ::prost::alloc::string::String,
 }
 /// Base58Address represents a Base58-encoded address
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -425,6 +453,7 @@ pub struct Base58Address {
 }
 /// HexAddress represents an Hex-encoded address
 /// NOTE: Currently it only supports keccak256-uncompressed addresses
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -445,6 +474,7 @@ pub struct HexAddress {
     pub prefix: ::prost::alloc::string::String,
 }
 /// DTagTransferRequest represent a DTag transfer request between two users
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

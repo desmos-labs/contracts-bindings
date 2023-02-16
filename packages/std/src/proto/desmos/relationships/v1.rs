@@ -1,5 +1,6 @@
 /// Relationship is the struct of a relationship.
 /// It represent the concept of "follow" of traditional social networks.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -28,6 +29,7 @@ pub struct Relationship {
 }
 /// UserBlock represents the fact that the Blocker has blocked the given Blocked
 /// user.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -59,6 +61,7 @@ pub struct UserBlock {
 }
 /// QueryRelationshipsRequest is the request type for the
 /// Query/Relationships RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -95,6 +98,7 @@ pub struct QueryRelationshipsRequest {
 }
 /// QueryRelationshipsResponse is the response type for the
 /// Query/Relationships RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -114,6 +118,7 @@ pub struct QueryRelationshipsResponse {
 }
 /// QueryBlocksRequest is the request type for the Query/Blocks RPC
 /// endpoint
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -150,6 +155,7 @@ pub struct QueryBlocksRequest {
 }
 /// QueryBlocksResponse is the response type for the Query/Blocks RPC
 /// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -169,6 +175,7 @@ pub struct QueryBlocksResponse {
 }
 /// MsgCreateRelationship represents a message to create a relationship
 /// between two users on a specific subspace.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -196,6 +203,7 @@ pub struct MsgCreateRelationship {
 }
 /// MsgCreateRelationshipResponse defines the Msg/CreateRelationship response
 /// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -209,6 +217,7 @@ pub struct MsgCreateRelationship {
 pub struct MsgCreateRelationshipResponse {}
 /// MsgDeleteRelationship represents a message to delete the relationship
 /// between two users.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -236,6 +245,7 @@ pub struct MsgDeleteRelationship {
 }
 /// MsgDeleteRelationshipResponse defines the Msg/DeleteRelationship response
 /// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -249,6 +259,7 @@ pub struct MsgDeleteRelationship {
 pub struct MsgDeleteRelationshipResponse {}
 /// MsgBlockUser represents a message to block another user specifying an
 /// optional reason.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -278,6 +289,7 @@ pub struct MsgBlockUser {
     pub subspace_id: u64,
 }
 /// MsgBlockUserResponse defines the Msg/BlockUser response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -290,6 +302,7 @@ pub struct MsgBlockUser {
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUserResponse")]
 pub struct MsgBlockUserResponse {}
 /// MsgUnblockUser represents a message to unblock a previously blocked user.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -316,6 +329,7 @@ pub struct MsgUnblockUser {
     pub subspace_id: u64,
 }
 /// MsgUnblockUserResponse defines the Msg/UnblockUser response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

@@ -277,8 +277,8 @@ expand_as_any!(
     crate::proto::desmos::profiles::v3::SingleSignature,
     crate::proto::desmos::profiles::v3::CosmosMultiSignature,
     // posts module
-    crate::proto::desmos::posts::v2::Poll,
-    crate::proto::desmos::posts::v2::Media,
+    crate::proto::desmos::posts::v3::Poll,
+    crate::proto::desmos::posts::v3::Media,
     // reactions module
     crate::proto::desmos::reactions::v1::FreeTextValue,
     crate::proto::desmos::reactions::v1::RegisteredReactionValue,

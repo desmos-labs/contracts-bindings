@@ -1,4 +1,5 @@
 /// Reaction contains the data of a single post reaction
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -40,6 +41,7 @@ pub struct Reaction {
 }
 /// RegisteredReactionValue contains the details of a reaction value that
 /// references a reaction registered within the subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -61,6 +63,7 @@ pub struct RegisteredReactionValue {
 }
 /// FreeTextValue contains the details of a reaction value that
 /// is made of free text
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -77,6 +80,7 @@ pub struct FreeTextValue {
 }
 /// RegisteredReaction contains the details of a registered reaction within a
 /// subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -111,6 +115,7 @@ pub struct RegisteredReaction {
 }
 /// SubspaceReactionsParams contains the params related to a single subspace
 /// reactions
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -137,6 +142,7 @@ pub struct SubspaceReactionsParams {
     pub free_text: ::core::option::Option<FreeTextValueParams>,
 }
 /// FreeTextValueParams contains the params for FreeTextValue based reactions
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -165,6 +171,7 @@ pub struct FreeTextValueParams {
 }
 /// RegisteredReactionValueParams contains the params for RegisteredReactionValue
 /// based reactions
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -181,6 +188,7 @@ pub struct RegisteredReactionValueParams {
     pub enabled: bool,
 }
 /// QueryReactionsRequest is the request type for the Query/Reactions RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -221,6 +229,7 @@ pub struct QueryReactionsRequest {
 }
 /// QueryReactionsResponse is the response type for the Query/Reactions RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -240,6 +249,7 @@ pub struct QueryReactionsResponse {
 }
 /// QueryReactionRequest is the request type for the Query/ReactionRequest RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -279,6 +289,7 @@ pub struct QueryReactionRequest {
 }
 /// QueryReactionResponse is the response type for the Query/Reaction RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -295,6 +306,7 @@ pub struct QueryReactionResponse {
 }
 /// QueryRegisteredReactionsRequest is the request type for the
 /// Query/RegisteredReactions RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -324,6 +336,7 @@ pub struct QueryRegisteredReactionsRequest {
 }
 /// QueryRegisteredReactionsResponse is the response type for the
 /// Query/RegisteredReactions RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -343,6 +356,7 @@ pub struct QueryRegisteredReactionsResponse {
 }
 /// QueryRegisteredReactionRequest is the request type for the
 /// Query/RegisteredReaction RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -375,6 +389,7 @@ pub struct QueryRegisteredReactionRequest {
 }
 /// QueryRegisteredReactionResponse is the response type for the
 /// Query/RegisteredReaction RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -391,6 +406,7 @@ pub struct QueryRegisteredReactionResponse {
 }
 /// QueryReactionsParamsRequest is the request type for the Query/ReactionsParams
 /// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -416,6 +432,7 @@ pub struct QueryReactionsParamsRequest {
 }
 /// QueryReactionsParamsResponse is the response type for the
 /// Query/ReactionsParam RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -431,6 +448,7 @@ pub struct QueryReactionsParamsResponse {
     pub params: ::core::option::Option<SubspaceReactionsParams>,
 }
 /// MsgAddReaction represents the message to be used to add a post reaction
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -464,6 +482,7 @@ pub struct MsgAddReaction {
     pub user: ::prost::alloc::string::String,
 }
 /// MsgAddReactionResponse represents the Msg/AddReaction response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -485,6 +504,7 @@ pub struct MsgAddReactionResponse {
 }
 /// MsgRemoveReaction represents the message to be used to remove an
 /// existing reaction from a post
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -522,6 +542,7 @@ pub struct MsgRemoveReaction {
     pub user: ::prost::alloc::string::String,
 }
 /// MsgRemoveReactionResponse represents the Msg/RemoveReaction response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -535,6 +556,7 @@ pub struct MsgRemoveReaction {
 pub struct MsgRemoveReactionResponse {}
 /// MsgAddRegisteredReaction represents the message to be used to
 /// register a new supported reaction
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -565,6 +587,7 @@ pub struct MsgAddRegisteredReaction {
 }
 /// MsgAddRegisteredReactionResponse represents the
 /// Msg/AddRegisteredReaction response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -586,6 +609,7 @@ pub struct MsgAddRegisteredReactionResponse {
 }
 /// MsgEditRegisteredReaction represents the message to be used to edit a
 /// registered reaction
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -623,6 +647,7 @@ pub struct MsgEditRegisteredReaction {
 }
 /// MsgEditRegisteredReactionResponse represents the Msg/EditRegisteredReaction
 /// response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -636,6 +661,7 @@ pub struct MsgEditRegisteredReaction {
 pub struct MsgEditRegisteredReactionResponse {}
 /// MsgRemoveRegisteredReaction represents the message to be used to
 /// remove an existing registered reaction
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -667,6 +693,7 @@ pub struct MsgRemoveRegisteredReaction {
 }
 /// MsgRemoveRegisteredReactionResponse represents the
 /// Msg/RemoveRegisteredReaction response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -680,6 +707,7 @@ pub struct MsgRemoveRegisteredReaction {
 pub struct MsgRemoveRegisteredReactionResponse {}
 /// MsgSetReactionsParams represents the message to be used when setting
 /// a subspace reactions params
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -710,6 +738,7 @@ pub struct MsgSetReactionsParams {
 }
 /// MsgSetReactionsParamsResponse represents the Msg/SetReactionsParams response
 /// type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

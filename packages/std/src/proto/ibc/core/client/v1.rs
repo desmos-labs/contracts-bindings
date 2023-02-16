@@ -1,5 +1,6 @@
 /// IdentifiedClientState defines a client state with an additional client
 /// identifier field.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -20,6 +21,7 @@ pub struct IdentifiedClientState {
 }
 /// ConsensusStateWithHeight defines a consensus state with an additional height
 /// field.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -40,6 +42,7 @@ pub struct ConsensusStateWithHeight {
 }
 /// ClientConsensusStates defines all the stored consensus states for a given
 /// client.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -62,6 +65,7 @@ pub struct ClientConsensusStates {
 /// client's latest consensus state is copied over to the subject client. The proposal
 /// handler may fail if the subject and the substitute do not match in client and
 /// chain parameters (with exception to latest height, frozen height, and chain-id).
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -89,6 +93,7 @@ pub struct ClientUpdateProposal {
 }
 /// UpgradeProposal is a gov Content type for initiating an IBC breaking
 /// upgrade.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -125,6 +130,7 @@ pub struct UpgradeProposal {
 /// breaking changes In these cases, the RevisionNumber is incremented so that
 /// height continues to be monitonically increasing even as the RevisionHeight
 /// gets reset
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -152,6 +158,7 @@ pub struct Height {
     pub revision_height: u64,
 }
 /// Params defines the set of IBC light client parameters.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

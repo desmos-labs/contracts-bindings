@@ -191,7 +191,6 @@ mod tests {
         let msg = SubspacesMsg::CreateSubspace {
             name: "test".to_string(),
             description: "test".to_string(),
-            treasury: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             owner: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };
@@ -204,7 +203,6 @@ mod tests {
         let msg = SubspacesMsg::CreateSubspace {
             name: "test".to_string(),
             description: "test".to_string(),
-            treasury: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
             owner: Addr::unchecked("cosmos17qcf9sv5yk0ly5vt3ztev70nwf6c5sprkwfh8t"),
             creator: Addr::unchecked("cosmos18atyyv6zycryhvnhpr2mjxgusdcah6kdpkffq0"),
         };

@@ -1,4 +1,5 @@
 /// Plan specifies information about a planned upgrade and when it should occur.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -46,6 +47,7 @@ pub struct Plan {
 }
 /// SoftwareUpgradeProposal is a gov Content type for initiating a software
 /// upgrade.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -66,6 +68,7 @@ pub struct SoftwareUpgradeProposal {
 }
 /// CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software
 /// upgrade.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -85,6 +88,7 @@ pub struct CancelSoftwareUpgradeProposal {
 /// ModuleVersion specifies a module and its consensus version.
 ///
 /// Since: cosmos-sdk 0.43
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

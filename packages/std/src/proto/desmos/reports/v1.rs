@@ -1,4 +1,5 @@
 /// Report contains the data of a generic report
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -41,6 +42,7 @@ pub struct Report {
     pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// UserTarget contains the data of a report about a user
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -57,6 +59,7 @@ pub struct UserTarget {
     pub user: ::prost::alloc::string::String,
 }
 /// PostTarget contains the data of a report about a post
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -77,6 +80,7 @@ pub struct PostTarget {
     pub post_id: u64,
 }
 /// Reason contains the data about a reporting reason
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -110,6 +114,7 @@ pub struct Reason {
     pub description: ::prost::alloc::string::String,
 }
 /// Params contains the module parameters
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -128,6 +133,7 @@ pub struct Params {
 }
 /// StandardReason contains the data of a standard reason that can be picked and
 /// used from different subspaces
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -154,6 +160,7 @@ pub struct StandardReason {
     pub description: ::prost::alloc::string::String,
 }
 /// QueryReportsResponse is the request type for Query/Reports RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -189,6 +196,7 @@ pub struct QueryReportsRequest {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryReportsResponse is the response type for Query/Reports RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -207,6 +215,7 @@ pub struct QueryReportsResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryReportRequest is the request type for Query/Report RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -238,6 +247,7 @@ pub struct QueryReportRequest {
     pub report_id: u64,
 }
 /// QueryReportResponse is the response type for Query/Report RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -253,6 +263,7 @@ pub struct QueryReportResponse {
     pub report: ::core::option::Option<Report>,
 }
 /// QueryReasonsRequest is the request type for Query/Reasons RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -281,6 +292,7 @@ pub struct QueryReasonsRequest {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryReasonsResponse is the response type for Query/Reasons RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -299,6 +311,7 @@ pub struct QueryReasonsResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryReasonRequest is the request type for Query/Reason RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -330,6 +343,7 @@ pub struct QueryReasonRequest {
     pub reason_id: u32,
 }
 /// QueryReasonResponse is the response type for Query/Reason RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -345,6 +359,7 @@ pub struct QueryReasonResponse {
     pub reason: ::core::option::Option<Reason>,
 }
 /// QueryParamsRequest is the request type for Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -361,6 +376,7 @@ pub struct QueryReasonResponse {
 )]
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -376,6 +392,7 @@ pub struct QueryParamsResponse {
     pub params: ::core::option::Option<Params>,
 }
 /// MsgCreateReport represents the message to be used to create a report
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -408,6 +425,7 @@ pub struct MsgCreateReport {
     pub target: ::core::option::Option<crate::shim::Any>,
 }
 /// MsgCreateReportResponse represents the Msg/CreateReport response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -431,6 +449,7 @@ pub struct MsgCreateReportResponse {
     pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// MsgDeleteReport represents the message to be used when deleting a report
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -461,6 +480,7 @@ pub struct MsgDeleteReport {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgDeleteReportResponse represents the Msg/DeleteReport response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -474,6 +494,7 @@ pub struct MsgDeleteReport {
 pub struct MsgDeleteReportResponse {}
 /// MsgSupportStandardReason represents the message to be used when wanting to
 /// support one reason from the module params
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -505,6 +526,7 @@ pub struct MsgSupportStandardReason {
 }
 /// MsgSupportStandardReasonResponse represents the Msg/SupportStandardReason
 /// response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -526,6 +548,7 @@ pub struct MsgSupportStandardReasonResponse {
 }
 /// MsgAddReason represents the message to be used when adding a new supported
 /// reason
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -555,6 +578,7 @@ pub struct MsgAddReason {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgAddReasonResponse represents the Msg/AddReason response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -576,6 +600,7 @@ pub struct MsgAddReasonResponse {
 }
 /// MsgRemoveReason represents the message to be used when removing an exiting
 /// reporting reason
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -606,6 +631,7 @@ pub struct MsgRemoveReason {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgRemoveReasonResponse represents the Msg/RemoveReason response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

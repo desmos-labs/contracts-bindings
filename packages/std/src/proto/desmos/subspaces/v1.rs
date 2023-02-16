@@ -1,4 +1,5 @@
 /// Subspace contains all the data of a Desmos subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -38,6 +39,7 @@ pub struct Subspace {
     pub creation_time: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// UserGroup represents a group of users
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -78,6 +80,7 @@ pub struct UserGroup {
     pub permissions: u32,
 }
 /// PermissionDetail contains the details data of a permission
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -97,6 +100,7 @@ pub struct PermissionDetail {
 /// Nested message and enum types in `PermissionDetail`.
 pub mod permission_detail {
     /// User is a permission that has been set to a specific user
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -120,6 +124,7 @@ pub mod permission_detail {
         pub permission: u32,
     }
     /// Group is a permission that has been set to a user group
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -148,6 +153,7 @@ pub mod permission_detail {
     }
     /// sum is the oneof that specifies whether this represents a user or
     /// group permission detail
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]

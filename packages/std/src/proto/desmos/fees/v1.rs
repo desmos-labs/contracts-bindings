@@ -1,5 +1,6 @@
 /// MinFee contains the minimum amount of coins that should be paid as a fee for
 /// each message of the specific type sent
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -17,6 +18,7 @@ pub struct MinFee {
     pub amount: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 /// Params contains the parameters for the fees module
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -32,6 +34,7 @@ pub struct Params {
     pub min_fees: ::prost::alloc::vec::Vec<MinFee>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -48,6 +51,7 @@ pub struct Params {
 )]
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for the Query/Params RPC
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

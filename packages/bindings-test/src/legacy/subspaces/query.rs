@@ -28,7 +28,6 @@ mod tests {
         let test_subspace = response.subspaces.first().unwrap();
         assert_eq!("Test subspace", test_subspace.name.as_str());
         assert_eq!("", test_subspace.description.as_str());
-        assert_eq!(&contract_address, test_subspace.treasury.as_str());
         assert_eq!(&contract_address, test_subspace.owner.as_str());
         assert_eq!(&contract_address, test_subspace.creator.as_str());
     }
@@ -51,7 +50,6 @@ mod tests {
         let test_subspace = response.subspace;
         assert_eq!("Test subspace", test_subspace.name.as_str());
         assert_eq!("", test_subspace.description.as_str());
-        assert_eq!(&contract_address, test_subspace.treasury.as_str());
         assert_eq!(&contract_address, test_subspace.owner.as_str());
         assert_eq!(&contract_address, test_subspace.creator.as_str());
     }

@@ -7,9 +7,9 @@ use std::convert::TryFrom;
 use thiserror::Error;
 
 /// Proto type uri of [`PostAttachment::Media`].
-pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v2.Media";
+pub const MEDIA_TYPE_URI: &str = "/desmos.posts.v3.Media";
 /// Proto type uri of [`PostAttachment::Poll`].
-pub const POLL_TYPE_URI: &str = "/desmos.posts.v2.Poll";
+pub const POLL_TYPE_URI: &str = "/desmos.posts.v3.Poll";
 
 /// Contains all the information about a single post.
 #[cw_serde]
@@ -291,11 +291,11 @@ pub enum UnwrapPostAttachmentError {
     /// Error that occur if [`RawPostAttachment`] have an unknown attachment type.
     #[error("unknown attachment type: {0}")]
     UnknownAttachment(String),
-    /// Error that occur if [`RawPostAttachment`] have type `/desmos.posts.v1.Media` but
+    /// Error that occur if [`RawPostAttachment`] have type `/desmos.posts.v3.Media` but
     /// some fields are undefined.
     #[error("invalid media attachment field {0} is none")]
     InvalidMedia(String),
-    /// Error that occur if [`RawPostAttachment`] have type `/desmos.posts.v1.Poll` but
+    /// Error that occur if [`RawPostAttachment`] have type `/desmos.posts.v3.Poll` but
     /// some fields are undefined.
     #[error("invalid poll attachment field {0} is none")]
     InvalidPoll(String),
@@ -343,7 +343,7 @@ mod tests {
     #[test]
     fn post_attachment_try_from_invalid_raw_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.InvalidAttachment".to_string(),
+            type_uri: "/desmos.posts.v3.InvalidAttachment".to_string(),
             mime_type: None,
             uri: None,
             question: None,
@@ -355,7 +355,7 @@ mod tests {
         };
         assert_eq!(
             UnwrapPostAttachmentError::UnknownAttachment(
-                "/desmos.posts.v2.InvalidAttachment".to_string()
+                "/desmos.posts.v3.InvalidAttachment".to_string()
             ),
             PostAttachment::try_from(raw).unwrap_err()
         )
@@ -364,7 +364,7 @@ mod tests {
     #[test]
     fn post_media_attachment_try_from_raw_without_mime_type_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Media".to_string(),
+            type_uri: "/desmos.posts.v3.Media".to_string(),
             mime_type: None,
             uri: None,
             question: None,
@@ -383,7 +383,7 @@ mod tests {
     #[test]
     fn post_media_attachment_try_from_raw_without_uri_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Media".to_string(),
+            type_uri: "/desmos.posts.v3.Media".to_string(),
             mime_type: Some("test".to_string()),
             uri: None,
             question: None,
@@ -402,7 +402,7 @@ mod tests {
     #[test]
     fn post_media_attachment_try_from_valid_raw_properly() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Media".to_string(),
+            type_uri: "/desmos.posts.v3.Media".to_string(),
             mime_type: Some("test".to_string()),
             uri: Some("ipfs://test".to_string()),
             question: None,
@@ -424,7 +424,7 @@ mod tests {
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_question_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            type_uri: "/desmos.posts.v3.Poll".to_string(),
             mime_type: None,
             uri: None,
             question: None,
@@ -443,7 +443,7 @@ mod tests {
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_provided_answers_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            type_uri: "/desmos.posts.v3.Poll".to_string(),
             mime_type: None,
             uri: None,
             question: Some("test".to_string()),
@@ -462,7 +462,7 @@ mod tests {
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_end_date_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            type_uri: "/desmos.posts.v3.Poll".to_string(),
             mime_type: None,
             uri: None,
             question: Some("test".to_string()),
@@ -484,7 +484,7 @@ mod tests {
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_allows_multiple_answers_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            type_uri: "/desmos.posts.v3.Poll".to_string(),
             mime_type: None,
             uri: None,
             question: Some("test".to_string()),
@@ -506,7 +506,7 @@ mod tests {
     #[test]
     fn post_poll_attachment_try_from_wrong_raw_without_allows_answer_edits_error() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            type_uri: "/desmos.posts.v3.Poll".to_string(),
             mime_type: None,
             uri: None,
             question: Some("test".to_string()),
@@ -528,7 +528,7 @@ mod tests {
     #[test]
     fn post_poll_attachment_try_from_valid_raw_properly() {
         let raw = RawPostAttachment {
-            type_uri: "/desmos.posts.v2.Poll".to_string(),
+            type_uri: "/desmos.posts.v3.Poll".to_string(),
             mime_type: None,
             uri: None,
             question: Some("test".to_string()),

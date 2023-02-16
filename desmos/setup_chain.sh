@@ -75,7 +75,7 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --chain-id=testchain --keyring-backend=file -b=block -y
 
 # Create test subspace owned by the smart contract
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"subspaces\":{\"create_subspace\":{\"name\":\"Test subspace\",\"description\":\"\",\"treasury\":\"$CONTRACT\",\"owner\":\"$CONTRACT\",\"creator\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"subspaces\":{\"create_subspace\":{\"name\":\"Test subspace\",\"description\":\"\",\"owner\":\"$CONTRACT\",\"creator\":\"$CONTRACT\"}}}}]}}"
 echo "Create test subspace"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
@@ -121,7 +121,7 @@ echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
 
 # Add a post attachment that can be removed and a poll that can be answered from the tests.
 echo "Adding a media attachment and a poll that can be answered to the post"
-MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v2.Poll\",\"question\":\"Test question?\",\"provided_answers\":[{\"text\":\"Answer 1\",\"attachments\":[]},{\"text\":\"Answer 2\",\"attachments\":[]}],\"end_date\":\"2140-01-01T10:00:20.021Z\",\"allows_multiple_answers\":false,\"allows_answer_edits\":true},\"editor\":\"$CONTRACT\"}}}}, {\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v2.Media\",\"mime_type\":\"test-mime\",\"uri\":\"https://test.com/image.png\"},\"editor\":\"$CONTRACT\"}}}}]}}"
+MSG="{\"desmos_messages\":{\"msgs\":[{\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v3.Poll\",\"question\":\"Test question?\",\"provided_answers\":[{\"text\":\"Answer 1\",\"attachments\":[]},{\"text\":\"Answer 2\",\"attachments\":[]}],\"end_date\":\"2140-01-01T10:00:20.021Z\",\"allows_multiple_answers\":false,\"allows_answer_edits\":true},\"editor\":\"$CONTRACT\"}}}}, {\"custom\":{\"posts\":{\"add_post_attachment\":{\"subspace_id\":\"1\",\"post_id\":\"1\",\"content\":{\"@type\":\"/desmos.posts.v3.Media\",\"mime_type\":\"test-mime\",\"uri\":\"https://test.com/image.png\"},\"editor\":\"$CONTRACT\"}}}}]}}"
 echo $KEYRING_PASS | desmos tx wasm execute "$CONTRACT" "$MSG" \
   --from $USER1 \
   --chain-id=testchain --keyring-backend=file -b=block -y

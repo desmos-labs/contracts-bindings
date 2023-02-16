@@ -105,7 +105,7 @@ fn recur_gen_mod(for_dir: &Path, start_dir: &Path, paths: Vec<Vec<String>>, incl
 
 fn create_mod_rs(ts: TokenStream2, path: &Path) {
     let file = syn::parse_file(ts.to_string().as_str())
-        .expect("[error] Unable to parse generated content as file while genrating mod.rs");
+        .expect("[error] Unable to parse generated content as file while generating mod.rs");
 
     let write = fs::write(path.join("mod.rs"), prettyplease::unparse(&file));
 

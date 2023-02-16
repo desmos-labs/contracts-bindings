@@ -1,4 +1,5 @@
 /// QueryTotalRequest is the request type for Query/Total RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -27,6 +28,7 @@ pub struct QueryTotalRequest {
     pub divider_exponent: u64,
 }
 /// QueryTotalResponse is the response type for the Query/Total RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -43,6 +45,7 @@ pub struct QueryTotalResponse {
 }
 /// QueryCirculatingRequest is the request type for the Query/Circulating RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -72,6 +75,7 @@ pub struct QueryCirculatingRequest {
 }
 /// QueryCirculatingResponse is the response type for the Query/Circulating RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,

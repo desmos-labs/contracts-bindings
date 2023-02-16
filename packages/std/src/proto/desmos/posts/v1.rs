@@ -1,4 +1,5 @@
 /// Post contains all the information about a single post
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -68,6 +69,7 @@ pub struct Post {
     pub last_edited_date: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// PostReference contains the details of a post reference
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -103,6 +105,7 @@ pub struct PostReference {
     pub position: u64,
 }
 /// Contains the details of entities parsed out of the post text
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -122,6 +125,7 @@ pub struct Entities {
     pub urls: ::prost::alloc::vec::Vec<Url>,
 }
 /// Tag represents a generic tag
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -152,6 +156,7 @@ pub struct Tag {
     pub tag: ::prost::alloc::string::String,
 }
 /// Url contains the details of a generic URL
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -185,6 +190,7 @@ pub struct Url {
     pub display_url: ::prost::alloc::string::String,
 }
 /// Attachment contains the data of a single post attachment
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -231,6 +237,7 @@ pub struct Attachment {
     pub content: ::core::option::Option<crate::shim::Any>,
 }
 /// Media represents a media attachment
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -248,6 +255,7 @@ pub struct Media {
     pub mime_type: ::prost::alloc::string::String,
 }
 /// Poll represents a poll attachment
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -281,6 +289,7 @@ pub struct Poll {
 /// Nested message and enum types in `Poll`.
 pub mod poll {
     /// Provided answer contains the details of a possible poll answer
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -301,6 +310,7 @@ pub mod poll {
     }
 }
 /// UserAnswer represents a user answer to a poll
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -348,6 +358,7 @@ pub struct UserAnswer {
     pub user: ::prost::alloc::string::String,
 }
 /// PollTallyResults contains the tally results for a poll
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -365,6 +376,7 @@ pub struct PollTallyResults {
 /// Nested message and enum types in `PollTallyResults`.
 pub mod poll_tally_results {
     /// AnswerResult contains the result of a single poll provided answer
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -393,6 +405,7 @@ pub mod poll_tally_results {
     }
 }
 /// Params contains the parameters for the posts module
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -439,6 +452,16 @@ impl PostReferenceType {
             PostReferenceType::Repost => "POST_REFERENCE_TYPE_REPOST",
         }
     }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "POST_REFERENCE_TYPE_UNSPECIFIED" => Some(Self::Unspecified),
+            "POST_REFERENCE_TYPE_REPLY" => Some(Self::Reply),
+            "POST_REFERENCE_TYPE_QUOTE" => Some(Self::Quote),
+            "POST_REFERENCE_TYPE_REPOST" => Some(Self::Repost),
+            _ => None,
+        }
+    }
 }
 /// ReplySetting contains the possible reply settings that a post can have
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -468,6 +491,17 @@ impl ReplySetting {
             ReplySetting::Followers => "REPLY_SETTING_FOLLOWERS",
             ReplySetting::Mutual => "REPLY_SETTING_MUTUAL",
             ReplySetting::Mentions => "REPLY_SETTING_MENTIONS",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "REPLY_SETTING_UNSPECIFIED" => Some(Self::Unspecified),
+            "REPLY_SETTING_EVERYONE" => Some(Self::Everyone),
+            "REPLY_SETTING_FOLLOWERS" => Some(Self::Followers),
+            "REPLY_SETTING_MUTUAL" => Some(Self::Mutual),
+            "REPLY_SETTING_MENTIONS" => Some(Self::Mentions),
+            _ => None,
         }
     }
 }

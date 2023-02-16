@@ -1,5 +1,6 @@
 pub mod authz;
 /// Subspace contains all the data of a Desmos subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -39,6 +40,7 @@ pub struct Subspace {
     pub creation_time: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// Section contains the data of a single subspace section
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -79,6 +81,7 @@ pub struct Section {
     pub description: ::prost::alloc::string::String,
 }
 /// UserGroup represents a group of users
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -122,6 +125,7 @@ pub struct UserGroup {
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// UserPermission represents a single Access Control List entry
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -151,6 +155,7 @@ pub struct UserPermission {
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// QuerySubspacesRequest is the request type for the Query/Subspaces RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -173,6 +178,7 @@ pub struct QuerySubspacesRequest {
 }
 /// QuerySubspacesResponse is the response type for the Query/Subspaces RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -191,6 +197,7 @@ pub struct QuerySubspacesResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QuerySubspace is the request type for the Query/Subspace RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -215,6 +222,7 @@ pub struct QuerySubspaceRequest {
     pub subspace_id: u64,
 }
 /// QuerySubspaceResponse is the response type for the Query/Subspace method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -230,6 +238,7 @@ pub struct QuerySubspaceResponse {
     pub subspace: ::core::option::Option<Subspace>,
 }
 /// QuerySectionsRequest is the request type for Query/Sections RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -258,6 +267,7 @@ pub struct QuerySectionsRequest {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QuerySectionsResponse is the response type for Query/Sections RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -276,6 +286,7 @@ pub struct QuerySectionsResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QuerySectionRequest is the request type for Query/Section RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -307,6 +318,7 @@ pub struct QuerySectionRequest {
     pub section_id: u32,
 }
 /// QuerySectionResponse is the response type for Query/Section RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -323,6 +335,7 @@ pub struct QuerySectionResponse {
 }
 /// QueryUserGroupsRequest is the request type for the Query/UserGroups RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -359,6 +372,7 @@ pub struct QueryUserGroupsRequest {
 }
 /// QueryUserGroupsResponse is the response type for the Query/UserGroups RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -377,6 +391,7 @@ pub struct QueryUserGroupsResponse {
         ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryUserGroupRequest is the request type for the Query/UserGroup RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -409,6 +424,7 @@ pub struct QueryUserGroupRequest {
 }
 /// QueryUserGroupResponse is the response type for the Query/UserGroup RPC
 /// method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -425,6 +441,7 @@ pub struct QueryUserGroupResponse {
 }
 /// QueryUserGroupMembersRequest is the request type for the
 /// Query/UserGroupMembers RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -461,6 +478,7 @@ pub struct QueryUserGroupMembersRequest {
 }
 /// QueryUserGroupMembersResponse is the response type for the
 /// Query/UserGroupMembers RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -480,6 +498,7 @@ pub struct QueryUserGroupMembersResponse {
 }
 /// QueryUserPermissionsRequest is the request type for the Query/UserPermissions
 /// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -515,6 +534,7 @@ pub struct QueryUserPermissionsRequest {
 }
 /// QueryUserPermissionsRequest is the response type for the
 /// Query/UserPermissions method
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -532,6 +552,7 @@ pub struct QueryUserPermissionsResponse {
     pub details: ::prost::alloc::vec::Vec<PermissionDetail>,
 }
 /// PermissionDetail contains the details data of a permission
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -565,6 +586,7 @@ pub struct PermissionDetail {
 /// Nested message and enum types in `PermissionDetail`.
 pub mod permission_detail {
     /// User is a permission that has been set to a specific user
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -584,6 +606,7 @@ pub mod permission_detail {
         pub permission: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     }
     /// Group is a permission that has been set to a user group
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone,
         PartialEq,
@@ -608,6 +631,7 @@ pub mod permission_detail {
     }
     /// sum is the oneof that specifies whether this represents a user or
     /// group permission detail
+    #[allow(clippy::derive_partial_eq_without_eq)]
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]
@@ -620,7 +644,98 @@ pub mod permission_detail {
         Group(Group),
     }
 }
+/// MsgGrantTreasuryAuthorization grants an authorization on behalf of the
+/// treasury to a user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorization")]
+pub struct MsgGrantTreasuryAuthorization {
+    /// Id of the subspace where the authorization should be granted
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Address of the user granting a treasury authorization
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Address of the user who is being granted a treasury authorization
+    #[prost(string, tag = "3")]
+    pub grantee: ::prost::alloc::string::String,
+    /// Grant represents the authorization to execute the provided methods
+    #[prost(message, optional, tag = "4")]
+    pub grant: ::core::option::Option<super::super::super::cosmos::authz::v1beta1::Grant>,
+}
+/// MsgGrantTreasuryAuthorizationResponse defines the
+/// Msg/MsgGrantTreasuryAuthorization response type
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorizationResponse")]
+pub struct MsgGrantTreasuryAuthorizationResponse {}
+/// MsgRevokeTreasuryAuthorization revokes an existing treasury authorization
+/// from a user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorization")]
+pub struct MsgRevokeTreasuryAuthorization {
+    /// Id of the subspace from which the authorization should be revoked
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Address of the user revoking the treasury authorization
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Address of the user who is being revoked the treasury authorization
+    #[prost(string, tag = "3")]
+    pub grantee: ::prost::alloc::string::String,
+    /// Type url of the authorized message which is being revoked
+    #[prost(string, tag = "4")]
+    pub msg_type_url: ::prost::alloc::string::String,
+}
+/// MsgRevokeTreasuryAuthorizationResponse defines the
+/// Msg/MsgRevokeTreasuryAuthorization response type
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorizationResponse")]
+pub struct MsgRevokeTreasuryAuthorizationResponse {}
 /// MsgCreateSubspace represents the message used to create a subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -638,18 +753,16 @@ pub struct MsgCreateSubspace {
     /// (optional) Description of the subspace
     #[prost(string, tag = "2")]
     pub description: ::prost::alloc::string::String,
-    /// (optional) Treasury address associated to this subspace
-    #[prost(string, tag = "3")]
-    pub treasury: ::prost::alloc::string::String,
     /// (optional) Owner of this subspace. If not specified, the creator will be
     /// the default owner.
-    #[prost(string, tag = "4")]
+    #[prost(string, tag = "3")]
     pub owner: ::prost::alloc::string::String,
     /// Address creating the subspace
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub creator: ::prost::alloc::string::String,
 }
 /// MsgCreateSubspaceResponse defines the Msg/CreateSubspace response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -670,6 +783,7 @@ pub struct MsgCreateSubspaceResponse {
     pub subspace_id: u64,
 }
 /// MsgEditSubspace represents the message used to edit a subspace fields
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -696,19 +810,16 @@ pub struct MsgEditSubspace {
     /// \[do-not-modify\] instead.
     #[prost(string, tag = "3")]
     pub description: ::prost::alloc::string::String,
-    /// New treasury address of the subspace. If it shouldn't be changed, use
-    /// \[do-not-modify\] instead.
-    #[prost(string, tag = "4")]
-    pub treasury: ::prost::alloc::string::String,
     /// New owner of the subspace. If it shouldn't be changed, use \[do-not-modify\]
     /// instead.
-    #[prost(string, tag = "5")]
+    #[prost(string, tag = "4")]
     pub owner: ::prost::alloc::string::String,
     /// Address of the user editing the subspace
-    #[prost(string, tag = "6")]
+    #[prost(string, tag = "5")]
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgEditSubspaceResponse defines the Msg/EditSubspace response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -721,6 +832,7 @@ pub struct MsgEditSubspace {
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSubspaceResponse")]
 pub struct MsgEditSubspaceResponse {}
 /// MsgDeleteSubspace represents the message used to delete a subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -744,6 +856,7 @@ pub struct MsgDeleteSubspace {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgDeleteSubspaceResponse defines the Msg/DeleteSubspace response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -757,6 +870,7 @@ pub struct MsgDeleteSubspace {
 pub struct MsgDeleteSubspaceResponse {}
 /// MsgCreateSection represents the message to be used when creating a subspace
 /// section
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -793,6 +907,7 @@ pub struct MsgCreateSection {
     pub creator: ::prost::alloc::string::String,
 }
 /// MsgCreateSectionResponse represents the Msg/CreateSection response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -814,6 +929,7 @@ pub struct MsgCreateSectionResponse {
 }
 /// MsgEditSection represents the message to be used when editing a subspace
 /// section
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -850,6 +966,7 @@ pub struct MsgEditSection {
     pub editor: ::prost::alloc::string::String,
 }
 /// MsgEditSectionResponse represents the Msg/EditSection response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -863,6 +980,7 @@ pub struct MsgEditSection {
 pub struct MsgEditSectionResponse {}
 /// MsgMoveSection represents the message to be used when moving a section to
 /// another parent
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -900,6 +1018,7 @@ pub struct MsgMoveSection {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgMoveSectionResponse
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -912,6 +1031,7 @@ pub struct MsgMoveSection {
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveSectionResponse")]
 pub struct MsgMoveSectionResponse {}
 /// MsgDeleteSection represents the message to be used when deleting a section
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -942,6 +1062,7 @@ pub struct MsgDeleteSection {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgDeleteSectionResponse represents the Msg/DeleteSection response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -954,6 +1075,7 @@ pub struct MsgDeleteSection {
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSectionResponse")]
 pub struct MsgDeleteSectionResponse {}
 /// MsgCreateUserGroup represents the message used to create a user group
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -996,6 +1118,7 @@ pub struct MsgCreateUserGroup {
     pub creator: ::prost::alloc::string::String,
 }
 /// MsgCreateUserGroupResponse defines the Msg/CreateUserGroup response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1015,6 +1138,7 @@ pub struct MsgCreateUserGroupResponse {
     pub group_id: u32,
 }
 /// MsgEditUserGroup represents the message used to edit a user group
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1051,6 +1175,7 @@ pub struct MsgEditUserGroup {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgEditUserGroupResponse defines the Msg/EditUserGroup response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1064,6 +1189,7 @@ pub struct MsgEditUserGroup {
 pub struct MsgEditUserGroupResponse {}
 /// MsgMoveUserGroup represents the message used to move one user group from a
 /// section to anoter
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1101,6 +1227,7 @@ pub struct MsgMoveUserGroup {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgMoveUserGroupResponse defines the Msg/MoveUserGroup response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1114,6 +1241,7 @@ pub struct MsgMoveUserGroup {
 pub struct MsgMoveUserGroupResponse {}
 /// MsgSetUserGroupPermissions represents the message used to set the permissions
 /// of a user group
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1148,6 +1276,7 @@ pub struct MsgSetUserGroupPermissions {
 }
 /// MsgSetUserGroupPermissionsResponse defines the
 /// Msg/SetUserGroupPermissionsResponse response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1160,6 +1289,7 @@ pub struct MsgSetUserGroupPermissions {
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserGroupPermissionsResponse")]
 pub struct MsgSetUserGroupPermissionsResponse {}
 /// MsgDeleteUserGroup represents the message used to delete a user group
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1190,6 +1320,7 @@ pub struct MsgDeleteUserGroup {
     pub signer: ::prost::alloc::string::String,
 }
 /// MsgDeleteUserGroupResponse defines the Msg/DeleteUserGroup response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1203,6 +1334,7 @@ pub struct MsgDeleteUserGroup {
 pub struct MsgDeleteUserGroupResponse {}
 /// MsgAddUserToUserGroup represents the message used to add a user to a user
 /// group
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1237,6 +1369,7 @@ pub struct MsgAddUserToUserGroup {
 }
 /// MsgAddUserToUserGroupResponse defines the Msg/AddUserToUserGroupResponse
 /// response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1250,6 +1383,7 @@ pub struct MsgAddUserToUserGroup {
 pub struct MsgAddUserToUserGroupResponse {}
 /// MsgRemoveUserFromUserGroup represents the message used to remove a user from
 /// a user group
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1284,6 +1418,7 @@ pub struct MsgRemoveUserFromUserGroup {
 }
 /// MsgRemoveUserFromUserGroupResponse defines the
 /// Msg/RemoveUserFromUserGroupResponse response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1297,6 +1432,7 @@ pub struct MsgRemoveUserFromUserGroup {
 pub struct MsgRemoveUserFromUserGroupResponse {}
 /// MsgSetUserPermissions represents the message used to set the permissions of a
 /// specific user
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
@@ -1334,6 +1470,7 @@ pub struct MsgSetUserPermissions {
 }
 /// MsgSetUserPermissionsResponse defines the Msg/SetPermissionsResponse
 /// response type
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
