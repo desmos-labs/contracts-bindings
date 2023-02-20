@@ -1,7 +1,7 @@
 use std::fs::{create_dir_all, remove_dir_all};
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::{env, fs};
+use std::{env, fs, io};
 
 use log::info;
 use prost::Message;
@@ -41,7 +41,8 @@ impl CodeGenerator {
             .build_server(false)
             .extern_path(".google.protobuf.Timestamp", "crate::shim::Timestamp")
             .extern_path(".google.protobuf.Duration", "crate::shim::Duration")
-            .extern_path(".google.protobuf.Any", "crate::shim::Any");
+            .extern_path(".google.protobuf.Any", "crate::shim::Any")
+            .extern_path(".google.protobuf", "::pbjson_types");
 
         Self {
             project,
@@ -63,6 +64,7 @@ impl CodeGenerator {
         );
 
         self.transform();
+        self.combine_serdes_to_types();
         self.generate_mod_file();
         self.fmt();
 
@@ -70,6 +72,35 @@ impl CodeGenerator {
             "✨  [{}] Library is successfully generated!",
             self.project.name
         );
+    }
+
+    fn combine_serdes_to_types(&self) {
+        let root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let types_dir = root.join(&self.absolute_out_dir());
+        let pattern = Regex::new(".serde.rs$").unwrap();
+
+        for file in types_dir.read_dir().unwrap() {
+            let f = file.unwrap();
+
+            let filename = f.file_name().into_string().unwrap();
+            if pattern.is_match(filename.as_str()) {
+                let src_path = f.path().to_str().unwrap().replace(".serde", "");
+
+                let mut src_file = fs::OpenOptions::new()
+                .append(true)
+                .open(src_path)
+                .unwrap();
+
+                let mut serde_file = fs::OpenOptions::new()
+                .read(true)
+                .open(f.path())
+                .unwrap();
+
+                io::copy(&mut serde_file, &mut src_file).unwrap();
+
+                fs::remove_file(f.path()).unwrap()
+            }
+        }
     }
 
     fn prepare_dir(&self) {
@@ -156,7 +187,17 @@ impl CodeGenerator {
             .clone()
             .out_dir(self.tmp_namespaced_dir())
             .file_descriptor_set_path(&descriptor_file)
+            .compile_well_known_types(true)
             .compile(&protos, &includes)
+            .unwrap();
+
+        // Generate proto json (de)serialization methods
+        let descriptor_set = std::fs::read(descriptor_file).unwrap();
+        pbjson_build::Builder::new()
+            .out_dir(self.tmp_namespaced_dir())
+            .register_descriptors(&descriptor_set)
+            .unwrap()
+            .build(&["."])
             .unwrap();
 
         info!(

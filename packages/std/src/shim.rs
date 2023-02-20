@@ -78,6 +78,7 @@ impl From<DateTime<Utc>> for Timestamp {
         }
     }
 }
+
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
 pub struct Duration {
     /// Signed seconds of the span of time. Must be from -315,576,000,000

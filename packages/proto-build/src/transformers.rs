@@ -3,7 +3,6 @@ use std::path::Path;
 
 use heck::ToSnakeCase;
 use heck::ToUpperCamelCase;
-use proc_macro2::Span;
 use prost_types::{
     DescriptorProto, EnumDescriptorProto, FileDescriptorSet, ServiceDescriptorProto,
 };
@@ -33,30 +32,6 @@ pub const REPLACEMENTS: &[(&str, &str)] = &[
     ),
 ];
 
-// [Hack] replace profiles::Result into AppResult since `Result` conflicts with `std::result::Result`.
-pub fn replace_result_into_app_result(s: &ItemStruct) -> ItemStruct {
-    let mut s = s.clone();
-    if s.ident.to_string() == "Result" {
-        s.ident = Ident::new("AppResult", Span::call_site());
-    }
-    let fields_vec = s
-        .fields
-        .clone()
-        .into_iter()
-        .map(|mut field| {
-            if field.ty == parse_quote!(::core::option::Option<Result>) {
-                field.ty = parse_quote!(::core::option::Option<AppResult>)
-            }
-            field
-        })
-        .collect::<Vec<syn::Field>>();
-    let fields_named: syn::FieldsNamed = parse_quote! {
-        { #(#fields_vec,)* }
-    };
-    let fields = syn::Fields::Named(fields_named);
-    syn::ItemStruct { fields, ..s }
-}
-
 pub fn append_struct_attrs(
     src: &Path,
     s: &ItemStruct,
@@ -67,7 +42,7 @@ pub fn append_struct_attrs(
     let type_url = get_type_url(src, &s.ident, descriptor);
 
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema, std_derive::CosmwasmExt,)] },
+        syn::parse_quote! { #[derive(schemars::JsonSchema, std_derive::CosmwasmExt,)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
     ]);
 
@@ -80,53 +55,11 @@ pub fn append_struct_attrs(
 pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
     let mut s = s.clone();
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)] },
+        syn::parse_quote! { #[derive(schemars::JsonSchema)] },
     ]);
     s
 }
 
-pub fn allow_serde_int_as_str(s: ItemStruct) -> ItemStruct {
-    let int_types = vec![
-        parse_quote!(i8),
-        parse_quote!(i16),
-        parse_quote!(i32),
-        parse_quote!(i64),
-        parse_quote!(i128),
-        parse_quote!(isize),
-        parse_quote!(u8),
-        parse_quote!(u16),
-        parse_quote!(u32),
-        parse_quote!(u64),
-        parse_quote!(u128),
-        parse_quote!(usize),
-    ];
-    let fields_vec = s
-        .fields
-        .clone()
-        .into_iter()
-        .map(|mut field| {
-            if int_types.contains(&field.ty) {
-                let from_str: syn::Attribute = parse_quote! {
-                    #[serde(
-                        serialize_with = "crate::serde::as_str::serialize",
-                        deserialize_with = "crate::serde::as_str::deserialize"
-                    )]
-                };
-                field.attrs.append(&mut vec![from_str]);
-                field
-            } else {
-                field
-            }
-        })
-        .collect::<Vec<syn::Field>>();
-
-    let fields_named: syn::FieldsNamed = parse_quote! {
-        { #(#fields_vec,)* }
-    };
-    let fields = syn::Fields::Named(fields_named);
-
-    syn::ItemStruct { fields, ..s }
-}
 // ====== helpers ======
 
 fn get_query_attr(
@@ -290,7 +223,7 @@ pub fn append_querier(
         let arg_ty = req_args.unwrap().into_iter().map(|arg| arg.ty).collect::<Vec<Type>>();
 
         quote! {
-          pub fn #name( &self, #(#arg_idents : #arg_ty),* ) -> Result<#res_type, cosmwasm_std::StdError> {
+          pub fn #name( &self, #(#arg_idents : #arg_ty),* ) -> std::result::Result<#res_type, cosmwasm_std::StdError> {
             #req_type { #(#arg_idents),* }.query(self.querier)
           }
         }

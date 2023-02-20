@@ -5,7 +5,7 @@ use crate::stargate::profiles::types::{
     query_application_link_owners_response::ApplicationLinkOwnerDetails,
     query_chain_link_owners_response::ChainLinkOwnerDetails,
     result::{Success, Sum},
-    AppResult, ApplicationLink, ApplicationLinkState, Bech32Address, ChainConfig, ChainLink,
+    Result as AppResult, ApplicationLink, ApplicationLinkState, Bech32Address, ChainConfig, ChainLink,
     DTagTransferRequest, Data, OracleRequest, Pictures, Profile, Proof,
     QueryApplicationLinkByClientIdResponse, QueryApplicationLinkOwnersResponse,
     QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
