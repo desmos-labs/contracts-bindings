@@ -315,7 +315,9 @@ impl<'de> serde::Deserialize<'de> for PageResponse {
                                 return Err(serde::de::Error::duplicate_field("nextKey"));
                             }
                             next_key__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    // [HACKED] deserialize null or other invalid types as empty
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
