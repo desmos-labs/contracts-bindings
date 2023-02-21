@@ -3,9 +3,9 @@ mod test {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_EDITABLE_POST_ID};
     use chrono::DateTime;
-    use cosmwasm_std::{Addr, Uint64};
+    use cosmwasm_std::Addr;
     use desmos_bindings::stargate::posts::types::{
-        poll::ProvidedAnswer, Attachment, Entities, Poll, Post, ReplySetting, Url,
+        poll::ProvidedAnswer, Entities, Poll, Post, ReplySetting, Url,
     };
     use desmos_bindings::stargate::posts::types::{
         MsgAnswerPoll, QueryPollAnswersRequest, QueryPollAnswersResponse,

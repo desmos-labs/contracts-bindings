@@ -3,24 +3,23 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
-    use desmos_bindings::legacy::profiles::models_chain_links::{
-        Address, ChainConfig, Proof, Signature, SignatureValueType,
+    use desmos_bindings::stargate::profiles::msg::ProfilesMsgBuilder;
+    use desmos_bindings::stargate::profiles::types::{
+        AddressData, Bech32Address, ChainConfig, Proof, SingleSignature, SignatureValueType,
     };
-    use desmos_bindings::legacy::profiles::msg::ProfilesMsg;
-    use desmos_bindings::legacy::profiles::msg::ProfilesMsg::{DeleteProfile, SaveProfile};
-    use desmos_bindings::legacy::types::PubKey;
+    use desmos_bindings::stargate::types::Secp256k1PublicKey;
     use test_contract::msg::ExecuteMsg;
 
     fn build_save_profile_msg(contract_address: &str) -> ExecuteMsg {
         ExecuteMsg::DesmosMessages {
-            msgs: vec![SaveProfile {
-                dtag: "test_profile".to_string(),
-                nickname: "contract_nick".to_string(),
-                bio: "test_bio".to_string(),
-                profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-                cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-                creator: Addr::unchecked(contract_address),
-            }
+            msgs: vec![ProfilesMsgBuilder::save_profile(
+                Some("test_profile"),
+                Some("contract_nick"),
+                Some("test_bio"),
+                Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+                Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+                Addr::unchecked(contract_address),
+            )
             .into()],
         }
     }
@@ -48,11 +47,11 @@ mod tests {
             .wasm_execute(&contract_address, &save_profile_msg)
             .assert_success();
 
-        let delete_profile = DeleteProfile {
-            creator: Addr::unchecked(contract_address.clone()),
-        };
+        let delete_profile_msg =
+            ProfilesMsgBuilder::delete_profile(Addr::unchecked(&contract_address));
+
         let msg = ExecuteMsg::DesmosMessages {
-            msgs: vec![delete_profile.into()],
+            msgs: vec![delete_profile_msg.into()],
         };
 
         desmos_cli
@@ -65,10 +64,11 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let dtag_transfer_request = ProfilesMsg::RequestDtagTransfer {
-            receiver: Addr::unchecked(USER2_ADDRESS),
-            sender: Addr::unchecked(&contract_address),
-        };
+        let dtag_transfer_request = ProfilesMsgBuilder::request_dtag_transfer(
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER2_ADDRESS),
+        );
+
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![dtag_transfer_request.into()],
         };
@@ -77,10 +77,11 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
 
-        let cancel_dtag_transfer_request = ProfilesMsg::CancelDtagTransferRequest {
-            receiver: Addr::unchecked(USER2_ADDRESS),
-            sender: Addr::unchecked(&contract_address),
-        };
+        let cancel_dtag_transfer_request = ProfilesMsgBuilder::cancel_dtag_transfer_request(
+            Addr::unchecked(USER2_ADDRESS),
+            Addr::unchecked(&contract_address),
+        );
+
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![cancel_dtag_transfer_request.into()],
         };
@@ -96,14 +97,15 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         // Create a profile for the smart contract
-        let save_profile = SaveProfile {
-            dtag: "test_accept_dtag_transfer".to_string(),
-            nickname: "contract_nick".to_string(),
-            bio: "test_bio".to_string(),
-            profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            creator: Addr::unchecked(contract_address.clone()),
-        };
+        let save_profile = ProfilesMsgBuilder::save_profile(
+            Some("test_accept_dtag_transfer"),
+            Some("contract_nick"),
+            Some("test_bio"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Addr::unchecked(&contract_address),
+        );
+
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![save_profile.into()],
         };
@@ -123,11 +125,11 @@ mod tests {
             .assert_success();
 
         // Prepare the AcceptDtagTransferRequest msg for the smart contract
-        let accept_dtag_transfer_request = ProfilesMsg::AcceptDtagTransferRequest {
-            new_dtag: "user2".to_string(),
-            receiver: Addr::unchecked(&contract_address),
-            sender: Addr::unchecked(USER2_ADDRESS),
-        };
+        let accept_dtag_transfer_request = ProfilesMsgBuilder::accept_dtag_transfer_request(
+            "user2",
+            Addr::unchecked(USER2_ADDRESS),
+            Addr::unchecked(&contract_address),
+        );
 
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
@@ -146,14 +148,15 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         // Create a profile for the smart contract
-        let save_profile = SaveProfile {
-            dtag: "test_refuse_dtag_transfer".to_string(),
-            nickname: "contract_nick".to_string(),
-            bio: "test_bio".to_string(),
-            profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            creator: Addr::unchecked(contract_address.clone()),
-        };
+        let save_profile = ProfilesMsgBuilder::save_profile(
+            Some("test_refuse_dtag_transfer"),
+            Some("contract_nick"),
+            Some("test_bio"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Addr::unchecked(&contract_address),
+        );
+
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![save_profile.into()],
         };
@@ -172,11 +175,11 @@ mod tests {
             ])
             .assert_success();
 
-        // Prepare the AcceptDtagTransferRequest msg for the smart contract
-        let refuse_dtag_transfer_request = ProfilesMsg::RefuseDtagTransferRequest {
-            sender: Addr::unchecked(USER1_ADDRESS),
-            receiver: Addr::unchecked(&contract_address),
-        };
+        // Prepare the RefuseDtagTransferRequest msg for the smart contract
+        let refuse_dtag_transfer_request = ProfilesMsgBuilder::refuse_dtag_transfer_request(
+            Addr::unchecked(USER1_ADDRESS),
+            Addr::unchecked(&contract_address),
+        );
 
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
@@ -195,44 +198,39 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         // Create a profile for the smart contract
-        let save_profile = SaveProfile {
-            dtag: "test_link_chain_account".to_string(),
-            nickname: "contract_nick".to_string(),
-            bio: "test_bio".to_string(),
-            profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            creator: Addr::unchecked(contract_address.clone()),
-        };
+        let save_profile = ProfilesMsgBuilder::save_profile(
+            Some("test_link_chain_account"),
+            Some("contract_nick"),
+            Some("test_bio"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Addr::unchecked(&contract_address),
+        );
 
         // Prepare the LinkChainAccount msg for the smart contract
-        let link_chain_account = ProfilesMsg::LinkChainAccount {
-            chain_address: Address {
-                proto_type: "/desmos.profiles.v3.Bech32Address".to_string(),
-                value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
-                prefix: Some("cosmos".to_string()),
+        let link_chain_account = ProfilesMsgBuilder::link_chain_account(
+            AddressData::Bech32Address(Bech32Address{
+            value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".into(),
+            prefix:"cosmos".into()
+            }),
+            Proof{
+                pub_key: Some(Secp256k1PublicKey{ key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap().into() }.into()),
+                signature: Some(SingleSignature{
+                    value_type: SignatureValueType::Raw.into(),
+                    signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap().into(),
+                }.into()),
+                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".into(),
             },
-            proof: Proof {
-                pub_key: PubKey {
-                    proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap(),
-                },
-                signature: Signature {
-                    proto_type: "/desmos.profiles.v3.SingleSignature".to_string(),
-                    value_type: SignatureValueType::Raw,
-                    signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap(),
-                },
-                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".to_string(),
-            },
-            chain_config: ChainConfig { name: "cosmos".to_string() },
-            signer: Addr::unchecked(&contract_address),
-        };
+            ChainConfig { name: "cosmos".into() },
+            Addr::unchecked(&contract_address),
+        );
 
         // Prepare the UnlinkChainAccount msg for the smart contract
-        let unlink_chain_account = ProfilesMsg::UnlinkChainAccount {
-            owner: Addr::unchecked(&contract_address),
-            chain_name: "cosmos".to_string(),
-            target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
-        };
+        let unlink_chain_account = ProfilesMsgBuilder::unlink_chain_account(
+            Addr::unchecked(&contract_address),
+            "cosmos".into(),
+            "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".into(),
+        );
 
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {
@@ -255,81 +253,71 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         // Create a profile for the smart contract
-        let save_profile = SaveProfile {
-            dtag: "test_link_chain_account".to_string(),
-            nickname: "contract_nick".to_string(),
-            bio: "test_bio".to_string(),
-            profile_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            cover_picture: "https://i.imgur.com/X2aK5Bq.jpeg".to_string(),
-            creator: Addr::unchecked(contract_address.clone()),
-        };
+        let save_profile = ProfilesMsgBuilder::save_profile(
+            Some("test_default_external_address"),
+            Some("contract_nick"),
+            Some("test_bio"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Addr::unchecked(&contract_address),
+        );
 
         // Prepare the LinkChainAccount msg of the first address for the smart contract
-        let link_first_chain_account = ProfilesMsg::LinkChainAccount {
-            chain_address: Address {
-                proto_type: "/desmos.profiles.v3.Bech32Address".to_string(),
-                value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
-                prefix: Some("cosmos".to_string()),
+        let link_first_chain_account = ProfilesMsgBuilder::link_chain_account(
+            AddressData::Bech32Address(Bech32Address{
+            value: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".into(),
+            prefix:"cosmos".into()
+            }),
+            Proof{
+                pub_key: Some(Secp256k1PublicKey{ key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap().into() }.into()),
+                signature: Some(SingleSignature{
+                    value_type: SignatureValueType::Raw.into(),
+                    signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap().into(),
+                }.into()),
+                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".into(),
             },
-            proof: Proof {
-                pub_key: PubKey {
-                    proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap(),
-                },
-                signature: Signature {
-                    proto_type: "/desmos.profiles.v3.SingleSignature".to_string(),
-                    value_type: SignatureValueType::Raw,
-                    signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap(),
-                },
-                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".to_string(),
-            },
-            chain_config: ChainConfig { name: "cosmos".to_string() },
-            signer: Addr::unchecked(&contract_address),
-        };
+            ChainConfig { name: "cosmos".into() },
+            Addr::unchecked(&contract_address),
+        );
 
         // Prepare the LinkChainAccount msg of the second address for the smart contract
-        let link_second_chain_account = ProfilesMsg::LinkChainAccount {
-            chain_address: Address {
-                proto_type: "/desmos.profiles.v3.Bech32Address".to_string(),
-                value: "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn".to_string(),
-                prefix: Some("cosmos".to_string()),
+        let link_second_chain_account = ProfilesMsgBuilder::link_chain_account(
+            AddressData::Bech32Address(Bech32Address{
+            value: "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn".into(),
+            prefix:"cosmos".into()
+            }),
+            Proof{
+                pub_key: Some(Secp256k1PublicKey{ key: Binary::from_base64("AqYZhHKaeBcrYktZEvor/SUDlHCkv5JBplaG2vc2bvfS").unwrap().into() }.into()),
+                signature: Some(SingleSignature{
+                    value_type: SignatureValueType::Raw.into(),
+                    signature: Binary::from_base64("gLIWKbyZ8nUtCVvr8TfPGDYU1rybwPDi6neMuEjfvkwNXJVuNcmthqVeuvxEln7K15PIEPUGTMTV/kU0n3iGPw==").unwrap().into(),
+                }.into()),
+                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".into(),
             },
-            proof: Proof {
-                pub_key: PubKey {
-                    proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: Binary::from_base64("AqYZhHKaeBcrYktZEvor/SUDlHCkv5JBplaG2vc2bvfS").unwrap(),
-                },
-                signature: Signature {
-                    proto_type: "/desmos.profiles.v3.SingleSignature".to_string(),
-                    value_type: SignatureValueType::Raw,
-                    signature: Binary::from_base64("gLIWKbyZ8nUtCVvr8TfPGDYU1rybwPDi6neMuEjfvkwNXJVuNcmthqVeuvxEln7K15PIEPUGTMTV/kU0n3iGPw==").unwrap(),
-                },
-                plain_text: "6465736d6f733134686a32746176713866706573647778786375343472747933686839307668756a7276636d73746c347a723374786d66767739736c6d66666c76".to_string(),
-            },
-            chain_config: ChainConfig { name: "cosmos".to_string() },
-            signer: Addr::unchecked(&contract_address),
-        };
+            ChainConfig { name: "cosmos".into() },
+            Addr::unchecked(&contract_address),
+        );
 
         // Prepare the SetDefaultExternalAddress msg
-        let set_default_external_address = ProfilesMsg::set_default_external_address(
+        let set_default_external_address = ProfilesMsgBuilder::set_default_external_address(
             "cosmos",
             "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn",
             Addr::unchecked(&contract_address),
         );
 
         // Prepare the UnlinkChainAccount msg for first chain account
-        let unlink_first_chain_account = ProfilesMsg::UnlinkChainAccount {
-            owner: Addr::unchecked(&contract_address),
-            chain_name: "cosmos".to_string(),
-            target: "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".to_string(),
-        };
+        let unlink_first_chain_account = ProfilesMsgBuilder::unlink_chain_account(
+            Addr::unchecked(&contract_address),
+            "cosmos".into(),
+            "cosmos1wrx0kayjzuf27gaaqult0z576y0xggq00mrc2r".into(),
+        );
 
         // Prepare the UnlinkChainAccount msg for second chain account
-        let unlink_second_chain_account = ProfilesMsg::UnlinkChainAccount {
-            owner: Addr::unchecked(&contract_address),
-            chain_name: "cosmos".to_string(),
-            target: "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn".to_string(),
-        };
+        let unlink_second_chain_account = ProfilesMsgBuilder::unlink_chain_account(
+            Addr::unchecked(&contract_address),
+            "cosmos".into(),
+            "cosmos13n9wek2ktpxhpgfrd39zlaqaeahxuyusxrsfvn".into(),
+        );
 
         // Wrap the message into the smart contract message
         let msg = ExecuteMsg::DesmosMessages {

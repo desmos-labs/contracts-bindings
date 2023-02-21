@@ -5,12 +5,12 @@ mod test {
         TEST_DELETABLE_ATTACHMENT_ID, TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_DELETABLE_POST_ID,
         TEST_SUBSPACE_EDITABLE_POST_ID,
     };
-    use chrono::{DateTime, Utc};
+    use chrono::DateTime;
     use cosmwasm_std::Addr;
     use desmos_bindings::stargate::posts::msg::PostsMsgBuilder;
     use desmos_bindings::stargate::posts::types::{
-        AttachmentContent, Entities, Media, Poll, Attachment, PostReference, PostReferenceType,
-        poll::ProvidedAnswer, ReplySetting, Url,
+        poll::ProvidedAnswer, AttachmentContent, Entities, Media, Poll, PostReference,
+        PostReferenceType, ReplySetting, Url,
     };
     use test_contract::msg::ExecuteMsg;
 
@@ -133,9 +133,12 @@ mod test {
                         attachments: vec![],
                     },
                 ],
-                end_date: Some(DateTime::from(
-                    DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
-                ).into()),
+                end_date: Some(
+                    DateTime::from(
+                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                    )
+                    .into(),
+                ),
                 allows_multiple_answers: false,
                 allows_answer_edits: false,
                 final_tally_results: None,

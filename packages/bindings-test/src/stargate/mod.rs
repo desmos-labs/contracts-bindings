@@ -1,5 +1,5 @@
 mod posts;
-// mod profiles;
+mod profiles;
 // mod reactions;
 // mod relationships;
 // mod reports;
