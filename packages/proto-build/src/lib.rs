@@ -10,7 +10,7 @@ mod transform;
 mod transformers;
 
 /// The desmos commit or tag to be cloned and used to build the proto files
-const DESMOS_REV: &str = "476143f3b9494b9b491c68e05bebd458e6e1c24c";
+const DESMOS_REV: &str = "84f470b0a93ce5623242b8e960778a0ccfd58423";
 
 /// Directory where the desmos submodule is located
 const DESMOS_DIR: &str = "../../dependencies/desmos/";
