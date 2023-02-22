@@ -2,7 +2,6 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{USER1_ADDRESS, USER2_ADDRESS};
-    use cosmwasm_std::Addr;
 
     use desmos_bindings::stargate::profiles::types::{
         query_chain_link_owners_response::ChainLinkOwnerDetails, Bech32Address, Pictures, Profile,

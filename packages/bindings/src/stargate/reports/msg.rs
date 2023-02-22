@@ -106,7 +106,7 @@ mod test {
             vec![0],
             Some("test"),
             Addr::unchecked("reporter"),
-            ReportTarget::PostTarget(PostTarget { post_id: 1 }),
+            ReportTarget::Post(PostTarget { post_id: 1 }),
         );
 
         let expected = MsgCreateReport {
@@ -114,7 +114,7 @@ mod test {
             reasons_ids: vec![0],
             message: "test".into(),
             reporter: "reporter".into(),
-            target: Some(ReportTarget::PostTarget(PostTarget { post_id: 1 }).into()),
+            target: Some(ReportTarget::Post(PostTarget { post_id: 1 }).into()),
         };
 
         assert_eq!(expected, msg);

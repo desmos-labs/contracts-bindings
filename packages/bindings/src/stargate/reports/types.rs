@@ -8,17 +8,17 @@ pub use desmos_std::proto::desmos::reports::v1::*;
 #[derive(Clone)]
 pub enum ReportTarget {
     /// Represents the user target.
-    UserTarget(UserTarget),
+    User(UserTarget),
 
     /// Represents the post target.
-    PostTarget(PostTarget),
+    Post(PostTarget),
 }
 
 impl Into<Any> for ReportTarget {
     fn into(self) -> Any {
         match self {
-            ReportTarget::UserTarget(target) => target.into(),
-            ReportTarget::PostTarget(target) => target.into(),
+            ReportTarget::User(target) => target.into(),
+            ReportTarget::Post(target) => target.into(),
         }
     }
 }
