@@ -5,7 +5,6 @@ mod tests {
         TEST_EDITABLE_REGISTERED_REACTION_ID, TEST_POST_FREE_TEXT_REACTION_ID,
         TEST_POST_REGISTERED_REACTION_ID, TEST_REACTIONS_POST_ID, TEST_SUBSPACE,
     };
-    use cosmwasm_std::Addr;
     use desmos_bindings::stargate::reactions::types::{
         FreeTextValue, FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
         RegisteredReactionValue, RegisteredReactionValueParams, SubspaceReactionsParams,
