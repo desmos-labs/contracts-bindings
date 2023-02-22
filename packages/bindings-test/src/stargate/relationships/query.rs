@@ -3,8 +3,8 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, USER1_ADDRESS, USER2_ADDRESS};
     use desmos_bindings::stargate::relationships::types::{
-        QueryBlocksRequest, QueryRelationshipsRequest,
-        QueryBlocksResponse, QueryRelationshipsResponse,
+        QueryBlocksRequest, QueryBlocksResponse, QueryRelationshipsRequest,
+        QueryRelationshipsResponse,
     };
     use test_contract::msg::QueryMsg::DesmosChain;
 
@@ -76,10 +76,9 @@ mod tests {
         let response: QueryRelationshipsResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-            println!("{:?}", response);
+        println!("{:?}", response);
         // Should be only one relationship between user1 and user2
         assert_eq!(1, response.relationships.len());
-       
 
         // Check that the relationship is between user1 and user2
         let relationship = response.relationships.first().unwrap();

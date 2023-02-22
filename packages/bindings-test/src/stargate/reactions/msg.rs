@@ -8,7 +8,7 @@ mod tests {
     use cosmwasm_std::Addr;
     use desmos_bindings::stargate::reactions::msg::ReactionsMsgBuilder;
     use desmos_bindings::stargate::reactions::types::{
-        FreeTextValueParams, ReactionValue, RegisteredReactionValueParams, FreeTextValue,
+        FreeTextValue, FreeTextValueParams, ReactionValue, RegisteredReactionValueParams,
     };
     use test_contract::msg::ExecuteMsg;
 

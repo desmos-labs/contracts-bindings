@@ -5,7 +5,7 @@ mod tests {
     use cosmwasm_std::{Addr, Binary};
     use desmos_bindings::stargate::profiles::msg::ProfilesMsgBuilder;
     use desmos_bindings::stargate::profiles::types::{
-        AddressData, Bech32Address, ChainConfig, Proof, SingleSignature, SignatureValueType,
+        AddressData, Bech32Address, ChainConfig, Proof, SignatureValueType, SingleSignature,
     };
     use desmos_bindings::stargate::types::Secp256k1PublicKey;
     use test_contract::msg::ExecuteMsg;

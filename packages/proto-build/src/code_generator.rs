@@ -86,15 +86,9 @@ impl CodeGenerator {
             if pattern.is_match(filename.as_str()) {
                 let src_path = f.path().to_str().unwrap().replace(".serde", "");
 
-                let mut src_file = fs::OpenOptions::new()
-                .append(true)
-                .open(src_path)
-                .unwrap();
+                let mut src_file = fs::OpenOptions::new().append(true).open(src_path).unwrap();
 
-                let mut serde_file = fs::OpenOptions::new()
-                .read(true)
-                .open(f.path())
-                .unwrap();
+                let mut serde_file = fs::OpenOptions::new().read(true).open(f.path()).unwrap();
 
                 io::copy(&mut serde_file, &mut src_file).unwrap();
 
