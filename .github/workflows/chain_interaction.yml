@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: desmos-labs/desmos
-          ref: refs/tags/v4.7.1
+          ref: paul/set-stargate-querier-accepted-list
           path: ./desmos-src
   
       - name: Build desmos chain ⚙
@@ -113,7 +113,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: desmos-labs/desmos
-          ref: refs/tags/v4.7.1
+          ref: paul/set-stargate-querier-accepted-list
           path: ./desmos-src
   
       - name: Build desmos chain ⚙
