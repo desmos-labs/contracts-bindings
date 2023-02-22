@@ -7,17 +7,17 @@ use crate::stargate::types::Any;
 /// Represents a generic reaction value.
 pub enum ReactionValue {
     /// Represents the value of free text reaction.
-    FreeTextValue(FreeTextValue),
+    FreeText(FreeTextValue),
 
     /// Represents the value of registered reaction.
-    RegisteredReactionValue(RegisteredReactionValue),
+    Registered(RegisteredReactionValue),
 }
 
 impl Into<Any> for ReactionValue {
     fn into(self) -> Any {
         match self {
-            ReactionValue::FreeTextValue(address) => address.into(),
-            ReactionValue::RegisteredReactionValue(address) => address.into(),
+            ReactionValue::FreeText(address) => address.into(),
+            ReactionValue::Registered(address) => address.into(),
         }
     }
 }

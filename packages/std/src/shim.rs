@@ -264,12 +264,13 @@ macro_rules! expand_as_any {
     };
 }
 
-// [HACK] Register all types that can serde as Any manually for now.
+// [HACK] Register all types that can convert to Any manually for now.
 expand_as_any!(
     // public keys
     crate::public_keys::Ed25519PublicKey,
     crate::public_keys::Secp256k1PublicKey,
     crate::public_keys::Secp256r1PublicKey,
+
     // profiles module
     crate::proto::desmos::profiles::v3::Profile,
     crate::proto::desmos::profiles::v3::Bech32Address,
@@ -277,12 +278,15 @@ expand_as_any!(
     crate::proto::desmos::profiles::v3::Base58Address,
     crate::proto::desmos::profiles::v3::SingleSignature,
     crate::proto::desmos::profiles::v3::CosmosMultiSignature,
+    
     // posts module
     crate::proto::desmos::posts::v3::Poll,
     crate::proto::desmos::posts::v3::Media,
+
     // reactions module
     crate::proto::desmos::reactions::v1::FreeTextValue,
     crate::proto::desmos::reactions::v1::RegisteredReactionValue,
+    
     // reports module
     crate::proto::desmos::reports::v1::UserTarget,
     crate::proto::desmos::reports::v1::PostTarget,

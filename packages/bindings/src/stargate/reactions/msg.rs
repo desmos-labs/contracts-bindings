@@ -132,7 +132,7 @@ mod tests {
         let msg = ReactionsMsgBuilder::add_reaction(
             1,
             1,
-            ReactionValue::RegisteredReactionValue(RegisteredReactionValue {
+            ReactionValue::Registered(RegisteredReactionValue {
                 registered_reaction_id: 1,
             })
             .into(),
@@ -143,7 +143,7 @@ mod tests {
             subspace_id: 1,
             post_id: 1,
             value: Some(
-                ReactionValue::RegisteredReactionValue(RegisteredReactionValue {
+                ReactionValue::Registered(RegisteredReactionValue {
                     registered_reaction_id: 1,
                 })
                 .into(),
