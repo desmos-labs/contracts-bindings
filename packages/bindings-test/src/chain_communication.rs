@@ -1,6 +1,6 @@
 use crate::consts::{GAS, USER1_KEY};
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
-use cosmwasm_std::Uint64;
+use cosmwasm_std::{Uint64, CosmosMsg};
 use desmos_bindings::subspaces::types::{
     QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
     QueryUserGroupResponse, QueryUserGroupsResponse,
@@ -11,6 +11,7 @@ use std::env;
 use std::ffi::OsStr;
 use std::path::Path;
 use std::process::Command;
+use test_contract::msg::ExecuteMsg;
 
 pub struct DesmosCli {
     desmos_bin: String,
@@ -153,6 +154,15 @@ impl DesmosCli {
             &format!("--from={}", USER1_KEY),
             &format!("--gas={}", GAS),
         ])
+    }
+
+    pub fn execute_contract(&self, contract: &str, msgs: impl IntoIterator<Item = impl Into<CosmosMsg>>) -> TxResponse {
+        self.wasm_execute(
+            contract,
+            &ExecuteMsg::DesmosMessages {
+                msgs: msgs.into_iter().map(Into::into).collect(),
+            },
+        )
     }
 
     /// Send a query request to a smart contract

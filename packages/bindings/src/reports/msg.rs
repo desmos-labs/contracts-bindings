@@ -18,14 +18,14 @@ impl ReportsMsg {
     pub fn create_report(
         subspace_id: u64,
         reasons_ids: Vec<u32>,
-        message: Option<&str>,
+        message: &str,
         reporter: Addr,
         target: ReportTarget,
     ) -> MsgCreateReport {
         MsgCreateReport {
             subspace_id: subspace_id.into(),
             reasons_ids,
-            message: message.unwrap_or_default().into(),
+            message: message.into(),
             reporter: reporter.into(),
             target: Some(target.into()),
         }
@@ -70,13 +70,13 @@ impl ReportsMsg {
     pub fn add_reason(
         subspace_id: u64,
         title: &str,
-        description: Option<&str>,
+        description: &str,
         signer: Addr,
     ) -> MsgAddReason {
         MsgAddReason {
             subspace_id,
             title: title.into(),
-            description: description.unwrap_or_default().into(),
+            description: description.into(),
             signer: signer.into(),
         }
     }
@@ -104,7 +104,7 @@ mod test {
         let msg = ReportsMsg::create_report(
             1,
             vec![0],
-            Some("test"),
+            "test",
             Addr::unchecked("reporter"),
             ReportTarget::Post(PostTarget { post_id: 1 }),
         );
@@ -151,7 +151,7 @@ mod test {
         let msg = ReportsMsg::add_reason(
             1,
             "test reason",
-            Some("Test description"),
+            "Test description",
             Addr::unchecked("reporter"),
         );
 

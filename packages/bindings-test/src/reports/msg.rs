@@ -17,7 +17,7 @@ mod tests {
         let create_report = ReportsMsg::create_report(
             TEST_SUBSPACE.into(),
             vec![TEST_REASON_ID],
-            None,
+            "",
             Addr::unchecked(&contract_address),
             ReportTarget::User(UserTarget {
                 user: "desmos1ppvcentlcj2qzhzuu0zp2k492ef24asxmta5g5".into(),
@@ -81,7 +81,7 @@ mod tests {
         let add_reason = ReportsMsg::add_reason(
             TEST_SUBSPACE.into(),
             "Test reason".into(),
-            None,
+            "",
             Addr::unchecked(&contract_address),
         );
 

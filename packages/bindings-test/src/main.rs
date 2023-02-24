@@ -4,6 +4,7 @@ mod chain_communication;
 
 mod consts;
 mod models;
+mod setup;
 
 mod posts;
 mod profiles;
@@ -13,5 +14,8 @@ mod reports;
 mod subspaces;
 
 fn main() {
-    println!("Hello, world!");
+    println!("Setup contract state start!");
+    setup::setup();
+    println!("Setup contract state finished!");
 }
+

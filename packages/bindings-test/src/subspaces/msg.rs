@@ -91,9 +91,9 @@ mod tests {
         DesmosMessages {
             msgs: vec![SubspacesMsg::create_user_group(
                 subspace_id.into(),
-                None,
+                0,
                 "test_user_group",
-                None,
+                "",
                 vec![Permission::EditSubspace],
                 vec![],
                 Addr::unchecked(contract_address),

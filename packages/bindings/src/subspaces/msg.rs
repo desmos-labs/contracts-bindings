@@ -76,15 +76,15 @@ impl SubspacesMsg {
     pub fn create_section(
         subspace_id: u64,
         name: &str,
-        description: Option<&str>,
-        parent_id: Option<u32>,
+        description: &str,
+        parent_id: u32,
         creator: Addr,
     ) -> MsgCreateSection {
         MsgCreateSection {
             subspace_id,
             name: name.into(),
-            description: description.unwrap_or_default().into(),
-            parent_id: parent_id.unwrap_or_default(),
+            description: description.into(),
+            parent_id,
             creator: creator.into(),
         }
     }
@@ -106,8 +106,8 @@ impl SubspacesMsg {
         MsgEditSection {
             subspace_id,
             section_id,
-            name: name.unwrap_or_default().into(),
-            description: description.unwrap_or_default().into(),
+            name: name.unwrap_or("[do-not-modify]").into(),
+            description: description.unwrap_or("[do-not-modify]").into(),
             editor: editor.into(),
         }
     }
@@ -155,18 +155,18 @@ impl SubspacesMsg {
     /// * `creator` - Address of who wants to create the group.
     pub fn create_user_group(
         subspace_id: u64,
-        section_id: Option<u32>,
+        section_id: u32,
         name: &str,
-        description: Option<&str>,
+        description: &str,
         default_permissions: Vec<Permission>,
         initial_members: Vec<Addr>,
         creator: Addr,
     ) -> MsgCreateUserGroup {
         MsgCreateUserGroup {
             subspace_id,
-            section_id: section_id.unwrap_or_default(),
+            section_id,
             name: name.into(),
-            description: description.unwrap_or_default().into(),
+            description: description.into(),
             default_permissions: default_permissions.into_iter().map(Into::into).collect(),
             initial_members: initial_members.into_iter().map(Into::into).collect(),
             creator: creator.into(),
@@ -190,8 +190,8 @@ impl SubspacesMsg {
         MsgEditUserGroup {
             subspace_id,
             group_id,
-            name: name.unwrap_or_default().into(),
-            description: description.unwrap_or_default().into(),
+            name: name.unwrap_or("[do-not-modify]").into(),
+            description: description.unwrap_or("[do-not-modify]").into(),
             signer: signer.into(),
         }
     }
@@ -370,8 +370,8 @@ mod tests {
         let msg = SubspacesMsg::create_section(
             1,
             "test_section",
-            Some("test description".into()),
-            Some(1),
+            "test description".into(),
+            1,
             Addr::unchecked("signer"),
         );
 
@@ -438,9 +438,9 @@ mod tests {
     fn test_create_user_group() {
         let msg = SubspacesMsg::create_user_group(
             1,
-            Some(1),
+            1,
             "test".into(),
-            Some("test".into()),
+            "test".into(),
             vec![],
             vec![],
             Addr::unchecked("signer"),

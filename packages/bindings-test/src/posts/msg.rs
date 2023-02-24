@@ -23,7 +23,7 @@ mod test {
             TEST_SUBSPACE.into(),
             0,
             None,
-            Some("Post text"),
+            "Post text",
             None,
             vec![],
             vec![],
