@@ -1,3 +1,0 @@
-[submodule "dependencies/desmos"]
-	path = dependencies/desmos
-	url = git@github.com:desmos-labs/desmos.git

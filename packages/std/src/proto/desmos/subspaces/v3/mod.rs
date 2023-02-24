@@ -86,6 +86,41 @@ pub struct UserPermission {
     #[prost(string, repeated, tag = "4")]
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
+/// Grant represents a grant to a user or a group
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.Grant")]
+pub struct Grant {
+    /// Id of the subspace inside which the user was granted the allowance
+    #[prost(uint64, tag = "1")]
+    pub subspace_id: u64,
+    /// Address of the user that granted the allowance
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Target to which the allowance has been granted
+    #[prost(message, optional, tag = "3")]
+    pub grantee: ::core::option::Option<crate::shim::Any>,
+    /// Allowance can be any allowance type implementing the FeeAllowanceI
+    /// interface
+    #[prost(message, optional, tag = "4")]
+    pub allowance: ::core::option::Option<crate::shim::Any>,
+}
+/// UserGrantee contains the target of a grant about a user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.UserGrantee")]
+pub struct UserGrantee {
+    #[prost(string, tag = "1")]
+    pub user: ::prost::alloc::string::String,
+}
+/// GroupGrantee contains the target of a grant about a group
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.GroupGrantee")]
+pub struct GroupGrantee {
+    #[prost(uint32, tag = "1")]
+    pub group_id: u32,
+}
 /// QuerySubspacesRequest is the request type for the Query/Subspaces RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
@@ -362,6 +397,74 @@ pub mod permission_detail {
         Group(Group),
     }
 }
+/// QueryUserAllowancesRequest is the request type for the Query/UserAllowances
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesRequest")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/UserAllowances",
+    response_type = QueryUserAllowancesResponse
+)]
+pub struct QueryUserAllowancesRequest {
+    /// Id of the subspace for which to get the grant(s)
+    #[prost(uint64, tag = "1")]
+    pub subspace_id: u64,
+    /// (Optional) Address of the user that was granted an allowance
+    #[prost(string, tag = "2")]
+    pub grantee: ::prost::alloc::string::String,
+    /// pagination defines an pagination for the request
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryUserAllowancesResponse is the response type for the Query/UserAllowances
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesResponse")]
+pub struct QueryUserAllowancesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub grants: ::prost::alloc::vec::Vec<Grant>,
+    /// pagination defines an pagination for the response
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryGroupAllowancesRequest is the request type for the Query/GroupAllowances
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesRequest")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/GroupAllowances",
+    response_type = QueryGroupAllowancesResponse
+)]
+pub struct QueryGroupAllowancesRequest {
+    /// Id of the subspace for which to get the grant(s)
+    #[prost(uint64, tag = "1")]
+    pub subspace_id: u64,
+    /// (optional) Address of the user group that was granted the allowance(s)
+    #[prost(uint32, tag = "2")]
+    pub group_id: u32,
+    /// pagination defines an pagination for the request
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryGroupAllowancesResponse is the response type for the
+/// Query/GroupAllowances RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesResponse")]
+pub struct QueryGroupAllowancesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub grants: ::prost::alloc::vec::Vec<Grant>,
+    /// pagination defines an pagination for the response
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
 /// MsgGrantTreasuryAuthorization grants an authorization on behalf of the
 /// treasury to a user
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -412,6 +515,53 @@ pub struct MsgRevokeTreasuryAuthorization {
 #[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorizationResponse")]
 pub struct MsgRevokeTreasuryAuthorizationResponse {}
+/// MsgGrantAllowance adds grants for the grantee to spend up allowance of fees
+/// from the treasury inside the given subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowance")]
+pub struct MsgGrantAllowance {
+    /// Id of the subspace inside which where the allowance should be granted
+    #[prost(uint64, tag = "1")]
+    pub subspace_id: u64,
+    /// Address of the user granting the allowance
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Target being granted the allowance
+    #[prost(message, optional, tag = "3")]
+    pub grantee: ::core::option::Option<crate::shim::Any>,
+    /// Allowance can be any allowance type that implements AllowanceI
+    #[prost(message, optional, tag = "4")]
+    pub allowance: ::core::option::Option<crate::shim::Any>,
+}
+/// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response
+/// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowanceResponse")]
+pub struct MsgGrantAllowanceResponse {}
+/// MsgRevokeAllowance removes any existing allowance to the grantee inside the
+/// subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowance")]
+pub struct MsgRevokeAllowance {
+    /// If of the subspace inside which the allowance to be deleted is
+    #[prost(uint64, tag = "1")]
+    pub subspace_id: u64,
+    /// Address of the user that created the allowance
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Target being revoked the allowance
+    #[prost(message, optional, tag = "3")]
+    pub grantee: ::core::option::Option<crate::shim::Any>,
+}
+/// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse
+/// response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowanceResponse")]
+pub struct MsgRevokeAllowanceResponse {}
 /// MsgCreateSubspace represents the message used to create a subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message, schemars::JsonSchema, std_derive::CosmwasmExt)]
@@ -894,6 +1044,276 @@ impl<'a, Q: cosmwasm_std::CustomQuery> SubspacesQuerier<'a, Q> {
             user,
         }
         .query(self.querier)
+    }
+    pub fn user_allowances(
+        &self,
+        subspace_id: u64,
+        grantee: ::prost::alloc::string::String,
+        pagination: ::core::option::Option<
+            super::super::super::cosmos::base::query::v1beta1::PageRequest,
+        >,
+    ) -> std::result::Result<QueryUserAllowancesResponse, cosmwasm_std::StdError> {
+        QueryUserAllowancesRequest {
+            subspace_id,
+            grantee,
+            pagination,
+        }
+        .query(self.querier)
+    }
+    pub fn group_allowances(
+        &self,
+        subspace_id: u64,
+        group_id: u32,
+        pagination: ::core::option::Option<
+            super::super::super::cosmos::base::query::v1beta1::PageRequest,
+        >,
+    ) -> std::result::Result<QueryGroupAllowancesResponse, cosmwasm_std::StdError> {
+        QueryGroupAllowancesRequest {
+            subspace_id,
+            group_id,
+            pagination,
+        }
+        .query(self.querier)
+    }
+}
+impl serde::Serialize for Grant {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.subspace_id != 0 {
+            len += 1;
+        }
+        if !self.granter.is_empty() {
+            len += 1;
+        }
+        if self.grantee.is_some() {
+            len += 1;
+        }
+        if self.allowance.is_some() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("desmos.subspaces.v3.Grant", len)?;
+        if self.subspace_id != 0 {
+            struct_ser.serialize_field(
+                "subspaceId",
+                ToString::to_string(&self.subspace_id).as_str(),
+            )?;
+        }
+        if !self.granter.is_empty() {
+            struct_ser.serialize_field("granter", &self.granter)?;
+        }
+        if let Some(v) = self.grantee.as_ref() {
+            struct_ser.serialize_field("grantee", v)?;
+        }
+        if let Some(v) = self.allowance.as_ref() {
+            struct_ser.serialize_field("allowance", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for Grant {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "subspace_id",
+            "subspaceId",
+            "granter",
+            "grantee",
+            "allowance",
+        ];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            SubspaceId,
+            Granter,
+            Grantee,
+            Allowance,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "subspaceId" | "subspace_id" => Ok(GeneratedField::SubspaceId),
+                            "granter" => Ok(GeneratedField::Granter),
+                            "grantee" => Ok(GeneratedField::Grantee),
+                            "allowance" => Ok(GeneratedField::Allowance),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = Grant;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.Grant")
+            }
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<Grant, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut subspace_id__ = None;
+                let mut granter__ = None;
+                let mut grantee__ = None;
+                let mut allowance__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::SubspaceId => {
+                            if subspace_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("subspaceId"));
+                            }
+                            subspace_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Granter => {
+                            if granter__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("granter"));
+                            }
+                            granter__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Grantee => {
+                            if grantee__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grantee"));
+                            }
+                            grantee__ = map.next_value()?;
+                        }
+                        GeneratedField::Allowance => {
+                            if allowance__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("allowance"));
+                            }
+                            allowance__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(Grant {
+                    subspace_id: subspace_id__.unwrap_or_default(),
+                    granter: granter__.unwrap_or_default(),
+                    grantee: grantee__,
+                    allowance: allowance__,
+                })
+            }
+        }
+        deserializer.deserialize_struct("desmos.subspaces.v3.Grant", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for GroupGrantee {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.group_id != 0 {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.GroupGrantee", len)?;
+        if self.group_id != 0 {
+            struct_ser.serialize_field("groupId", &self.group_id)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for GroupGrantee {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["group_id", "groupId"];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            GroupId,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "groupId" | "group_id" => Ok(GeneratedField::GroupId),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = GroupGrantee;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.GroupGrantee")
+            }
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<GroupGrantee, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut group_id__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::GroupId => {
+                            if group_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("groupId"));
+                            }
+                            group_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                    }
+                }
+                Ok(GroupGrantee {
+                    group_id: group_id__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.GroupGrantee",
+            FIELDS,
+            GeneratedVisitor,
+        )
     }
 }
 impl serde::Serialize for MsgAddUserToUserGroup {
@@ -3279,6 +3699,230 @@ impl<'de> serde::Deserialize<'de> for MsgEditUserGroupResponse {
         )
     }
 }
+impl serde::Serialize for MsgGrantAllowance {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.subspace_id != 0 {
+            len += 1;
+        }
+        if !self.granter.is_empty() {
+            len += 1;
+        }
+        if self.grantee.is_some() {
+            len += 1;
+        }
+        if self.allowance.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.MsgGrantAllowance", len)?;
+        if self.subspace_id != 0 {
+            struct_ser.serialize_field(
+                "subspaceId",
+                ToString::to_string(&self.subspace_id).as_str(),
+            )?;
+        }
+        if !self.granter.is_empty() {
+            struct_ser.serialize_field("granter", &self.granter)?;
+        }
+        if let Some(v) = self.grantee.as_ref() {
+            struct_ser.serialize_field("grantee", v)?;
+        }
+        if let Some(v) = self.allowance.as_ref() {
+            struct_ser.serialize_field("allowance", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for MsgGrantAllowance {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "subspace_id",
+            "subspaceId",
+            "granter",
+            "grantee",
+            "allowance",
+        ];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            SubspaceId,
+            Granter,
+            Grantee,
+            Allowance,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "subspaceId" | "subspace_id" => Ok(GeneratedField::SubspaceId),
+                            "granter" => Ok(GeneratedField::Granter),
+                            "grantee" => Ok(GeneratedField::Grantee),
+                            "allowance" => Ok(GeneratedField::Allowance),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgGrantAllowance;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.MsgGrantAllowance")
+            }
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgGrantAllowance, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut subspace_id__ = None;
+                let mut granter__ = None;
+                let mut grantee__ = None;
+                let mut allowance__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::SubspaceId => {
+                            if subspace_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("subspaceId"));
+                            }
+                            subspace_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Granter => {
+                            if granter__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("granter"));
+                            }
+                            granter__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Grantee => {
+                            if grantee__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grantee"));
+                            }
+                            grantee__ = map.next_value()?;
+                        }
+                        GeneratedField::Allowance => {
+                            if allowance__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("allowance"));
+                            }
+                            allowance__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgGrantAllowance {
+                    subspace_id: subspace_id__.unwrap_or_default(),
+                    granter: granter__.unwrap_or_default(),
+                    grantee: grantee__,
+                    allowance: allowance__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.MsgGrantAllowance",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+impl serde::Serialize for MsgGrantAllowanceResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.MsgGrantAllowanceResponse", len)?;
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for MsgGrantAllowanceResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgGrantAllowanceResponse;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.MsgGrantAllowanceResponse")
+            }
+            fn visit_map<V>(
+                self,
+                mut map: V,
+            ) -> std::result::Result<MsgGrantAllowanceResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgGrantAllowanceResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.MsgGrantAllowanceResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
 impl serde::Serialize for MsgGrantTreasuryAuthorization {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -4195,6 +4839,208 @@ impl<'de> serde::Deserialize<'de> for MsgRemoveUserFromUserGroupResponse {
         }
         deserializer.deserialize_struct(
             "desmos.subspaces.v3.MsgRemoveUserFromUserGroupResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+impl serde::Serialize for MsgRevokeAllowance {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.subspace_id != 0 {
+            len += 1;
+        }
+        if !self.granter.is_empty() {
+            len += 1;
+        }
+        if self.grantee.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.MsgRevokeAllowance", len)?;
+        if self.subspace_id != 0 {
+            struct_ser.serialize_field(
+                "subspaceId",
+                ToString::to_string(&self.subspace_id).as_str(),
+            )?;
+        }
+        if !self.granter.is_empty() {
+            struct_ser.serialize_field("granter", &self.granter)?;
+        }
+        if let Some(v) = self.grantee.as_ref() {
+            struct_ser.serialize_field("grantee", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for MsgRevokeAllowance {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["subspace_id", "subspaceId", "granter", "grantee"];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            SubspaceId,
+            Granter,
+            Grantee,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "subspaceId" | "subspace_id" => Ok(GeneratedField::SubspaceId),
+                            "granter" => Ok(GeneratedField::Granter),
+                            "grantee" => Ok(GeneratedField::Grantee),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgRevokeAllowance;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.MsgRevokeAllowance")
+            }
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<MsgRevokeAllowance, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut subspace_id__ = None;
+                let mut granter__ = None;
+                let mut grantee__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::SubspaceId => {
+                            if subspace_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("subspaceId"));
+                            }
+                            subspace_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Granter => {
+                            if granter__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("granter"));
+                            }
+                            granter__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Grantee => {
+                            if grantee__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grantee"));
+                            }
+                            grantee__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(MsgRevokeAllowance {
+                    subspace_id: subspace_id__.unwrap_or_default(),
+                    granter: granter__.unwrap_or_default(),
+                    grantee: grantee__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.MsgRevokeAllowance",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+impl serde::Serialize for MsgRevokeAllowanceResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let len = 0;
+        let struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.MsgRevokeAllowanceResponse", len)?;
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for MsgRevokeAllowanceResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {}
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        Err(serde::de::Error::unknown_field(value, FIELDS))
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = MsgRevokeAllowanceResponse;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.MsgRevokeAllowanceResponse")
+            }
+            fn visit_map<V>(
+                self,
+                mut map: V,
+            ) -> std::result::Result<MsgRevokeAllowanceResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                while map.next_key::<GeneratedField>()?.is_some() {
+                    let _ = map.next_value::<serde::de::IgnoredAny>()?;
+                }
+                Ok(MsgRevokeAllowanceResponse {})
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.MsgRevokeAllowanceResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -5293,6 +6139,257 @@ impl<'de> serde::Deserialize<'de> for permission_detail::User {
         )
     }
 }
+impl serde::Serialize for QueryGroupAllowancesRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.subspace_id != 0 {
+            len += 1;
+        }
+        if self.group_id != 0 {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.QueryGroupAllowancesRequest", len)?;
+        if self.subspace_id != 0 {
+            struct_ser.serialize_field(
+                "subspaceId",
+                ToString::to_string(&self.subspace_id).as_str(),
+            )?;
+        }
+        if self.group_id != 0 {
+            struct_ser.serialize_field("groupId", &self.group_id)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for QueryGroupAllowancesRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &[
+            "subspace_id",
+            "subspaceId",
+            "group_id",
+            "groupId",
+            "pagination",
+        ];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            SubspaceId,
+            GroupId,
+            Pagination,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "subspaceId" | "subspace_id" => Ok(GeneratedField::SubspaceId),
+                            "groupId" | "group_id" => Ok(GeneratedField::GroupId),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryGroupAllowancesRequest;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.QueryGroupAllowancesRequest")
+            }
+            fn visit_map<V>(
+                self,
+                mut map: V,
+            ) -> std::result::Result<QueryGroupAllowancesRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut subspace_id__ = None;
+                let mut group_id__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::SubspaceId => {
+                            if subspace_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("subspaceId"));
+                            }
+                            subspace_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::GroupId => {
+                            if group_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("groupId"));
+                            }
+                            group_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryGroupAllowancesRequest {
+                    subspace_id: subspace_id__.unwrap_or_default(),
+                    group_id: group_id__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.QueryGroupAllowancesRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+impl serde::Serialize for QueryGroupAllowancesResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.grants.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.QueryGroupAllowancesResponse", len)?;
+        if !self.grants.is_empty() {
+            struct_ser.serialize_field("grants", &self.grants)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for QueryGroupAllowancesResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["grants", "pagination"];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Grants,
+            Pagination,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "grants" => Ok(GeneratedField::Grants),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryGroupAllowancesResponse;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.QueryGroupAllowancesResponse")
+            }
+            fn visit_map<V>(
+                self,
+                mut map: V,
+            ) -> std::result::Result<QueryGroupAllowancesResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut grants__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::Grants => {
+                            if grants__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grants"));
+                            }
+                            grants__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryGroupAllowancesResponse {
+                    grants: grants__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.QueryGroupAllowancesResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
 impl serde::Serialize for QuerySectionRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
@@ -6111,6 +7208,248 @@ impl<'de> serde::Deserialize<'de> for QuerySubspacesResponse {
         }
         deserializer.deserialize_struct(
             "desmos.subspaces.v3.QuerySubspacesResponse",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+impl serde::Serialize for QueryUserAllowancesRequest {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if self.subspace_id != 0 {
+            len += 1;
+        }
+        if !self.grantee.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.QueryUserAllowancesRequest", len)?;
+        if self.subspace_id != 0 {
+            struct_ser.serialize_field(
+                "subspaceId",
+                ToString::to_string(&self.subspace_id).as_str(),
+            )?;
+        }
+        if !self.grantee.is_empty() {
+            struct_ser.serialize_field("grantee", &self.grantee)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for QueryUserAllowancesRequest {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["subspace_id", "subspaceId", "grantee", "pagination"];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            SubspaceId,
+            Grantee,
+            Pagination,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "subspaceId" | "subspace_id" => Ok(GeneratedField::SubspaceId),
+                            "grantee" => Ok(GeneratedField::Grantee),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryUserAllowancesRequest;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.QueryUserAllowancesRequest")
+            }
+            fn visit_map<V>(
+                self,
+                mut map: V,
+            ) -> std::result::Result<QueryUserAllowancesRequest, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut subspace_id__ = None;
+                let mut grantee__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::SubspaceId => {
+                            if subspace_id__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("subspaceId"));
+                            }
+                            subspace_id__ = Some(
+                                map.next_value::<::pbjson::private::NumberDeserialize<_>>()?
+                                    .0,
+                            );
+                        }
+                        GeneratedField::Grantee => {
+                            if grantee__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grantee"));
+                            }
+                            grantee__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryUserAllowancesRequest {
+                    subspace_id: subspace_id__.unwrap_or_default(),
+                    grantee: grantee__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.QueryUserAllowancesRequest",
+            FIELDS,
+            GeneratedVisitor,
+        )
+    }
+}
+impl serde::Serialize for QueryUserAllowancesResponse {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.grants.is_empty() {
+            len += 1;
+        }
+        if self.pagination.is_some() {
+            len += 1;
+        }
+        let mut struct_ser =
+            serializer.serialize_struct("desmos.subspaces.v3.QueryUserAllowancesResponse", len)?;
+        if !self.grants.is_empty() {
+            struct_ser.serialize_field("grants", &self.grants)?;
+        }
+        if let Some(v) = self.pagination.as_ref() {
+            struct_ser.serialize_field("pagination", v)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for QueryUserAllowancesResponse {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["grants", "pagination"];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            Grants,
+            Pagination,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "grants" => Ok(GeneratedField::Grants),
+                            "pagination" => Ok(GeneratedField::Pagination),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = QueryUserAllowancesResponse;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.QueryUserAllowancesResponse")
+            }
+            fn visit_map<V>(
+                self,
+                mut map: V,
+            ) -> std::result::Result<QueryUserAllowancesResponse, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut grants__ = None;
+                let mut pagination__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::Grants => {
+                            if grants__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("grants"));
+                            }
+                            grants__ = Some(map.next_value()?);
+                        }
+                        GeneratedField::Pagination => {
+                            if pagination__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("pagination"));
+                            }
+                            pagination__ = map.next_value()?;
+                        }
+                    }
+                }
+                Ok(QueryUserAllowancesResponse {
+                    grants: grants__.unwrap_or_default(),
+                    pagination: pagination__,
+                })
+            }
+        }
+        deserializer.deserialize_struct(
+            "desmos.subspaces.v3.QueryUserAllowancesResponse",
             FIELDS,
             GeneratedVisitor,
         )
@@ -7442,6 +8781,92 @@ impl<'de> serde::Deserialize<'de> for Subspace {
             }
         }
         deserializer.deserialize_struct("desmos.subspaces.v3.Subspace", FIELDS, GeneratedVisitor)
+    }
+}
+impl serde::Serialize for UserGrantee {
+    #[allow(deprecated)]
+    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        use serde::ser::SerializeStruct;
+        let mut len = 0;
+        if !self.user.is_empty() {
+            len += 1;
+        }
+        let mut struct_ser = serializer.serialize_struct("desmos.subspaces.v3.UserGrantee", len)?;
+        if !self.user.is_empty() {
+            struct_ser.serialize_field("user", &self.user)?;
+        }
+        struct_ser.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for UserGrantee {
+    #[allow(deprecated)]
+    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        const FIELDS: &[&str] = &["user"];
+        #[allow(clippy::enum_variant_names)]
+        enum GeneratedField {
+            User,
+        }
+        impl<'de> serde::Deserialize<'de> for GeneratedField {
+            fn deserialize<D>(deserializer: D) -> std::result::Result<GeneratedField, D::Error>
+            where
+                D: serde::Deserializer<'de>,
+            {
+                struct GeneratedVisitor;
+                impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+                    type Value = GeneratedField;
+                    fn expecting(
+                        &self,
+                        formatter: &mut std::fmt::Formatter<'_>,
+                    ) -> std::fmt::Result {
+                        write!(formatter, "expected one of: {:?}", &FIELDS)
+                    }
+                    #[allow(unused_variables)]
+                    fn visit_str<E>(self, value: &str) -> std::result::Result<GeneratedField, E>
+                    where
+                        E: serde::de::Error,
+                    {
+                        match value {
+                            "user" => Ok(GeneratedField::User),
+                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+                deserializer.deserialize_identifier(GeneratedVisitor)
+            }
+        }
+        struct GeneratedVisitor;
+        impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
+            type Value = UserGrantee;
+            fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                formatter.write_str("struct desmos.subspaces.v3.UserGrantee")
+            }
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<UserGrantee, V::Error>
+            where
+                V: serde::de::MapAccess<'de>,
+            {
+                let mut user__ = None;
+                while let Some(k) = map.next_key()? {
+                    match k {
+                        GeneratedField::User => {
+                            if user__.is_some() {
+                                return Err(serde::de::Error::duplicate_field("user"));
+                            }
+                            user__ = Some(map.next_value()?);
+                        }
+                    }
+                }
+                Ok(UserGrantee {
+                    user: user__.unwrap_or_default(),
+                })
+            }
+        }
+        deserializer.deserialize_struct("desmos.subspaces.v3.UserGrantee", FIELDS, GeneratedVisitor)
     }
 }
 impl serde::Serialize for UserGroup {
