@@ -16,8 +16,8 @@ pub enum ReactionValue {
 impl Into<Any> for ReactionValue {
     fn into(self) -> Any {
         match self {
-            ReactionValue::FreeText(address) => address.into(),
-            ReactionValue::Registered(address) => address.into(),
+            ReactionValue::FreeText(value) => value.into(),
+            ReactionValue::Registered(value) => value.into(),
         }
     }
 }
