@@ -30,6 +30,8 @@ pub const REPLACEMENTS: &[(&str, &str)] = &[
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
              impl ${1}Client<tonic::transport::Channel>",
     ),
+    // Remove TryFrom since we are using rust 2021
+    ("use std::convert::TryFrom", ""),
 ];
 
 pub fn append_struct_attrs(
