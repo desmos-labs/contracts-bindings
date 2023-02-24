@@ -35,7 +35,7 @@ mock = { version = "0.1.0", path = "../mock" }
 cw-multi-test = { version = "0.16.2" }
 
 [features]
-default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "legacy"]
+default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions"]
 profiles = []
 subspaces = []
 posts = []
@@ -43,5 +43,3 @@ relationships = []
 reports = []
 reactions = []
 iterators = []
-stargate = []
-legacy = []

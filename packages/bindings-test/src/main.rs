@@ -5,11 +5,12 @@ mod chain_communication;
 mod consts;
 mod models;
 
-#[cfg(feature = "legacy")]
-mod legacy;
-
-#[cfg(feature = "stargate")]
-mod stargate;
+mod posts;
+mod profiles;
+mod reactions;
+mod relationships;
+mod reports;
+mod subspaces;
 
 fn main() {
     println!("Hello, world!");
