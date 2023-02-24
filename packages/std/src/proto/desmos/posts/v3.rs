@@ -3865,7 +3865,6 @@ impl<'de> serde::Deserialize<'de> for PostReferenceType {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(PostReferenceType::from_i32)
@@ -3877,7 +3876,6 @@ impl<'de> serde::Deserialize<'de> for PostReferenceType {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(PostReferenceType::from_i32)
@@ -5320,7 +5318,6 @@ impl<'de> serde::Deserialize<'de> for ReplySetting {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(ReplySetting::from_i32)
@@ -5332,7 +5329,6 @@ impl<'de> serde::Deserialize<'de> for ReplySetting {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(ReplySetting::from_i32)

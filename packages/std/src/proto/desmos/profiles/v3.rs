@@ -1537,7 +1537,6 @@ impl<'de> serde::Deserialize<'de> for ApplicationLinkState {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(ApplicationLinkState::from_i32)
@@ -1549,7 +1548,6 @@ impl<'de> serde::Deserialize<'de> for ApplicationLinkState {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(ApplicationLinkState::from_i32)
@@ -8953,7 +8951,6 @@ impl<'de> serde::Deserialize<'de> for SignatureValueType {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(SignatureValueType::from_i32)
@@ -8965,7 +8962,6 @@ impl<'de> serde::Deserialize<'de> for SignatureValueType {
             where
                 E: serde::de::Error,
             {
-                use std::convert::TryFrom;
                 i32::try_from(v)
                     .ok()
                     .and_then(SignatureValueType::from_i32)
