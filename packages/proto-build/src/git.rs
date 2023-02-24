@@ -1,9 +1,9 @@
-use crate::{DESMOS_DIR, DESMOS_REV, DESMOS_REPO_URL};
+use crate::{DESMOS_DIR, DESMOS_REPO_URL, DESMOS_REV};
 use log::info;
 use std::ffi::OsStr;
+use std::fs;
 use std::path::PathBuf;
 use std::process;
-use std::fs;
 
 fn run_command(command: impl AsRef<OsStr>, args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     let stdout = process::Stdio::inherit();
@@ -40,7 +40,7 @@ pub fn try_init_modules() {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
     if fs::metadata(full_path(DESMOS_DIR).to_str().unwrap()).is_ok() {
-        return
+        return;
     };
 
     info!("Clone desmos repository...");
