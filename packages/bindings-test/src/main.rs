@@ -18,4 +18,3 @@ fn main() {
     setup::setup();
     println!("Setup contract state finished!");
 }
-
