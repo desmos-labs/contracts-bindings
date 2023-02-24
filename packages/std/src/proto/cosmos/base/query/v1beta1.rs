@@ -175,7 +175,8 @@ impl<'de> serde::Deserialize<'de> for PageRequest {
                                 return Err(serde::de::Error::duplicate_field("key"));
                             }
                             key__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
@@ -316,7 +317,6 @@ impl<'de> serde::Deserialize<'de> for PageResponse {
                             }
                             next_key__ = Some(
                                 map.next_value::<::pbjson::private::BytesDeserialize<_>>()
-                                    // [HACKED] deserialize null or other invalid types as empty
                                     .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );

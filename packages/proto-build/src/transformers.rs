@@ -32,6 +32,12 @@ pub const REPLACEMENTS: &[(&str, &str)] = &[
     ),
     // Remove TryFrom since we are using rust 2021
     ("use std::convert::TryFrom", ""),
+    // [HACKED] deserialize protobuf bytes types null or other invalid types as empty
+    (
+        "map.next_value::<::pbjson::private::BytesDeserialize<_>>\\(\\)\\?",
+        "map.next_value::<::pbjson::private::BytesDeserialize<_>>()\n
+        .unwrap_or(pbjson::private::BytesDeserialize(vec![]))",
+    ),
 ];
 
 pub fn append_struct_attrs(

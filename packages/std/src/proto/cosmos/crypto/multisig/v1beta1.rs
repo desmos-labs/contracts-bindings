@@ -120,7 +120,8 @@ impl<'de> serde::Deserialize<'de> for CompactBitArray {
                                 return Err(serde::de::Error::duplicate_field("elems"));
                             }
                             elems__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }

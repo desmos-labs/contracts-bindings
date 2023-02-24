@@ -1856,7 +1856,8 @@ impl<'de> serde::Deserialize<'de> for BioParams {
                                 return Err(serde::de::Error::duplicate_field("maxLength"));
                             }
                             max_length__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
@@ -2333,7 +2334,8 @@ impl<'de> serde::Deserialize<'de> for DTagParams {
                                 return Err(serde::de::Error::duplicate_field("minLength"));
                             }
                             min_length__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
@@ -2342,7 +2344,8 @@ impl<'de> serde::Deserialize<'de> for DTagParams {
                                 return Err(serde::de::Error::duplicate_field("maxLength"));
                             }
                             max_length__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
@@ -5321,7 +5324,8 @@ impl<'de> serde::Deserialize<'de> for NicknameParams {
                                 return Err(serde::de::Error::duplicate_field("minLength"));
                             }
                             min_length__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
@@ -5330,7 +5334,8 @@ impl<'de> serde::Deserialize<'de> for NicknameParams {
                                 return Err(serde::de::Error::duplicate_field("maxLength"));
                             }
                             max_length__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
@@ -9085,7 +9090,8 @@ impl<'de> serde::Deserialize<'de> for SingleSignature {
                                 return Err(serde::de::Error::duplicate_field("signature"));
                             }
                             signature__ = Some(
-                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()?
+                                map.next_value::<::pbjson::private::BytesDeserialize<_>>()
+                                    .unwrap_or(pbjson::private::BytesDeserialize(vec![]))
                                     .0,
                             );
                         }
