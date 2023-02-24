@@ -1,5 +1,5 @@
 use cosmwasm_schema::{cw_serde, QueryResponses};
-use cosmwasm_std::{Binary, CosmosMsg, QueryRequest, Empty};
+use cosmwasm_std::{Binary, CosmosMsg, Empty, QueryRequest};
 
 #[cw_serde]
 pub struct InstantiateMsg {}

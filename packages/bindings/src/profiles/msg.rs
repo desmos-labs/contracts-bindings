@@ -350,8 +350,7 @@ mod tests {
 
     #[test]
     fn test_unlink_chain_account() {
-        let msg =
-            ProfilesMsg::unlink_chain_account(Addr::unchecked("owner"), "cosmos", "target");
+        let msg = ProfilesMsg::unlink_chain_account(Addr::unchecked("owner"), "cosmos", "target");
 
         let expected = MsgUnlinkChainAccount {
             owner: "owner".into(),
@@ -364,11 +363,8 @@ mod tests {
 
     #[test]
     fn test_set_default_external_address() {
-        let msg = ProfilesMsg::set_default_external_address(
-            "cosmos",
-            "target",
-            Addr::unchecked("owner"),
-        );
+        let msg =
+            ProfilesMsg::set_default_external_address("cosmos", "target", Addr::unchecked("owner"));
 
         let expected = MsgSetDefaultExternalAddress {
             chain_name: "cosmos".into(),
@@ -426,8 +422,7 @@ mod tests {
 
     #[test]
     fn test_unlink_application() {
-        let msg =
-            ProfilesMsg::unlink_application("twitter", "gawrgura", Addr::unchecked("owner"));
+        let msg = ProfilesMsg::unlink_application("twitter", "gawrgura", Addr::unchecked("owner"));
 
         let expected = MsgUnlinkApplication {
             application: "twitter".into(),

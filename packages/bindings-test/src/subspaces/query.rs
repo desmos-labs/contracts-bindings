@@ -2,9 +2,7 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
-    use desmos_bindings::subspaces::types::{
-        permission_detail, Permission, PermissionDetail,
-    };
+    use desmos_bindings::subspaces::types::{permission_detail, Permission, PermissionDetail};
     use desmos_bindings::subspaces::types::{
         QuerySubspaceRequest, QuerySubspaceResponse, QuerySubspacesRequest, QuerySubspacesResponse,
         QueryUserGroupMembersRequest, QueryUserGroupMembersResponse, QueryUserGroupRequest,

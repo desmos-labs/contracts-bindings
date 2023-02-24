@@ -47,8 +47,7 @@ mod tests {
             .wasm_execute(&contract_address, &save_profile_msg)
             .assert_success();
 
-        let delete_profile_msg =
-            ProfilesMsg::delete_profile(Addr::unchecked(&contract_address));
+        let delete_profile_msg = ProfilesMsg::delete_profile(Addr::unchecked(&contract_address));
 
         let msg = ExecuteMsg::DesmosMessages {
             msgs: vec![delete_profile_msg.into()],

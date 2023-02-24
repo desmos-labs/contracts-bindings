@@ -171,7 +171,10 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
 
-        let group = desmos_cli.query_user_group(subspace_id, group_id).group.unwrap();
+        let group = desmos_cli
+            .query_user_group(subspace_id, group_id)
+            .group
+            .unwrap();
         assert_eq!(new_user_group_name, group.name);
         assert!(group.description.is_empty());
     }

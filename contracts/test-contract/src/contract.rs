@@ -3,8 +3,8 @@ use crate::msg::{ChainResponse, ExecuteMsg, InstantiateMsg, QueryMsg};
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{
-    to_binary, to_vec, ContractResult, Deps, DepsMut, Env, MessageInfo, QueryRequest,
-    QueryResponse, Response, StdError, StdResult, SystemResult, Empty,
+    to_binary, to_vec, ContractResult, Deps, DepsMut, Empty, Env, MessageInfo, QueryRequest,
+    QueryResponse, Response, StdError, StdResult, SystemResult,
 };
 use cw2::set_contract_version;
 
@@ -47,10 +47,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<QueryResponse> {
     }
 }
 
-fn query_desmos_chain(
-    deps: Deps,
-    request: &QueryRequest<Empty>,
-) -> StdResult<ChainResponse> {
+fn query_desmos_chain(deps: Deps, request: &QueryRequest<Empty>) -> StdResult<ChainResponse> {
     let raw = to_vec(request).map_err(|serialize_err| {
         StdError::generic_err(format!("Serializing QueryRequest: {}", serialize_err))
     })?;

@@ -496,12 +496,7 @@ mod tests {
 
     #[test]
     fn test_set_user_group_permissions() {
-        let msg = SubspacesMsg::set_user_group_permissions(
-            1,
-            1,
-            vec![],
-            Addr::unchecked("signer"),
-        );
+        let msg = SubspacesMsg::set_user_group_permissions(1, 1, vec![], Addr::unchecked("signer"));
 
         let expected = MsgSetUserGroupPermissions {
             subspace_id: 1,
