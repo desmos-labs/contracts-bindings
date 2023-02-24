@@ -79,8 +79,8 @@ impl<'a> ReportsQuerier<'a> {
                     target.clone(),
                     reporter.clone(),
                     Some(PageRequest {
-                        key,
-                        offset: None,
+                        key: key.unwrap_or_default().to_vec(),
+                        offset: 0,
                         limit: limit.into(),
                         count_total: false,
                         reverse: false,
@@ -133,8 +133,8 @@ impl<'a> ReportsQuerier<'a> {
                 self.query_reasons(
                     subspace_id,
                     Some(PageRequest {
-                        key,
-                        offset: None,
+                        key: key.unwrap_or_default().to_vec(),
+                        offset: 0,
                         limit: limit.into(),
                         count_total: false,
                         reverse: false,

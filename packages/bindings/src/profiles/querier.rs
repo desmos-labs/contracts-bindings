@@ -67,11 +67,11 @@ impl<'a> ProfilesQuerier<'a> {
                 self.query_incoming_dtag_transfer_requests(
                     receiver.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -133,11 +133,11 @@ impl<'a> ProfilesQuerier<'a> {
                     chain_name.clone(),
                     target.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -189,11 +189,11 @@ impl<'a> ProfilesQuerier<'a> {
                     chain_name.clone(),
                     target.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -245,11 +245,11 @@ impl<'a> ProfilesQuerier<'a> {
                     owner.clone(),
                     chain_name.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -311,11 +311,11 @@ impl<'a> ProfilesQuerier<'a> {
                     application.clone(),
                     username.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -379,11 +379,11 @@ impl<'a> ProfilesQuerier<'a> {
                     application.map(Into::into).clone(),
                     username.map(Into::into).clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {

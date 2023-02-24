@@ -61,11 +61,11 @@ impl<'a> PostsQuerier<'a> {
                 self.query_subspace_posts(
                     subspace_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -112,11 +112,11 @@ impl<'a> PostsQuerier<'a> {
                     subspace_id,
                     section_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -171,11 +171,11 @@ impl<'a> PostsQuerier<'a> {
                     subspace_id,
                     post_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -235,11 +235,11 @@ impl<'a> PostsQuerier<'a> {
                     poll_id,
                     user.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {

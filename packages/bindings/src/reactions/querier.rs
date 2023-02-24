@@ -80,11 +80,11 @@ impl<'a> ReactionsQuerier<'a> {
                     post_id,
                     user.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
@@ -140,11 +140,11 @@ impl<'a> ReactionsQuerier<'a> {
                 self.query_registered_reactions(
                     subspace_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
