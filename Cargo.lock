@@ -535,8 +535,7 @@ dependencies = [
  "chrono",
  "cosmwasm-std",
  "mock",
- "pbjson",
- "pbjson-types",
+ "pbjson 0.5.1 (git+https://github.com/desmos-labs/pbjson.git?branch=paul/disable-untagged)",
  "prost 0.11.6",
  "prost-types",
  "schemars",
@@ -1094,6 +1093,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "pbjson"
+version = "0.5.1"
+source = "git+https://github.com/desmos-labs/pbjson.git?branch=paul/disable-untagged#3ae4963e614eb119d1948247d676d1df1067f342"
+dependencies = [
+ "base64 0.13.1",
+ "serde",
+]
+
+[[package]]
 name = "pbjson-build"
 version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1113,7 +1121,7 @@ checksum = "4a88c8d87f99a4ac14325e7a4c24af190fca261956e3b82dd7ed67e77e6c7043"
 dependencies = [
  "bytes",
  "chrono",
- "pbjson",
+ "pbjson 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "pbjson-build",
  "prost 0.11.6",
  "prost-build",
@@ -1298,7 +1306,7 @@ dependencies = [
  "heck",
  "itertools",
  "log",
- "pbjson",
+ "pbjson 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "pbjson-build",
  "pbjson-types",
  "pretty_env_logger",
