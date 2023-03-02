@@ -144,7 +144,10 @@ fn transform_items(
     items
         .into_iter()
         .map(|i| match i.clone() {
-            Item::Struct(s) => Item::Struct(transformers::append_struct_attrs(src, &s, descriptor)),
+            Item::Struct(s) => Item::Struct({
+                let s = transformers::append_struct_attrs(src, &s, descriptor);
+                transformers::allow_serde_number_as_str(s)
+        }),
             Item::Enum(s) => Item::Enum(transformers::append_enum_attrs(&s)),
             _ => i,
         })

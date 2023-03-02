@@ -30,14 +30,6 @@ pub const REPLACEMENTS: &[(&str, &str)] = &[
              #[cfg_attr(docsrs, doc(cfg(feature = \"grpc-transport\")))]\n    \
              impl ${1}Client<tonic::transport::Channel>",
     ),
-    // Remove TryFrom since we are using rust 2021
-    ("use std::convert::TryFrom", ""),
-    // [HACKED] deserialize protobuf bytes types null or other invalid types as empty
-    (
-        "map.next_value::<::pbjson::private::BytesDeserialize<_>>\\(\\)\\?",
-        "map.next_value::<::pbjson::private::BytesDeserialize<_>>()\n
-        .unwrap_or(pbjson::private::BytesDeserialize(vec![]))",
-    ),
 ];
 
 pub fn append_struct_attrs(
@@ -50,7 +42,7 @@ pub fn append_struct_attrs(
     let type_url = get_type_url(src, &s.ident, descriptor);
 
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(schemars::JsonSchema, std_derive::CosmwasmExt,)] },
+        syn::parse_quote! { #[derive(schemars::JsonSchema, serde::Serialize, serde::Deserialize, std_derive::CosmwasmExt,)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
     ]);
 
@@ -60,10 +52,48 @@ pub fn append_struct_attrs(
     s
 }
 
+pub fn allow_serde_number_as_str(s: ItemStruct) -> ItemStruct {
+    let fields_vec = s
+        .fields
+        .clone()
+        .into_iter()
+        .map(|mut field| {
+            let number_types = vec![
+                parse_quote!(i64),
+                parse_quote!(i128),
+                parse_quote!(u64),
+                parse_quote!(u128),
+            ];
+
+            if number_types.contains(&field.ty) {
+                let from_str: syn::Attribute = parse_quote! {
+                    #[serde(
+                        serialize_with = "crate::serde::as_str::serialize",
+                        deserialize_with = "crate::serde::as_str::deserialize"
+                    )]
+                };
+                field.attrs.append(&mut vec![from_str]);
+                field
+            } else {
+                field
+            }
+        })
+        .collect::<Vec<syn::Field>>();
+
+    let fields_named: syn::FieldsNamed = parse_quote! {
+        { #(#fields_vec,)* }
+    };
+    let fields = syn::Fields::Named(fields_named);
+
+    syn::ItemStruct { fields, ..s }
+}
+
 pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
     let mut s = s.clone();
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(schemars::JsonSchema)] },
+        syn::parse_quote! {
+            #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+        },
     ]);
     s
 }
