@@ -441,6 +441,7 @@ pub struct SingleSignatureData {
     pub mode: i32,
     /// Signature is the raw signature bytes
     #[prost(bytes = "vec", tag = "2")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 /// MultiSignatureData is the signature data for a multisig public key
@@ -526,8 +527,10 @@ pub struct Params {
 #[proto_message(type_url = "/desmos.profiles.v2.NicknameParams")]
 pub struct NicknameParams {
     #[prost(bytes = "vec", tag = "1")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub min_length: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "2")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// DTagParams defines the parameters related to profile DTags
@@ -546,8 +549,10 @@ pub struct DTagParams {
     #[prost(string, tag = "1")]
     pub reg_ex: ::prost::alloc::string::String,
     #[prost(bytes = "vec", tag = "2")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub min_length: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "3")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// BioParams defines the parameters related to profile biography
@@ -564,6 +569,7 @@ pub struct DTagParams {
 #[proto_message(type_url = "/desmos.profiles.v2.BioParams")]
 pub struct BioParams {
     #[prost(bytes = "vec", tag = "3")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// OracleParams defines the parameters related to the oracle

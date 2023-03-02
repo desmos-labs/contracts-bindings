@@ -146,8 +146,9 @@ fn transform_items(
         .map(|i| match i.clone() {
             Item::Struct(s) => Item::Struct({
                 let s = transformers::append_struct_attrs(src, &s, descriptor);
-                transformers::allow_serde_number_as_str(s)
-        }),
+                let s = transformers::allow_serde_number_as_str(s);
+                transformers::allow_serde_byte_as_option(s)
+            }),
             Item::Enum(s) => Item::Enum(transformers::append_enum_attrs(&s)),
             _ => i,
         })

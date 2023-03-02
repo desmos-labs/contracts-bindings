@@ -85,6 +85,7 @@ pub mod signature_descriptor {
             pub mode: i32,
             /// signature is the raw signature bytes
             #[prost(bytes = "vec", tag = "2")]
+            #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
             pub signature: ::prost::alloc::vec::Vec<u8>,
         }
         /// Multi is the signature data for a multisig public key

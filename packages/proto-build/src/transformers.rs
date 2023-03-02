@@ -88,13 +88,41 @@ pub fn allow_serde_number_as_str(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
+pub fn allow_serde_byte_as_option(s: ItemStruct) -> ItemStruct {
+    let fields_vec = s
+        .fields
+        .clone()
+        .into_iter()
+        .map(|mut field| {
+            let byte_types = vec![
+                parse_quote!(::prost::alloc::vec::Vec<u8>),
+            ];
+
+            if byte_types.contains(&field.ty) {
+                let from_option: syn::Attribute = parse_quote! {
+                    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+                };
+                field.attrs.append(&mut vec![from_option]);
+                field
+            } else {
+                field
+            }
+        })
+        .collect::<Vec<syn::Field>>();
+
+    let fields_named: syn::FieldsNamed = parse_quote! {
+        { #(#fields_vec,)* }
+    };
+    let fields = syn::Fields::Named(fields_named);
+
+    syn::ItemStruct { fields, ..s }
+}
+
 pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
     let mut s = s.clone();
-    s.attrs.append(&mut vec![
-        syn::parse_quote! {
-            #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-        },
-    ]);
+    s.attrs.append(&mut vec![syn::parse_quote! {
+        #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+    }]);
     s
 }
 

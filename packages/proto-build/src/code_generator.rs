@@ -159,7 +159,6 @@ impl CodeGenerator {
             .compile(&protos, &includes)
             .unwrap();
 
-        
         info!(
             "✨  [{}] Types from protobuf definitions is compiled successfully!",
             self.project.name

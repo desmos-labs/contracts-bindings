@@ -35,5 +35,6 @@ pub struct CompactBitArray {
     #[prost(uint32, tag = "1")]
     pub extra_bits_stored: u32,
     #[prost(bytes = "vec", tag = "2")]
+    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
     pub elems: ::prost::alloc::vec::Vec<u8>,
 }
