@@ -1,7 +1,6 @@
 use crate::chain_communication::DesmosCli;
 use crate::consts::{USER1_ADDRESS, USER2_ADDRESS};
 use chrono::DateTime;
-use test_contract::msg::ExecuteMsg;
 
 use cosmwasm_std::Addr;
 use desmos_bindings::posts::{

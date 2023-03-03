@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Report")]
+#[serde(rename_all = "snake_case")]
 pub struct Report {
     /// Id of the subspace for which the report has been created
     #[prost(uint64, tag = "1")]
@@ -53,6 +54,7 @@ pub struct Report {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.UserTarget")]
+#[serde(rename_all = "snake_case")]
 pub struct UserTarget {
     /// Address of the reported user
     #[prost(string, tag = "1")]
@@ -70,6 +72,7 @@ pub struct UserTarget {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.PostTarget")]
+#[serde(rename_all = "snake_case")]
 pub struct PostTarget {
     /// Id of the reported post
     #[prost(uint64, tag = "1")]
@@ -91,6 +94,7 @@ pub struct PostTarget {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Reason")]
+#[serde(rename_all = "snake_case")]
 pub struct Reason {
     /// Id of the subspace for which this reason is valid
     #[prost(uint64, tag = "1")]
@@ -121,6 +125,7 @@ pub struct Reason {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Params")]
+#[serde(rename_all = "snake_case")]
 pub struct Params {
     /// List of available reasons from which new subspaces can pick their default
     /// ones
@@ -140,6 +145,7 @@ pub struct Params {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.StandardReason")]
+#[serde(rename_all = "snake_case")]
 pub struct StandardReason {
     /// Id of the reason inside the subspace
     #[prost(uint32, tag = "1")]
@@ -163,6 +169,7 @@ pub struct StandardReason {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reports.v1.Query/Reports",
     response_type = QueryReportsResponse
@@ -199,6 +206,7 @@ pub struct QueryReportsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReportsResponse {
     #[prost(message, repeated, tag = "1")]
     pub reports: ::prost::alloc::vec::Vec<Report>,
@@ -218,6 +226,7 @@ pub struct QueryReportsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reports.v1.Query/Report",
     response_type = QueryReportResponse
@@ -250,6 +259,7 @@ pub struct QueryReportRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReportResponse {
     #[prost(message, optional, tag = "1")]
     pub report: ::core::option::Option<Report>,
@@ -266,6 +276,7 @@ pub struct QueryReportResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reports.v1.Query/Reasons",
     response_type = QueryReasonsResponse
@@ -295,6 +306,7 @@ pub struct QueryReasonsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReasonsResponse {
     #[prost(message, repeated, tag = "1")]
     pub reasons: ::prost::alloc::vec::Vec<Reason>,
@@ -314,6 +326,7 @@ pub struct QueryReasonsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reports.v1.Query/Reason",
     response_type = QueryReasonResponse
@@ -342,6 +355,7 @@ pub struct QueryReasonRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReasonResponse {
     #[prost(message, optional, tag = "1")]
     pub reason: ::core::option::Option<Reason>,
@@ -358,6 +372,7 @@ pub struct QueryReasonResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryParamsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reports.v1.Query/Params",
     response_type = QueryParamsResponse
@@ -375,6 +390,7 @@ pub struct QueryParamsRequest {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryParamsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
@@ -391,6 +407,7 @@ pub struct QueryParamsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgCreateReport")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateReport {
     /// Id of the subspace for which the report should be stored
     #[prost(uint64, tag = "1")]
@@ -424,6 +441,7 @@ pub struct MsgCreateReport {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgCreateReportResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateReportResponse {
     /// Id of the newly created report
     #[prost(uint64, tag = "1")]
@@ -448,6 +466,7 @@ pub struct MsgCreateReportResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgDeleteReport")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteReport {
     /// Id of the subspace that contains the report to be deleted
     #[prost(uint64, tag = "1")]
@@ -479,6 +498,7 @@ pub struct MsgDeleteReport {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgDeleteReportResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteReportResponse {}
 /// MsgSupportStandardReason represents the message to be used when wanting to
 /// support one reason from the module params
@@ -493,6 +513,7 @@ pub struct MsgDeleteReportResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgSupportStandardReason")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSupportStandardReason {
     /// Id of the subspace for which to support the reason
     #[prost(uint64, tag = "1")]
@@ -521,6 +542,7 @@ pub struct MsgSupportStandardReason {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgSupportStandardReasonResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSupportStandardReasonResponse {
     /// Id of the newly added reason
     #[prost(uint32, tag = "1")]
@@ -539,6 +561,7 @@ pub struct MsgSupportStandardReasonResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgAddReason")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddReason {
     /// Id of the subspace for which to add the reason
     #[prost(uint64, tag = "1")]
@@ -569,6 +592,7 @@ pub struct MsgAddReason {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgAddReasonResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddReasonResponse {
     /// Id of the newly supported reason
     #[prost(uint32, tag = "1")]
@@ -587,6 +611,7 @@ pub struct MsgAddReasonResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReason")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveReason {
     /// Id of the subspace from which to remove the reason
     #[prost(uint64, tag = "1")]
@@ -614,6 +639,7 @@ pub struct MsgRemoveReason {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReasonResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveReasonResponse {}
 pub struct ReportsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,

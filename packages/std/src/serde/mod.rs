@@ -21,14 +21,21 @@ pub mod as_str {
     }
 }
 
-pub mod as_option {
-    use serde::{Deserialize, Deserializer};
-    pub fn deserialize<'de, T, D>(deserializer: D) -> Result<T, D::Error>
+pub mod as_base64 {
+    use base64;
+    use serde::{Deserialize, Deserializer, Serialize, Serializer};
+
+    pub fn serialize<S: Serializer>(v: &Vec<u8>, s: S) -> Result<S::Ok, S::Error> {
+        let base64_value = base64::encode(v);
+        String::serialize(&base64_value, s)
+    }
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Vec<u8>, D::Error>
     where
-        T: Default + serde::Deserialize<'de>,
         D: Deserializer<'de>,
     {
-        let opt = Option::deserialize(deserializer)?;
-        Ok(opt.unwrap_or_default())
+        let opt = Option::<String>::deserialize(deserializer)?;
+        let base64_value = opt.unwrap_or_default();
+        base64::decode(base64_value.as_bytes()).map_err(serde::de::Error::custom)
     }
 }

@@ -8,7 +8,7 @@ use prost_types::{
 };
 use regex::Regex;
 use syn::__private::quote::__private::TokenStream as TokenStream2;
-use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemStruct, Type};
+use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl, ItemStruct, Type};
 
 use crate::{format_ident, quote};
 
@@ -44,6 +44,7 @@ pub fn append_struct_attrs(
     s.attrs.append(&mut vec![
         syn::parse_quote! { #[derive(schemars::JsonSchema, serde::Serialize, serde::Deserialize, std_derive::CosmwasmExt,)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
+        syn::parse_quote! { #[serde(rename_all = "snake_case")] },
     ]);
 
     if let Some(attr) = get_query_attr(src, &s.ident, &query_services) {
@@ -73,10 +74,9 @@ pub fn allow_serde_number_as_str(s: ItemStruct) -> ItemStruct {
                     )]
                 };
                 field.attrs.append(&mut vec![from_str]);
-                field
-            } else {
-                field
             }
+
+            field
         })
         .collect::<Vec<syn::Field>>();
 
@@ -88,21 +88,23 @@ pub fn allow_serde_number_as_str(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
-pub fn allow_serde_byte_as_option(s: ItemStruct) -> ItemStruct {
+pub fn allow_serde_byte_as_base64(s: ItemStruct) -> ItemStruct {
+    let as_base64: syn::Attribute = parse_quote! {
+        #[serde(
+            serialize_with = "crate::serde::as_base64::serialize",
+            deserialize_with = "crate::serde::as_base64::deserialize"
+        )]
+    };
+
     let fields_vec = s
         .fields
         .clone()
         .into_iter()
         .map(|mut field| {
-            let byte_types = vec![
-                parse_quote!(::prost::alloc::vec::Vec<u8>),
-            ];
+            let byte_types = vec![parse_quote!(::prost::alloc::vec::Vec<u8>)];
 
             if byte_types.contains(&field.ty) {
-                let from_option: syn::Attribute = parse_quote! {
-                    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
-                };
-                field.attrs.append(&mut vec![from_option]);
+                field.attrs.append(&mut vec![as_base64.clone()]);
                 field
             } else {
                 field
@@ -118,12 +120,157 @@ pub fn allow_serde_byte_as_option(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
+pub fn allow_serde_enum_as_str(s: ItemStruct) -> ItemStruct {
+    let fields_vec = s
+        .fields
+        .clone()
+        .into_iter()
+        .map(|mut field| {
+            // Add custom serde methods for field having enumeration attribute
+            if let Some(v) = find_prost_enumeration_value(&field.attrs) {
+                let as_enum = format!("{}::deserialize", v);
+                let as_enum_serde: syn::Attribute = parse_quote! {
+                    #[serde(deserialize_with = #as_enum)]
+                };
+
+                field.attrs.append(&mut vec![as_enum_serde]);
+            }
+
+            // Add serde flatten for filed having one of attribute
+            if has_prost_one_of_attr(&field.attrs) {
+                let flatten: syn::Attribute = parse_quote! {
+                    #[serde(flatten)]
+                };
+
+                field.attrs.append(&mut vec![flatten]);
+            }
+
+            field
+        })
+        .collect::<Vec<syn::Field>>();
+
+    let fields_named: syn::FieldsNamed = parse_quote! {
+        { #(#fields_vec,)* }
+    };
+    let fields = syn::Fields::Named(fields_named);
+
+    syn::ItemStruct { fields, ..s }
+}
+
+/// Searches for the "enumeration" attribute in an attribute list of the form
+/// #[prost(enumeration = "target" )] and returns the target value if it does exist.
+fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
+    attrs.iter().find_map(|attr| {
+        // Parse the attribute's meta information.
+        let meta = match attr.parse_meta() {
+            Ok(meta) => meta,
+            Err(_) => return None,
+        };
+
+        // Check if the attribute name is "prost".
+        let list = match meta {
+            syn::Meta::List(list)
+                if list
+                    .path
+                    .get_ident()
+                    .filter(|ident| ident.to_string() == "prost")
+                    .is_some() =>
+            {
+                list
+            }
+            _ => return None,
+        };
+
+        // Search all nested attributes and look for the "enumeration" attribute.
+        list.nested.iter().find_map(|nested| {
+            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
+                if nv.path.is_ident("enumeration") {
+                    if let syn::Lit::Str(s) = &nv.lit {
+                        return Some(s.value());
+                    }
+                }
+            }
+            None
+        })
+    })
+}
+
+pub fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
+    attrs.iter().any(|attr| {
+        // Parse the attribute's meta information.
+        let meta = match attr.parse_meta() {
+            Ok(meta) => meta,
+            Err(_) => return false,
+        };
+
+        // Check if the attribute name is "prost".
+        let list = match meta {
+            syn::Meta::List(list)
+                if list
+                    .path
+                    .get_ident()
+                    .filter(|ident| ident.to_string() == "prost")
+                    .is_some() =>
+            {
+                list
+            }
+            _ => return false,
+        };
+
+        // Search all nested attributes and look for the "one_of" attribute.
+        list.nested.iter().any(|nested| {
+            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
+                return nv.path.is_ident("oneof");
+            }
+
+            false
+        })
+    })
+}
+
 pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
     let mut s = s.clone();
-    s.attrs.append(&mut vec![syn::parse_quote! {
-        #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-    }]);
+    s.attrs.append(&mut vec![
+        syn::parse_quote! {
+            #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+        },
+        syn::parse_quote! {
+           #[serde(rename_all = "snake_case")]
+        },
+    ]);
     s
+}
+
+pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
+    let mut item = item_impl.clone();
+
+    // Check if impl has both `as_str_name` and `from_str_name` methods
+    let has_as_str_name = item
+        .items
+        .iter()
+        .any(|item| matches!(item, syn::ImplItem::Method(m) if m.sig.ident == "as_str_name"));
+
+    let has_from_str_name = item
+        .items
+        .iter()
+        .any(|item| matches!(item, syn::ImplItem::Method(m) if m.sig.ident == "from_str_name"));
+
+    if !has_as_str_name || !has_from_str_name {
+        return item;
+    }
+
+    // Add a custom deserialize method for impl
+    let deserialize_method: syn::ImplItemMethod = parse_quote! {
+        pub  fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+        where  D: serde::Deserializer<'de> {
+            let s: &str = serde::Deserialize::deserialize(deserializer)?;
+            Ok(Self::from_str_name(s).unwrap() as i32)
+        }
+    };
+
+    item.items.append(&mut vec![deserialize_method.into()]);
+
+    item
 }
 
 // ====== helpers ======
@@ -148,7 +295,7 @@ fn get_query_attr(
     let response_type = format_ident!("{}", response_type.to_upper_camel_case());
 
     let path = format!("/{}.Query/{}", package, method_name);
-    Some(syn::parse_quote! { #[proto_query(path = #path, response_type = #response_type)] })
+    Some(syn::parse_quote! { #[proto_query(path = #path, response_type = #response_type  )] })
 }
 
 fn get_type_url(src: &Path, ident: &Ident, descriptor: &FileDescriptorSet) -> String {

@@ -11,6 +11,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.IdentifiedClientState")]
+#[serde(rename_all = "snake_case")]
 pub struct IdentifiedClientState {
     /// client identifier
     #[prost(string, tag = "1")]
@@ -32,6 +33,7 @@ pub struct IdentifiedClientState {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ConsensusStateWithHeight")]
+#[serde(rename_all = "snake_case")]
 pub struct ConsensusStateWithHeight {
     /// consensus state height
     #[prost(message, optional, tag = "1")]
@@ -53,6 +55,7 @@ pub struct ConsensusStateWithHeight {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientConsensusStates")]
+#[serde(rename_all = "snake_case")]
 pub struct ClientConsensusStates {
     /// client identifier
     #[prost(string, tag = "1")]
@@ -76,6 +79,7 @@ pub struct ClientConsensusStates {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientUpdateProposal")]
+#[serde(rename_all = "snake_case")]
 pub struct ClientUpdateProposal {
     /// the title of the update proposal
     #[prost(string, tag = "1")]
@@ -104,6 +108,7 @@ pub struct ClientUpdateProposal {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.UpgradeProposal")]
+#[serde(rename_all = "snake_case")]
 pub struct UpgradeProposal {
     #[prost(string, tag = "1")]
     pub title: ::prost::alloc::string::String,
@@ -141,6 +146,7 @@ pub struct UpgradeProposal {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Height")]
+#[serde(rename_all = "snake_case")]
 pub struct Height {
     /// the revision that the client is currently on
     #[prost(uint64, tag = "1")]
@@ -169,6 +175,7 @@ pub struct Height {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Params")]
+#[serde(rename_all = "snake_case")]
 pub struct Params {
     /// allowed_clients defines the list of allowed client state types.
     #[prost(string, repeated, tag = "1")]

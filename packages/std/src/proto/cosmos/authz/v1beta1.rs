@@ -11,6 +11,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GenericAuthorization")]
+#[serde(rename_all = "snake_case")]
 pub struct GenericAuthorization {
     /// Msg, identified by it's type URL, to grant unrestricted permissions to execute
     #[prost(string, tag = "1")]
@@ -29,6 +30,7 @@ pub struct GenericAuthorization {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.Grant")]
+#[serde(rename_all = "snake_case")]
 pub struct Grant {
     #[prost(message, optional, tag = "1")]
     pub authorization: ::core::option::Option<crate::shim::Any>,
@@ -50,6 +52,7 @@ pub struct Grant {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GrantAuthorization")]
+#[serde(rename_all = "snake_case")]
 pub struct GrantAuthorization {
     #[prost(string, tag = "1")]
     pub granter: ::prost::alloc::string::String,

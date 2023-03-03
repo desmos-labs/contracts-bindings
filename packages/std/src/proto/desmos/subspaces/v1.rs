@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v1.Subspace")]
+#[serde(rename_all = "snake_case")]
 pub struct Subspace {
     /// Unique id that identifies the subspace
     #[prost(uint64, tag = "1")]
@@ -50,6 +51,7 @@ pub struct Subspace {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v1.UserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct UserGroup {
     /// ID of the subspace inside which this group exists
     #[prost(uint64, tag = "1")]
@@ -83,10 +85,12 @@ pub struct UserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v1.PermissionDetail")]
+#[serde(rename_all = "snake_case")]
 pub struct PermissionDetail {
     /// sum is the oneof that specifies whether this represents a user or
     /// group permission detail
     #[prost(oneof = "permission_detail::Sum", tags = "1, 2")]
+    #[serde(flatten)]
     pub sum: ::core::option::Option<permission_detail::Sum>,
 }
 /// Nested message and enum types in `PermissionDetail`.
@@ -103,6 +107,7 @@ pub mod permission_detail {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v1.PermissionDetail.User")]
+    #[serde(rename_all = "snake_case")]
     pub struct User {
         /// User for which the permission was set
         #[prost(string, tag = "1")]
@@ -123,6 +128,7 @@ pub mod permission_detail {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v1.PermissionDetail.Group")]
+    #[serde(rename_all = "snake_case")]
     pub struct Group {
         /// Unique id of the group
         #[prost(uint32, tag = "1")]
@@ -137,6 +143,7 @@ pub mod permission_detail {
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]
+    #[serde(rename_all = "snake_case")]
     pub enum Sum {
         /// User represents a user permission
         #[prost(message, tag = "1")]

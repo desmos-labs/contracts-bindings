@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.Plan")]
+#[serde(rename_all = "snake_case")]
 pub struct Plan {
     /// Sets the name for the upgrade. This name will be used by the upgraded
     /// version of the software to apply any special "on-upgrade" commands during
@@ -58,6 +59,7 @@ pub struct Plan {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal")]
+#[serde(rename_all = "snake_case")]
 pub struct SoftwareUpgradeProposal {
     #[prost(string, tag = "1")]
     pub title: ::prost::alloc::string::String,
@@ -79,6 +81,7 @@ pub struct SoftwareUpgradeProposal {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal")]
+#[serde(rename_all = "snake_case")]
 pub struct CancelSoftwareUpgradeProposal {
     #[prost(string, tag = "1")]
     pub title: ::prost::alloc::string::String,
@@ -99,6 +102,7 @@ pub struct CancelSoftwareUpgradeProposal {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.ModuleVersion")]
+#[serde(rename_all = "snake_case")]
 pub struct ModuleVersion {
     /// name of the app module
     #[prost(string, tag = "1")]

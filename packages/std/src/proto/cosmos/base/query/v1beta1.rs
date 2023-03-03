@@ -16,12 +16,16 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.query.v1beta1.PageRequest")]
+#[serde(rename_all = "snake_case")]
 pub struct PageRequest {
     /// key is a value returned in PageResponse.next_key to begin
     /// querying the next page most efficiently. Only one of offset or key
     /// should be set.
     #[prost(bytes = "vec", tag = "1")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub key: ::prost::alloc::vec::Vec<u8>,
     /// offset is a numeric offset that can be used when key is unavailable.
     /// It is less efficient than using key. Only one of offset or key should
@@ -70,11 +74,15 @@ pub struct PageRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.query.v1beta1.PageResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct PageResponse {
     /// next_key is the key to be passed to PageRequest.key to
     /// query the next page most efficiently
     #[prost(bytes = "vec", tag = "1")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub next_key: ::prost::alloc::vec::Vec<u8>,
     /// total is total number of results available if PageRequest.count_total
     /// was set, its value is undefined otherwise

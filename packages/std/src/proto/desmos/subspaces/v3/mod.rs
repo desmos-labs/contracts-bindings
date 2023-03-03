@@ -11,6 +11,7 @@ pub mod authz;
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.Subspace")]
+#[serde(rename_all = "snake_case")]
 pub struct Subspace {
     /// Unique id that identifies the subspace
     #[prost(uint64, tag = "1")]
@@ -51,6 +52,7 @@ pub struct Subspace {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.Section")]
+#[serde(rename_all = "snake_case")]
 pub struct Section {
     /// Id of the subspace inside which the section exists
     #[prost(uint64, tag = "1")]
@@ -84,6 +86,7 @@ pub struct Section {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.UserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct UserGroup {
     /// ID of the subspace inside which this group exists
     #[prost(uint64, tag = "1")]
@@ -120,6 +123,7 @@ pub struct UserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.UserPermission")]
+#[serde(rename_all = "snake_case")]
 pub struct UserPermission {
     #[prost(uint64, tag = "1")]
     #[serde(
@@ -146,6 +150,7 @@ pub struct UserPermission {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.Grant")]
+#[serde(rename_all = "snake_case")]
 pub struct Grant {
     /// Id of the subspace inside which the user was granted the allowance
     #[prost(uint64, tag = "1")]
@@ -177,6 +182,7 @@ pub struct Grant {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.UserGrantee")]
+#[serde(rename_all = "snake_case")]
 pub struct UserGrantee {
     #[prost(string, tag = "1")]
     pub user: ::prost::alloc::string::String,
@@ -193,6 +199,7 @@ pub struct UserGrantee {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.GroupGrantee")]
+#[serde(rename_all = "snake_case")]
 pub struct GroupGrantee {
     #[prost(uint32, tag = "1")]
     pub group_id: u32,
@@ -209,6 +216,7 @@ pub struct GroupGrantee {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/Subspaces",
     response_type = QuerySubspacesResponse
@@ -232,6 +240,7 @@ pub struct QuerySubspacesRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QuerySubspacesResponse {
     #[prost(message, repeated, tag = "1")]
     pub subspaces: ::prost::alloc::vec::Vec<Subspace>,
@@ -251,6 +260,7 @@ pub struct QuerySubspacesResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/Subspace",
     response_type = QuerySubspaceResponse
@@ -276,6 +286,7 @@ pub struct QuerySubspaceRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QuerySubspaceResponse {
     #[prost(message, optional, tag = "1")]
     pub subspace: ::core::option::Option<Subspace>,
@@ -292,6 +303,7 @@ pub struct QuerySubspaceResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/Sections",
     response_type = QuerySectionsResponse
@@ -321,6 +333,7 @@ pub struct QuerySectionsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QuerySectionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub sections: ::prost::alloc::vec::Vec<Section>,
@@ -340,6 +353,7 @@ pub struct QuerySectionsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/Section",
     response_type = QuerySectionResponse
@@ -368,6 +382,7 @@ pub struct QuerySectionRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QuerySectionResponse {
     #[prost(message, optional, tag = "1")]
     pub section: ::core::option::Option<Section>,
@@ -385,6 +400,7 @@ pub struct QuerySectionResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/UserGroups",
     response_type = QueryUserGroupsResponse
@@ -418,6 +434,7 @@ pub struct QueryUserGroupsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryUserGroupsResponse {
     #[prost(message, repeated, tag = "1")]
     pub groups: ::prost::alloc::vec::Vec<UserGroup>,
@@ -437,6 +454,7 @@ pub struct QueryUserGroupsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/UserGroup",
     response_type = QueryUserGroupResponse
@@ -466,6 +484,7 @@ pub struct QueryUserGroupRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryUserGroupResponse {
     #[prost(message, optional, tag = "1")]
     pub group: ::core::option::Option<UserGroup>,
@@ -483,6 +502,7 @@ pub struct QueryUserGroupResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/UserGroupMembers",
     response_type = QueryUserGroupMembersResponse
@@ -516,6 +536,7 @@ pub struct QueryUserGroupMembersRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryUserGroupMembersResponse {
     #[prost(string, repeated, tag = "1")]
     pub members: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -536,6 +557,7 @@ pub struct QueryUserGroupMembersResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/UserPermissions",
     response_type = QueryUserPermissionsResponse
@@ -568,6 +590,7 @@ pub struct QueryUserPermissionsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryUserPermissionsResponse {
     #[prost(string, repeated, tag = "1")]
     pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -586,6 +609,7 @@ pub struct QueryUserPermissionsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail")]
+#[serde(rename_all = "snake_case")]
 pub struct PermissionDetail {
     /// Id of the subspace for which this permission is valid
     #[prost(uint64, tag = "1")]
@@ -600,6 +624,7 @@ pub struct PermissionDetail {
     /// sum is the oneof that specifies whether this represents a user or
     /// group permission detail
     #[prost(oneof = "permission_detail::Sum", tags = "3, 4")]
+    #[serde(flatten)]
     pub sum: ::core::option::Option<permission_detail::Sum>,
 }
 /// Nested message and enum types in `PermissionDetail`.
@@ -616,6 +641,7 @@ pub mod permission_detail {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.User")]
+    #[serde(rename_all = "snake_case")]
     pub struct User {
         /// User for which the permission was set
         #[prost(string, tag = "1")]
@@ -636,6 +662,7 @@ pub mod permission_detail {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.Group")]
+    #[serde(rename_all = "snake_case")]
     pub struct Group {
         /// Unique id of the group
         #[prost(uint32, tag = "1")]
@@ -650,6 +677,7 @@ pub mod permission_detail {
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]
+    #[serde(rename_all = "snake_case")]
     pub enum Sum {
         /// User represents a user permission
         #[prost(message, tag = "3")]
@@ -672,6 +700,7 @@ pub mod permission_detail {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/UserAllowances",
     response_type = QueryUserAllowancesResponse
@@ -705,6 +734,7 @@ pub struct QueryUserAllowancesRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryUserAllowancesResponse {
     #[prost(message, repeated, tag = "1")]
     pub grants: ::prost::alloc::vec::Vec<Grant>,
@@ -726,6 +756,7 @@ pub struct QueryUserAllowancesResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.subspaces.v3.Query/GroupAllowances",
     response_type = QueryGroupAllowancesResponse
@@ -759,6 +790,7 @@ pub struct QueryGroupAllowancesRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryGroupAllowancesResponse {
     #[prost(message, repeated, tag = "1")]
     pub grants: ::prost::alloc::vec::Vec<Grant>,
@@ -780,6 +812,7 @@ pub struct QueryGroupAllowancesResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorization")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgGrantTreasuryAuthorization {
     /// Id of the subspace where the authorization should be granted
     #[prost(uint64, tag = "1")]
@@ -811,6 +844,7 @@ pub struct MsgGrantTreasuryAuthorization {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorizationResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgGrantTreasuryAuthorizationResponse {}
 /// MsgRevokeTreasuryAuthorization revokes an existing treasury authorization
 /// from a user
@@ -825,6 +859,7 @@ pub struct MsgGrantTreasuryAuthorizationResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorization")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRevokeTreasuryAuthorization {
     /// Id of the subspace from which the authorization should be revoked
     #[prost(uint64, tag = "1")]
@@ -856,6 +891,7 @@ pub struct MsgRevokeTreasuryAuthorization {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorizationResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRevokeTreasuryAuthorizationResponse {}
 /// MsgGrantAllowance adds grants for the grantee to spend up allowance of fees
 /// from the treasury inside the given subspace
@@ -870,6 +906,7 @@ pub struct MsgRevokeTreasuryAuthorizationResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowance")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgGrantAllowance {
     /// Id of the subspace inside which where the allowance should be granted
     #[prost(uint64, tag = "1")]
@@ -901,6 +938,7 @@ pub struct MsgGrantAllowance {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowanceResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgGrantAllowanceResponse {}
 /// MsgRevokeAllowance removes any existing allowance to the grantee inside the
 /// subspace
@@ -915,6 +953,7 @@ pub struct MsgGrantAllowanceResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowance")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRevokeAllowance {
     /// If of the subspace inside which the allowance to be deleted is
     #[prost(uint64, tag = "1")]
@@ -943,6 +982,7 @@ pub struct MsgRevokeAllowance {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowanceResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRevokeAllowanceResponse {}
 /// MsgCreateSubspace represents the message used to create a subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -956,6 +996,7 @@ pub struct MsgRevokeAllowanceResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSubspace")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateSubspace {
     /// Name of the subspace
     #[prost(string, tag = "1")]
@@ -983,6 +1024,7 @@ pub struct MsgCreateSubspace {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSubspaceResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateSubspaceResponse {
     /// Id of the newly created subspace id
     #[prost(uint64, tag = "1")]
@@ -1004,6 +1046,7 @@ pub struct MsgCreateSubspaceResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSubspace")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditSubspace {
     /// Id of the subspace to edit
     #[prost(uint64, tag = "1")]
@@ -1040,6 +1083,7 @@ pub struct MsgEditSubspace {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSubspaceResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditSubspaceResponse {}
 /// MsgDeleteSubspace represents the message used to delete a subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1053,6 +1097,7 @@ pub struct MsgEditSubspaceResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSubspace")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteSubspace {
     /// Id of the subspace to delete
     #[prost(uint64, tag = "1")]
@@ -1077,6 +1122,7 @@ pub struct MsgDeleteSubspace {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSubspaceResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteSubspaceResponse {}
 /// MsgCreateSection represents the message to be used when creating a subspace
 /// section
@@ -1091,6 +1137,7 @@ pub struct MsgDeleteSubspaceResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSection")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateSection {
     /// Id of the subspace inside which the section will be placed
     #[prost(uint64, tag = "1")]
@@ -1124,6 +1171,7 @@ pub struct MsgCreateSection {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateSectionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateSectionResponse {
     /// Id of the newly created section
     #[prost(uint32, tag = "1")]
@@ -1142,6 +1190,7 @@ pub struct MsgCreateSectionResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSection")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditSection {
     /// Id of the subspace inside which the section to be edited is
     #[prost(uint64, tag = "1")]
@@ -1175,6 +1224,7 @@ pub struct MsgEditSection {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditSectionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditSectionResponse {}
 /// MsgMoveSection represents the message to be used when moving a section to
 /// another parent
@@ -1189,6 +1239,7 @@ pub struct MsgEditSectionResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveSection")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgMoveSection {
     /// Id of the subspace inside which the section lies
     #[prost(uint64, tag = "1")]
@@ -1219,6 +1270,7 @@ pub struct MsgMoveSection {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveSectionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgMoveSectionResponse {}
 /// MsgDeleteSection represents the message to be used when deleting a section
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1232,6 +1284,7 @@ pub struct MsgMoveSectionResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSection")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteSection {
     /// Id of the subspace inside which the section to be deleted is
     #[prost(uint64, tag = "1")]
@@ -1259,6 +1312,7 @@ pub struct MsgDeleteSection {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteSectionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteSectionResponse {}
 /// MsgCreateUserGroup represents the message used to create a user group
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1272,6 +1326,7 @@ pub struct MsgDeleteSectionResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateUserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateUserGroup {
     /// Id of the subspace inside which the group will be created
     #[prost(uint64, tag = "1")]
@@ -1311,6 +1366,7 @@ pub struct MsgCreateUserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgCreateUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateUserGroupResponse {
     #[prost(uint32, tag = "1")]
     pub group_id: u32,
@@ -1327,6 +1383,7 @@ pub struct MsgCreateUserGroupResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditUserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditUserGroup {
     /// Id of the subspace inside which the group to be edited is
     #[prost(uint64, tag = "1")]
@@ -1360,6 +1417,7 @@ pub struct MsgEditUserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgEditUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditUserGroupResponse {}
 /// MsgMoveUserGroup represents the message used to move one user group from a
 /// section to anoter
@@ -1374,6 +1432,7 @@ pub struct MsgEditUserGroupResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveUserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgMoveUserGroup {
     /// Id of the subspace inside which the group to move is
     #[prost(uint64, tag = "1")]
@@ -1404,6 +1463,7 @@ pub struct MsgMoveUserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgMoveUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgMoveUserGroupResponse {}
 /// MsgSetUserGroupPermissions represents the message used to set the permissions
 /// of a user group
@@ -1418,6 +1478,7 @@ pub struct MsgMoveUserGroupResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserGroupPermissions")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetUserGroupPermissions {
     /// Id of the subspace inside which the group is
     #[prost(uint64, tag = "1")]
@@ -1449,6 +1510,7 @@ pub struct MsgSetUserGroupPermissions {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserGroupPermissionsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetUserGroupPermissionsResponse {}
 /// MsgDeleteUserGroup represents the message used to delete a user group
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1462,6 +1524,7 @@ pub struct MsgSetUserGroupPermissionsResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteUserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteUserGroup {
     /// Id of the subspace inside which the group to delete is
     #[prost(uint64, tag = "1")]
@@ -1489,6 +1552,7 @@ pub struct MsgDeleteUserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgDeleteUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteUserGroupResponse {}
 /// MsgAddUserToUserGroup represents the message used to add a user to a user
 /// group
@@ -1503,6 +1567,7 @@ pub struct MsgDeleteUserGroupResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgAddUserToUserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddUserToUserGroup {
     /// Id of the subspace inside which the group is
     #[prost(uint64, tag = "1")]
@@ -1534,6 +1599,7 @@ pub struct MsgAddUserToUserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgAddUserToUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddUserToUserGroupResponse {}
 /// MsgRemoveUserFromUserGroup represents the message used to remove a user from
 /// a user group
@@ -1548,6 +1614,7 @@ pub struct MsgAddUserToUserGroupResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRemoveUserFromUserGroup")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveUserFromUserGroup {
     /// Id of the subspace inside which the group to remove the user from is
     #[prost(uint64, tag = "1")]
@@ -1579,6 +1646,7 @@ pub struct MsgRemoveUserFromUserGroup {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgRemoveUserFromUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveUserFromUserGroupResponse {}
 /// MsgSetUserPermissions represents the message used to set the permissions of a
 /// specific user
@@ -1593,6 +1661,7 @@ pub struct MsgRemoveUserFromUserGroupResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserPermissions")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetUserPermissions {
     /// Id of the subspace inside which to set the permissions
     #[prost(uint64, tag = "1")]
@@ -1627,6 +1696,7 @@ pub struct MsgSetUserPermissions {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserPermissionsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetUserPermissionsResponse {}
 pub struct SubspacesQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,

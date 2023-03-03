@@ -11,6 +11,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.Relationship")]
+#[serde(rename_all = "snake_case")]
 pub struct Relationship {
     /// Creator represents the creator of the relationship
     #[prost(string, tag = "1")]
@@ -40,6 +41,7 @@ pub struct Relationship {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.UserBlock")]
+#[serde(rename_all = "snake_case")]
 pub struct UserBlock {
     /// Blocker represents the address of the user blocking another one
     #[prost(string, tag = "1")]
@@ -72,6 +74,7 @@ pub struct UserBlock {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.relationships.v1.Query/Relationships",
     response_type = QueryRelationshipsResponse
@@ -109,6 +112,7 @@ pub struct QueryRelationshipsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryRelationshipsResponse {
     #[prost(message, repeated, tag = "1")]
     pub relationships: ::prost::alloc::vec::Vec<Relationship>,
@@ -129,6 +133,7 @@ pub struct QueryRelationshipsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.relationships.v1.Query/Blocks",
     response_type = QueryBlocksResponse
@@ -166,6 +171,7 @@ pub struct QueryBlocksRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryBlocksResponse {
     #[prost(message, repeated, tag = "1")]
     pub blocks: ::prost::alloc::vec::Vec<UserBlock>,
@@ -186,6 +192,7 @@ pub struct QueryBlocksResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationship")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateRelationship {
     /// User creating the relationship
     #[prost(string, tag = "1")]
@@ -214,6 +221,7 @@ pub struct MsgCreateRelationship {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationshipResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreateRelationshipResponse {}
 /// MsgDeleteRelationship represents a message to delete the relationship
 /// between two users.
@@ -228,6 +236,7 @@ pub struct MsgCreateRelationshipResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationship")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteRelationship {
     /// User that created the relationship
     #[prost(string, tag = "1")]
@@ -256,6 +265,7 @@ pub struct MsgDeleteRelationship {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationshipResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteRelationshipResponse {}
 /// MsgBlockUser represents a message to block another user specifying an
 /// optional reason.
@@ -270,6 +280,7 @@ pub struct MsgDeleteRelationshipResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUser")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgBlockUser {
     /// Address of the user blocking the other user
     #[prost(string, tag = "1")]
@@ -300,6 +311,7 @@ pub struct MsgBlockUser {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUserResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgBlockUserResponse {}
 /// MsgUnblockUser represents a message to unblock a previously blocked user.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -313,6 +325,7 @@ pub struct MsgBlockUserResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUser")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgUnblockUser {
     /// Address of the user that blocked another user
     #[prost(string, tag = "1")]
@@ -340,6 +353,7 @@ pub struct MsgUnblockUser {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUserResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgUnblockUserResponse {}
 pub struct RelationshipsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,

@@ -11,6 +11,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.MinFee")]
+#[serde(rename_all = "snake_case")]
 pub struct MinFee {
     #[prost(string, tag = "1")]
     pub message_type: ::prost::alloc::string::String,
@@ -29,6 +30,7 @@ pub struct MinFee {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.Params")]
+#[serde(rename_all = "snake_case")]
 pub struct Params {
     #[prost(message, repeated, tag = "1")]
     pub min_fees: ::prost::alloc::vec::Vec<MinFee>,
@@ -45,6 +47,7 @@ pub struct Params {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.QueryParamsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.fees.v1.Query/Params",
     response_type = QueryParamsResponse
@@ -62,6 +65,7 @@ pub struct QueryParamsRequest {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.fees.v1.QueryParamsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,

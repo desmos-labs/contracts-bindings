@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Post")]
+#[serde(rename_all = "snake_case")]
 pub struct Post {
     /// Id of the subspace inside which the post has been created
     #[prost(uint64, tag = "1")]
@@ -55,6 +56,7 @@ pub struct Post {
     pub referenced_posts: ::prost::alloc::vec::Vec<PostReference>,
     /// Reply settings of this post
     #[prost(enumeration = "ReplySetting", tag = "11")]
+    #[serde(deserialize_with = "ReplySetting::deserialize")]
     pub reply_settings: i32,
     /// Creation date of the post
     #[prost(message, optional, tag = "12")]
@@ -75,9 +77,11 @@ pub struct Post {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.PostReference")]
+#[serde(rename_all = "snake_case")]
 pub struct PostReference {
     /// Type of reference
     #[prost(enumeration = "PostReferenceType", tag = "1")]
+    #[serde(deserialize_with = "PostReferenceType::deserialize")]
     pub r#type: i32,
     /// Id of the referenced post
     #[prost(uint64, tag = "2")]
@@ -107,6 +111,7 @@ pub struct PostReference {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Entities")]
+#[serde(rename_all = "snake_case")]
 pub struct Entities {
     /// Hashtags represent inside the post text
     #[prost(message, repeated, tag = "1")]
@@ -130,6 +135,7 @@ pub struct Entities {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.TextTag")]
+#[serde(rename_all = "snake_case")]
 pub struct TextTag {
     /// Index of the character inside the text at which the tag starts
     #[prost(uint64, tag = "1")]
@@ -161,6 +167,7 @@ pub struct TextTag {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Url")]
+#[serde(rename_all = "snake_case")]
 pub struct Url {
     /// Index of the character inside the text at which the URL starts
     #[prost(uint64, tag = "1")]
@@ -195,6 +202,7 @@ pub struct Url {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Attachment")]
+#[serde(rename_all = "snake_case")]
 pub struct Attachment {
     /// Id of the subspace inside which the post to which this attachment should be
     /// connected is
@@ -230,6 +238,7 @@ pub struct Attachment {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Media")]
+#[serde(rename_all = "snake_case")]
 pub struct Media {
     #[prost(string, tag = "2")]
     pub uri: ::prost::alloc::string::String,
@@ -248,6 +257,7 @@ pub struct Media {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Poll")]
+#[serde(rename_all = "snake_case")]
 pub struct Poll {
     /// Question of the poll
     #[prost(string, tag = "1")]
@@ -282,6 +292,7 @@ pub mod poll {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v2.Poll.ProvidedAnswer")]
+    #[serde(rename_all = "snake_case")]
     pub struct ProvidedAnswer {
         /// (optional) Text of the answer
         #[prost(string, tag = "1")]
@@ -303,6 +314,7 @@ pub mod poll {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.UserAnswer")]
+#[serde(rename_all = "snake_case")]
 pub struct UserAnswer {
     /// Subspace id inside which the post related to this attachment is located
     #[prost(uint64, tag = "1")]
@@ -340,6 +352,7 @@ pub struct UserAnswer {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.PollTallyResults")]
+#[serde(rename_all = "snake_case")]
 pub struct PollTallyResults {
     #[prost(message, repeated, tag = "1")]
     pub results: ::prost::alloc::vec::Vec<poll_tally_results::AnswerResult>,
@@ -358,6 +371,7 @@ pub mod poll_tally_results {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v2.PollTallyResults.AnswerResult")]
+    #[serde(rename_all = "snake_case")]
     pub struct AnswerResult {
         /// Index of the answer inside the poll's ProvidedAnswers slice
         #[prost(uint32, tag = "1")]
@@ -383,6 +397,7 @@ pub mod poll_tally_results {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v2.Params")]
+#[serde(rename_all = "snake_case")]
 pub struct Params {
     /// Maximum length of the post text
     #[prost(uint32, tag = "1")]
@@ -392,6 +407,7 @@ pub struct Params {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum PostReferenceType {
     /// No reference specified
     Unspecified = 0,
@@ -425,11 +441,19 @@ impl PostReferenceType {
             _ => None,
         }
     }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
+    }
 }
 /// ReplySetting contains the possible reply settings that a post can have
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum ReplySetting {
     /// No reply setting specified
     Unspecified = 0,
@@ -466,5 +490,12 @@ impl ReplySetting {
             "REPLY_SETTING_MENTIONS" => Some(Self::Mentions),
             _ => None,
         }
+    }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
     }
 }

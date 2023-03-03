@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryTotalRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.supply.v1.Query/Total",
     response_type = QueryTotalResponse
@@ -39,6 +40,7 @@ pub struct QueryTotalRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryTotalResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryTotalResponse {
     #[prost(string, tag = "1")]
     pub total_supply: ::prost::alloc::string::String,
@@ -56,6 +58,7 @@ pub struct QueryTotalResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryCirculatingRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.supply.v1.Query/Circulating",
     response_type = QueryCirculatingResponse
@@ -86,6 +89,7 @@ pub struct QueryCirculatingRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.supply.v1.QueryCirculatingResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryCirculatingResponse {
     #[prost(string, tag = "1")]
     pub circulating_supply: ::prost::alloc::string::String,

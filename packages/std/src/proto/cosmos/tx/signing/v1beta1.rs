@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptors")]
+#[serde(rename_all = "snake_case")]
 pub struct SignatureDescriptors {
     /// signatures are the signature descriptors
     #[prost(message, repeated, tag = "1")]
@@ -30,6 +31,7 @@ pub struct SignatureDescriptors {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor")]
+#[serde(rename_all = "snake_case")]
 pub struct SignatureDescriptor {
     /// public_key is the public key of the signer
     #[prost(message, optional, tag = "1")]
@@ -60,9 +62,11 @@ pub mod signature_descriptor {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data")]
+    #[serde(rename_all = "snake_case")]
     pub struct Data {
         /// sum is the oneof that specifies whether this represents single or multi-signature data
         #[prost(oneof = "data::Sum", tags = "1, 2")]
+        #[serde(flatten)]
         pub sum: ::core::option::Option<data::Sum>,
     }
     /// Nested message and enum types in `Data`.
@@ -79,13 +83,18 @@ pub mod signature_descriptor {
             std_derive::CosmwasmExt,
         )]
         #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single")]
+        #[serde(rename_all = "snake_case")]
         pub struct Single {
             /// mode is the signing mode of the single signer
             #[prost(enumeration = "super::super::SignMode", tag = "1")]
+            #[serde(deserialize_with = "super::super::SignMode::deserialize")]
             pub mode: i32,
             /// signature is the raw signature bytes
             #[prost(bytes = "vec", tag = "2")]
-            #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+            #[serde(
+                serialize_with = "crate::serde::as_base64::serialize",
+                deserialize_with = "crate::serde::as_base64::deserialize"
+            )]
             pub signature: ::prost::alloc::vec::Vec<u8>,
         }
         /// Multi is the signature data for a multisig public key
@@ -100,6 +109,7 @@ pub mod signature_descriptor {
             std_derive::CosmwasmExt,
         )]
         #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi")]
+        #[serde(rename_all = "snake_case")]
         pub struct Multi {
             /// bitarray specifies which keys within the multisig are signing
             #[prost(message, optional, tag = "1")]
@@ -120,6 +130,7 @@ pub mod signature_descriptor {
             serde::Deserialize,
             schemars::JsonSchema,
         )]
+        #[serde(rename_all = "snake_case")]
         pub enum Sum {
             /// single represents a single signer
             #[prost(message, tag = "1")]
@@ -134,6 +145,7 @@ pub mod signature_descriptor {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum SignMode {
     /// SIGN_MODE_UNSPECIFIED specifies an unknown signing mode and will be
     /// rejected
@@ -184,5 +196,12 @@ impl SignMode {
             "SIGN_MODE_EIP_191" => Some(Self::Eip191),
             _ => None,
         }
+    }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
     }
 }

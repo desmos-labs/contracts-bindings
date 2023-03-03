@@ -11,6 +11,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v2.authz.GenericSubspaceAuthorization")]
+#[serde(rename_all = "snake_case")]
 pub struct GenericSubspaceAuthorization {
     /// Ids of the subspaces inside which to grant the permission
     #[prost(uint64, repeated, packed = "false", tag = "1")]

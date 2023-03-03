@@ -13,6 +13,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.Coin")]
+#[serde(rename_all = "snake_case")]
 pub struct Coin {
     #[prost(string, tag = "1")]
     pub denom: ::prost::alloc::string::String,
@@ -34,6 +35,7 @@ pub struct Coin {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.DecCoin")]
+#[serde(rename_all = "snake_case")]
 pub struct DecCoin {
     #[prost(string, tag = "1")]
     pub denom: ::prost::alloc::string::String,
@@ -52,6 +54,7 @@ pub struct DecCoin {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.IntProto")]
+#[serde(rename_all = "snake_case")]
 pub struct IntProto {
     #[prost(string, tag = "1")]
     pub int: ::prost::alloc::string::String,
@@ -68,6 +71,7 @@ pub struct IntProto {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.DecProto")]
+#[serde(rename_all = "snake_case")]
 pub struct DecProto {
     #[prost(string, tag = "1")]
     pub dec: ::prost::alloc::string::String,

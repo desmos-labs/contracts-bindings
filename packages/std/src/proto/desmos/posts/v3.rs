@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Post")]
+#[serde(rename_all = "snake_case")]
 pub struct Post {
     /// Id of the subspace inside which the post has been created
     #[prost(uint64, tag = "1")]
@@ -55,6 +56,7 @@ pub struct Post {
     pub referenced_posts: ::prost::alloc::vec::Vec<PostReference>,
     /// Reply settings of this post
     #[prost(enumeration = "ReplySetting", tag = "11")]
+    #[serde(deserialize_with = "ReplySetting::deserialize")]
     pub reply_settings: i32,
     /// Creation date of the post
     #[prost(message, optional, tag = "12")]
@@ -75,9 +77,11 @@ pub struct Post {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PostReference")]
+#[serde(rename_all = "snake_case")]
 pub struct PostReference {
     /// Type of reference
     #[prost(enumeration = "PostReferenceType", tag = "1")]
+    #[serde(deserialize_with = "PostReferenceType::deserialize")]
     pub r#type: i32,
     /// Id of the referenced post
     #[prost(uint64, tag = "2")]
@@ -107,6 +111,7 @@ pub struct PostReference {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Entities")]
+#[serde(rename_all = "snake_case")]
 pub struct Entities {
     /// Hashtags represent inside the post text
     #[prost(message, repeated, tag = "1")]
@@ -130,6 +135,7 @@ pub struct Entities {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.TextTag")]
+#[serde(rename_all = "snake_case")]
 pub struct TextTag {
     /// Index of the character inside the text at which the tag starts
     #[prost(uint64, tag = "1")]
@@ -161,6 +167,7 @@ pub struct TextTag {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Url")]
+#[serde(rename_all = "snake_case")]
 pub struct Url {
     /// Index of the character inside the text at which the URL starts
     #[prost(uint64, tag = "1")]
@@ -195,6 +202,7 @@ pub struct Url {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Attachment")]
+#[serde(rename_all = "snake_case")]
 pub struct Attachment {
     /// Id of the subspace inside which the post to which this attachment should be
     /// connected is
@@ -230,6 +238,7 @@ pub struct Attachment {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Media")]
+#[serde(rename_all = "snake_case")]
 pub struct Media {
     #[prost(string, tag = "2")]
     pub uri: ::prost::alloc::string::String,
@@ -248,6 +257,7 @@ pub struct Media {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Poll")]
+#[serde(rename_all = "snake_case")]
 pub struct Poll {
     /// Question of the poll
     #[prost(string, tag = "1")]
@@ -282,6 +292,7 @@ pub mod poll {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v3.Poll.ProvidedAnswer")]
+    #[serde(rename_all = "snake_case")]
     pub struct ProvidedAnswer {
         /// (optional) Text of the answer
         #[prost(string, tag = "1")]
@@ -303,6 +314,7 @@ pub mod poll {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.UserAnswer")]
+#[serde(rename_all = "snake_case")]
 pub struct UserAnswer {
     /// Subspace id inside which the post related to this attachment is located
     #[prost(uint64, tag = "1")]
@@ -340,6 +352,7 @@ pub struct UserAnswer {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PollTallyResults")]
+#[serde(rename_all = "snake_case")]
 pub struct PollTallyResults {
     #[prost(message, repeated, tag = "1")]
     pub results: ::prost::alloc::vec::Vec<poll_tally_results::AnswerResult>,
@@ -358,6 +371,7 @@ pub mod poll_tally_results {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v3.PollTallyResults.AnswerResult")]
+    #[serde(rename_all = "snake_case")]
     pub struct AnswerResult {
         /// Index of the answer inside the poll's ProvidedAnswers slice
         #[prost(uint32, tag = "1")]
@@ -383,6 +397,7 @@ pub mod poll_tally_results {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Params")]
+#[serde(rename_all = "snake_case")]
 pub struct Params {
     /// Maximum length of the post text
     #[prost(uint32, tag = "1")]
@@ -392,6 +407,7 @@ pub struct Params {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum PostReferenceType {
     /// No reference specified
     Unspecified = 0,
@@ -425,11 +441,19 @@ impl PostReferenceType {
             _ => None,
         }
     }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
+    }
 }
 /// ReplySetting contains the possible reply settings that a post can have
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum ReplySetting {
     /// No reply setting specified
     Unspecified = 0,
@@ -467,6 +491,13 @@ impl ReplySetting {
             _ => None,
         }
     }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
+    }
 }
 /// QuerySubspacePostsRequest is the request type for the Query/SubspacePosts RPC
 /// method
@@ -481,6 +512,7 @@ impl ReplySetting {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.posts.v3.Query/SubspacePosts",
     response_type = QuerySubspacePostsResponse
@@ -511,6 +543,7 @@ pub struct QuerySubspacePostsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QuerySubspacePostsResponse {
     #[prost(message, repeated, tag = "1")]
     pub posts: ::prost::alloc::vec::Vec<Post>,
@@ -531,6 +564,7 @@ pub struct QuerySubspacePostsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.posts.v3.Query/SectionPosts",
     response_type = QuerySectionPostsResponse
@@ -564,6 +598,7 @@ pub struct QuerySectionPostsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QuerySectionPostsResponse {
     #[prost(message, repeated, tag = "1")]
     pub posts: ::prost::alloc::vec::Vec<Post>,
@@ -583,6 +618,7 @@ pub struct QuerySectionPostsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(path = "/desmos.posts.v3.Query/Post", response_type = QueryPostResponse)]
 pub struct QueryPostRequest {
     /// Id of the subspace inside which the post lies
@@ -612,6 +648,7 @@ pub struct QueryPostRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryPostResponse {
     #[prost(message, optional, tag = "1")]
     pub post: ::core::option::Option<Post>,
@@ -629,6 +666,7 @@ pub struct QueryPostResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.posts.v3.Query/PostAttachments",
     response_type = QueryPostAttachmentsResponse
@@ -666,6 +704,7 @@ pub struct QueryPostAttachmentsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryPostAttachmentsResponse {
     #[prost(message, repeated, tag = "1")]
     pub attachments: ::prost::alloc::vec::Vec<Attachment>,
@@ -686,6 +725,7 @@ pub struct QueryPostAttachmentsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.posts.v3.Query/PollAnswers",
     response_type = QueryPollAnswersResponse
@@ -729,6 +769,7 @@ pub struct QueryPollAnswersRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryPollAnswersResponse {
     #[prost(message, repeated, tag = "1")]
     pub answers: ::prost::alloc::vec::Vec<UserAnswer>,
@@ -748,6 +789,7 @@ pub struct QueryPollAnswersResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryParamsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.posts.v3.Query/Params",
     response_type = QueryParamsResponse
@@ -765,6 +807,7 @@ pub struct QueryParamsRequest {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryParamsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
@@ -781,6 +824,7 @@ pub struct QueryParamsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgCreatePost")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreatePost {
     /// Id of the subspace inside which the post must be created
     #[prost(uint64, tag = "1")]
@@ -819,6 +863,7 @@ pub struct MsgCreatePost {
     pub conversation_id: u64,
     /// Reply settings of this post
     #[prost(enumeration = "ReplySetting", tag = "10")]
+    #[serde(deserialize_with = "ReplySetting::deserialize")]
     pub reply_settings: i32,
     /// A list this posts references (either as a reply, repost or quote)
     #[prost(message, repeated, tag = "11")]
@@ -836,6 +881,7 @@ pub struct MsgCreatePost {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgCreatePostResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCreatePostResponse {
     /// Id of the newly created post
     #[prost(uint64, tag = "1")]
@@ -860,6 +906,7 @@ pub struct MsgCreatePostResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgEditPost")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditPost {
     /// Id of the subspace inside which the post is
     #[prost(uint64, tag = "1")]
@@ -903,6 +950,7 @@ pub struct MsgEditPost {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgEditPostResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditPostResponse {
     /// Edit date of the post
     #[prost(message, optional, tag = "1")]
@@ -920,6 +968,7 @@ pub struct MsgEditPostResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgDeletePost")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeletePost {
     /// Id of the subspace containing the post
     #[prost(uint64, tag = "1")]
@@ -951,6 +1000,7 @@ pub struct MsgDeletePost {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgDeletePostResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeletePostResponse {}
 /// MsgAddPostAttachment represents the message that should be
 /// used when adding an attachment to post
@@ -965,6 +1015,7 @@ pub struct MsgDeletePostResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAddPostAttachment")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddPostAttachment {
     /// Id of the subspace containing the post
     #[prost(uint64, tag = "1")]
@@ -999,6 +1050,7 @@ pub struct MsgAddPostAttachment {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAddPostAttachmentResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddPostAttachmentResponse {
     /// New id of the uploaded attachment
     #[prost(uint32, tag = "1")]
@@ -1020,6 +1072,7 @@ pub struct MsgAddPostAttachmentResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgRemovePostAttachment")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemovePostAttachment {
     /// Id of the subspace containing the post
     #[prost(uint64, tag = "1")]
@@ -1055,6 +1108,7 @@ pub struct MsgRemovePostAttachment {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgRemovePostAttachmentResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemovePostAttachmentResponse {
     /// Edit date of the post
     #[prost(message, optional, tag = "1")]
@@ -1072,6 +1126,7 @@ pub struct MsgRemovePostAttachmentResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPoll")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAnswerPoll {
     /// Id of the subspace containing the post
     #[prost(uint64, tag = "1")]
@@ -1109,6 +1164,7 @@ pub struct MsgAnswerPoll {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPollResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAnswerPollResponse {}
 pub struct PostsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,

@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.Reaction")]
+#[serde(rename_all = "snake_case")]
 pub struct Reaction {
     /// Id of the subspace inside which the reaction has been put
     #[prost(uint64, tag = "1")]
@@ -48,6 +49,7 @@ pub struct Reaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReactionValue")]
+#[serde(rename_all = "snake_case")]
 pub struct RegisteredReactionValue {
     /// Id of the registered reaction
     #[prost(uint32, tag = "1")]
@@ -66,6 +68,7 @@ pub struct RegisteredReactionValue {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.FreeTextValue")]
+#[serde(rename_all = "snake_case")]
 pub struct FreeTextValue {
     #[prost(string, tag = "1")]
     pub text: ::prost::alloc::string::String,
@@ -83,6 +86,7 @@ pub struct FreeTextValue {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReaction")]
+#[serde(rename_all = "snake_case")]
 pub struct RegisteredReaction {
     /// Id of the subspace for which this reaction has been registered
     #[prost(uint64, tag = "1")]
@@ -114,6 +118,7 @@ pub struct RegisteredReaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.SubspaceReactionsParams")]
+#[serde(rename_all = "snake_case")]
 pub struct SubspaceReactionsParams {
     /// Id of the subspace for which these params are valid
     #[prost(uint64, tag = "1")]
@@ -141,6 +146,7 @@ pub struct SubspaceReactionsParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.FreeTextValueParams")]
+#[serde(rename_all = "snake_case")]
 pub struct FreeTextValueParams {
     /// Whether FreeTextValue reactions should be enabled
     #[prost(bool, tag = "1")]
@@ -166,6 +172,7 @@ pub struct FreeTextValueParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReactionValueParams")]
+#[serde(rename_all = "snake_case")]
 pub struct RegisteredReactionValueParams {
     /// Whether RegisteredReactionValue reactions should be enabled
     #[prost(bool, tag = "1")]
@@ -183,6 +190,7 @@ pub struct RegisteredReactionValueParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reactions.v1.Query/Reactions",
     response_type = QueryReactionsResponse
@@ -224,6 +232,7 @@ pub struct QueryReactionsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReactionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub reactions: ::prost::alloc::vec::Vec<Reaction>,
@@ -244,6 +253,7 @@ pub struct QueryReactionsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reactions.v1.Query/Reaction",
     response_type = QueryReactionResponse
@@ -280,6 +290,7 @@ pub struct QueryReactionRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReactionResponse {
     #[prost(message, optional, tag = "1")]
     pub reaction: ::core::option::Option<Reaction>,
@@ -297,6 +308,7 @@ pub struct QueryReactionResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reactions.v1.Query/RegisteredReactions",
     response_type = QueryRegisteredReactionsResponse
@@ -327,6 +339,7 @@ pub struct QueryRegisteredReactionsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryRegisteredReactionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub registered_reactions: ::prost::alloc::vec::Vec<RegisteredReaction>,
@@ -347,6 +360,7 @@ pub struct QueryRegisteredReactionsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reactions.v1.Query/RegisteredReaction",
     response_type = QueryRegisteredReactionResponse
@@ -376,6 +390,7 @@ pub struct QueryRegisteredReactionRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryRegisteredReactionResponse {
     #[prost(message, optional, tag = "1")]
     pub registered_reaction: ::core::option::Option<RegisteredReaction>,
@@ -393,6 +408,7 @@ pub struct QueryRegisteredReactionResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.reactions.v1.Query/ReactionsParams",
     response_type = QueryReactionsParamsResponse
@@ -419,6 +435,7 @@ pub struct QueryReactionsParamsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryReactionsParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<SubspaceReactionsParams>,
@@ -435,6 +452,7 @@ pub struct QueryReactionsParamsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddReaction")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddReaction {
     /// Id of the subspace inside which the post to react to is
     #[prost(uint64, tag = "1")]
@@ -469,6 +487,7 @@ pub struct MsgAddReaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddReactionResponse {
     /// Id of the newly added reaction
     #[prost(uint32, tag = "1")]
@@ -487,6 +506,7 @@ pub struct MsgAddReactionResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveReaction")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveReaction {
     /// Id of the subspace inside which the reaction to remove is
     #[prost(uint64, tag = "1")]
@@ -521,6 +541,7 @@ pub struct MsgRemoveReaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveReactionResponse {}
 /// MsgAddRegisteredReaction represents the message to be used to
 /// register a new supported reaction
@@ -535,6 +556,7 @@ pub struct MsgRemoveReactionResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddRegisteredReaction")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddRegisteredReaction {
     /// Id of the subspace inside which this reaction should be registered
     #[prost(uint64, tag = "1")]
@@ -566,6 +588,7 @@ pub struct MsgAddRegisteredReaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddRegisteredReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAddRegisteredReactionResponse {
     /// Id of the newly registered reaction
     #[prost(uint32, tag = "1")]
@@ -584,6 +607,7 @@ pub struct MsgAddRegisteredReactionResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgEditRegisteredReaction")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditRegisteredReaction {
     /// Id of the subspace inside which the reaction to edit is
     #[prost(uint64, tag = "1")]
@@ -618,6 +642,7 @@ pub struct MsgEditRegisteredReaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgEditRegisteredReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgEditRegisteredReactionResponse {}
 /// MsgRemoveRegisteredReaction represents the message to be used to
 /// remove an existing registered reaction
@@ -632,6 +657,7 @@ pub struct MsgEditRegisteredReactionResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveRegisteredReaction")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveRegisteredReaction {
     /// Id of the subspace from which to remove the registered reaction
     #[prost(uint64, tag = "1")]
@@ -660,6 +686,7 @@ pub struct MsgRemoveRegisteredReaction {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveRegisteredReactionResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRemoveRegisteredReactionResponse {}
 /// MsgSetReactionsParams represents the message to be used when setting
 /// a subspace reactions params
@@ -674,6 +701,7 @@ pub struct MsgRemoveRegisteredReactionResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParams")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetReactionsParams {
     /// Id of the subspace for which to set the params
     #[prost(uint64, tag = "1")]
@@ -705,6 +733,7 @@ pub struct MsgSetReactionsParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParamsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetReactionsParamsResponse {}
 pub struct ReactionsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,

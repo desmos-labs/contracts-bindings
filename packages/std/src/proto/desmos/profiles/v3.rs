@@ -10,6 +10,7 @@
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryProfileRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/Profile",
     response_type = QueryProfileResponse
@@ -31,6 +32,7 @@ pub struct QueryProfileRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryProfileResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryProfileResponse {
     #[prost(message, optional, tag = "1")]
     pub profile: ::core::option::Option<crate::shim::Any>,
@@ -47,6 +49,7 @@ pub struct QueryProfileResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.DTagTransferRequest")]
+#[serde(rename_all = "snake_case")]
 pub struct DTagTransferRequest {
     /// DTagToTrade contains the value of the DTag that should be transferred from
     /// the receiver of the request to the sender
@@ -73,6 +76,7 @@ pub struct DTagTransferRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryIncomingDTagTransferRequestsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/IncomingDTagTransferRequests",
     response_type = QueryIncomingDTagTransferRequestsResponse
@@ -100,6 +104,7 @@ pub struct QueryIncomingDTagTransferRequestsRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryIncomingDTagTransferRequestsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryIncomingDTagTransferRequestsResponse {
     /// Requests represent the list of all the DTag transfer requests made towards
     /// the user
@@ -122,6 +127,7 @@ pub struct QueryIncomingDTagTransferRequestsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Params")]
+#[serde(rename_all = "snake_case")]
 pub struct Params {
     #[prost(message, optional, tag = "1")]
     pub nickname: ::core::option::Option<NicknameParams>,
@@ -146,12 +152,19 @@ pub struct Params {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.NicknameParams")]
+#[serde(rename_all = "snake_case")]
 pub struct NicknameParams {
     #[prost(bytes = "vec", tag = "1")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub min_length: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "2")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// DTagParams defines the parameters related to profile DTags
@@ -166,14 +179,21 @@ pub struct NicknameParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.DTagParams")]
+#[serde(rename_all = "snake_case")]
 pub struct DTagParams {
     #[prost(string, tag = "1")]
     pub reg_ex: ::prost::alloc::string::String,
     #[prost(bytes = "vec", tag = "2")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub min_length: ::prost::alloc::vec::Vec<u8>,
     #[prost(bytes = "vec", tag = "3")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// BioParams defines the parameters related to profile biography
@@ -188,9 +208,13 @@ pub struct DTagParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.BioParams")]
+#[serde(rename_all = "snake_case")]
 pub struct BioParams {
     #[prost(bytes = "vec", tag = "3")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub max_length: ::prost::alloc::vec::Vec<u8>,
 }
 /// OracleParams defines the parameters related to the oracle
@@ -207,6 +231,7 @@ pub struct BioParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.OracleParams")]
+#[serde(rename_all = "snake_case")]
 pub struct OracleParams {
     /// ScriptID represents the ID of the oracle script to be called to verify the
     /// data
@@ -264,6 +289,7 @@ pub struct OracleParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.AppLinksParams")]
+#[serde(rename_all = "snake_case")]
 pub struct AppLinksParams {
     /// Default validity duration before an application link expires
     #[prost(message, optional, tag = "1")]
@@ -281,6 +307,7 @@ pub struct AppLinksParams {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryParamsRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/Params",
     response_type = QueryParamsResponse
@@ -298,6 +325,7 @@ pub struct QueryParamsRequest {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryParamsResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
@@ -315,6 +343,7 @@ pub struct QueryParamsResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ChainLink")]
+#[serde(rename_all = "snake_case")]
 pub struct ChainLink {
     /// User defines the destination profile address to link
     #[prost(string, tag = "1")]
@@ -345,6 +374,7 @@ pub struct ChainLink {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ChainConfig")]
+#[serde(rename_all = "snake_case")]
 pub struct ChainConfig {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
@@ -362,6 +392,7 @@ pub struct ChainConfig {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Proof")]
+#[serde(rename_all = "snake_case")]
 pub struct Proof {
     /// PubKey represents the public key associated with the address for which to
     /// prove the ownership
@@ -387,6 +418,7 @@ pub struct Proof {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Bech32Address")]
+#[serde(rename_all = "snake_case")]
 pub struct Bech32Address {
     /// Value represents the Bech-32 encoded address value
     #[prost(string, tag = "1")]
@@ -407,6 +439,7 @@ pub struct Bech32Address {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Base58Address")]
+#[serde(rename_all = "snake_case")]
 pub struct Base58Address {
     /// Value contains the Base58-encoded address
     #[prost(string, tag = "1")]
@@ -425,6 +458,7 @@ pub struct Base58Address {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.HexAddress")]
+#[serde(rename_all = "snake_case")]
 pub struct HexAddress {
     /// Value represents the hex address value
     #[prost(string, tag = "1")]
@@ -446,13 +480,18 @@ pub struct HexAddress {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.SingleSignature")]
+#[serde(rename_all = "snake_case")]
 pub struct SingleSignature {
     /// Type represents the type of the signature value
     #[prost(enumeration = "SignatureValueType", tag = "1")]
+    #[serde(deserialize_with = "SignatureValueType::deserialize")]
     pub value_type: i32,
     /// Signature is the raw signature bytes
     #[prost(bytes = "vec", tag = "2")]
-    #[serde(deserialize_with = "crate::serde::as_option::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub signature: ::prost::alloc::vec::Vec<u8>,
 }
 /// CosmosMultiSignature is the signature data for a multisig public key
@@ -467,6 +506,7 @@ pub struct SingleSignature {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.CosmosMultiSignature")]
+#[serde(rename_all = "snake_case")]
 pub struct CosmosMultiSignature {
     /// Bitarray specifies which keys within the multisig are signing
     #[prost(message, optional, tag = "1")]
@@ -481,6 +521,7 @@ pub struct CosmosMultiSignature {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum SignatureValueType {
     /// SIGNATURE_VALUE_TYPE_UNSPECIFIED specifies an unknown signing mode
     /// and will be rejected
@@ -525,6 +566,13 @@ impl SignatureValueType {
             _ => None,
         }
     }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
+    }
 }
 /// QueryChainLinksRequest represents the request that should be used in order
 /// to retrieve the link associated with the provided user, for the given chain
@@ -540,6 +588,7 @@ impl SignatureValueType {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinksRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/ChainLinks",
     response_type = QueryChainLinksResponse
@@ -575,6 +624,7 @@ pub struct QueryChainLinksRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinksResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryChainLinksResponse {
     #[prost(message, repeated, tag = "1")]
     pub links: ::prost::alloc::vec::Vec<ChainLink>,
@@ -596,6 +646,7 @@ pub struct QueryChainLinksResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinkOwnersRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/ChainLinkOwners",
     response_type = QueryChainLinkOwnersResponse
@@ -627,6 +678,7 @@ pub struct QueryChainLinkOwnersRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinkOwnersResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryChainLinkOwnersResponse {
     /// Addresses of the chain links owners
     #[prost(message, repeated, tag = "1")]
@@ -652,6 +704,7 @@ pub mod query_chain_link_owners_response {
     #[proto_message(
         type_url = "/desmos.profiles.v3.QueryChainLinkOwnersResponse.ChainLinkOwnerDetails"
     )]
+    #[serde(rename_all = "snake_case")]
     pub struct ChainLinkOwnerDetails {
         #[prost(string, tag = "1")]
         pub user: ::prost::alloc::string::String,
@@ -674,6 +727,7 @@ pub mod query_chain_link_owners_response {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryDefaultExternalAddressesRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/DefaultExternalAddresses",
     response_type = QueryDefaultExternalAddressesResponse
@@ -703,6 +757,7 @@ pub struct QueryDefaultExternalAddressesRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryDefaultExternalAddressesResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryDefaultExternalAddressesResponse {
     /// List of default addresses, each one represented by the associated chain
     /// link
@@ -724,6 +779,7 @@ pub struct QueryDefaultExternalAddressesResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ApplicationLink")]
+#[serde(rename_all = "snake_case")]
 pub struct ApplicationLink {
     ///   User to which the link is associated
     #[prost(string, tag = "1")]
@@ -733,6 +789,7 @@ pub struct ApplicationLink {
     pub data: ::core::option::Option<Data>,
     /// State of the link
     #[prost(enumeration = "ApplicationLinkState", tag = "3")]
+    #[serde(deserialize_with = "ApplicationLinkState::deserialize")]
     pub state: i32,
     /// OracleRequest represents the request that has been made to the oracle
     #[prost(message, optional, tag = "4")]
@@ -761,6 +818,7 @@ pub struct ApplicationLink {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Data")]
+#[serde(rename_all = "snake_case")]
 pub struct Data {
     /// The application name (eg. Twitter, GitHub, etc)
     #[prost(string, tag = "1")]
@@ -782,6 +840,7 @@ pub struct Data {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.OracleRequest")]
+#[serde(rename_all = "snake_case")]
 pub struct OracleRequest {
     /// ID is the ID of the request
     #[prost(uint64, tag = "1")]
@@ -819,6 +878,7 @@ pub mod oracle_request {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.profiles.v3.OracleRequest.CallData")]
+    #[serde(rename_all = "snake_case")]
     pub struct CallData {
         /// The application for which the ownership should be verified
         #[prost(string, tag = "1")]
@@ -841,10 +901,12 @@ pub mod oracle_request {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Result")]
+#[serde(rename_all = "snake_case")]
 pub struct Result {
     /// sum is the oneof that specifies whether this represents a success or
     /// failure result
     #[prost(oneof = "result::Sum", tags = "1, 2")]
+    #[serde(flatten)]
     pub sum: ::core::option::Option<result::Sum>,
 }
 /// Nested message and enum types in `Result`.
@@ -862,6 +924,7 @@ pub mod result {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.profiles.v3.Result.Success")]
+    #[serde(rename_all = "snake_case")]
     pub struct Success {
         /// Hex-encoded value that has be signed by the profile
         #[prost(string, tag = "1")]
@@ -883,6 +946,7 @@ pub mod result {
         std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.profiles.v3.Result.Failed")]
+    #[serde(rename_all = "snake_case")]
     pub struct Failed {
         /// Error that is associated with the failure
         #[prost(string, tag = "1")]
@@ -894,6 +958,7 @@ pub mod result {
     #[derive(
         Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
     )]
+    #[serde(rename_all = "snake_case")]
     pub enum Sum {
         /// Success represents a successful verification
         #[prost(message, tag = "1")]
@@ -908,6 +973,7 @@ pub mod result {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
 #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[serde(rename_all = "snake_case")]
 pub enum ApplicationLinkState {
     /// A link has just been initialized
     InitializedUnspecified = 0,
@@ -951,6 +1017,13 @@ impl ApplicationLinkState {
             _ => None,
         }
     }
+    pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let s: &str = serde::Deserialize::deserialize(deserializer)?;
+        Ok(Self::from_str_name(s).unwrap() as i32)
+    }
 }
 /// QueryUserApplicationLinkRequest represents the request used when querying an
 /// application link using an application name and username for a given user
@@ -965,6 +1038,7 @@ impl ApplicationLinkState {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinksRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/ApplicationLinks",
     response_type = QueryApplicationLinksResponse
@@ -1000,6 +1074,7 @@ pub struct QueryApplicationLinksRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinksResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryApplicationLinksResponse {
     #[prost(message, repeated, tag = "1")]
     pub links: ::prost::alloc::vec::Vec<ApplicationLink>,
@@ -1021,6 +1096,7 @@ pub struct QueryApplicationLinksResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkByClientIDRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/ApplicationLinkByClientID",
     response_type = QueryApplicationLinkByClientIdResponse
@@ -1043,6 +1119,7 @@ pub struct QueryApplicationLinkByClientIdRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkByClientIDResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryApplicationLinkByClientIdResponse {
     #[prost(message, optional, tag = "1")]
     pub link: ::core::option::Option<ApplicationLink>,
@@ -1060,6 +1137,7 @@ pub struct QueryApplicationLinkByClientIdResponse {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkOwnersRequest")]
+#[serde(rename_all = "snake_case")]
 #[proto_query(
     path = "/desmos.profiles.v3.Query/ApplicationLinkOwners",
     response_type = QueryApplicationLinkOwnersResponse
@@ -1091,6 +1169,7 @@ pub struct QueryApplicationLinkOwnersRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkOwnersResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct QueryApplicationLinkOwnersResponse {
     /// Addresses of the application links owners
     #[prost(message, repeated, tag = "1")]
@@ -1119,6 +1198,7 @@ pub mod query_application_link_owners_response {
     #[proto_message(
         type_url = "/desmos.profiles.v3.QueryApplicationLinkOwnersResponse.ApplicationLinkOwnerDetails"
     )]
+    #[serde(rename_all = "snake_case")]
     pub struct ApplicationLinkOwnerDetails {
         #[prost(string, tag = "1")]
         pub user: ::prost::alloc::string::String,
@@ -1141,6 +1221,7 @@ pub mod query_application_link_owners_response {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Profile")]
+#[serde(rename_all = "snake_case")]
 pub struct Profile {
     /// Account represents the base Cosmos account associated with this profile
     #[prost(message, optional, tag = "1")]
@@ -1173,6 +1254,7 @@ pub struct Profile {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Pictures")]
+#[serde(rename_all = "snake_case")]
 pub struct Pictures {
     /// Profile contains the URL to the profile picture
     #[prost(string, tag = "1")]
@@ -1194,6 +1276,7 @@ pub struct Pictures {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRequestDTagTransfer")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRequestDTagTransfer {
     /// Receiver contains the address of the request receiver that owns the DTag to
     /// transfer if the request is accepted
@@ -1217,6 +1300,7 @@ pub struct MsgRequestDTagTransfer {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRequestDTagTransferResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRequestDTagTransferResponse {}
 /// MsgCancelDTagTransferRequest represents the message used to cancel a DTag
 /// transfer request.
@@ -1231,6 +1315,7 @@ pub struct MsgRequestDTagTransferResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgCancelDTagTransferRequest")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCancelDTagTransferRequest {
     /// Receiver contains the address of the request receiver
     #[prost(string, tag = "1")]
@@ -1252,6 +1337,7 @@ pub struct MsgCancelDTagTransferRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgCancelDTagTransferRequestResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgCancelDTagTransferRequestResponse {}
 /// MsgAcceptDTagTransferRequest represents the message used to accept a DTag
 /// transfer request.
@@ -1266,6 +1352,7 @@ pub struct MsgCancelDTagTransferRequestResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgAcceptDTagTransferRequest")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAcceptDTagTransferRequest {
     /// NewDTag represents the DTag that the request receiver will obtain if they
     /// accept the request
@@ -1291,6 +1378,7 @@ pub struct MsgAcceptDTagTransferRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgAcceptDTagTransferRequestResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgAcceptDTagTransferRequestResponse {}
 /// MsgRefuseDTagTransferRequest represents the message used to refuse a DTag
 /// transfer request.
@@ -1305,6 +1393,7 @@ pub struct MsgAcceptDTagTransferRequestResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRefuseDTagTransferRequest")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRefuseDTagTransferRequest {
     /// Sender represents the request sender
     #[prost(string, tag = "1")]
@@ -1326,6 +1415,7 @@ pub struct MsgRefuseDTagTransferRequest {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRefuseDTagTransferRequestResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgRefuseDTagTransferRequestResponse {}
 /// MsgSaveProfile represents a message to save a profile.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1339,6 +1429,7 @@ pub struct MsgRefuseDTagTransferRequestResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSaveProfile")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSaveProfile {
     /// DTag of the profile. If it shouldn't be changed, \[do-no-modify\] can be used
     /// instead.
@@ -1376,6 +1467,7 @@ pub struct MsgSaveProfile {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSaveProfileResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSaveProfileResponse {}
 /// MsgDeleteProfile represents the message used to delete an existing profile.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1389,6 +1481,7 @@ pub struct MsgSaveProfileResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgDeleteProfile")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteProfile {
     /// Address associated to the profile to be deleted
     #[prost(string, tag = "1")]
@@ -1406,6 +1499,7 @@ pub struct MsgDeleteProfile {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgDeleteProfileResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgDeleteProfileResponse {}
 /// MsgLinkChainAccount represents a message to link an account to a profile.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1419,6 +1513,7 @@ pub struct MsgDeleteProfileResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkChainAccount")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgLinkChainAccount {
     /// ChainAddress contains the details of the external chain address to be
     /// linked
@@ -1447,6 +1542,7 @@ pub struct MsgLinkChainAccount {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkChainAccountResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgLinkChainAccountResponse {}
 /// MsgUnlinkChainAccount represents a message to unlink an account from a
 /// profile.
@@ -1461,6 +1557,7 @@ pub struct MsgLinkChainAccountResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkChainAccount")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgUnlinkChainAccount {
     /// Owner represents the Desmos profile from which to remove the link
     #[prost(string, tag = "1")]
@@ -1485,6 +1582,7 @@ pub struct MsgUnlinkChainAccount {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkChainAccountResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgUnlinkChainAccountResponse {}
 /// MsgSetDefaultExternalAddress represents the message used to set a default
 /// address for a specific chain
@@ -1499,6 +1597,7 @@ pub struct MsgUnlinkChainAccountResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSetDefaultExternalAddress")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetDefaultExternalAddress {
     /// Name of the chain for which to set the default address
     #[prost(string, tag = "1")]
@@ -1523,6 +1622,7 @@ pub struct MsgSetDefaultExternalAddress {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSetDefaultExternalAddressResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgSetDefaultExternalAddressResponse {}
 /// MsgLinkApplication defines a msg to connect a profile with a
 /// centralized application account (eg. Twitter, GitHub, etc).
@@ -1537,6 +1637,7 @@ pub struct MsgSetDefaultExternalAddressResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkApplication")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgLinkApplication {
     /// The sender of the connection request
     #[prost(string, tag = "1")]
@@ -1580,6 +1681,7 @@ pub struct MsgLinkApplication {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkApplicationResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgLinkApplicationResponse {}
 /// MsgUnlinkApplication defines a msg to delete an application link from a user
 /// profile
@@ -1594,6 +1696,7 @@ pub struct MsgLinkApplicationResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkApplication")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgUnlinkApplication {
     /// Application represents the name of the application to unlink
     #[prost(string, tag = "1")]
@@ -1619,6 +1722,7 @@ pub struct MsgUnlinkApplication {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkApplicationResponse")]
+#[serde(rename_all = "snake_case")]
 pub struct MsgUnlinkApplicationResponse {}
 /// LinkChainAccountPacketData defines the object that should be sent inside a
 /// MsgSendPacket when wanting to link an external chain to a Desmos profile
@@ -1634,6 +1738,7 @@ pub struct MsgUnlinkApplicationResponse {}
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.LinkChainAccountPacketData")]
+#[serde(rename_all = "snake_case")]
 pub struct LinkChainAccountPacketData {
     /// SourceAddress contains the details of the external chain address
     #[prost(message, optional, tag = "1")]
@@ -1664,6 +1769,7 @@ pub struct LinkChainAccountPacketData {
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.LinkChainAccountPacketAck")]
+#[serde(rename_all = "snake_case")]
 pub struct LinkChainAccountPacketAck {
     /// SourceAddress contains the external address that has been linked properly
     /// with the profile
