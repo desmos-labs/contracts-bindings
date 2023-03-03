@@ -149,11 +149,8 @@ mod tests {
             .into(),
         };
 
-        let a =
-            desmos_cli.wasm_query(&contract_address, &query);
-
-            println!("{:?}", a.to_string());
-            let response: QueryUserPermissionsResponse = a.to_object();
+        let response: QueryUserPermissionsResponse =
+            desmos_cli.wasm_query(&contract_address, &query).to_object();
 
         assert_eq!(
             vec![
