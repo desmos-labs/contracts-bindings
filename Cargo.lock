@@ -1737,6 +1737,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "test-contract-stargate"
+version = "1.0.0"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
+ "cw2",
+ "desmos-bindings",
+ "thiserror",
+]
+
+[[package]]
 name = "thiserror"
 version = "1.0.38"
 source = "registry+https://github.com/rust-lang/crates.io-index"
