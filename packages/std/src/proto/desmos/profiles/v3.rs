@@ -484,7 +484,10 @@ pub struct HexAddress {
 pub struct SingleSignature {
     /// Type represents the type of the signature value
     #[prost(enumeration = "SignatureValueType", tag = "1")]
-    #[serde(deserialize_with = "SignatureValueType::deserialize")]
+    #[serde(
+        serialize_with = "SignatureValueType::serialize",
+        deserialize_with = "SignatureValueType::deserialize"
+    )]
     pub value_type: i32,
     /// Signature is the raw signature bytes
     #[prost(bytes = "vec", tag = "2")]
@@ -520,7 +523,7 @@ pub struct CosmosMultiSignature {
 /// SignatureValueType specifies all the possible signature types
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum SignatureValueType {
     /// SIGNATURE_VALUE_TYPE_UNSPECIFIED specifies an unknown signing mode
@@ -566,12 +569,25 @@ impl SignatureValueType {
             _ => None,
         }
     }
+    pub fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let enum_value = Self::from_repr(*v);
+        match enum_value {
+            Some(v) => serializer.serialize_str(v.as_str_name()),
+            None => Err(serde::ser::Error::custom("unknown value")),
+        }
+    }
     pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        Ok(Self::from_str_name(s).unwrap() as i32)
+        match Self::from_str_name(s) {
+            Some(v) => Ok(v as i32),
+            None => Err(serde::de::Error::custom("unknown value")),
+        }
     }
 }
 /// QueryChainLinksRequest represents the request that should be used in order
@@ -789,7 +805,10 @@ pub struct ApplicationLink {
     pub data: ::core::option::Option<Data>,
     /// State of the link
     #[prost(enumeration = "ApplicationLinkState", tag = "3")]
-    #[serde(deserialize_with = "ApplicationLinkState::deserialize")]
+    #[serde(
+        serialize_with = "ApplicationLinkState::serialize",
+        deserialize_with = "ApplicationLinkState::deserialize"
+    )]
     pub state: i32,
     /// OracleRequest represents the request that has been made to the oracle
     #[prost(message, optional, tag = "4")]
@@ -972,7 +991,7 @@ pub mod result {
 /// states: STARTED, ERRORED, SUCCESSFUL, TIMED_OUT
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ApplicationLinkState {
     /// A link has just been initialized
@@ -1017,12 +1036,25 @@ impl ApplicationLinkState {
             _ => None,
         }
     }
+    pub fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let enum_value = Self::from_repr(*v);
+        match enum_value {
+            Some(v) => serializer.serialize_str(v.as_str_name()),
+            None => Err(serde::ser::Error::custom("unknown value")),
+        }
+    }
     pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        Ok(Self::from_str_name(s).unwrap() as i32)
+        match Self::from_str_name(s) {
+            Some(v) => Ok(v as i32),
+            None => Err(serde::de::Error::custom("unknown value")),
+        }
     }
 }
 /// QueryUserApplicationLinkRequest represents the request used when querying an

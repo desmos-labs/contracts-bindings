@@ -42,7 +42,7 @@ pub fn append_struct_attrs(
     let type_url = get_type_url(src, &s.ident, descriptor);
 
     s.attrs.append(&mut vec![
-        syn::parse_quote! { #[derive(schemars::JsonSchema, serde::Serialize, serde::Deserialize, std_derive::CosmwasmExt,)] },
+        syn::parse_quote! { #[derive(schemars::JsonSchema, serde::Serialize, serde::Deserialize, std_derive::CosmwasmExt)] },
         syn::parse_quote! { #[proto_message(type_url = #type_url)] },
         syn::parse_quote! { #[serde(rename_all = "snake_case")] },
     ]);
@@ -128,9 +128,13 @@ pub fn allow_serde_enum_as_str(s: ItemStruct) -> ItemStruct {
         .map(|mut field| {
             // Add custom serde methods for field having enumeration attribute
             if let Some(v) = find_prost_enumeration_value(&field.attrs) {
-                let as_enum = format!("{}::deserialize", v);
+                let as_enum_serialize = format!("{}::serialize", v);
+                let as_enum_derserialize = format!("{}::deserialize", v);
                 let as_enum_serde: syn::Attribute = parse_quote! {
-                    #[serde(deserialize_with = #as_enum)]
+                    #[serde(
+                        serialize_with = #as_enum_serialize,
+                        deserialize_with = #as_enum_derserialize,
+                    )]
                 };
 
                 field.attrs.append(&mut vec![as_enum_serde]);
@@ -217,7 +221,7 @@ pub fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
             _ => return false,
         };
 
-        // Search all nested attributes and look for the "one_of" attribute.
+        // Search all nested attributes and look for the "oneof" attribute.
         list.nested.iter().any(|nested| {
             if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
                 return nv.path.is_ident("oneof");
@@ -230,6 +234,13 @@ pub fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
 
 pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
     let mut s = s.clone();
+
+    if has_repr_attribute(&s.attrs) {
+        s.attrs.append(&mut vec![syn::parse_quote! {
+            #[derive(strum_macros::FromRepr)]
+        }]);
+    }
+
     s.attrs.append(&mut vec![
         syn::parse_quote! {
             #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
@@ -238,7 +249,29 @@ pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
            #[serde(rename_all = "snake_case")]
         },
     ]);
+
     s
+}
+
+pub fn has_repr_attribute(attrs: &[Attribute]) -> bool {
+    attrs.iter().any(|attr| {
+        // Parse the attribute's meta information.
+        let meta = match attr.parse_meta() {
+            Ok(meta) => meta,
+            Err(_) => return false,
+        };
+
+        // Check if the attribute name is "prost".
+        match meta {
+            syn::Meta::List(list) => list
+                .path
+                .get_ident()
+                .filter(|ident| ident.to_string() == "repr")
+                .is_some(),
+
+            _ => return false,
+        }
+    })
 }
 
 pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
@@ -259,16 +292,33 @@ pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
         return item;
     }
 
-    // Add a custom deserialize method for impl
+    // Add a custom serde methods for impl
+    let serialize_method: syn::ImplItemMethod = parse_quote! {
+        pub  fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+        where  S: serde::Serializer {
+            let enum_value = Self::from_repr(*v);
+            match enum_value {
+                Some(v) => serializer.serialize_str(v.as_str_name()),
+                None => Err(serde::ser::Error::custom("unknown value")),
+            }
+        }
+    };
+
     let deserialize_method: syn::ImplItemMethod = parse_quote! {
         pub  fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
         where  D: serde::Deserializer<'de> {
             let s: &str = serde::Deserialize::deserialize(deserializer)?;
-            Ok(Self::from_str_name(s).unwrap() as i32)
+            match Self::from_str_name(s) {
+                Some(v) => Ok(v as i32),
+                None => Err(serde::de::Error::custom("unknown value")),
+            }
         }
     };
 
-    item.items.append(&mut vec![deserialize_method.into()]);
+    item.items.append(&mut vec![
+        serialize_method.into(),
+        deserialize_method.into(),
+    ]);
 
     item
 }

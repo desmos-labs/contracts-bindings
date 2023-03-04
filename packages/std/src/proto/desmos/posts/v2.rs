@@ -56,7 +56,10 @@ pub struct Post {
     pub referenced_posts: ::prost::alloc::vec::Vec<PostReference>,
     /// Reply settings of this post
     #[prost(enumeration = "ReplySetting", tag = "11")]
-    #[serde(deserialize_with = "ReplySetting::deserialize")]
+    #[serde(
+        serialize_with = "ReplySetting::serialize",
+        deserialize_with = "ReplySetting::deserialize"
+    )]
     pub reply_settings: i32,
     /// Creation date of the post
     #[prost(message, optional, tag = "12")]
@@ -81,7 +84,10 @@ pub struct Post {
 pub struct PostReference {
     /// Type of reference
     #[prost(enumeration = "PostReferenceType", tag = "1")]
-    #[serde(deserialize_with = "PostReferenceType::deserialize")]
+    #[serde(
+        serialize_with = "PostReferenceType::serialize",
+        deserialize_with = "PostReferenceType::deserialize"
+    )]
     pub r#type: i32,
     /// Id of the referenced post
     #[prost(uint64, tag = "2")]
@@ -406,7 +412,7 @@ pub struct Params {
 /// PostReferenceType represents the different types of references
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum PostReferenceType {
     /// No reference specified
@@ -441,18 +447,31 @@ impl PostReferenceType {
             _ => None,
         }
     }
+    pub fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let enum_value = Self::from_repr(*v);
+        match enum_value {
+            Some(v) => serializer.serialize_str(v.as_str_name()),
+            None => Err(serde::ser::Error::custom("unknown value")),
+        }
+    }
     pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        Ok(Self::from_str_name(s).unwrap() as i32)
+        match Self::from_str_name(s) {
+            Some(v) => Ok(v as i32),
+            None => Err(serde::de::Error::custom("unknown value")),
+        }
     }
 }
 /// ReplySetting contains the possible reply settings that a post can have
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ReplySetting {
     /// No reply setting specified
@@ -491,11 +510,24 @@ impl ReplySetting {
             _ => None,
         }
     }
+    pub fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let enum_value = Self::from_repr(*v);
+        match enum_value {
+            Some(v) => serializer.serialize_str(v.as_str_name()),
+            None => Err(serde::ser::Error::custom("unknown value")),
+        }
+    }
     pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        Ok(Self::from_str_name(s).unwrap() as i32)
+        match Self::from_str_name(s) {
+            Some(v) => Ok(v as i32),
+            None => Err(serde::de::Error::custom("unknown value")),
+        }
     }
 }

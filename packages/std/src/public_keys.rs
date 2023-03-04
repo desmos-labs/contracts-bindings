@@ -15,7 +15,10 @@
 #[proto_message(type_url = "/cosmos.crypto.ed25519.PubKey")]
 pub struct Ed25519PublicKey {
     #[prost(bytes = "vec", tag = "1")]
-    #[serde(deserialize_with = "crate::serde::as_base64::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
 
@@ -36,7 +39,10 @@ pub struct Ed25519PublicKey {
 #[proto_message(type_url = "/cosmos.crypto.secp256k1.PubKey")]
 pub struct Secp256k1PublicKey {
     #[prost(bytes = "vec", tag = "1")]
-    #[serde(deserialize_with = "crate::serde::as_base64::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
 
@@ -55,6 +61,9 @@ pub struct Secp256r1PublicKey {
     /// Point on secp256r1 curve in a compressed representation as specified in section
     /// 4.3.6 of ANSI X9.62: <https://webstore.ansi.org/standards/ascx9/ansix9621998>
     #[prost(bytes = "vec", tag = "1")]
-    #[serde(deserialize_with = "crate::serde::as_base64::deserialize")]
+    #[serde(
+        serialize_with = "crate::serde::as_base64::serialize",
+        deserialize_with = "crate::serde::as_base64::deserialize"
+    )]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }

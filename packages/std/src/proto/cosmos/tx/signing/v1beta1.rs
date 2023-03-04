@@ -87,7 +87,10 @@ pub mod signature_descriptor {
         pub struct Single {
             /// mode is the signing mode of the single signer
             #[prost(enumeration = "super::super::SignMode", tag = "1")]
-            #[serde(deserialize_with = "super::super::SignMode::deserialize")]
+            #[serde(
+                serialize_with = "super::super::SignMode::serialize",
+                deserialize_with = "super::super::SignMode::deserialize"
+            )]
             pub mode: i32,
             /// signature is the raw signature bytes
             #[prost(bytes = "vec", tag = "2")]
@@ -144,7 +147,7 @@ pub mod signature_descriptor {
 /// SignMode represents a signing mode with its own security guarantees.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum SignMode {
     /// SIGN_MODE_UNSPECIFIED specifies an unknown signing mode and will be
@@ -197,11 +200,24 @@ impl SignMode {
             _ => None,
         }
     }
+    pub fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let enum_value = Self::from_repr(*v);
+        match enum_value {
+            Some(v) => serializer.serialize_str(v.as_str_name()),
+            None => Err(serde::ser::Error::custom("unknown value")),
+        }
+    }
     pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        Ok(Self::from_str_name(s).unwrap() as i32)
+        match Self::from_str_name(s) {
+            Some(v) => Ok(v as i32),
+            None => Err(serde::de::Error::custom("unknown value")),
+        }
     }
 }

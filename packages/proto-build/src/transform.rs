@@ -151,8 +151,8 @@ fn transform_items(
                 let s = transformers::allow_serde_byte_as_base64(s);
                 transformers::allow_serde_enum_as_str(s)
             }),
-            Item::Enum(s) => Item::Enum({ transformers::append_enum_attrs(&s) }),
-            Item::Impl(s) => Item::Impl({ transformers::add_serde_impl_for_enum_impl(&s) }),
+            Item::Enum(s) => Item::Enum(transformers::append_enum_attrs(&s)),
+            Item::Impl(s) => Item::Impl(transformers::add_serde_impl_for_enum_impl(&s)),
             _ => i,
         })
         // TODO: Remove this temporary hack when cosmos & tendermint code gen is supported

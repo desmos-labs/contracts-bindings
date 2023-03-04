@@ -20,7 +20,10 @@ pub struct ApplicationLink {
     pub data: ::core::option::Option<Data>,
     /// State of the link
     #[prost(enumeration = "ApplicationLinkState", tag = "3")]
-    #[serde(deserialize_with = "ApplicationLinkState::deserialize")]
+    #[serde(
+        serialize_with = "ApplicationLinkState::serialize",
+        deserialize_with = "ApplicationLinkState::deserialize"
+    )]
     pub state: i32,
     /// OracleRequest represents the request that has been made to the oracle
     #[prost(message, optional, tag = "4")]
@@ -200,7 +203,7 @@ pub mod result {
 /// states: STARTED, ERRORED, SUCCESSFUL, TIMED_OUT
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ApplicationLinkState {
     /// A link has just been initialized
@@ -245,12 +248,25 @@ impl ApplicationLinkState {
             _ => None,
         }
     }
+    pub fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let enum_value = Self::from_repr(*v);
+        match enum_value {
+            Some(v) => serializer.serialize_str(v.as_str_name()),
+            None => Err(serde::ser::Error::custom("unknown value")),
+        }
+    }
     pub fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
         let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        Ok(Self::from_str_name(s).unwrap() as i32)
+        match Self::from_str_name(s) {
+            Some(v) => Ok(v as i32),
+            None => Err(serde::de::Error::custom("unknown value")),
+        }
     }
 }
 /// Profile represents a generic first on Desmos, containing the information of a
@@ -466,6 +482,7 @@ pub struct SingleSignatureData {
         tag = "1"
     )]
     #[serde(
+        serialize_with = "super::super::super::cosmos::tx::signing::v1beta1::SignMode::serialize",
         deserialize_with = "super::super::super::cosmos::tx::signing::v1beta1::SignMode::deserialize"
     )]
     pub mode: i32,
