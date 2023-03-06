@@ -21,7 +21,7 @@ pub struct DesmosCli {
 
 impl DesmosCli {
     pub fn default() -> DesmosCli {
-        DesmosCli::new("../../desmos".to_string())
+        DesmosCli::new("../../scripts".to_string())
     }
 
     /// Creates a new instance of [`DesmosCli`].

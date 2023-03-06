@@ -16,5 +16,6 @@ dependencies/
 *.iml
 .idea
 
-# Desmos chain temp directory
+# Desmos chain temp binary file and directory
+scripts/desmos
 scripts/.desmos
