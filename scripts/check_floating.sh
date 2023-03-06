@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script checks if the given file contains "f64" or "f32" operations and returns an error if found.
 
