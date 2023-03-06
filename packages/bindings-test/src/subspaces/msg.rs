@@ -87,7 +87,7 @@ mod tests {
             .assert_success();
     }
 
-    fn build_create_user_group_msg(subspace_id: Uint64, contract_address: &str) -> ExecuteMsg {
+    fn build_create_user_group_msg(subspace_id: u64, contract_address: &str) -> ExecuteMsg {
         DesmosMessages {
             msgs: vec![SubspacesMsg::create_user_group(
                 subspace_id.into(),
@@ -121,7 +121,7 @@ mod tests {
         let subspace_id = TEST_SUBSPACE;
 
         // Create the user group to delete.
-        let create_user_group_msg = build_create_user_group_msg(TEST_SUBSPACE, &contract_address);
+        let create_user_group_msg = build_create_user_group_msg(subspace_id, &contract_address);
 
         desmos_cli
             .wasm_execute(&contract_address, &create_user_group_msg)

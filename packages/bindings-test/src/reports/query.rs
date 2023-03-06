@@ -36,7 +36,7 @@ mod tests {
 
         // The first one should be the one reporting the user
         let report = response.reports.first().unwrap();
-        assert_eq!(TEST_SUBSPACE.u64(), report.subspace_id);
+        assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(&contract_address, report.reporter.as_str());
         assert_eq!(
             UserTarget {
@@ -47,7 +47,7 @@ mod tests {
 
         // The second one should be the one reporting a post
         let report = response.reports.get(1).unwrap();
-        assert_eq!(TEST_SUBSPACE.u64(), report.subspace_id);
+        assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(Addr::unchecked(&contract_address), report.reporter);
         assert_eq!(
             PostTarget {
@@ -78,7 +78,7 @@ mod tests {
         assert_eq!(1, response.reports.len());
 
         let report = response.reports.get(0).unwrap();
-        assert_eq!(TEST_SUBSPACE.u64(), report.subspace_id);
+        assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(Addr::unchecked(&contract_address), report.reporter);
         assert_eq!(
             PostTarget {
@@ -105,7 +105,7 @@ mod tests {
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
         let report = response.report.unwrap();
-        assert_eq!(TEST_SUBSPACE.u64(), report.subspace_id);
+        assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(
             UserTarget {
                 user: USER1_ADDRESS.into()

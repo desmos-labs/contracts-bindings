@@ -1,6 +1,6 @@
 use crate::consts::{GAS, USER1_KEY};
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
-use cosmwasm_std::{CosmosMsg, Uint64};
+use cosmwasm_std::CosmosMsg;
 use desmos_bindings::subspaces::types::{
     QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
     QueryUserGroupResponse, QueryUserGroupsResponse,
@@ -212,7 +212,7 @@ impl DesmosCli {
     }
 
     /// Queries the details of a subspace.
-    pub fn query_subspace(&self, subspace_id: Uint64) -> QuerySubspaceResponse {
+    pub fn query_subspace(&self, subspace_id: u64) -> QuerySubspaceResponse {
         let mut cmd = self.desmos();
         cmd.args([
             "query",
@@ -230,7 +230,7 @@ impl DesmosCli {
     /// Queries the user groups inside a subspace.
     pub fn query_user_groups(
         &self,
-        subspace_id: Uint64,
+        subspace_id: u64,
         page_key: Option<String>,
     ) -> QueryUserGroupsResponse {
         let mut cmd = self.desmos();
@@ -251,7 +251,7 @@ impl DesmosCli {
     }
 
     /// Queries the details of a user group inside a subspace.
-    pub fn query_user_group(&self, subspace_id: Uint64, group_id: u32) -> QueryUserGroupResponse {
+    pub fn query_user_group(&self, subspace_id: u64, group_id: u32) -> QueryUserGroupResponse {
         let mut cmd = self.desmos();
         cmd.args([
             "query",
@@ -269,7 +269,7 @@ impl DesmosCli {
     /// Queries the members of a group.
     pub fn query_user_group_members(
         &self,
-        subspace_id: Uint64,
+        subspace_id: u64,
         group_id: u32,
         page_key: Option<String>,
     ) -> QueryUserGroupMembersResponse {

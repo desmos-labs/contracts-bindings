@@ -55,7 +55,7 @@ mod tests {
         let relationship = response.relationships.first().unwrap();
         assert_eq!(USER1_ADDRESS, relationship.creator.as_str());
         assert_eq!(USER2_ADDRESS, relationship.counterparty.as_str());
-        assert_eq!(TEST_SUBSPACE.u64(), relationship.subspace_id);
+        assert_eq!(TEST_SUBSPACE, relationship.subspace_id);
     }
 
     #[test]
@@ -84,7 +84,7 @@ mod tests {
         let relationship = response.relationships.first().unwrap();
         assert_eq!(USER1_ADDRESS, relationship.creator.as_str());
         assert_eq!(USER2_ADDRESS, relationship.counterparty.as_str());
-        assert_eq!(TEST_SUBSPACE.u64(), relationship.subspace_id);
+        assert_eq!(TEST_SUBSPACE, relationship.subspace_id);
     }
 
     #[test]
@@ -132,7 +132,7 @@ mod tests {
 
         // Check that the fetched block was created from user2 to block user1
         let block = response.blocks.first().unwrap();
-        assert_eq!(TEST_SUBSPACE.u64(), block.subspace_id);
+        assert_eq!(TEST_SUBSPACE, block.subspace_id);
         assert_eq!(USER2_ADDRESS, block.blocker.as_str());
         assert_eq!(USER1_ADDRESS, block.blocked.as_str());
     }
@@ -160,7 +160,7 @@ mod tests {
 
         // Check that the fetched block was created from user2 to block user1
         let block = response.blocks.first().unwrap();
-        assert_eq!(TEST_SUBSPACE.u64(), block.subspace_id);
+        assert_eq!(TEST_SUBSPACE, block.subspace_id);
         assert_eq!(USER2_ADDRESS, block.blocker.as_str());
         assert_eq!(USER1_ADDRESS, block.blocked.as_str());
     }
