@@ -17,4 +17,4 @@ dependencies/
 .idea
 
 # Desmos chain temp directory
-desmos/.desmos
+scripts/.desmos

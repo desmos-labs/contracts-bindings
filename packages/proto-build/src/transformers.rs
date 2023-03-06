@@ -187,8 +187,6 @@ pub fn allow_serde_enum_as_custom_enum(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
-
-
 /// Add custom serde methods to implementation for enum
 pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
     let mut item = item_impl.clone();
