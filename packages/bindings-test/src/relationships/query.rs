@@ -15,7 +15,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryRelationshipsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 user: "".into(),
                 counterparty: "".into(),
                 pagination: None,
@@ -37,7 +37,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryRelationshipsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 user: USER1_ADDRESS.into(),
                 counterparty: "".into(),
                 pagination: None,
@@ -65,7 +65,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryRelationshipsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 user: USER1_ADDRESS.into(),
                 counterparty: USER2_ADDRESS.into(),
                 pagination: None,
@@ -94,7 +94,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryBlocksRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 blocker: "".into(),
                 blocked: "".into(),
                 pagination: None,
@@ -116,7 +116,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryBlocksRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 blocker: USER2_ADDRESS.into(),
                 blocked: "".into(),
                 pagination: None,
@@ -144,7 +144,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryBlocksRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 blocker: USER2_ADDRESS.into(),
                 blocked: USER1_ADDRESS.into(),
                 pagination: None,

@@ -14,7 +14,7 @@ mod tests {
         let create_relationship = RelationshipsMsg::create_relationship(
             Addr::unchecked(&contract_address),
             Addr::unchecked(USER1_ADDRESS),
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
         );
 
         let msg = DesmosMessages {
@@ -28,7 +28,7 @@ mod tests {
         let delete_relationship = RelationshipsMsg::delete_relationship(
             Addr::unchecked(&contract_address),
             Addr::unchecked(USER1_ADDRESS),
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
         );
 
         let msg = DesmosMessages {
@@ -49,7 +49,7 @@ mod tests {
             Addr::unchecked(&contract_address),
             Addr::unchecked(USER1_ADDRESS),
             "".into(),
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
         );
 
         let msg = DesmosMessages {
@@ -63,7 +63,7 @@ mod tests {
         let unblock_user = RelationshipsMsg::unblock_user(
             Addr::unchecked(&contract_address),
             Addr::unchecked(USER1_ADDRESS),
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
         );
 
         let msg = DesmosMessages {

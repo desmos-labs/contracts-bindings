@@ -21,7 +21,7 @@ mod tests {
         // Query all
         let query = DesmosChain {
             request: QueryReportsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 target: None,
                 reporter: "".into(),
                 pagination: None,
@@ -51,7 +51,7 @@ mod tests {
         assert_eq!(Addr::unchecked(&contract_address), report.reporter);
         assert_eq!(
             PostTarget {
-                post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into()
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID
             },
             PostTarget::try_from(report.target.clone().unwrap()).unwrap(),
         );
@@ -59,10 +59,10 @@ mod tests {
         // Query the post report
         let query = DesmosChain {
             request: QueryReportsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 target: Some(
                     PostTarget {
-                        post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+                        post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                     }
                     .into(),
                 ),
@@ -82,7 +82,7 @@ mod tests {
         assert_eq!(Addr::unchecked(&contract_address), report.reporter);
         assert_eq!(
             PostTarget {
-                post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into()
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID
             },
             PostTarget::try_from(report.target.clone().unwrap()).unwrap(),
         );
@@ -96,7 +96,7 @@ mod tests {
         // Query all
         let query = DesmosChain {
             request: QueryReportRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 report_id: TEST_REPORT_ID_WITH_USER_TARGET.into(),
             }
             .into(),
@@ -122,7 +122,7 @@ mod tests {
         // Query all
         let query = DesmosChain {
             request: QueryReasonsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 pagination: None,
             }
             .into(),
@@ -148,7 +148,7 @@ mod tests {
         // Query all
         let query = DesmosChain {
             request: QueryReasonRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 reason_id: TEST_REASON_ID,
             }
             .into(),

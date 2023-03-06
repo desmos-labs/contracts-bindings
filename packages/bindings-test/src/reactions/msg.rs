@@ -18,8 +18,8 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = ReactionsMsg::add_reaction(
-            TEST_SUBSPACE.into(),
-            TEST_REACTIONS_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_REACTIONS_POST_ID,
             ReactionValue::FreeText(FreeTextValue {
                 text: "test".into(),
             }),
@@ -42,8 +42,8 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = ReactionsMsg::remove_reaction(
-            TEST_SUBSPACE.into(),
-            TEST_REACTIONS_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_REACTIONS_POST_ID,
             TEST_POST_DELETABLE_REACTION_ID.into(),
             Addr::unchecked(&contract_address),
         );
@@ -64,7 +64,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = ReactionsMsg::add_registered_reaction(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             "test".into(),
             "test".into(),
             Addr::unchecked(&contract_address),
@@ -86,7 +86,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = ReactionsMsg::edit_registered_reaction(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             TEST_EDITABLE_REGISTERED_REACTION_ID.into(),
             "editable_code".into(),
             "editable_value".into(),
@@ -109,7 +109,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = ReactionsMsg::remove_registered_reaction(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             TEST_DELETABLE_REGISTERED_REACTION_ID.into(),
             Addr::unchecked(&contract_address),
         );
@@ -130,7 +130,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = ReactionsMsg::set_reactions_params(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             Some(RegisteredReactionValueParams { enabled: true }),
             Some(FreeTextValueParams {
                 enabled: true,

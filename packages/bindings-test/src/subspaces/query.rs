@@ -37,7 +37,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QuerySubspaceRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
             }
             .into(),
         };
@@ -59,7 +59,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryUserGroupsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 section_id: 0,
                 pagination: None,
             }
@@ -89,7 +89,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryUserGroupRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 group_id: TEST_SUBSPACE_USER_GROUP,
             }
             .into(),
@@ -118,7 +118,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryUserGroupMembersRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 group_id: TEST_SUBSPACE_USER_GROUP,
                 pagination: None,
             }
@@ -142,7 +142,7 @@ mod tests {
 
         let query = DesmosChain {
             request: QueryUserPermissionsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 section_id: 0,
                 user: USER1_ADDRESS.into(),
             }

@@ -23,8 +23,8 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: QueryReactionsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
-                post_id: TEST_REACTIONS_POST_ID.into(),
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_REACTIONS_POST_ID,
                 user: "".into(),
                 pagination: None,
             }
@@ -39,8 +39,8 @@ mod tests {
         let reaction = result.reactions.first().unwrap();
 
         let expected = Reaction {
-            subspace_id: TEST_SUBSPACE.into(),
-            post_id: TEST_REACTIONS_POST_ID.into(),
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_REGISTERED_REACTION_ID,
             value: Some(
                 ReactionValue::Registered(RegisteredReactionValue {
@@ -59,8 +59,8 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: QueryReactionRequest {
-                subspace_id: TEST_SUBSPACE.into(),
-                post_id: TEST_REACTIONS_POST_ID.into(),
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_REACTIONS_POST_ID,
                 reaction_id: TEST_POST_REGISTERED_REACTION_ID,
             }
             .into(),
@@ -73,8 +73,8 @@ mod tests {
             .to_object();
 
         let expected = Reaction {
-            subspace_id: TEST_SUBSPACE.into(),
-            post_id: TEST_REACTIONS_POST_ID.into(),
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_REGISTERED_REACTION_ID,
             value: Some(
                 ReactionValue::Registered(RegisteredReactionValue {
@@ -93,8 +93,8 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: QueryReactionRequest {
-                subspace_id: TEST_SUBSPACE.into(),
-                post_id: TEST_REACTIONS_POST_ID.into(),
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_REACTIONS_POST_ID,
                 reaction_id: TEST_POST_FREE_TEXT_REACTION_ID,
             }
             .into(),
@@ -107,8 +107,8 @@ mod tests {
             .to_object();
 
         let expected = Reaction {
-            subspace_id: TEST_SUBSPACE.into(),
-            post_id: TEST_REACTIONS_POST_ID.into(),
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_FREE_TEXT_REACTION_ID,
             value: Some(
                 FreeTextValue {
@@ -127,7 +127,7 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: QueryRegisteredReactionsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 pagination: None,
             }
             .into(),
@@ -141,7 +141,7 @@ mod tests {
         let registered_reaction = result.registered_reactions.first().unwrap();
 
         let expected = RegisteredReaction {
-            subspace_id: TEST_SUBSPACE.into(),
+            subspace_id: TEST_SUBSPACE,
             id: 1,
             shorthand_code: "editable_code".into(),
             display_value: "editable_value".into(),
@@ -155,7 +155,7 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: QueryRegisteredReactionRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 reaction_id: 1,
             }
             .into(),
@@ -168,7 +168,7 @@ mod tests {
             .to_object();
 
         let expected = RegisteredReaction {
-            subspace_id: TEST_SUBSPACE.into(),
+            subspace_id: TEST_SUBSPACE,
             id: 1,
             shorthand_code: "editable_code".into(),
             display_value: "editable_value".into(),
@@ -182,7 +182,7 @@ mod tests {
 
         let query_msg = DesmosChain {
             request: QueryReactionsParamsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
             }
             .into(),
         };
@@ -194,7 +194,7 @@ mod tests {
             .to_object();
 
         let expected = SubspaceReactionsParams {
-            subspace_id: TEST_SUBSPACE.into(),
+            subspace_id: TEST_SUBSPACE,
             registered_reaction: Some(RegisteredReactionValueParams { enabled: true }),
             free_text: Some(FreeTextValueParams {
                 enabled: true,

@@ -15,7 +15,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let create_report = ReportsMsg::create_report(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             vec![TEST_REASON_ID],
             "",
             Addr::unchecked(&contract_address),
@@ -39,7 +39,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let delete_report = ReportsMsg::delete_report(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             TEST_DELETABLE_REPORT_ID.into(),
             Addr::unchecked(&contract_address),
         );
@@ -59,7 +59,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let delete_report = ReportsMsg::support_standard_reason(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             TEST_REASON_ID.into(),
             Addr::unchecked(&contract_address),
         );
@@ -79,7 +79,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let add_reason = ReportsMsg::add_reason(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             "Test reason".into(),
             "",
             Addr::unchecked(&contract_address),
@@ -100,7 +100,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let remove_reason = ReportsMsg::remove_reason(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             TEST_DELETABLE_REASON_ID,
             Addr::unchecked(&contract_address),
         );

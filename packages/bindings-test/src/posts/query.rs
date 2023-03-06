@@ -18,8 +18,8 @@ mod test {
 
     fn get_editable_post(contract_address: &str) -> Post {
         Post {
-            id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
-            subspace_id: TEST_SUBSPACE.into(),
+            id: TEST_SUBSPACE_EDITABLE_POST_ID,
+            subspace_id: TEST_SUBSPACE,
             section_id: 0,
             external_id: "".to_string(),
             text: "Editable post".into(),
@@ -73,7 +73,7 @@ mod test {
 
         let query_msg = DesmosChain {
             request: QuerySubspacePostsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 pagination: None,
             }
             .into(),
@@ -97,7 +97,7 @@ mod test {
 
         let query_msg = DesmosChain {
             request: QuerySectionPostsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
+                subspace_id: TEST_SUBSPACE,
                 section_id: 0,
                 pagination: None,
             }
@@ -120,8 +120,8 @@ mod test {
 
         let query_msg = DesmosChain {
             request: QueryPostRequest {
-                subspace_id: TEST_SUBSPACE.into(),
-                post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
             }
             .into(),
         };
@@ -145,8 +145,8 @@ mod test {
 
         let query_msg = DesmosChain {
             request: QueryPostAttachmentsRequest {
-                subspace_id: TEST_SUBSPACE.into(),
-                post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                 pagination: None,
             }
             .into(),
@@ -198,8 +198,8 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = MsgAnswerPoll {
-            subspace_id: TEST_SUBSPACE.into(),
-            post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+            subspace_id: TEST_SUBSPACE,
+            post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
             poll_id: TEST_POLL_ID.into(),
             answers_indexes: vec![0],
             signer: contract_address.clone(),
@@ -216,8 +216,8 @@ mod test {
 
         let query_msg = DesmosChain {
             request: QueryPollAnswersRequest {
-                subspace_id: TEST_SUBSPACE.into(),
-                post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+                subspace_id: TEST_SUBSPACE,
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                 poll_id: 1,
                 user: "".into(),
                 pagination: None,

@@ -20,7 +20,7 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = PostsMsg::create_post(
-            TEST_SUBSPACE.into(),
+            TEST_SUBSPACE,
             0,
             None,
             "Post text",
@@ -32,7 +32,7 @@ mod test {
             ReplySetting::Everyone,
             vec![PostReference {
                 r#type: PostReferenceType::Reply.into(),
-                post_id: TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+                post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                 position: 0,
             }],
         );
@@ -53,8 +53,8 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = PostsMsg::edit_post(
-            TEST_SUBSPACE.into(),
-            TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_SUBSPACE_EDITABLE_POST_ID,
             None,
             Some(Entities {
                 hashtags: vec![],
@@ -88,8 +88,8 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = PostsMsg::delete_post(
-            TEST_SUBSPACE.into(),
-            TEST_SUBSPACE_DELETABLE_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_SUBSPACE_DELETABLE_POST_ID,
             Addr::unchecked(&contract_address),
         );
 
@@ -109,8 +109,8 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg_add_media = PostsMsg::add_post_attachment(
-            TEST_SUBSPACE.into(),
-            TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_SUBSPACE_EDITABLE_POST_ID,
             AttachmentContent::Media(Media {
                 mime_type: "test-mime".into(),
                 uri: "https://test.com/image.png".into(),
@@ -119,8 +119,8 @@ mod test {
         );
 
         let msg_add_poll = PostsMsg::add_post_attachment(
-            TEST_SUBSPACE.into(),
-            TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_SUBSPACE_EDITABLE_POST_ID,
             AttachmentContent::Poll(Poll {
                 question: "Test question?".to_string(),
                 provided_answers: vec![
@@ -162,8 +162,8 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = PostsMsg::remove_post_attachment(
-            TEST_SUBSPACE.into(),
-            TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_SUBSPACE_EDITABLE_POST_ID,
             TEST_DELETABLE_ATTACHMENT_ID,
             Addr::unchecked(&contract_address),
         );
@@ -184,8 +184,8 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let msg = PostsMsg::answer_poll(
-            TEST_SUBSPACE.into(),
-            TEST_SUBSPACE_EDITABLE_POST_ID.into(),
+            TEST_SUBSPACE,
+            TEST_SUBSPACE_EDITABLE_POST_ID,
             TEST_POLL_ID,
             vec![0],
             Addr::unchecked(&contract_address),
