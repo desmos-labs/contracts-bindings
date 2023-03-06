@@ -114,11 +114,6 @@ jobs:
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --target wasm32-unknown-unknown
 
-      - name: Build all feature 🧪
-        if: env.GIT_DIFF
-        working-directory: ./packages/bindings
-        run: cargo build --target wasm32-unknown-unknown
-
       - name: Build feature (profiles) 🧪
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
@@ -148,3 +143,62 @@ jobs:
         if: env.GIT_DIFF
         working-directory: ./packages/bindings
         run: cargo build --no-default-features --features reports --target wasm32-unknown-unknown
+
+      - name: Build all feature 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: | 
+          cargo build --all-features --target wasm32-unknown-unknown
+
+  check:
+    name: Check desmos-bindings build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Verify .rs and toml files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+            **/**.toml
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.65.0
+          override: true
+          components: rustfmt, clippy
+
+      - name: Prepare rust cache 🗄
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+      
+      - name: Install wasm2wat ⚙
+        run: |
+          wget https://github.com/WebAssembly/wabt/releases/download/1.0.32/wabt-1.0.32-ubuntu.tar.gz
+          tar -xzf wabt-1.0.32-ubuntu.tar.gz
+          sudo mv wabt-1.0.32/bin/wasm2wat .
+
+      - name: Install wasm32-unknown-unknown target ⚙
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Build all feature 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: | 
+          cargo build --all-features --target wasm32-unknown-unknown
+
+      - name: Check floating issue 👀
+        if: env.GIT_DIFF
+        run: |
+          ./wasm2wat target/wasm32-unknown-unknown/debug/desmos_bindings.wasm > tmp.wat
+          ./scripts/check_floating.sh tmp.wat
+
+
+          
