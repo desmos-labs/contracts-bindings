@@ -81,11 +81,9 @@ mod test {
 
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let res = desmos_cli.wasm_query(&contract_address, &query_msg);
-
-        println!("{:?}", res.to_string());
-
-        let result: QuerySubspacePostsResponse = res.to_object();
+        let result: QuerySubspacePostsResponse = desmos_cli
+            .wasm_query(&contract_address, &query_msg)
+            .to_object();
 
         let post = result.posts.first().unwrap();
         assert_post_eq(&get_editable_post(&contract_address), post, false);

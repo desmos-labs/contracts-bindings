@@ -76,7 +76,6 @@ mod tests {
         let response: QueryRelationshipsResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        println!("{:?}", response);
         // Should be only one relationship between user1 and user2
         assert_eq!(1, response.relationships.len());
 
