@@ -100,15 +100,6 @@ fn transform_module(
     nested_mod: bool,
 ) -> Vec<Item> {
     let items = transform_items(items, src, ancestors, descriptor);
-    append(items, src, descriptor, nested_mod)
-}
-
-fn append(
-    items: Vec<Item>,
-    src: &Path,
-    descriptor: &FileDescriptorSet,
-    nested_mod: bool,
-) -> Vec<Item> {
     transformers::append_querier(items, src, nested_mod, descriptor)
 }
 

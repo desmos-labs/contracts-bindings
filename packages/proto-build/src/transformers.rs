@@ -238,6 +238,85 @@ pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
     item
 }
 
+pub fn append_querier(
+    items: Vec<Item>,
+    src: &Path,
+    nested_mod: bool,
+    descriptor: &FileDescriptorSet,
+) -> Vec<Item> {
+    let package = src.file_stem().unwrap().to_str().unwrap();
+    let re = Regex::new(r"([^.]*)(\.v\d+(beta\d+)?)?$").unwrap();
+
+    let package_stem = re.captures(package).unwrap().get(1).unwrap().as_str();
+
+    let querier_wrapper_ident = format_ident!("{}Querier", &package_stem.to_upper_camel_case());
+
+    let query_services = extract_query_services(descriptor);
+    let query_fns = query_services.get(package).map(|service| service.method.iter().map(|method_desc| {
+        if nested_mod {
+            return quote! {};
+        }
+
+        let method_desc = method_desc.clone();
+
+        let name = format_ident!("{}", method_desc.name.unwrap().as_str().to_snake_case());
+        let req_type = format_ident!("{}", method_desc.input_type.unwrap().split('.').last().unwrap().to_string().to_upper_camel_case());
+        let res_type = format_ident!("{}", method_desc.output_type.unwrap().split('.').last().unwrap().to_string().to_upper_camel_case());
+
+        let req_args = items.clone().into_iter()
+            .find_map(|item| match item {
+                Item::Struct(s) => {
+                    if s.ident == req_type {
+                        match s.fields {
+                            Fields::Named(fields_named) => {
+                                Some(fields_named.named)
+                            }
+                            _ => None
+                        }
+                    } else {
+                        None
+                    }
+                }
+                _ => None
+            });
+
+        let arg_idents = req_args.clone().unwrap().into_iter().map(|arg| arg.ident.unwrap()).collect::<Vec<Ident>>();
+        let arg_ty = req_args.unwrap().into_iter().map(|arg| arg.ty).collect::<Vec<Type>>();
+
+        quote! {
+          pub fn #name( &self, #(#arg_idents : #arg_ty),* ) -> std::result::Result<#res_type, cosmwasm_std::StdError> {
+            #req_type { #(#arg_idents),* }.query(self.querier)
+          }
+        }
+    }).collect::<Vec<TokenStream2>>());
+
+    let querier = if let Some(query_fns) = query_fns {
+        if !nested_mod {
+            vec![
+                parse_quote! {
+                  pub struct #querier_wrapper_ident<'a, Q: cosmwasm_std::CustomQuery> {
+                      querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
+                  }
+                },
+                parse_quote! {
+                  impl<'a, Q: cosmwasm_std::CustomQuery> #querier_wrapper_ident<'a, Q> {
+                      pub fn new(querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>) -> Self {
+                    Self { querier }
+                    }
+                    #(#query_fns)*
+                  }
+                },
+            ]
+        } else {
+            vec![]
+        }
+    } else {
+        vec![]
+    };
+
+    vec![items, querier].concat()
+}
+
 // ====== helpers ======
 
 fn get_query_attr(
@@ -322,7 +401,7 @@ fn extract_type_path_from_enum(
         .map(|e| append_type_path(path, &e.name.to_owned().unwrap()))
 }
 
-pub fn extract_query_services(
+fn extract_query_services(
     descriptor: &FileDescriptorSet,
 ) -> HashMap<String, ServiceDescriptorProto> {
     descriptor
@@ -355,86 +434,7 @@ fn append_type_path(path: &str, name: &str) -> String {
     }
 }
 
-pub fn append_querier(
-    items: Vec<Item>,
-    src: &Path,
-    nested_mod: bool,
-    descriptor: &FileDescriptorSet,
-) -> Vec<Item> {
-    let package = src.file_stem().unwrap().to_str().unwrap();
-    let re = Regex::new(r"([^.]*)(\.v\d+(beta\d+)?)?$").unwrap();
-
-    let package_stem = re.captures(package).unwrap().get(1).unwrap().as_str();
-
-    let querier_wrapper_ident = format_ident!("{}Querier", &package_stem.to_upper_camel_case());
-
-    let query_services = extract_query_services(descriptor);
-    let query_fns = query_services.get(package).map(|service| service.method.iter().map(|method_desc| {
-        if nested_mod {
-            return quote! {};
-        }
-
-        let method_desc = method_desc.clone();
-
-        let name = format_ident!("{}", method_desc.name.unwrap().as_str().to_snake_case());
-        let req_type = format_ident!("{}", method_desc.input_type.unwrap().split('.').last().unwrap().to_string().to_upper_camel_case());
-        let res_type = format_ident!("{}", method_desc.output_type.unwrap().split('.').last().unwrap().to_string().to_upper_camel_case());
-
-        let req_args = items.clone().into_iter()
-            .find_map(|item| match item {
-                Item::Struct(s) => {
-                    if s.ident == req_type {
-                        match s.fields {
-                            Fields::Named(fields_named) => {
-                                Some(fields_named.named)
-                            }
-                            _ => None
-                        }
-                    } else {
-                        None
-                    }
-                }
-                _ => None
-            });
-
-        let arg_idents = req_args.clone().unwrap().into_iter().map(|arg| arg.ident.unwrap()).collect::<Vec<Ident>>();
-        let arg_ty = req_args.unwrap().into_iter().map(|arg| arg.ty).collect::<Vec<Type>>();
-
-        quote! {
-          pub fn #name( &self, #(#arg_idents : #arg_ty),* ) -> std::result::Result<#res_type, cosmwasm_std::StdError> {
-            #req_type { #(#arg_idents),* }.query(self.querier)
-          }
-        }
-    }).collect::<Vec<TokenStream2>>());
-
-    let querier = if let Some(query_fns) = query_fns {
-        if !nested_mod {
-            vec![
-                parse_quote! {
-                  pub struct #querier_wrapper_ident<'a, Q: cosmwasm_std::CustomQuery> {
-                      querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
-                  }
-                },
-                parse_quote! {
-                  impl<'a, Q: cosmwasm_std::CustomQuery> #querier_wrapper_ident<'a, Q> {
-                      pub fn new(querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>) -> Self {
-                    Self { querier }
-                    }
-                    #(#query_fns)*
-                  }
-                },
-            ]
-        } else {
-            vec![]
-        }
-    } else {
-        vec![]
-    };
-
-    vec![items, querier].concat()
-}
-
-pub fn has_repr_attribute(attrs: &[Attribute]) -> bool {
+fn has_repr_attribute(attrs: &[Attribute]) -> bool {
     attrs.iter().any(|attr| {
         // Parse the attribute's meta information.
         let meta = match attr.parse_meta() {
@@ -493,7 +493,7 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
     })
 }
 
-pub fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
+fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
     attrs.iter().any(|attr| {
         // Parse the attribute's meta information.
         let meta = match attr.parse_meta() {
