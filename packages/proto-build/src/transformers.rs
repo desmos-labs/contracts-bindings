@@ -32,6 +32,7 @@ pub const REPLACEMENTS: &[(&str, &str)] = &[
     ),
 ];
 
+/// Appends required attributes for struct
 pub fn append_struct_attrs(
     src: &Path,
     s: &ItemStruct,
@@ -53,6 +54,29 @@ pub fn append_struct_attrs(
     s
 }
 
+/// Appends required attributes for enum
+pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
+    let mut s = s.clone();
+
+    if has_repr_attribute(&s.attrs) {
+        s.attrs.append(&mut vec![syn::parse_quote! {
+            #[derive(strum_macros::FromRepr)]
+        }]);
+    }
+
+    s.attrs.append(&mut vec![
+        syn::parse_quote! {
+            #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+        },
+        syn::parse_quote! {
+           #[serde(rename_all = "snake_case")]
+        },
+    ]);
+
+    s
+}
+
+/// Allows the number type field to be (de)serialized as str
 pub fn allow_serde_number_as_str(s: ItemStruct) -> ItemStruct {
     let fields_vec = s
         .fields
@@ -88,6 +112,7 @@ pub fn allow_serde_number_as_str(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
+/// Allows the byte type field to be (de)serialized as base64
 pub fn allow_serde_byte_as_base64(s: ItemStruct) -> ItemStruct {
     let as_base64: syn::Attribute = parse_quote! {
         #[serde(
@@ -120,7 +145,8 @@ pub fn allow_serde_byte_as_base64(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
-pub fn allow_serde_enum_as_str(s: ItemStruct) -> ItemStruct {
+/// Allows the enum type field to be (de)serialized as custom enum
+pub fn allow_serde_enum_as_custom_enum(s: ItemStruct) -> ItemStruct {
     let fields_vec = s
         .fields
         .clone()
@@ -161,119 +187,9 @@ pub fn allow_serde_enum_as_str(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
-/// Searches for the "enumeration" attribute in an attribute list of the form
-/// #[prost(enumeration = "target" )] and returns the target value if it does exist.
-fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
-    attrs.iter().find_map(|attr| {
-        // Parse the attribute's meta information.
-        let meta = match attr.parse_meta() {
-            Ok(meta) => meta,
-            Err(_) => return None,
-        };
 
-        // Check if the attribute name is "prost".
-        let list = match meta {
-            syn::Meta::List(list)
-                if list
-                    .path
-                    .get_ident()
-                    .filter(|ident| ident.to_string() == "prost")
-                    .is_some() =>
-            {
-                list
-            }
-            _ => return None,
-        };
 
-        // Search all nested attributes and look for the "enumeration" attribute.
-        list.nested.iter().find_map(|nested| {
-            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
-                if nv.path.is_ident("enumeration") {
-                    if let syn::Lit::Str(s) = &nv.lit {
-                        return Some(s.value());
-                    }
-                }
-            }
-            None
-        })
-    })
-}
-
-pub fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
-    attrs.iter().any(|attr| {
-        // Parse the attribute's meta information.
-        let meta = match attr.parse_meta() {
-            Ok(meta) => meta,
-            Err(_) => return false,
-        };
-
-        // Check if the attribute name is "prost".
-        let list = match meta {
-            syn::Meta::List(list)
-                if list
-                    .path
-                    .get_ident()
-                    .filter(|ident| ident.to_string() == "prost")
-                    .is_some() =>
-            {
-                list
-            }
-            _ => return false,
-        };
-
-        // Search all nested attributes and look for the "oneof" attribute.
-        list.nested.iter().any(|nested| {
-            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
-                return nv.path.is_ident("oneof");
-            }
-
-            false
-        })
-    })
-}
-
-pub fn append_enum_attrs(s: &ItemEnum) -> ItemEnum {
-    let mut s = s.clone();
-
-    if has_repr_attribute(&s.attrs) {
-        s.attrs.append(&mut vec![syn::parse_quote! {
-            #[derive(strum_macros::FromRepr)]
-        }]);
-    }
-
-    s.attrs.append(&mut vec![
-        syn::parse_quote! {
-            #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-        },
-        syn::parse_quote! {
-           #[serde(rename_all = "snake_case")]
-        },
-    ]);
-
-    s
-}
-
-pub fn has_repr_attribute(attrs: &[Attribute]) -> bool {
-    attrs.iter().any(|attr| {
-        // Parse the attribute's meta information.
-        let meta = match attr.parse_meta() {
-            Ok(meta) => meta,
-            Err(_) => return false,
-        };
-
-        // Check if the attribute name is "prost".
-        match meta {
-            syn::Meta::List(list) => list
-                .path
-                .get_ident()
-                .filter(|ident| ident.to_string() == "repr")
-                .is_some(),
-
-            _ => return false,
-        }
-    })
-}
-
+/// Add custom serde methods to implementation for enum
 pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
     let mut item = item_impl.clone();
 
@@ -307,9 +223,10 @@ pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
     let deserialize_method: syn::ImplItemMethod = parse_quote! {
         pub  fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
         where  D: serde::Deserializer<'de> {
-            let s: &str = serde::Deserialize::deserialize(deserializer)?;
-            match Self::from_str_name(s) {
-                Some(v) => Ok(v as i32),
+            use serde::de::Deserialize;
+            let s = String::deserialize(deserializer)?;
+            match Self::from_str_name(&s) {
+                Some(v) => Ok(v.into()),
                 None => Err(serde::de::Error::custom("unknown value")),
             }
         }
@@ -517,4 +434,96 @@ pub fn append_querier(
     };
 
     vec![items, querier].concat()
+}
+
+pub fn has_repr_attribute(attrs: &[Attribute]) -> bool {
+    attrs.iter().any(|attr| {
+        // Parse the attribute's meta information.
+        let meta = match attr.parse_meta() {
+            Ok(meta) => meta,
+            Err(_) => return false,
+        };
+
+        // Check if the attribute name is "prost".
+        match meta {
+            syn::Meta::List(list) => list
+                .path
+                .get_ident()
+                .filter(|ident| ident.to_string() == "repr")
+                .is_some(),
+
+            _ => return false,
+        }
+    })
+}
+
+/// Searches for the "enumeration" attribute in an attribute list of the form
+/// #[prost(enumeration = "target" )] and returns the target value if it does exist.
+fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
+    attrs.iter().find_map(|attr| {
+        // Parse the attribute's meta information.
+        let meta = match attr.parse_meta() {
+            Ok(meta) => meta,
+            Err(_) => return None,
+        };
+
+        // Check if the attribute name is "prost".
+        let list = match meta {
+            syn::Meta::List(list)
+                if list
+                    .path
+                    .get_ident()
+                    .filter(|ident| ident.to_string() == "prost")
+                    .is_some() =>
+            {
+                list
+            }
+            _ => return None,
+        };
+
+        // Search all nested attributes and look for the "enumeration" attribute.
+        list.nested.iter().find_map(|nested| {
+            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
+                if nv.path.is_ident("enumeration") {
+                    if let syn::Lit::Str(s) = &nv.lit {
+                        return Some(s.value());
+                    }
+                }
+            }
+            None
+        })
+    })
+}
+
+pub fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
+    attrs.iter().any(|attr| {
+        // Parse the attribute's meta information.
+        let meta = match attr.parse_meta() {
+            Ok(meta) => meta,
+            Err(_) => return false,
+        };
+
+        // Check if the attribute name is "prost".
+        let list = match meta {
+            syn::Meta::List(list)
+                if list
+                    .path
+                    .get_ident()
+                    .filter(|ident| ident.to_string() == "prost")
+                    .is_some() =>
+            {
+                list
+            }
+            _ => return false,
+        };
+
+        // Search all nested attributes and look for the "oneof" attribute.
+        list.nested.iter().any(|nested| {
+            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
+                return nv.path.is_ident("oneof");
+            }
+
+            false
+        })
+    })
 }

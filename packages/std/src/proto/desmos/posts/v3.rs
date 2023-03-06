@@ -461,9 +461,10 @@ impl PostReferenceType {
     where
         D: serde::Deserializer<'de>,
     {
-        let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        match Self::from_str_name(s) {
-            Some(v) => Ok(v as i32),
+        use serde::de::Deserialize;
+        let s = String::deserialize(deserializer)?;
+        match Self::from_str_name(&s) {
+            Some(v) => Ok(v.into()),
             None => Err(serde::de::Error::custom("unknown value")),
         }
     }
@@ -524,9 +525,10 @@ impl ReplySetting {
     where
         D: serde::Deserializer<'de>,
     {
-        let s: &str = serde::Deserialize::deserialize(deserializer)?;
-        match Self::from_str_name(s) {
-            Some(v) => Ok(v as i32),
+        use serde::de::Deserialize;
+        let s = String::deserialize(deserializer)?;
+        match Self::from_str_name(&s) {
+            Some(v) => Ok(v.into()),
             None => Err(serde::de::Error::custom("unknown value")),
         }
     }

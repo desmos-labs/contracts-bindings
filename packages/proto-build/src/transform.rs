@@ -149,7 +149,7 @@ fn transform_items(
                 let s = transformers::append_struct_attrs(src, &s, descriptor);
                 let s = transformers::allow_serde_number_as_str(s);
                 let s = transformers::allow_serde_byte_as_base64(s);
-                transformers::allow_serde_enum_as_str(s)
+                transformers::allow_serde_enum_as_custom_enum(s)
             }),
             Item::Enum(s) => Item::Enum(transformers::append_enum_attrs(&s)),
             Item::Impl(s) => Item::Impl(transformers::add_serde_impl_for_enum_impl(&s)),
