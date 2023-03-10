@@ -21,7 +21,7 @@ all-features = true
 cosmwasm-std = "1.2.1"
 cosmwasm-schema = "1.2.1"
 anyhow = "1.0.69"
-serde = { version = "1.0.152", default-features = false, features = ["derive"] }
+serde = { version = "1.0.154", default-features = false, features = ["derive"] }
 thiserror = "1.0.39"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
