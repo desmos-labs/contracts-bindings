@@ -2,16 +2,17 @@
 mod test {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_EDITABLE_POST_ID};
-    use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::posts::models::{
-        Entities, Post, PostAttachment, ProvidedAnswer, ReplySetting, UrlEntity,
+    use chrono::DateTime;
+    use cosmwasm_std::Addr;
+    use desmos_bindings::posts::types::{
+        poll::ProvidedAnswer, Entities, Poll, Post, ReplySetting, Url,
     };
-    use desmos_bindings::posts::models_query::{
-        QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
-        QuerySectionPostsResponse, QuerySubspacePostsResponse,
+    use desmos_bindings::posts::types::{
+        MsgAnswerPoll, QueryPollAnswersRequest, QueryPollAnswersResponse,
+        QueryPostAttachmentsRequest, QueryPostAttachmentsResponse, QueryPostRequest,
+        QueryPostResponse, QuerySectionPostsRequest, QuerySectionPostsResponse,
+        QuerySubspacePostsRequest, QuerySubspacePostsResponse,
     };
-    use desmos_bindings::posts::msg::PostsMsg;
-    use desmos_bindings::posts::query::PostsQuery;
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::QueryMsg::DesmosChain;
 
@@ -20,14 +21,14 @@ mod test {
             id: TEST_SUBSPACE_EDITABLE_POST_ID,
             subspace_id: TEST_SUBSPACE,
             section_id: 0,
-            external_id: Some("".to_string()),
-            text: Some("Editable post".to_string()),
+            external_id: "".to_string(),
+            text: "Editable post".into(),
             entities: Some(Entities {
                 hashtags: vec![],
                 mentions: vec![],
-                urls: vec![UrlEntity {
-                    start: Uint64::new(0),
-                    end: Uint64::new(1),
+                urls: vec![Url {
+                    start: 0,
+                    end: 1,
                     url:
                         "https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7"
                             .into(),
@@ -35,12 +36,15 @@ mod test {
                 }],
             }),
             tags: vec![],
-            author: Addr::unchecked(contract_address),
-            conversation_id: Some(Uint64::new(0)),
+            author: contract_address.into(),
+            conversation_id: 0,
             referenced_posts: vec![],
-            reply_settings: ReplySetting::Everyone,
+            reply_settings: ReplySetting::Everyone.into(),
             // Leave the creation date blank since we can't guess it at runtime.
-            creation_date: "".to_string(),
+            creation_date: Some(
+                DateTime::from(DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap())
+                    .into(),
+            ),
             // Leave the last edited date None since we can't guess it at runtime.
             last_edited_date: None,
         }
@@ -68,7 +72,7 @@ mod test {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: PostsQuery::SubspacePosts {
+            request: QuerySubspacePostsRequest {
                 subspace_id: TEST_SUBSPACE,
                 pagination: None,
             }
@@ -90,7 +94,7 @@ mod test {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: PostsQuery::SectionPosts {
+            request: QuerySectionPostsRequest {
                 subspace_id: TEST_SUBSPACE,
                 section_id: 0,
                 pagination: None,
@@ -113,7 +117,7 @@ mod test {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: PostsQuery::Post {
+            request: QueryPostRequest {
                 subspace_id: TEST_SUBSPACE,
                 post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
             }
@@ -126,7 +130,11 @@ mod test {
             .wasm_query(&contract_address, &query_msg)
             .to_object();
 
-        assert_post_eq(&get_editable_post(&contract_address), &result.post, false);
+        assert_post_eq(
+            &get_editable_post(&contract_address),
+            &result.post.unwrap(),
+            false,
+        );
     }
 
     #[test]
@@ -134,7 +142,7 @@ mod test {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: PostsQuery::PostAttachments {
+            request: QueryPostAttachmentsRequest {
                 subspace_id: TEST_SUBSPACE,
                 post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                 pagination: None,
@@ -153,24 +161,28 @@ mod test {
         assert_eq!(attachment.id, TEST_POLL_ID);
 
         // Convert from the raw attachment content into the enum
-        let post_attachment: PostAttachment =
-            PostAttachment::try_from(attachment.content.clone()).unwrap();
+        let post_attachment = Poll::try_from(attachment.content.clone().unwrap()).unwrap();
 
         assert_eq!(
             post_attachment,
-            PostAttachment::Poll {
+            Poll {
                 question: "Test question?".to_string(),
                 provided_answers: vec![
                     ProvidedAnswer {
-                        text: Some("Answer 1".to_string()),
+                        text: "Answer 1".to_string(),
                         attachments: vec![]
                     },
                     ProvidedAnswer {
-                        text: Some("Answer 2".to_string()),
+                        text: "Answer 2".to_string(),
                         attachments: vec![]
                     }
                 ],
-                end_date: "2140-01-01T10:00:20.021Z".to_string(),
+                end_date: Some(
+                    DateTime::from(
+                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                    )
+                    .into()
+                ),
                 allows_multiple_answers: false,
                 allows_answer_edits: true,
                 final_tally_results: None
@@ -183,12 +195,12 @@ mod test {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let msg = PostsMsg::AnswerPoll {
+        let msg = MsgAnswerPoll {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
-            poll_id: TEST_POLL_ID,
+            poll_id: TEST_POLL_ID.into(),
             answers_indexes: vec![0],
-            signer: Addr::unchecked(&contract_address),
+            signer: contract_address.clone(),
         };
 
         desmos_cli
@@ -201,11 +213,11 @@ mod test {
             .assert_success();
 
         let query_msg = DesmosChain {
-            request: PostsQuery::PollAnswers {
+            request: QueryPollAnswersRequest {
                 subspace_id: TEST_SUBSPACE,
                 post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                 poll_id: 1,
-                user: None,
+                user: "".into(),
                 pagination: None,
             }
             .into(),

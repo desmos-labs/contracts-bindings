@@ -5,8 +5,8 @@ mod tests {
         TEST_DELETABLE_REASON_ID, TEST_DELETABLE_REPORT_ID, TEST_REASON_ID, TEST_SUBSPACE,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::reports::models::ReportTarget;
     use desmos_bindings::reports::msg::ReportsMsg;
+    use desmos_bindings::reports::types::{ReportTarget, UserTarget};
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
     #[test]
@@ -14,16 +14,15 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let create_report = ReportsMsg::CreateReport {
-            subspace_id: TEST_SUBSPACE,
-            reasons_ids: vec![TEST_REASON_ID],
-            message: None,
-            reporter: Addr::unchecked(&contract_address),
-            target: ReportTarget::User {
-                user: Addr::unchecked("desmos1ppvcentlcj2qzhzuu0zp2k492ef24asxmta5g5"),
-            }
-            .into(),
-        };
+        let create_report = ReportsMsg::create_report(
+            TEST_SUBSPACE,
+            vec![TEST_REASON_ID],
+            "",
+            Addr::unchecked(&contract_address),
+            ReportTarget::User(UserTarget {
+                user: "desmos1ppvcentlcj2qzhzuu0zp2k492ef24asxmta5g5".into(),
+            }),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![create_report.into()],
@@ -39,11 +38,11 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let delete_report = ReportsMsg::DeleteReport {
-            subspace_id: TEST_SUBSPACE,
-            report_id: TEST_DELETABLE_REPORT_ID,
-            signer: Addr::unchecked(&contract_address),
-        };
+        let delete_report = ReportsMsg::delete_report(
+            TEST_SUBSPACE,
+            TEST_DELETABLE_REPORT_ID.into(),
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![delete_report.into()],
@@ -59,11 +58,11 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let delete_report = ReportsMsg::SupportStandardReason {
-            subspace_id: TEST_SUBSPACE,
-            standard_reason_id: TEST_REASON_ID,
-            signer: Addr::unchecked(&contract_address),
-        };
+        let delete_report = ReportsMsg::support_standard_reason(
+            TEST_SUBSPACE,
+            TEST_REASON_ID.into(),
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![delete_report.into()],
@@ -79,12 +78,12 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let add_reason = ReportsMsg::AddReason {
-            subspace_id: TEST_SUBSPACE,
-            title: "Test reason".to_string(),
-            description: None,
-            signer: Addr::unchecked(&contract_address),
-        };
+        let add_reason = ReportsMsg::add_reason(
+            TEST_SUBSPACE,
+            "Test reason".into(),
+            "",
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![add_reason.into()],
@@ -100,11 +99,11 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let remove_reason = ReportsMsg::RemoveReason {
-            subspace_id: TEST_SUBSPACE,
-            reason_id: TEST_DELETABLE_REASON_ID,
-            signer: Addr::unchecked(&contract_address),
-        };
+        let remove_reason = ReportsMsg::remove_reason(
+            TEST_SUBSPACE,
+            TEST_DELETABLE_REASON_ID,
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![remove_reason.into()],

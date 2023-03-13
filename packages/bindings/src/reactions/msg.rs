@@ -1,113 +1,51 @@
 //! Contains the messages that can be sent to the chain to interact with the x/reactions module.
 
-use crate::reactions::models::{
-    FreeTextValueParams, RawReactionValue, ReactionValue, RegisteredReactionValueParams,
-};
+use crate::reactions::types::*;
+use cosmwasm_std::Addr;
 
-use cosmwasm_schema::cw_serde;
-use cosmwasm_std::{Addr, Uint64};
-
-/// Represents the messages to interact with the reactions module.
-#[cw_serde]
-pub enum ReactionsMsg {
-    /// Add a reaction to a post.
-    AddReaction {
-        /// Id of the subspace inside which the post to react to is.
-        subspace_id: Uint64,
-        /// Id of the post to react to.
-        post_id: Uint64,
-        /// Value of the reaction.
-        value: RawReactionValue,
-        /// User reacting to the post.
-        user: Addr,
-    },
-    /// Remove a reaction from a post.
-    RemoveReaction {
-        /// Id of the subspace inside which the reaction to remove is.
-        subspace_id: Uint64,
-        /// Id of the post from which to remove the reaction.
-        post_id: Uint64,
-        /// Id of the reaction to be removed.
-        reaction_id: u32,
-        /// User removing the reaction.
-        user: Addr,
-    },
-    /// Register a new supported reaction to the subspace.
-    AddRegisteredReaction {
-        /// Id of the subspace inside which this reaction should be registered.
-        subspace_id: Uint64,
-        /// Shorthand code of the reaction.
-        shorthand_code: String,
-        /// Display value of the reaction.
-        display_value: String,
-        /// User adding the supported reaction.
-        user: Addr,
-    },
-    /// Edit a registered reaction inside the subspace.
-    EditRegisteredReaction {
-        /// Id of the subspace inside which the reaction to edit is.
-        subspace_id: Uint64,
-        /// Id of the registered reaction to edit.
-        registered_reaction_id: u32,
-        /// New shorthand code to be set.
-        shorthand_code: String,
-        /// Display value to be set.
-        display_value: String,
-        /// User editing the registered reaction.
-        user: Addr,
-    },
-    /// Remove a registered reaction from the subspace.
-    RemoveRegisteredReaction {
-        /// Id of the subspace from which to remove the registered reaction.
-        subspace_id: Uint64,
-        /// Id of the registered reaction to be removed.
-        registered_reaction_id: u32,
-        /// User removing the registered reaction.
-        user: Addr,
-    },
-    /// Set reactions parameters for the subspace.
-    SetReactionsParams {
-        /// Id of the subspace for which to set the params.
-        subspace_id: Uint64,
-        /// Params related to [`ReactionValue::Registered`](crate::reactions::models::ReactionValue::Registered) reactions.
-        registered_reaction: RegisteredReactionValueParams,
-        /// Params related to [`ReactionValue::FreeText`](crate::reactions::models::ReactionValue::FreeText) reactions.
-        free_text: FreeTextValueParams,
-        /// User setting the params.
-        user: Addr,
-    },
-}
+/// ReactionsMsg is the builder to generate Desmos x/reactions messages.
+pub struct ReactionsMsg {}
 
 impl ReactionsMsg {
-    /// Creates a new instance of [`ReactionsMsg::AddReaction`].
+    /// Creates a new instance of [`MsgAddReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the post to react to is.
     /// * `post_id` - Id of the post to react to.
     /// * `value` - Value of the reaction.
     /// * `user` - User reacting to the post.
-    pub fn add_reaction(subspace_id: u64, post_id: u64, value: ReactionValue, user: Addr) -> Self {
-        Self::AddReaction {
-            subspace_id: subspace_id.into(),
-            post_id: post_id.into(),
-            value: value.into(),
-            user,
+    pub fn add_reaction(
+        subspace_id: u64,
+        post_id: u64,
+        value: ReactionValue,
+        user: Addr,
+    ) -> MsgAddReaction {
+        MsgAddReaction {
+            subspace_id,
+            post_id,
+            value: Some(value.into()),
+            user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsg::RemoveReaction`].
+    /// Creates a new instance of [`MsgRemoveReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the reaction to remove is.
     /// * `post_id` - Id of the post from which to remove the reaction.
     /// * `reaction_id` - Id of the reaction to be removed.
     /// * `user` - User removing the reaction.
-    pub fn remove_reaction(subspace_id: u64, post_id: u64, reaction_id: u32, user: Addr) -> Self {
-        Self::RemoveReaction {
-            subspace_id: subspace_id.into(),
-            post_id: post_id.into(),
+    pub fn remove_reaction(
+        subspace_id: u64,
+        post_id: u64,
+        reaction_id: u32,
+        user: Addr,
+    ) -> MsgRemoveReaction {
+        MsgRemoveReaction {
+            subspace_id,
+            post_id,
             reaction_id,
-            user,
+            user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsg::AddRegisteredReaction`].
+    /// Creates a new instance of [`MsgAddRegisteredReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which this reaction should be registered.
     /// * `shorthand_code` - Shorthand code of the reaction.
@@ -118,15 +56,15 @@ impl ReactionsMsg {
         shorthand_code: &str,
         display_value: &str,
         user: Addr,
-    ) -> Self {
-        Self::AddRegisteredReaction {
-            subspace_id: subspace_id.into(),
-            shorthand_code: shorthand_code.to_string(),
-            display_value: display_value.to_string(),
-            user,
+    ) -> MsgAddRegisteredReaction {
+        MsgAddRegisteredReaction {
+            subspace_id,
+            shorthand_code: shorthand_code.into(),
+            display_value: display_value.into(),
+            user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsg::EditRegisteredReaction`].
+    /// Creates a new instance of [`MsgEditRegisteredReaction`].
     ///
     /// * `subspace_id` - Id of the subspace inside which the reaction to edit is.
     /// * `registered_reaction_id` - Id of the registered reaction to edit.
@@ -139,16 +77,16 @@ impl ReactionsMsg {
         shorthand_code: &str,
         display_value: &str,
         user: Addr,
-    ) -> Self {
-        Self::EditRegisteredReaction {
-            subspace_id: subspace_id.into(),
+    ) -> MsgEditRegisteredReaction {
+        MsgEditRegisteredReaction {
+            subspace_id,
             registered_reaction_id,
-            shorthand_code: shorthand_code.to_string(),
-            display_value: display_value.to_string(),
-            user,
+            shorthand_code: shorthand_code.into(),
+            display_value: display_value.into(),
+            user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsg::RemoveRegisteredReaction`].
+    /// Creates a new instance of [`MsgRemoveRegisteredReaction`].
     ///
     /// * `subspace_id` - Id of the registered reaction to be removed.
     /// * `registered_reaction_id` - Id of the registered reaction to be removed.
@@ -157,30 +95,30 @@ impl ReactionsMsg {
         subspace_id: u64,
         registered_reaction_id: u32,
         user: Addr,
-    ) -> Self {
-        Self::RemoveRegisteredReaction {
-            subspace_id: subspace_id.into(),
+    ) -> MsgRemoveRegisteredReaction {
+        MsgRemoveRegisteredReaction {
+            subspace_id,
             registered_reaction_id,
-            user,
+            user: user.into(),
         }
     }
-    /// Creates a new instance of [`ReactionsMsg::SetReactionsParams`].
+    /// Creates a new instance of [`MsgSetReactionsParams`].
     ///
     /// * `subspace_id` - Id of the subspace for which to set the params.
-    /// * `registered_reaction` - Params related to [`ReactionValue::Registered`](crate::reactions::models::ReactionValue::Registered) reactions.
-    /// * `value` - Params related to [`ReactionValue::FreeText`](crate::reactions::models::ReactionValue::FreeText) reactions.
+    /// * `registered_reaction` - Params related to [`FreeTextValue`].
+    /// * `free_text` - Params related to [`RegisteredReactionValue`].
     /// * `user` - User setting the params.
     pub fn set_reactions_params(
         subspace_id: u64,
-        registered_reaction: RegisteredReactionValueParams,
-        free_text: FreeTextValueParams,
+        registered_reaction: Option<RegisteredReactionValueParams>,
+        free_text: Option<FreeTextValueParams>,
         user: Addr,
-    ) -> Self {
-        Self::SetReactionsParams {
+    ) -> MsgSetReactionsParams {
+        MsgSetReactionsParams {
             subspace_id: subspace_id.into(),
             registered_reaction,
             free_text,
-            user,
+            user: user.into(),
         }
     }
 }
@@ -194,38 +132,40 @@ mod tests {
         let msg = ReactionsMsg::add_reaction(
             1,
             1,
-            ReactionValue::Registered {
+            ReactionValue::Registered(RegisteredReactionValue {
                 registered_reaction_id: 1,
-            },
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
-        );
-        let expected = ReactionsMsg::AddReaction {
-            subspace_id: Uint64::new(1),
-            post_id: Uint64::new(1),
-            value: ReactionValue::Registered {
-                registered_reaction_id: 1,
-            }
+            })
             .into(),
-            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            Addr::unchecked("user"),
+        );
+
+        let expected = MsgAddReaction {
+            subspace_id: 1,
+            post_id: 1,
+            value: Some(
+                ReactionValue::Registered(RegisteredReactionValue {
+                    registered_reaction_id: 1,
+                })
+                .into(),
+            ),
+            user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_remove_reaction() {
-        let msg = ReactionsMsg::remove_reaction(
-            1,
-            1,
-            1,
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
-        );
-        let expected = ReactionsMsg::RemoveReaction {
-            subspace_id: Uint64::new(1),
-            post_id: Uint64::new(1),
+        let msg = ReactionsMsg::remove_reaction(1, 1, 1, Addr::unchecked("user"));
+
+        let expected = MsgRemoveReaction {
+            subspace_id: 1,
+            post_id: 1,
             reaction_id: 1,
-            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -234,15 +174,17 @@ mod tests {
             1,
             "test_code",
             "test_value",
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            Addr::unchecked("user"),
         );
-        let expected = ReactionsMsg::AddRegisteredReaction {
-            subspace_id: Uint64::new(1),
-            shorthand_code: "test_code".to_string(),
-            display_value: "test_value".to_string(),
-            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+
+        let expected = MsgAddRegisteredReaction {
+            subspace_id: 1,
+            shorthand_code: "test_code".into(),
+            display_value: "test_value".into(),
+            user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
@@ -252,55 +194,57 @@ mod tests {
             1,
             "test_code",
             "test_value",
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            Addr::unchecked("user"),
         );
-        let expected = ReactionsMsg::EditRegisteredReaction {
-            subspace_id: Uint64::new(1),
+
+        let expected = MsgEditRegisteredReaction {
+            subspace_id: 1,
             registered_reaction_id: 1,
-            shorthand_code: "test_code".to_string(),
-            display_value: "test_value".to_string(),
-            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            shorthand_code: "test_code".into(),
+            display_value: "test_value".into(),
+            user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_remove_registered_reaction() {
-        let msg = ReactionsMsg::remove_registered_reaction(
-            1,
-            1,
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
-        );
-        let expected = ReactionsMsg::RemoveRegisteredReaction {
-            subspace_id: Uint64::new(1),
+        let msg = ReactionsMsg::remove_registered_reaction(1, 1, Addr::unchecked("user"));
+
+        let expected = MsgRemoveRegisteredReaction {
+            subspace_id: 1,
             registered_reaction_id: 1,
-            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 
     #[test]
     fn test_set_reactions_params() {
         let msg = ReactionsMsg::set_reactions_params(
             1,
-            RegisteredReactionValueParams { enabled: true },
-            FreeTextValueParams {
+            Some(RegisteredReactionValueParams { enabled: true }),
+            Some(FreeTextValueParams {
                 enabled: true,
                 max_length: 100,
-                reg_ex: "".to_string(),
-            },
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+                reg_ex: "".into(),
+            }),
+            Addr::unchecked("user"),
         );
-        let expected = ReactionsMsg::SetReactionsParams {
-            subspace_id: Uint64::new(1),
-            registered_reaction: RegisteredReactionValueParams { enabled: true },
-            free_text: FreeTextValueParams {
+
+        let expected = MsgSetReactionsParams {
+            subspace_id: 1,
+            registered_reaction: Some(RegisteredReactionValueParams { enabled: true }),
+            free_text: Some(FreeTextValueParams {
                 enabled: true,
                 max_length: 100,
-                reg_ex: "".to_string(),
-            },
-            user: Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+                reg_ex: "".into(),
+            }),
+            user: "user".into(),
         };
-        assert_eq!(msg, expected)
+
+        assert_eq!(expected, msg)
     }
 }

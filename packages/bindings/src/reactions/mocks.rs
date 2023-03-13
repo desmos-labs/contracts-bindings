@@ -1,167 +1,85 @@
-//! Contains some useful mocks of the Desmos x/reactions module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/reactions module's types made to be used in any test.
 
-use crate::reactions::{
-    models::{
-        FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
-        RegisteredReactionValueParams, SubspaceReactionsParams,
-    },
-    models_query::{
-        QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
-        QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
-    },
-    query::ReactionsQuery,
+use crate::reactions::types::{
+    FreeTextValue, FreeTextValueParams, QueryReactionResponse, QueryReactionsParamsResponse,
+    QueryReactionsResponse, QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
+    Reaction, RegisteredReaction, RegisteredReactionValueParams, SubspaceReactionsParams,
 };
-use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
 
-/// Struct that contains some utility methods to mock data of the Desmos
+/// Represents the mock author of the reaction for unit test.
+pub const MOCK_REACTION_AUTHOR: &str = "author";
+
+// Struct that contains some utility methods to mock data of the Desmos
 /// x/reactions module.
 pub struct MockReactionsQueries {}
 
 impl MockReactionsQueries {
-    /// Get a mocked [`Reaction`].
-    pub fn get_mock_reaction() -> Reaction {
+    /// Gets a mocked [`Reaction`].
+    pub fn get_mocked_reaction(subspace_id: u64, post_id: u64, id: u32) -> Reaction {
         Reaction {
-            subspace_id: Uint64::new(1),
-            post_id: Uint64::new(1),
-            id: 1,
-            value: ReactionValue::FreeText {
-                text: "test".to_string(),
-            }
-            .into(),
-            author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
+            subspace_id,
+            post_id,
+            id,
+            value: Some(
+                FreeTextValue {
+                    text: "test".into(),
+                }
+                .into(),
+            ),
+            author: MOCK_REACTION_AUTHOR.into(),
         }
     }
-
-    /// Get a mocked [`RegisteredReaction`].
-    pub fn get_mock_registered_reaction() -> RegisteredReaction {
+    /// Gets a mocked [`RegisteredReaction`].
+    pub fn get_mocked_registered_reaction(subspace_id: u64, id: u32) -> RegisteredReaction {
         RegisteredReaction {
-            subspace_id: Uint64::new(1),
-            id: 1,
-            shorthand_code: "code".to_string(),
-            display_value: "value".to_string(),
+            subspace_id,
+            id,
+            shorthand_code: "code".into(),
+            display_value: "value".into(),
         }
     }
-
-    /// Get a mocked [`SubspaceReactionsParams`].
-    pub fn get_mock_reactions_parameters() -> SubspaceReactionsParams {
+    /// Gets a mocked [`SubspaceReactionsParams`].
+    pub fn get_mocked_subspace_reactions_params(subspace_id: u64) -> SubspaceReactionsParams {
         SubspaceReactionsParams {
-            subspace_id: Uint64::new(1),
-            registered_reaction: RegisteredReactionValueParams { enabled: true },
-            free_text: FreeTextValueParams {
+            subspace_id,
+            registered_reaction: Some(RegisteredReactionValueParams { enabled: true }),
+            free_text: Some(FreeTextValueParams {
                 enabled: true,
                 max_length: 100,
-                reg_ex: "".to_string(),
-            },
+                reg_ex: "".into(),
+            }),
         }
     }
-}
-
-/// Functions that mocks the reactions query responses.
-pub fn mock_reactions_query_response(query: &ReactionsQuery) -> ContractResult<Binary> {
-    let response = match query {
-        ReactionsQuery::Reactions { .. } => {
-            let reaction = MockReactionsQueries::get_mock_reaction();
-            to_binary(&QueryReactionsResponse {
-                reactions: vec![reaction],
-                pagination: Default::default(),
-            })
+    /// Function that mocks a [`QueryReactionsResponse`].
+    pub fn get_mocked_reactions_response() -> QueryReactionsResponse {
+        QueryReactionsResponse {
+            reactions: vec![Self::get_mocked_reaction(1, 1, 1)],
+            pagination: None,
         }
-        ReactionsQuery::Reaction { .. } => {
-            let reaction = MockReactionsQueries::get_mock_reaction();
-            to_binary(&QueryReactionResponse { reaction })
-        }
-        ReactionsQuery::RegisteredReactions { .. } => {
-            let registered_reaction = MockReactionsQueries::get_mock_registered_reaction();
-            to_binary(&QueryRegisteredReactionsResponse {
-                registered_reactions: vec![registered_reaction],
-                pagination: Default::default(),
-            })
-        }
-        ReactionsQuery::RegisteredReaction { .. } => {
-            let registered_reaction = MockReactionsQueries::get_mock_registered_reaction();
-            to_binary(&QueryRegisteredReactionResponse {
-                registered_reaction,
-            })
-        }
-        ReactionsQuery::ReactionsParams { .. } => {
-            let params = MockReactionsQueries::get_mock_reactions_parameters();
-            to_binary(&QueryReactionsParamsResponse { params })
-        }
-    };
-    response.into()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_query_reactions() {
-        let query = ReactionsQuery::Reactions {
-            subspace_id: Uint64::new(1),
-            post_id: Uint64::new(1),
-            user: None,
-            pagination: Default::default(),
-        };
-        let response = mock_reactions_query_response(&query);
-        let expected = to_binary(&QueryReactionsResponse {
-            reactions: vec![MockReactionsQueries::get_mock_reaction()],
-            pagination: Default::default(),
-        });
-        println!("{:?}", response.clone().into_result().ok());
-        assert_eq!(response.into_result().ok(), expected.ok())
     }
-
-    #[test]
-    fn test_query_reaction() {
-        let query = ReactionsQuery::Reaction {
-            subspace_id: Uint64::new(1),
-            post_id: Uint64::new(1),
-            reaction_id: 1,
-        };
-        let response = mock_reactions_query_response(&query);
-        let expected = to_binary(&QueryReactionResponse {
-            reaction: MockReactionsQueries::get_mock_reaction(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryReactionResponse`].
+    pub fn get_mocked_reaction_response() -> QueryReactionResponse {
+        QueryReactionResponse {
+            reaction: Some(Self::get_mocked_reaction(1, 1, 1)),
+        }
     }
-
-    #[test]
-    fn test_query_registered_reactions() {
-        let query = ReactionsQuery::RegisteredReactions {
-            subspace_id: Uint64::new(1),
-            pagination: Default::default(),
-        };
-        let response = mock_reactions_query_response(&query);
-        let expected = to_binary(&QueryRegisteredReactionsResponse {
-            registered_reactions: vec![MockReactionsQueries::get_mock_registered_reaction()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryRegisteredReactionsResponse`].
+    pub fn get_mocked_registered_reactions_response() -> QueryRegisteredReactionsResponse {
+        QueryRegisteredReactionsResponse {
+            registered_reactions: vec![Self::get_mocked_registered_reaction(1, 1)],
+            pagination: None,
+        }
     }
-
-    #[test]
-    fn test_query_registered_reaction() {
-        let query = ReactionsQuery::RegisteredReaction {
-            subspace_id: Uint64::new(1),
-            reaction_id: 1,
-        };
-        let response = mock_reactions_query_response(&query);
-        let expected = to_binary(&QueryRegisteredReactionResponse {
-            registered_reaction: MockReactionsQueries::get_mock_registered_reaction(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryRegisteredReactionResponse`].
+    pub fn get_mocked_registered_reaction_response() -> QueryRegisteredReactionResponse {
+        QueryRegisteredReactionResponse {
+            registered_reaction: Some(Self::get_mocked_registered_reaction(1, 1)),
+        }
     }
-
-    #[test]
-    fn test_query_reactions_params() {
-        let query = ReactionsQuery::ReactionsParams {
-            subspace_id: Uint64::new(1),
-        };
-        let response = mock_reactions_query_response(&query);
-        let expected = to_binary(&QueryReactionsParamsResponse {
-            params: MockReactionsQueries::get_mock_reactions_parameters(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryReactionsParamsResponse`].
+    pub fn get_mocked_reactions_params_response() -> QueryReactionsParamsResponse {
+        QueryReactionsParamsResponse {
+            params: Some(Self::get_mocked_subspace_reactions_params(1)),
+        }
     }
 }

@@ -6,10 +6,11 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cosmwasm-std = { version = "1.2.1" }
+cosmwasm-std = { version = "1.2.1", features = ["stargate"]}
 desmos-bindings = { path = "../bindings", version = "1.2.1" }
 test-contract = { path = "../../contracts/test-contract", version = "1.0.0" }
 serde = "1.0.152"
 serde_json = "1.0.94"
 base64 = "0.21.0"
+chrono = "0.4.23"
 

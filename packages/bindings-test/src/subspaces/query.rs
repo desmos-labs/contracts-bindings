@@ -2,15 +2,13 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
-    use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::subspaces::models::{
-        GroupPermissions, Permission, PermissionDetail, UserPermissions,
+    use desmos_bindings::subspaces::types::{permission_detail, Permission, PermissionDetail};
+    use desmos_bindings::subspaces::types::{
+        QuerySubspaceRequest, QuerySubspaceResponse, QuerySubspacesRequest, QuerySubspacesResponse,
+        QueryUserGroupMembersRequest, QueryUserGroupMembersResponse, QueryUserGroupRequest,
+        QueryUserGroupResponse, QueryUserGroupsRequest, QueryUserGroupsResponse,
+        QueryUserPermissionsRequest, QueryUserPermissionsResponse,
     };
-    use desmos_bindings::subspaces::models_query::{
-        QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
-        QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
-    };
-    use desmos_bindings::subspaces::query::SubspacesQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
@@ -19,7 +17,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: SubspacesQuery::Subspaces { pagination: None }.into(),
+            request: QuerySubspacesRequest { pagination: None }.into(),
         };
 
         let response: QuerySubspacesResponse =
@@ -28,18 +26,17 @@ mod tests {
         let test_subspace = response.subspaces.first().unwrap();
         assert_eq!("Test subspace", test_subspace.name.as_str());
         assert_eq!("", test_subspace.description.as_str());
-        assert_eq!(&contract_address, test_subspace.treasury.as_str());
         assert_eq!(&contract_address, test_subspace.owner.as_str());
         assert_eq!(&contract_address, test_subspace.creator.as_str());
     }
 
     #[test]
-    fn test_query_test_subspace() {
+    fn test_query_subspace() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: SubspacesQuery::Subspace {
+            request: QuerySubspaceRequest {
                 subspace_id: TEST_SUBSPACE,
             }
             .into(),
@@ -48,12 +45,11 @@ mod tests {
         let response: QuerySubspaceResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        let test_subspace = response.subspace;
-        assert_eq!("Test subspace", test_subspace.name.as_str());
-        assert_eq!("", test_subspace.description.as_str());
-        assert_eq!(&contract_address, test_subspace.treasury.as_str());
-        assert_eq!(&contract_address, test_subspace.owner.as_str());
-        assert_eq!(&contract_address, test_subspace.creator.as_str());
+        let subspace = response.subspace.unwrap();
+        assert_eq!("Test subspace", subspace.name.as_str());
+        assert_eq!("", subspace.description.as_str());
+        assert_eq!(&contract_address, subspace.owner.as_str());
+        assert_eq!(&contract_address, subspace.creator.as_str());
     }
 
     #[test]
@@ -62,9 +58,9 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: SubspacesQuery::UserGroups {
+            request: QueryUserGroupsRequest {
                 subspace_id: TEST_SUBSPACE,
-                section_id: None,
+                section_id: 0,
                 pagination: None,
             }
             .into(),
@@ -73,11 +69,17 @@ mod tests {
         let response: QueryUserGroupsResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        let test_user_group = response.groups.get(1).unwrap();
-        assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
-        assert_eq!("Test user group", test_user_group.name.as_str());
-        assert_eq!("", test_user_group.description.as_str());
-        assert_eq!(vec![Permission::EditSubspace], test_user_group.permissions)
+        let user_group = response.groups.get(1).unwrap();
+        assert_eq!(TEST_SUBSPACE_USER_GROUP, user_group.id);
+        assert_eq!("Test user group", user_group.name.as_str());
+        assert_eq!("", user_group.description.as_str());
+        assert_eq!(
+            vec![Permission::EditSubspace]
+                .into_iter()
+                .map(Into::into)
+                .collect::<Vec<String>>(),
+            user_group.permissions,
+        )
     }
 
     #[test]
@@ -86,7 +88,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: SubspacesQuery::UserGroup {
+            request: QueryUserGroupRequest {
                 subspace_id: TEST_SUBSPACE,
                 group_id: TEST_SUBSPACE_USER_GROUP,
             }
@@ -96,11 +98,17 @@ mod tests {
         let response: QueryUserGroupResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        let test_user_group = response.group;
+        let test_user_group = response.group.unwrap();
         assert_eq!(TEST_SUBSPACE_USER_GROUP, test_user_group.id);
         assert_eq!("Test user group", test_user_group.name.as_str());
         assert_eq!("", test_user_group.description.as_str());
-        assert_eq!(vec![Permission::EditSubspace], test_user_group.permissions)
+        assert_eq!(
+            vec![Permission::EditSubspace]
+                .into_iter()
+                .map(Into::into)
+                .collect::<Vec<String>>(),
+            test_user_group.permissions
+        )
     }
 
     #[test]
@@ -109,7 +117,7 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: SubspacesQuery::UserGroupMembers {
+            request: QueryUserGroupMembersRequest {
                 subspace_id: TEST_SUBSPACE,
                 group_id: TEST_SUBSPACE_USER_GROUP,
                 pagination: None,
@@ -133,10 +141,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: SubspacesQuery::UserPermissions {
+            request: QueryUserPermissionsRequest {
                 subspace_id: TEST_SUBSPACE,
-                section_id: None,
-                user: Addr::unchecked(USER1_ADDRESS),
+                section_id: 0,
+                user: USER1_ADDRESS.into(),
             }
             .into(),
         };
@@ -148,42 +156,42 @@ mod tests {
             vec![
                 Permission::EditSubspace,
                 Permission::DeleteSubspace,
-                Permission::ManageGroups
-            ],
-            response.permissions
+                Permission::ManageGroups,
+            ]
+            .into_iter()
+            .map(Into::into)
+            .collect::<Vec<String>>(),
+            response.permissions,
         );
         assert_eq!(
             vec![
                 PermissionDetail {
-                    subspace_id: Uint64::new(1),
+                    subspace_id: 1,
                     section_id: 0,
-                    user: Some(UserPermissions {
-                        user: Addr::unchecked(USER1_ADDRESS),
+                    sum: Some(permission_detail::Sum::User(permission_detail::User {
+                        user: USER1_ADDRESS.into(),
                         permission: vec![
-                            Permission::EditSubspace,
-                            Permission::DeleteSubspace,
-                            Permission::ManageGroups
+                            Permission::EditSubspace.into(),
+                            Permission::DeleteSubspace.into(),
+                            Permission::ManageGroups.into(),
                         ]
-                    }),
-                    group: None
+                    })),
                 },
                 PermissionDetail {
-                    subspace_id: Uint64::new(1),
+                    subspace_id: 1,
                     section_id: 0,
-                    user: None,
-                    group: Some(GroupPermissions {
+                    sum: Some(permission_detail::Sum::Group(permission_detail::Group {
                         group_id: 0,
                         permission: vec![]
-                    })
+                    })),
                 },
                 PermissionDetail {
-                    subspace_id: Uint64::new(1),
+                    subspace_id: 1,
                     section_id: 0,
-                    user: None,
-                    group: Some(GroupPermissions {
+                    sum: Some(permission_detail::Sum::Group(permission_detail::Group {
                         group_id: 1,
-                        permission: vec![Permission::EditSubspace]
-                    })
+                        permission: vec![Permission::EditSubspace.into()]
+                    })),
                 }
             ],
             response.details

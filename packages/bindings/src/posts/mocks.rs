@@ -1,195 +1,141 @@
-//! Contains some useful mocks of the Desmos x/posts module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/posts module's types made to be used in any test.
 
-use crate::posts::models::{Attachment, Post, PostAttachment, ReplySetting, UserAnswer};
-use crate::posts::models_query::{
-    QueryPollAnswersResponse, QueryPostAttachmentsResponse, QueryPostResponse,
-    QuerySectionPostsResponse, QuerySubspacePostsResponse,
+use crate::posts::types::AttachmentContent;
+use crate::posts::types::{
+    Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
+    QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
+    UserAnswer,
 };
-use crate::posts::query::PostsQuery;
-use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
+use chrono::DateTime;
+use cosmwasm_std::Addr;
+use desmos_std::shim::Timestamp;
+
+/// Represents the mock author of the post for unit test.
+pub const MOCK_AUTHOR: &str = "author";
+
+/// Represents the mock answerer to the poll for unit test.
+pub const MOCK_ANSWERER: &str = "answerer";
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/posts module.
 pub struct MockPostsQueries {}
-
 impl MockPostsQueries {
-    /// Functions that mocks the posts inside a subspace.
-    pub fn get_mocked_subspace_posts(subspace_id: &Uint64) -> Vec<Post> {
-        vec![
-            Post {
-                subspace_id: *subspace_id,
-                section_id: 0,
-                external_id: None,
-                text: None,
-                entities: None,
-                tags: vec![],
-                author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                id: Uint64::new(0),
-                referenced_posts: vec![],
-                reply_settings: ReplySetting::Everyone,
-                creation_date: "".to_string(),
-                conversation_id: None,
-                last_edited_date: None,
-            },
-            Post {
-                subspace_id: *subspace_id,
-                section_id: 0,
-                external_id: None,
-                text: None,
-                entities: None,
-                tags: vec![],
-                author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                id: Uint64::new(1),
-                referenced_posts: vec![],
-                reply_settings: ReplySetting::Everyone,
-                creation_date: "".to_string(),
-                conversation_id: None,
-                last_edited_date: None,
-            },
-        ]
-    }
-
-    /// Functions that mocks the posts inside a section.
-    pub fn get_mocked_section_posts(subspace_id: &Uint64, section_id: &u32) -> Vec<Post> {
-        vec![
-            Post {
-                subspace_id: *subspace_id,
-                section_id: *section_id,
-                external_id: None,
-                text: None,
-                entities: None,
-                tags: vec![],
-                author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                id: Uint64::new(0),
-                referenced_posts: vec![],
-                reply_settings: ReplySetting::Everyone,
-                creation_date: "".to_string(),
-                conversation_id: None,
-                last_edited_date: None,
-            },
-            Post {
-                subspace_id: *subspace_id,
-                section_id: *section_id,
-                external_id: None,
-                text: None,
-                entities: None,
-                tags: vec![],
-                author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                id: Uint64::new(1),
-                referenced_posts: vec![],
-                reply_settings: ReplySetting::Everyone,
-                creation_date: "".to_string(),
-                conversation_id: None,
-                last_edited_date: None,
-            },
-        ]
-    }
-
-    /// Functions that mocks the post returned from the query post request.
-    pub fn get_mocked_post(post_id: Uint64, subspace_id: Uint64) -> Post {
+    /// Function that mock a post.
+    pub fn get_mocked_post(subspace_id: u64, section_id: u32, post_id: u64) -> Post {
         Post {
-            id: post_id,
             subspace_id,
-            section_id: 0,
-            external_id: None,
-            text: None,
+            section_id,
+            id: post_id,
+            external_id: "".into(),
+            text: "test".into(),
             entities: None,
-            tags: vec![],
-            author: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            conversation_id: None,
+            tags: vec!["hello".into(), "world".into()],
+            author: MOCK_AUTHOR.into(),
+            conversation_id: 0,
             referenced_posts: vec![],
-            reply_settings: ReplySetting::Unspecified,
-            creation_date: "".to_string(),
+            reply_settings: ReplySetting::Everyone.into(),
+            creation_date: Some(Timestamp::from(DateTime::from(
+                DateTime::parse_from_rfc3339("2011-11-11T11:11:11.111Z").unwrap(),
+            ))),
             last_edited_date: None,
         }
     }
-
-    /// Functions that mocks the attachments of a post.
-    pub fn get_mocked_post_attachments(subspace_id: &Uint64, post_id: &Uint64) -> Vec<Attachment> {
-        vec![
-            Attachment {
-                subspace_id: *subspace_id,
-                post_id: *post_id,
-                id: 0,
-                content: PostAttachment::Media {
-                    uri: "ftp://domain.io/image.png".to_string(),
-                    mime_type: "image/png".to_string(),
-                }
+    /// Function that mocks a attachment.
+    pub fn get_mocked_attachment(subspace_id: u64, post_id: u64, attachment_id: u32) -> Attachment {
+        Attachment {
+            subspace_id,
+            post_id,
+            id: attachment_id,
+            content: Some(
+                AttachmentContent::Media(Media {
+                    uri: "ftp://domain.io/image.png".into(),
+                    mime_type: "image/png".into(),
+                })
                 .into(),
-            },
-            Attachment {
-                subspace_id: *subspace_id,
-                post_id: *post_id,
-                id: 1,
-                content: PostAttachment::Media {
-                    uri: "ftp://domain.io/image2.png".to_string(),
-                    mime_type: "image/png".to_string(),
-                }
-                .into(),
-            },
-        ]
-    }
-
-    /// Functions that mocks the poll answers.
-    pub fn get_mocked_poll_answers(
-        subspace_id: &Uint64,
-        post_id: &Uint64,
-        poll_id: &u32,
-        user: &Option<Addr>,
-    ) -> Vec<UserAnswer> {
-        vec![UserAnswer {
-            subspace_id: *subspace_id,
-            post_id: *post_id,
-            poll_id: *poll_id,
-            answers_indexes: vec![0],
-            user: user.as_ref().map_or(
-                Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                |addr| addr.clone(),
             ),
-        }]
+        }
     }
-}
-
-/// Functions that mocks the posts query responses.
-pub fn mock_posts_query_response(query: &PostsQuery) -> ContractResult<Binary> {
-    let response = match query {
-        PostsQuery::SubspacePosts { subspace_id, .. } => to_binary(&QuerySubspacePostsResponse {
-            posts: MockPostsQueries::get_mocked_subspace_posts(subspace_id),
-            pagination: None,
-        }),
-        PostsQuery::SectionPosts {
-            subspace_id,
-            section_id,
-            ..
-        } => to_binary(&QuerySectionPostsResponse {
-            posts: MockPostsQueries::get_mocked_section_posts(subspace_id, section_id),
-            pagination: None,
-        }),
-        PostsQuery::Post {
-            subspace_id,
-            post_id,
-            ..
-        } => to_binary(&QueryPostResponse {
-            post: MockPostsQueries::get_mocked_post(*subspace_id, *post_id),
-        }),
-        PostsQuery::PostAttachments {
-            subspace_id,
-            post_id,
-            ..
-        } => to_binary(&QueryPostAttachmentsResponse {
-            attachments: MockPostsQueries::get_mocked_post_attachments(subspace_id, post_id),
-            pagination: None,
-        }),
-        PostsQuery::PollAnswers {
+    /// Function that mocks a poll answers.
+    pub fn get_mocked_user_answer(
+        subspace_id: u64,
+        post_id: u64,
+        poll_id: u32,
+        user: Addr,
+    ) -> UserAnswer {
+        UserAnswer {
             subspace_id,
             post_id,
             poll_id,
-            user,
-            ..
-        } => to_binary(&QueryPollAnswersResponse {
-            answers: MockPostsQueries::get_mocked_poll_answers(subspace_id, post_id, poll_id, user),
+            answers_indexes: vec![0],
+            user: user.into(),
+        }
+    }
+    /// Function that mocks the posts inside a subspace.
+    pub fn get_mocked_subspace_posts(subspace_id: u64) -> Vec<Post> {
+        vec![
+            Self::get_mocked_post(subspace_id, 0, 1),
+            Self::get_mocked_post(subspace_id, 0, 2),
+        ]
+    }
+    /// Function that mocks a [`QuerySubspacePostsResponse`].
+    pub fn get_mocked_subspace_posts_response() -> QuerySubspacePostsResponse {
+        QuerySubspacePostsResponse {
+            posts: Self::get_mocked_subspace_posts(1),
             pagination: None,
-        }),
-    };
-    response.into()
+        }
+    }
+    /// Functions that mocks the posts inside a section.
+    pub fn get_mocked_section_posts(subspace_id: u64, section_id: u32) -> Vec<Post> {
+        vec![
+            Self::get_mocked_post(subspace_id, section_id, 1),
+            Self::get_mocked_post(subspace_id, section_id, 2),
+        ]
+    }
+    /// Function that mocks a [`QuerySectionPostsResponse`].
+    pub fn get_mocked_section_posts_response() -> QuerySectionPostsResponse {
+        QuerySectionPostsResponse {
+            posts: Self::get_mocked_section_posts(1, 1),
+            pagination: None,
+        }
+    }
+    /// Function that mocks a [`QueryPostResponse`].
+    pub fn get_mocked_post_response() -> QueryPostResponse {
+        QueryPostResponse {
+            post: Some(Self::get_mocked_post(1, 0, 1)),
+        }
+    }
+    /// Function that mocks post attachments.
+    pub fn get_mocked_post_attachments(subspace_id: u64, post_id: u64) -> Vec<Attachment> {
+        vec![
+            Self::get_mocked_attachment(subspace_id, post_id, 1),
+            Self::get_mocked_attachment(subspace_id, post_id, 2),
+        ]
+    }
+    /// Function that mocks a [`QueryPostAttachmentsResponse`].
+    pub fn get_mocked_post_attachments_response() -> QueryPostAttachmentsResponse {
+        QueryPostAttachmentsResponse {
+            attachments: Self::get_mocked_post_attachments(1, 1),
+            pagination: None,
+        }
+    }
+    /// Function that mocks poll answers list.
+    pub fn get_mocked_poll_answers(
+        subspace_id: u64,
+        post_id: u64,
+        poll_id: u32,
+    ) -> Vec<UserAnswer> {
+        vec![Self::get_mocked_user_answer(
+            subspace_id,
+            post_id,
+            poll_id,
+            Addr::unchecked(MOCK_ANSWERER),
+        )]
+    }
+    /// Function that mocks a [`QueryPollAnswersResponse`].
+    pub fn get_mocked_poll_answers_response() -> QueryPollAnswersResponse {
+        QueryPollAnswersResponse {
+            answers: Self::get_mocked_poll_answers(1, 1, 1),
+            pagination: None,
+        }
+    }
 }

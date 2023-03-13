@@ -2,11 +2,10 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, USER1_ADDRESS, USER2_ADDRESS};
-    use cosmwasm_std::Addr;
-    use desmos_bindings::relationships::models_query::{
-        QueryBlocksResponse, QueryRelationshipsResponse,
+    use desmos_bindings::relationships::types::{
+        QueryBlocksRequest, QueryBlocksResponse, QueryRelationshipsRequest,
+        QueryRelationshipsResponse,
     };
-    use desmos_bindings::relationships::query::RelationshipsQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
@@ -15,10 +14,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: RelationshipsQuery::Relationships {
+            request: QueryRelationshipsRequest {
                 subspace_id: TEST_SUBSPACE,
-                user: None,
-                counterparty: None,
+                user: "".into(),
+                counterparty: "".into(),
                 pagination: None,
             }
             .into(),
@@ -37,10 +36,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: RelationshipsQuery::Relationships {
+            request: QueryRelationshipsRequest {
                 subspace_id: TEST_SUBSPACE,
-                user: Some(Addr::unchecked(USER1_ADDRESS)),
-                counterparty: None,
+                user: USER1_ADDRESS.into(),
+                counterparty: "".into(),
                 pagination: None,
             }
             .into(),
@@ -65,10 +64,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: RelationshipsQuery::Relationships {
+            request: QueryRelationshipsRequest {
                 subspace_id: TEST_SUBSPACE,
-                user: Some(Addr::unchecked(USER1_ADDRESS)),
-                counterparty: Some(Addr::unchecked(USER2_ADDRESS)),
+                user: USER1_ADDRESS.into(),
+                counterparty: USER2_ADDRESS.into(),
                 pagination: None,
             }
             .into(),
@@ -93,10 +92,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: RelationshipsQuery::Blocks {
+            request: QueryBlocksRequest {
                 subspace_id: TEST_SUBSPACE,
-                blocker: None,
-                blocked: None,
+                blocker: "".into(),
+                blocked: "".into(),
                 pagination: None,
             }
             .into(),
@@ -115,10 +114,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: RelationshipsQuery::Blocks {
+            request: QueryBlocksRequest {
                 subspace_id: TEST_SUBSPACE,
-                blocker: Some(Addr::unchecked(USER2_ADDRESS)),
-                blocked: None,
+                blocker: USER2_ADDRESS.into(),
+                blocked: "".into(),
                 pagination: None,
             }
             .into(),
@@ -143,10 +142,10 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let query = DesmosChain {
-            request: RelationshipsQuery::Blocks {
+            request: QueryBlocksRequest {
                 subspace_id: TEST_SUBSPACE,
-                blocker: Some(Addr::unchecked(USER2_ADDRESS)),
-                blocked: Some(Addr::unchecked(USER1_ADDRESS)),
+                blocker: USER2_ADDRESS.into(),
+                blocked: USER1_ADDRESS.into(),
                 pagination: None,
             }
             .into(),

@@ -1,7 +1,7 @@
 use crate::consts::{GAS, USER1_KEY};
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
-use cosmwasm_std::Uint64;
-use desmos_bindings::subspaces::models_query::{
+use cosmwasm_std::CosmosMsg;
+use desmos_bindings::subspaces::types::{
     QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
     QueryUserGroupResponse, QueryUserGroupsResponse,
 };
@@ -11,6 +11,7 @@ use std::env;
 use std::ffi::OsStr;
 use std::path::Path;
 use std::process::Command;
+use test_contract::msg::ExecuteMsg;
 
 pub struct DesmosCli {
     desmos_bin: String,
@@ -20,7 +21,7 @@ pub struct DesmosCli {
 
 impl DesmosCli {
     pub fn default() -> DesmosCli {
-        DesmosCli::new("../../desmos".to_string())
+        DesmosCli::new("../../scripts".to_string())
     }
 
     /// Creates a new instance of [`DesmosCli`].
@@ -155,6 +156,23 @@ impl DesmosCli {
         ])
     }
 
+    /// Execute test contract with msgs.
+    ///
+    /// * `contract` - Address of the smart contract to execute.
+    /// * `msgs` - Messages to send to the smart contract.
+    pub fn execute_contract(
+        &self,
+        contract: &str,
+        msgs: impl IntoIterator<Item = impl Into<CosmosMsg>>,
+    ) -> TxResponse {
+        self.wasm_execute(
+            contract,
+            &ExecuteMsg::DesmosMessages {
+                msgs: msgs.into_iter().map(Into::into).collect(),
+            },
+        )
+    }
+
     /// Send a query request to a smart contract
     ///
     /// * `contract` - Smart contract address.
@@ -194,7 +212,7 @@ impl DesmosCli {
     }
 
     /// Queries the details of a subspace.
-    pub fn query_subspace(&self, subspace_id: Uint64) -> QuerySubspaceResponse {
+    pub fn query_subspace(&self, subspace_id: u64) -> QuerySubspaceResponse {
         let mut cmd = self.desmos();
         cmd.args([
             "query",
@@ -212,7 +230,7 @@ impl DesmosCli {
     /// Queries the user groups inside a subspace.
     pub fn query_user_groups(
         &self,
-        subspace_id: Uint64,
+        subspace_id: u64,
         page_key: Option<String>,
     ) -> QueryUserGroupsResponse {
         let mut cmd = self.desmos();
@@ -233,7 +251,7 @@ impl DesmosCli {
     }
 
     /// Queries the details of a user group inside a subspace.
-    pub fn query_user_group(&self, subspace_id: Uint64, group_id: u32) -> QueryUserGroupResponse {
+    pub fn query_user_group(&self, subspace_id: u64, group_id: u32) -> QueryUserGroupResponse {
         let mut cmd = self.desmos();
         cmd.args([
             "query",
@@ -251,7 +269,7 @@ impl DesmosCli {
     /// Queries the members of a group.
     pub fn query_user_group_members(
         &self,
-        subspace_id: Uint64,
+        subspace_id: u64,
         group_id: u32,
         page_key: Option<String>,
     ) -> QueryUserGroupMembersResponse {

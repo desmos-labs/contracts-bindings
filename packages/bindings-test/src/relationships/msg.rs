@@ -11,11 +11,11 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let create_relationship = RelationshipsMsg::CreateRelationship {
-            signer: Addr::unchecked(&contract_address),
-            counterparty: Addr::unchecked(USER1_ADDRESS),
-            subspace_id: TEST_SUBSPACE,
-        };
+        let create_relationship = RelationshipsMsg::create_relationship(
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER1_ADDRESS),
+            TEST_SUBSPACE,
+        );
 
         let msg = DesmosMessages {
             msgs: vec![create_relationship.into()],
@@ -25,11 +25,11 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
 
-        let delete_relationship = RelationshipsMsg::DeleteRelationship {
-            signer: Addr::unchecked(&contract_address),
-            counterparty: Addr::unchecked(USER1_ADDRESS),
-            subspace_id: TEST_SUBSPACE,
-        };
+        let delete_relationship = RelationshipsMsg::delete_relationship(
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER1_ADDRESS),
+            TEST_SUBSPACE,
+        );
 
         let msg = DesmosMessages {
             msgs: vec![delete_relationship.into()],
@@ -45,12 +45,12 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let block_user = RelationshipsMsg::BlockUser {
-            blocker: Addr::unchecked(&contract_address),
-            blocked: Addr::unchecked(USER1_ADDRESS),
-            reason: "".to_string(),
-            subspace_id: TEST_SUBSPACE,
-        };
+        let block_user = RelationshipsMsg::block_user(
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER1_ADDRESS),
+            "".into(),
+            TEST_SUBSPACE,
+        );
 
         let msg = DesmosMessages {
             msgs: vec![block_user.into()],
@@ -60,11 +60,11 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
 
-        let unblock_user = RelationshipsMsg::UnblockUser {
-            blocker: Addr::unchecked(&contract_address),
-            blocked: Addr::unchecked(USER1_ADDRESS),
-            subspace_id: TEST_SUBSPACE,
-        };
+        let unblock_user = RelationshipsMsg::unblock_user(
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER1_ADDRESS),
+            TEST_SUBSPACE,
+        );
 
         let msg = DesmosMessages {
             msgs: vec![unblock_user.into()],

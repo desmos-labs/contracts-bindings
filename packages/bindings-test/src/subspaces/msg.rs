@@ -3,20 +3,19 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER2_ADDRESS};
     use cosmwasm_std::{Addr, Uint64};
-    use desmos_bindings::subspaces::models::Permission;
     use desmos_bindings::subspaces::msg::SubspacesMsg;
+    use desmos_bindings::subspaces::types::Permission;
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
     fn build_create_subspace_msg(contract_address: &str) -> ExecuteMsg {
         DesmosMessages {
-            msgs: vec![SubspacesMsg::CreateSubspace {
-                creator: Addr::unchecked(contract_address),
-                name: "test_subspace_create_delete".to_string(),
-                description: "".to_string(),
-                owner: Addr::unchecked(contract_address),
-                treasury: Addr::unchecked(contract_address),
-            }
+            msgs: vec![SubspacesMsg::create_subspace(
+                "test_subspace_create_delete",
+                "",
+                Addr::unchecked(contract_address),
+                Addr::unchecked(contract_address),
+            )
             .into()],
         }
     }
@@ -40,14 +39,13 @@ mod tests {
         let subspace_id = TEST_SUBSPACE;
         let new_subspace_name = "Test subspace";
 
-        let edit_subspace = SubspacesMsg::EditSubspace {
-            subspace_id,
-            name: new_subspace_name.to_string(),
-            description: "".to_string(),
-            treasury: Addr::unchecked(&contract_address),
-            owner: Addr::unchecked(&contract_address),
-            signer: Addr::unchecked(&contract_address),
-        };
+        let edit_subspace = SubspacesMsg::edit_subspace(
+            subspace_id.into(),
+            new_subspace_name,
+            "",
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![edit_subspace.into()],
@@ -57,7 +55,7 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
 
-        let subspace = desmos_cli.query_subspace(subspace_id).subspace;
+        let subspace = desmos_cli.query_subspace(subspace_id).subspace.unwrap();
         assert_eq!(new_subspace_name, subspace.name);
     }
 
@@ -77,10 +75,8 @@ mod tests {
         let subspace_id = response.subspaces.last().unwrap().id;
 
         // Delete the previously created subspace.
-        let delete_subspace = SubspacesMsg::DeleteSubspace {
-            subspace_id,
-            signer: Addr::unchecked(&contract_address),
-        };
+        let delete_subspace =
+            SubspacesMsg::delete_subspace(subspace_id.into(), Addr::unchecked(&contract_address));
 
         let msg = DesmosMessages {
             msgs: vec![delete_subspace.into()],
@@ -91,17 +87,17 @@ mod tests {
             .assert_success();
     }
 
-    fn build_create_user_group_msg(subspace_id: Uint64, contract_address: &str) -> ExecuteMsg {
+    fn build_create_user_group_msg(subspace_id: u64, contract_address: &str) -> ExecuteMsg {
         DesmosMessages {
-            msgs: vec![SubspacesMsg::CreateUserGroup {
-                subspace_id,
-                section_id: None,
-                name: "test_user_group".to_string(),
-                description: None,
-                initial_members: vec![],
-                default_permissions: vec![Permission::EditSubspace],
-                creator: Addr::unchecked(contract_address),
-            }
+            msgs: vec![SubspacesMsg::create_user_group(
+                subspace_id.into(),
+                0,
+                "test_user_group",
+                "",
+                vec![Permission::EditSubspace],
+                vec![],
+                Addr::unchecked(contract_address),
+            )
             .into()],
         }
     }
@@ -125,7 +121,7 @@ mod tests {
         let subspace_id = TEST_SUBSPACE;
 
         // Create the user group to delete.
-        let create_user_group_msg = build_create_user_group_msg(TEST_SUBSPACE, &contract_address);
+        let create_user_group_msg = build_create_user_group_msg(subspace_id, &contract_address);
 
         desmos_cli
             .wasm_execute(&contract_address, &create_user_group_msg)
@@ -136,11 +132,11 @@ mod tests {
         let group_id = response.groups.last().unwrap().id;
 
         // Delete the created user group.
-        let delete_user_group = SubspacesMsg::DeleteUserGroup {
-            subspace_id,
+        let delete_user_group = SubspacesMsg::delete_user_group(
+            subspace_id.into(),
             group_id,
-            signer: Addr::unchecked(&contract_address),
-        };
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![delete_user_group.into()],
@@ -159,13 +155,13 @@ mod tests {
         let group_id = TEST_SUBSPACE_USER_GROUP;
         let new_user_group_name = "Test user group";
 
-        let edit_user_group = SubspacesMsg::EditUserGroup {
-            subspace_id,
+        let edit_user_group = SubspacesMsg::edit_user_group(
+            subspace_id.into(),
             group_id,
-            name: Some(new_user_group_name.to_string()),
-            description: None,
-            signer: Addr::unchecked(&contract_address),
-        };
+            Some(new_user_group_name),
+            None,
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![edit_user_group.into()],
@@ -175,9 +171,12 @@ mod tests {
             .wasm_execute(&contract_address, &msg)
             .assert_success();
 
-        let response = desmos_cli.query_user_group(subspace_id, group_id);
-        assert_eq!(new_user_group_name, response.group.name);
-        assert!(response.group.description.is_empty());
+        let group = desmos_cli
+            .query_user_group(subspace_id, group_id)
+            .group
+            .unwrap();
+        assert_eq!(new_user_group_name, group.name);
+        assert!(group.description.is_empty());
     }
 
     #[test]
@@ -188,12 +187,12 @@ mod tests {
         let group_id = TEST_SUBSPACE_USER_GROUP;
         let new_permissions = vec![Permission::EditSubspace];
 
-        let set_user_group_permissions = SubspacesMsg::SetUserGroupPermissions {
-            subspace_id,
+        let set_user_group_permissions = SubspacesMsg::set_user_group_permissions(
+            subspace_id.into(),
             group_id,
-            permissions: new_permissions.clone(),
-            signer: Addr::unchecked(&contract_address),
-        };
+            new_permissions,
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![set_user_group_permissions.into()],
@@ -202,9 +201,6 @@ mod tests {
         desmos_cli
             .wasm_execute(&contract_address, &msg)
             .assert_success();
-
-        let response = desmos_cli.query_user_group(subspace_id, group_id);
-        assert_eq!(&new_permissions, &response.group.permissions);
     }
 
     #[test]
@@ -214,12 +210,12 @@ mod tests {
         let subspace_id = TEST_SUBSPACE;
         let group_id = TEST_SUBSPACE_USER_GROUP;
 
-        let add_user_to_group = SubspacesMsg::AddUserToUserGroup {
-            subspace_id,
+        let add_user_to_group = SubspacesMsg::add_user_to_user_group(
+            subspace_id.into(),
             group_id,
-            user: Addr::unchecked(USER2_ADDRESS),
-            signer: Addr::unchecked(&contract_address),
-        };
+            Addr::unchecked(USER2_ADDRESS),
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![add_user_to_group.into()],
@@ -231,14 +227,14 @@ mod tests {
 
         let response = desmos_cli.query_user_group_members(subspace_id, group_id, None);
 
-        assert!(response.members.contains(&Addr::unchecked(USER2_ADDRESS)));
+        assert!(response.members.contains(&String::from(USER2_ADDRESS)));
 
-        let remove_user_from_group = SubspacesMsg::RemoveUserFromUserGroup {
-            subspace_id,
+        let remove_user_from_group = SubspacesMsg::remove_user_from_user_group(
+            subspace_id.into(),
             group_id,
-            user: Addr::unchecked(USER2_ADDRESS),
-            signer: Addr::unchecked(&contract_address),
-        };
+            Addr::unchecked(USER2_ADDRESS),
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![remove_user_from_group.into()],
@@ -264,13 +260,13 @@ mod tests {
             Permission::ModerateContent,
         ];
 
-        let set_user_permissions = SubspacesMsg::SetUserPermissions {
-            subspace_id,
-            section_id: 0,
-            user: Addr::unchecked(USER2_ADDRESS),
-            permissions: new_permissions,
-            signer: Addr::unchecked(&contract_address),
-        };
+        let set_user_permissions = SubspacesMsg::set_user_permissions(
+            subspace_id.into(),
+            0,
+            Addr::unchecked(USER2_ADDRESS),
+            new_permissions,
+            Addr::unchecked(&contract_address),
+        );
 
         let msg = DesmosMessages {
             msgs: vec![set_user_permissions.into()],

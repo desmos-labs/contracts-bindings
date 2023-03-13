@@ -1,0 +1,204 @@
+name: Desmos Bindings
+# Based on https://github.com/actions-rs/example/blob/master/.github/workflows/quickstart.yml
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    name: Test Suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Verify .rs or toml files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+            **/**.toml
+            **/Cargo.lock
+          FILES: |
+            Cargo.lock
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: 1.66.0
+          profile: minimal
+          override: true
+
+      - name: Prepare rust cache 🗄️
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Unit tests 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo unit-test --locked
+        env:
+          RUST_BACKTRACE: 1
+
+  lints:
+    name: Lints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Verify .rs files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.66.0
+          override: true
+          components: rustfmt, clippy
+
+      - name: Prepare rust cache 🗄️
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Run cargo fmt ✅
+        if: env.GIT_DIFF
+        run: cargo fmt --all -- --check
+
+      - name: Run cargo clippy ✅
+        if: env.GIT_DIFF
+        run: cargo clippy
+
+  build:
+    name: Test features build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Verify .rs and toml files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+            **/**.toml
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.65.0
+          override: true
+          components: rustfmt, clippy
+
+      - name: Prepare rust cache 🗄
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install wasm32-unknown-unknown target ⚙
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Build No features 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --target wasm32-unknown-unknown
+
+      - name: Build feature (profiles) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features profiles --target wasm32-unknown-unknown
+
+      - name: Build feature (subspaces) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features subspaces --target wasm32-unknown-unknown
+
+      - name: Build feature (relationships) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features relationships --target wasm32-unknown-unknown
+
+      - name: Build feature (posts) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features posts --target wasm32-unknown-unknown
+
+      - name: Build feature (reactions) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features reactions --target wasm32-unknown-unknown
+
+      - name: Build feature (reports) 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: cargo build --no-default-features --features reports --target wasm32-unknown-unknown
+
+      - name: Build all feature 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: | 
+          cargo build --all-features --target wasm32-unknown-unknown
+
+  check:
+    name: Check desmos-bindings build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - name: Verify .rs and toml files 👀
+        uses: technote-space/get-diff-action@v6.1.0
+        id: git_diff
+        with:
+          PATTERNS: |
+            **/**.rs
+            **/**.toml
+
+      - name: Setup Rust ⚙
+        if: env.GIT_DIFF
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: 1.65.0
+          override: true
+          components: rustfmt, clippy
+
+      - name: Prepare rust cache 🗄
+        if: env.GIT_DIFF
+        uses: Swatinem/rust-cache@v2
+      
+      - name: Install wasm2wat ⚙
+        run: |
+          wget https://github.com/WebAssembly/wabt/releases/download/1.0.32/wabt-1.0.32-ubuntu.tar.gz
+          tar -xzf wabt-1.0.32-ubuntu.tar.gz
+          sudo mv wabt-1.0.32/bin/wasm2wat .
+
+      - name: Install wasm32-unknown-unknown target ⚙
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Build all feature 🧪
+        if: env.GIT_DIFF
+        working-directory: ./packages/bindings
+        run: | 
+          cargo build --all-features --target wasm32-unknown-unknown
+
+      - name: Check floating issue 👀
+        if: env.GIT_DIFF
+        run: |
+          ./wasm2wat target/wasm32-unknown-unknown/debug/desmos_bindings.wasm > tmp.wat
+          ./scripts/check_floating.sh tmp.wat
+
+
+          

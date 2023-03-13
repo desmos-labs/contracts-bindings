@@ -5,17 +5,15 @@ mod tests {
         TEST_EDITABLE_REGISTERED_REACTION_ID, TEST_POST_FREE_TEXT_REACTION_ID,
         TEST_POST_REGISTERED_REACTION_ID, TEST_REACTIONS_POST_ID, TEST_SUBSPACE,
     };
-    use cosmwasm_std::Addr;
-    use desmos_bindings::reactions::query::ReactionsQuery;
-    use desmos_bindings::reactions::{
-        models::{
-            FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
-            RegisteredReactionValueParams, SubspaceReactionsParams,
-        },
-        models_query::{
-            QueryReactionResponse, QueryReactionsParamsResponse, QueryReactionsResponse,
-            QueryRegisteredReactionResponse, QueryRegisteredReactionsResponse,
-        },
+    use desmos_bindings::reactions::types::{
+        FreeTextValue, FreeTextValueParams, Reaction, ReactionValue, RegisteredReaction,
+        RegisteredReactionValue, RegisteredReactionValueParams, SubspaceReactionsParams,
+    };
+    use desmos_bindings::reactions::types::{
+        QueryReactionRequest, QueryReactionResponse, QueryReactionsParamsRequest,
+        QueryReactionsParamsResponse, QueryReactionsRequest, QueryReactionsResponse,
+        QueryRegisteredReactionRequest, QueryRegisteredReactionResponse,
+        QueryRegisteredReactionsRequest, QueryRegisteredReactionsResponse,
     };
     use test_contract::msg::QueryMsg::DesmosChain;
 
@@ -24,10 +22,10 @@ mod tests {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: ReactionsQuery::Reactions {
+            request: QueryReactionsRequest {
                 subspace_id: TEST_SUBSPACE,
                 post_id: TEST_REACTIONS_POST_ID,
-                user: None,
+                user: "".into(),
                 pagination: None,
             }
             .into(),
@@ -44,11 +42,13 @@ mod tests {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_REGISTERED_REACTION_ID,
-            value: ReactionValue::Registered {
-                registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
-            }
-            .into(),
-            author: Addr::unchecked(contract_address),
+            value: Some(
+                ReactionValue::Registered(RegisteredReactionValue {
+                    registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
+                })
+                .into(),
+            ),
+            author: contract_address.into(),
         };
         assert_eq!(&expected, reaction);
     }
@@ -58,7 +58,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: ReactionsQuery::Reaction {
+            request: QueryReactionRequest {
                 subspace_id: TEST_SUBSPACE,
                 post_id: TEST_REACTIONS_POST_ID,
                 reaction_id: TEST_POST_REGISTERED_REACTION_ID,
@@ -76,13 +76,15 @@ mod tests {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_REGISTERED_REACTION_ID,
-            value: ReactionValue::Registered {
-                registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
-            }
-            .into(),
-            author: Addr::unchecked(contract_address),
+            value: Some(
+                ReactionValue::Registered(RegisteredReactionValue {
+                    registered_reaction_id: TEST_EDITABLE_REGISTERED_REACTION_ID,
+                })
+                .into(),
+            ),
+            author: contract_address.into(),
         };
-        assert_eq!(expected, result.reaction);
+        assert_eq!(expected, result.reaction.unwrap());
     }
 
     #[test]
@@ -90,7 +92,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: ReactionsQuery::Reaction {
+            request: QueryReactionRequest {
                 subspace_id: TEST_SUBSPACE,
                 post_id: TEST_REACTIONS_POST_ID,
                 reaction_id: TEST_POST_FREE_TEXT_REACTION_ID,
@@ -108,13 +110,15 @@ mod tests {
             subspace_id: TEST_SUBSPACE,
             post_id: TEST_REACTIONS_POST_ID,
             id: TEST_POST_FREE_TEXT_REACTION_ID,
-            value: ReactionValue::FreeText {
-                text: "test".to_string(),
-            }
-            .into(),
-            author: Addr::unchecked(contract_address),
+            value: Some(
+                FreeTextValue {
+                    text: "test".into(),
+                }
+                .into(),
+            ),
+            author: contract_address.into(),
         };
-        assert_eq!(expected, result.reaction);
+        assert_eq!(expected, result.reaction.unwrap());
     }
 
     #[test]
@@ -122,7 +126,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: ReactionsQuery::RegisteredReactions {
+            request: QueryRegisteredReactionsRequest {
                 subspace_id: TEST_SUBSPACE,
                 pagination: None,
             }
@@ -139,8 +143,8 @@ mod tests {
         let expected = RegisteredReaction {
             subspace_id: TEST_SUBSPACE,
             id: 1,
-            shorthand_code: "editable_code".to_string(),
-            display_value: "editable_value".to_string(),
+            shorthand_code: "editable_code".into(),
+            display_value: "editable_value".into(),
         };
         assert_eq!(&expected, registered_reaction);
     }
@@ -150,7 +154,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: ReactionsQuery::RegisteredReaction {
+            request: QueryRegisteredReactionRequest {
                 subspace_id: TEST_SUBSPACE,
                 reaction_id: 1,
             }
@@ -166,10 +170,10 @@ mod tests {
         let expected = RegisteredReaction {
             subspace_id: TEST_SUBSPACE,
             id: 1,
-            shorthand_code: "editable_code".to_string(),
-            display_value: "editable_value".to_string(),
+            shorthand_code: "editable_code".into(),
+            display_value: "editable_value".into(),
         };
-        assert_eq!(expected, result.registered_reaction);
+        assert_eq!(expected, result.registered_reaction.unwrap());
     }
 
     #[test]
@@ -177,7 +181,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
 
         let query_msg = DesmosChain {
-            request: ReactionsQuery::ReactionsParams {
+            request: QueryReactionsParamsRequest {
                 subspace_id: TEST_SUBSPACE,
             }
             .into(),
@@ -191,13 +195,13 @@ mod tests {
 
         let expected = SubspaceReactionsParams {
             subspace_id: TEST_SUBSPACE,
-            registered_reaction: RegisteredReactionValueParams { enabled: true },
-            free_text: FreeTextValueParams {
+            registered_reaction: Some(RegisteredReactionValueParams { enabled: true }),
+            free_text: Some(FreeTextValueParams {
                 enabled: true,
                 max_length: 5,
                 reg_ex: "".to_string(),
-            },
+            }),
         };
-        assert_eq!(expected, result.params);
+        assert_eq!(expected, result.params.unwrap());
     }
 }

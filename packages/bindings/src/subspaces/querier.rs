@@ -1,29 +1,18 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
-use crate::subspaces::models_query::{QuerySectionResponse, QuerySectionsResponse};
-use crate::{
-    query::DesmosQuery,
-    subspaces::{
-        models_query::{
-            QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
-            QueryUserGroupResponse, QueryUserGroupsResponse, QueryUserPermissionsResponse,
-        },
-        query::SubspacesQuery,
-    },
-    types::PageRequest,
-};
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult, Uint64};
+use crate::subspaces::types::*;
+use crate::types::PageRequest;
+use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
     crate::iter::page_iterator::{Page, PageIterator},
-    crate::subspaces::models::Section,
-    crate::subspaces::models::{Subspace, UserGroup},
+    crate::subspaces::types::{Section, Subspace, UserGroup},
     cosmwasm_std::Binary,
 };
 
-/// Querier able to query data from the Desmos x/subspaces module.
+/// Querier allows to query data from the Desmos x/subspaces module.
 pub struct SubspacesQuerier<'a> {
-    querier: QuerierWrapper<'a, DesmosQuery>,
+    querier: crate::subspaces::types::SubspacesQuerier<'a, Empty>,
 }
 
 impl<'a> SubspacesQuerier<'a> {
@@ -31,18 +20,17 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::subspaces::querier::SubspacesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = SubspacesQuerier::new(deps.querier.deref());
-    ///     let subspaces_response = querier.query_subspaces(None);
+    ///     let querier = SubspacesQuerier::new(&deps.querier);
+    ///     let response = querier.query_subspaces(None);
     /// }
     /// ```
-    pub fn new(querier: &'a dyn Querier) -> Self {
+    pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: QuerierWrapper::<'a, DesmosQuery>::new(querier),
+            querier: crate::subspaces::types::SubspacesQuerier::new(querier),
         }
     }
 }
@@ -55,9 +43,7 @@ impl<'a> SubspacesQuerier<'a> {
         &self,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySubspacesResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::Subspaces { pagination });
-        let res: QuerySubspacesResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.subspaces(pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over all the subspaces.
@@ -68,15 +54,17 @@ impl<'a> SubspacesQuerier<'a> {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_subspaces(Some(PageRequest {
-                    key,
+                    key: key.unwrap_or_default().to_vec(),
                     limit: limit.into(),
                     reverse: false,
                     count_total: false,
-                    offset: None,
+                    offset: 0,
                 }))
                 .map(|response| Page {
                     items: response.subspaces,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -87,11 +75,7 @@ impl<'a> SubspacesQuerier<'a> {
     ///
     /// * `subspace_id` - Subspace of interest.
     pub fn query_subspace(&self, subspace_id: u64) -> StdResult<QuerySubspaceResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::Subspace {
-            subspace_id: subspace_id.into(),
-        });
-        let res: QuerySubspaceResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.subspace(subspace_id)
     }
 
     /// Queries all the sections created inside a subspace.
@@ -103,12 +87,8 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         pagination: Option<PageRequest>,
     ) -> StdResult<QuerySectionsResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::Sections {
-            subspace_id: Uint64::new(subspace_id),
-            pagination,
-        });
-        let res: QuerySectionsResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier
+            .sections(subspace_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over all the sections inside a subspace.
@@ -126,16 +106,18 @@ impl<'a> SubspacesQuerier<'a> {
                 self.query_sections(
                     subspace_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.sections,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -151,12 +133,7 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         section_id: u32,
     ) -> StdResult<QuerySectionResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::Section {
-            subspace_id: subspace_id.into(),
-            section_id,
-        });
-        let res: QuerySectionResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.section(subspace_id, section_id)
     }
 
     /// Queries the user groups created in a subspace.
@@ -170,13 +147,11 @@ impl<'a> SubspacesQuerier<'a> {
         section_id: Option<u32>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryUserGroupsResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::UserGroups {
-            subspace_id: subspace_id.into(),
-            section_id,
-            pagination,
-        });
-        let res: QueryUserGroupsResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.user_groups(
+            subspace_id,
+            section_id.unwrap_or_default(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over all the user groups created in a subspace.
@@ -197,16 +172,18 @@ impl<'a> SubspacesQuerier<'a> {
                     subspace_id,
                     section_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.groups,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -222,12 +199,7 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         group_id: u32,
     ) -> StdResult<QueryUserGroupResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::UserGroup {
-            subspace_id: subspace_id.into(),
-            group_id,
-        });
-        let res: QueryUserGroupResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.user_group(subspace_id, group_id)
     }
 
     /// Queries the members of a group.
@@ -241,13 +213,8 @@ impl<'a> SubspacesQuerier<'a> {
         group_id: u32,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryUserGroupMembersResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::UserGroupMembers {
-            subspace_id: subspace_id.into(),
-            group_id,
-            pagination,
-        });
-        let res: QueryUserGroupMembersResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier
+            .user_group_members(subspace_id, group_id, pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over all the members of a user group created in a subspace.
@@ -261,23 +228,25 @@ impl<'a> SubspacesQuerier<'a> {
         subspace_id: u64,
         group_id: u32,
         page_size: u64,
-    ) -> PageIterator<Addr, Binary> {
+    ) -> PageIterator<String, Binary> {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_user_group_members(
                     subspace_id,
                     group_id,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.members,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -294,13 +263,8 @@ impl<'a> SubspacesQuerier<'a> {
         section_id: Option<u32>,
         user: Addr,
     ) -> StdResult<QueryUserPermissionsResponse> {
-        let request = DesmosQuery::from(SubspacesQuery::UserPermissions {
-            subspace_id: subspace_id.into(),
-            section_id,
-            user,
-        });
-        let res: QueryUserPermissionsResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier
+            .user_permissions(subspace_id, section_id.unwrap_or_default(), user.into())
     }
 }
 
@@ -309,33 +273,25 @@ mod tests {
     use super::*;
     use crate::mocks::mock_queriers::mock_desmos_dependencies;
     use crate::subspaces::mocks::MockSubspacesQueries;
-    use std::ops::Deref;
 
     #[test]
     fn test_query_subspaces() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_subspaces(Default::default());
-        let expected = QuerySubspacesResponse {
-            subspaces: vec![MockSubspacesQueries::get_mock_subspace()],
-            pagination: Default::default(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_subspaces(None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_subspaces_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_iterate_subspaces() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-
+        let querier = SubspacesQuerier::new(&deps.querier);
         let mut it = querier.iterate_subspaces(10);
-
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockSubspacesQueries::get_mock_subspace()
-        );
+        let expected = MockSubspacesQueries::get_mocked_subspaces_response();
+        assert_eq!(expected.subspaces[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
@@ -343,39 +299,30 @@ mod tests {
     fn test_query_subspace() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_subspace(1);
-        let expected = QuerySubspaceResponse {
-            subspace: MockSubspacesQueries::get_mock_subspace(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_subspace(1).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_subspace_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_query_sections() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_sections(1, Default::default());
-        let expected = QuerySectionsResponse {
-            sections: vec![MockSubspacesQueries::get_mock_section()],
-            pagination: Default::default(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_sections(1, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_sections_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_iterate_sections() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-
+        let querier = SubspacesQuerier::new(&deps.querier);
         let mut it = querier.iterate_sections(1, 10);
-
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockSubspacesQueries::get_mock_section()
-        );
+        let expected = MockSubspacesQueries::get_mocked_sections_response();
+        assert_eq!(expected.sections[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
@@ -383,39 +330,30 @@ mod tests {
     fn test_query_section() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_section(1, 1);
-        let expected = QuerySectionResponse {
-            section: MockSubspacesQueries::get_mock_section(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_section(1, 1).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_section_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_query_user_groups() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_user_groups(1, None, Default::default());
-        let expected = QueryUserGroupsResponse {
-            groups: vec![MockSubspacesQueries::get_mock_user_group()],
-            pagination: Default::default(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_groups(1, None, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_groups_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_iterate_user_groups() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-
+        let querier = SubspacesQuerier::new(&deps.querier);
         let mut it = querier.iterate_user_groups(1, None, 10);
-
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockSubspacesQueries::get_mock_user_group()
-        );
+        let expected = MockSubspacesQueries::get_mocked_user_groups_response();
+        assert_eq!(expected.groups[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
@@ -423,39 +361,30 @@ mod tests {
     fn test_query_user_group() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_user_group(1, 1);
-        let expected = QueryUserGroupResponse {
-            group: MockSubspacesQueries::get_mock_user_group(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_group(1, 1).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_group_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_query_user_group_members() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_user_group_members(1, 1, Default::default());
-        let expected = QueryUserGroupMembersResponse {
-            members: vec![MockSubspacesQueries::get_mock_group_member()],
-            pagination: Default::default(),
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_group_members(1, 1, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_group_members_response();
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_iterate_user_group_members() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-
+        let querier = SubspacesQuerier::new(&deps.querier);
         let mut it = querier.iterate_user_group_members(1, 1, 10);
-
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockSubspacesQueries::get_mock_group_member()
-        );
+        let expected = MockSubspacesQueries::get_mocked_user_group_members_response();
+        assert_eq!(expected.members[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
@@ -463,16 +392,15 @@ mod tests {
     fn test_query_user_permissions() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let querier = SubspacesQuerier::new(deps.querier.deref());
-        let response = querier.query_user_permissions(
-            1,
-            None,
-            Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
-        );
-        let expected = QueryUserPermissionsResponse {
-            permissions: Default::default(),
-            details: vec![MockSubspacesQueries::get_mock_permission_detail()],
-        };
-        assert_eq!(response.ok(), Some(expected));
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier
+            .query_user_permissions(
+                1,
+                None,
+                Addr::unchecked("cosmos1qzskhrcjnkdz2ln4yeafzsdwht8ch08j4wed69"),
+            )
+            .unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_permissions_response();
+        assert_eq!(expected, response);
     }
 }

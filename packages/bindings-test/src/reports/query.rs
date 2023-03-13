@@ -6,11 +6,11 @@ mod tests {
         TEST_SUBSPACE_EDITABLE_POST_ID, USER1_ADDRESS,
     };
     use cosmwasm_std::Addr;
-    use desmos_bindings::reports::models::{RawReportTarget, ReportTarget};
-    use desmos_bindings::reports::models_query::{
-        QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
+    use desmos_bindings::reports::types::{PostTarget, UserTarget};
+    use desmos_bindings::reports::types::{
+        QueryReasonRequest, QueryReasonResponse, QueryReasonsRequest, QueryReasonsResponse,
+        QueryReportRequest, QueryReportResponse, QueryReportsRequest, QueryReportsResponse,
     };
-    use desmos_bindings::reports::query::ReportsQuery;
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
@@ -20,10 +20,10 @@ mod tests {
 
         // Query all
         let query = DesmosChain {
-            request: ReportsQuery::Reports {
+            request: QueryReportsRequest {
                 subspace_id: TEST_SUBSPACE,
                 target: None,
-                reporter: None,
+                reporter: "".into(),
                 pagination: None,
             }
             .into(),
@@ -37,12 +37,12 @@ mod tests {
         // The first one should be the one reporting the user
         let report = response.reports.first().unwrap();
         assert_eq!(TEST_SUBSPACE, report.subspace_id);
-        assert_eq!(Addr::unchecked(&contract_address), report.reporter);
+        assert_eq!(&contract_address, report.reporter.as_str());
         assert_eq!(
-            RawReportTarget::from(ReportTarget::User {
-                user: Addr::unchecked(USER1_ADDRESS)
-            }),
-            report.target
+            UserTarget {
+                user: USER1_ADDRESS.into()
+            },
+            UserTarget::try_from(report.target.clone().unwrap()).unwrap(),
         );
 
         // The second one should be the one reporting a post
@@ -50,23 +50,23 @@ mod tests {
         assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(Addr::unchecked(&contract_address), report.reporter);
         assert_eq!(
-            RawReportTarget::from(ReportTarget::Post {
+            PostTarget {
                 post_id: TEST_SUBSPACE_EDITABLE_POST_ID
-            }),
-            report.target
+            },
+            PostTarget::try_from(report.target.clone().unwrap()).unwrap(),
         );
 
         // Query the post report
         let query = DesmosChain {
-            request: ReportsQuery::Reports {
+            request: QueryReportsRequest {
                 subspace_id: TEST_SUBSPACE,
                 target: Some(
-                    ReportTarget::Post {
+                    PostTarget {
                         post_id: TEST_SUBSPACE_EDITABLE_POST_ID,
                     }
                     .into(),
                 ),
-                reporter: None,
+                reporter: "".into(),
                 pagination: None,
             }
             .into(),
@@ -81,10 +81,10 @@ mod tests {
         assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(Addr::unchecked(&contract_address), report.reporter);
         assert_eq!(
-            RawReportTarget::from(ReportTarget::Post {
+            PostTarget {
                 post_id: TEST_SUBSPACE_EDITABLE_POST_ID
-            }),
-            report.target
+            },
+            PostTarget::try_from(report.target.clone().unwrap()).unwrap(),
         );
     }
 
@@ -95,21 +95,22 @@ mod tests {
 
         // Query all
         let query = DesmosChain {
-            request: ReportsQuery::Report {
+            request: QueryReportRequest {
                 subspace_id: TEST_SUBSPACE,
-                report_id: TEST_REPORT_ID_WITH_USER_TARGET,
+                report_id: TEST_REPORT_ID_WITH_USER_TARGET.into(),
             }
             .into(),
         };
         let response: QueryReportResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        assert_eq!(TEST_SUBSPACE, response.report.subspace_id);
+        let report = response.report.unwrap();
+        assert_eq!(TEST_SUBSPACE, report.subspace_id);
         assert_eq!(
-            RawReportTarget::from(ReportTarget::User {
-                user: Addr::unchecked(USER1_ADDRESS)
-            }),
-            response.report.target
+            UserTarget {
+                user: USER1_ADDRESS.into()
+            },
+            UserTarget::try_from(report.target.unwrap()).unwrap(),
         );
     }
 
@@ -120,7 +121,7 @@ mod tests {
 
         // Query all
         let query = DesmosChain {
-            request: ReportsQuery::Reasons {
+            request: QueryReasonsRequest {
                 subspace_id: TEST_SUBSPACE,
                 pagination: None,
             }
@@ -136,10 +137,7 @@ mod tests {
 
         assert_eq!("Test reason", reason.title.as_str());
         assert_eq!(TEST_REASON_ID, reason.id);
-        assert_eq!(
-            "Test reason description",
-            reason.description.as_ref().unwrap().as_str()
-        );
+        assert_eq!("Test reason description", reason.description.as_str());
     }
 
     #[test]
@@ -149,7 +147,7 @@ mod tests {
 
         // Query all
         let query = DesmosChain {
-            request: ReportsQuery::Reason {
+            request: QueryReasonRequest {
                 subspace_id: TEST_SUBSPACE,
                 reason_id: TEST_REASON_ID,
             }
@@ -158,13 +156,10 @@ mod tests {
         let response: QueryReasonResponse =
             desmos_cli.wasm_query(&contract_address, &query).to_object();
 
-        let reason = response.reason;
+        let reason = response.reason.unwrap();
 
         assert_eq!("Test reason", reason.title.as_str());
         assert_eq!(TEST_REASON_ID, reason.id);
-        assert_eq!(
-            "Test reason description",
-            reason.description.unwrap().as_str()
-        );
+        assert_eq!("Test reason description", reason.description.as_str());
     }
 }

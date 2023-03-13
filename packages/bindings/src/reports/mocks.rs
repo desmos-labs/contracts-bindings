@@ -1,109 +1,80 @@
-//! Contains some useful mocks of the Desmos x/reports module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/reports module's types made to be used in any test.
 
-use crate::reports::models::{Reason, Report, ReportTarget};
-use crate::reports::models_query::{
-    QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse,
+use crate::reports::types::{
+    QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
+    Report, UserTarget,
 };
-use crate::reports::query::ReportsQuery;
-use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
+use chrono::DateTime;
+use desmos_std::shim::Timestamp;
+
+/// Represents the mock reporter for unit test.
+pub const MOCK_REPORTER: &str = "reporter";
+
+/// Represents the mock user target of the report for unit test.
+pub const MOCK_USER_TARGET: &str = "user_target";
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/reports module.
 pub struct MockReportsQueries {}
 
 impl MockReportsQueries {
-    /// Functions that generate a mocked list of reports present in a subspace.
-    pub fn get_mocked_reports(subspace_id: &Uint64) -> Vec<Report> {
-        vec![
-            Report {
-                subspace_id: *subspace_id,
-                id: Uint64::new(0),
-                reasons_ids: vec![0, 2],
-                message: None,
-                reporter: Addr::unchecked("desmos1rfv0f7mx7w9d3jv3h803u38vqym9ygg344asm3"),
-                target: ReportTarget::User {
-                    user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                }
-                .into(),
-                creation_date: "".to_string(),
-            },
-            Report {
-                subspace_id: *subspace_id,
-                id: Uint64::new(0),
-                reasons_ids: vec![],
-                message: Some("Report text".to_string()),
-                reporter: Addr::unchecked("desmos1rfv0f7mx7w9d3jv3h803u38vqym9ygg344asm3"),
-                target: ReportTarget::Post {
-                    post_id: Uint64::new(42),
-                }
-                .into(),
-                creation_date: "".to_string(),
-            },
-        ]
-    }
-
-    /// Functions that generate a mocked report present in a subspace.
-    pub fn get_mocked_report(subspace_id: &Uint64) -> Report {
+    /// Gets a mocked instance of [`Report`].
+    pub fn get_mocked_report(subspace_id: u64, id: u64) -> Report {
         Report {
-            subspace_id: *subspace_id,
-            id: Uint64::new(0),
+            subspace_id,
+            id,
             reasons_ids: vec![0, 2],
-            message: None,
-            reporter: Addr::unchecked("desmos1rfv0f7mx7w9d3jv3h803u38vqym9ygg344asm3"),
-            target: ReportTarget::User {
-                user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            }
-            .into(),
-            creation_date: "".to_string(),
+            message: "mock report".into(),
+            reporter: MOCK_REPORTER.into(),
+            target: Some(
+                UserTarget {
+                    user: MOCK_USER_TARGET.into(),
+                }
+                .into(),
+            ),
+            creation_date: Some(Timestamp::from(DateTime::from(
+                DateTime::parse_from_rfc3339("2022-02-21T13:18:57.800827Z").unwrap(),
+            ))),
         }
     }
 
-    /// Functions that generate a mocked list of report reasons present in a subspace.
-    pub fn get_mocked_reasons(subspace_id: &Uint64) -> Vec<Reason> {
-        vec![
-            Reason {
-                subspace_id: *subspace_id,
-                id: 1,
-                title: "Mock reason 1".to_string(),
-                description: None,
-            },
-            Reason {
-                subspace_id: *subspace_id,
-                id: 2,
-                title: "Mock reason 2".to_string(),
-                description: Some("Reason description".to_string()),
-            },
-        ]
-    }
-
-    /// Functions that generate a mocked report reason present in a subspace.
-    pub fn get_mocked_reason(subspace_id: &Uint64) -> Reason {
+    /// Gets a mocked instance of [`Reason`].
+    pub fn get_mocked_reason(subspace_id: u64, id: u32) -> Reason {
         Reason {
-            subspace_id: *subspace_id,
-            id: 1,
-            title: "Mock reason 1".to_string(),
-            description: None,
+            subspace_id,
+            id,
+            title: "Mock reason".into(),
+            description: "mock reason".into(),
         }
     }
-}
 
-/// Functions that mocks the reports query responses.
-pub fn mock_reports_query_response(query: &ReportsQuery) -> ContractResult<Binary> {
-    let response = match query {
-        ReportsQuery::Reports { subspace_id, .. } => to_binary(&QueryReportsResponse {
-            reports: MockReportsQueries::get_mocked_reports(subspace_id),
+    /// Function that mocks a [`QueryReportsResponse`]
+    pub fn get_mocked_reports_response() -> QueryReportsResponse {
+        QueryReportsResponse {
+            reports: vec![Self::get_mocked_report(1, 1)],
             pagination: None,
-        }),
-        ReportsQuery::Report { subspace_id, .. } => to_binary(&QueryReportResponse {
-            report: MockReportsQueries::get_mocked_report(subspace_id),
-        }),
-        ReportsQuery::Reasons { subspace_id, .. } => to_binary(&QueryReasonsResponse {
-            reasons: MockReportsQueries::get_mocked_reasons(subspace_id),
+        }
+    }
+
+    /// Function that mocks a [`QueryReportsResponse`]
+    pub fn get_mocked_report_response() -> QueryReportResponse {
+        QueryReportResponse {
+            report: Some(Self::get_mocked_report(1, 1)),
+        }
+    }
+
+    /// Function that mocks a [`QueryReasonsResponse`]
+    pub fn get_mocked_reasons_response() -> QueryReasonsResponse {
+        QueryReasonsResponse {
+            reasons: vec![Self::get_mocked_reason(1, 1)],
             pagination: None,
-        }),
-        ReportsQuery::Reason { subspace_id, .. } => to_binary(&QueryReasonResponse {
-            reason: MockReportsQueries::get_mocked_reason(subspace_id),
-        }),
-    };
-    response.into()
+        }
+    }
+
+    /// Function that mocks a [`QueryReasonResponse`]
+    pub fn get_mocked_reason_response() -> QueryReasonResponse {
+        QueryReasonResponse {
+            reason: Some(Self::get_mocked_reason(1, 1)),
+        }
+    }
 }

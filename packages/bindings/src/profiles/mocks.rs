@@ -1,24 +1,50 @@
-//! Contains some useful mocks of the Desmos x/profiles module's types made to be used in any test.
+//! Contains useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
-use crate::profiles::models_app_links::ApplicationLinkState;
-use crate::profiles::models_chain_links::{Address, SignatureValueType};
-use crate::profiles::{
-    models_app_links::{
-        AppLinkResult, ApplicationLink, ApplicationLinkOwnerDetails, CallData, Data, OracleRequest,
-    },
-    models_chain_links::{ChainConfig, ChainLink, ChainLinkOwnerDetails, Proof, Signature},
-    models_dtag_requests::DtagTransferRequest,
-    models_profile::{Account, Pictures, Profile},
-    models_query::{
-        QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
-        QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-        QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestsResponse,
-        QueryProfileResponse,
-    },
-    query::ProfilesQuery,
+use crate::profiles::types::{
+    oracle_request::CallData,
+    query_application_link_owners_response::ApplicationLinkOwnerDetails,
+    query_chain_link_owners_response::ChainLinkOwnerDetails,
+    result::{Success, Sum},
+    ApplicationLink, ApplicationLinkState, Bech32Address, ChainConfig, ChainLink,
+    DTagTransferRequest, Data, OracleRequest, Pictures, Profile, Proof,
+    QueryApplicationLinkByClientIdResponse, QueryApplicationLinkOwnersResponse,
+    QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
+    QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
+    QueryProfileResponse, Result as AppResult, SignatureValueType, SingleSignature,
 };
-use crate::types::PubKey;
-use cosmwasm_std::{to_binary, Addr, Binary, ContractResult, Uint64};
+use crate::types::Secp256k1PublicKey;
+
+use chrono::DateTime;
+use cosmwasm_std::Binary;
+use desmos_std::shim::Timestamp;
+
+/// Represents the mock dtag for unit test.
+pub const MOCK_DTAG: &str = "dtag";
+
+/// Represents the mock user for unit test.
+pub const MOCK_USER: &str = "user";
+
+/// Represents the mock receiver for unit test.
+pub const MOCK_RECEIVER: &str = "receiver";
+
+/// Represents the mock chain link address prefix for unit test.
+pub const MOCK_CHAIN_LINK_ADDRESS_PREFIX: &str = "cosmos";
+
+/// Represents the mock chain name of the chain link for unit test.
+pub const MOCK_CHAIN_LINK_CHAIN_NAME: &str = "cosmos";
+
+/// Represents the mock destination address of the chain link for unit test.
+pub const MOCK_CHAIN_LINK_ADDRESS: &str = "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2";
+
+/// Represents the mock application of the application link for unit test.
+pub const MOCK_APPLICATION_LINK_APPLICATION: &str = "twitter";
+
+/// Represents the mock username of the application link for unit test.
+pub const MOCK_APPLICATION_LINK_USERNAME: &str = "goldrake";
+
+/// Represents the mock client id of the application link for unit test.
+pub const MOCK_APPLICATION_LINK_CLIENT_ID: &str =
+    "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake";
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/profiles module.
@@ -26,288 +52,171 @@ pub struct MockProfilesQueries {}
 
 impl MockProfilesQueries {
     /// Gets a mocked instance of [`Profile`].
-    pub fn get_mock_profile() -> Profile {
+    pub fn get_mocked_profile() -> Profile {
         Profile {
-            proto_type: "/desmos.profiles.v3.Profile".to_string(),
-            account: Account {
-                proto_type: "/cosmos.auth.v1beta1.BaseAccount".to_string(),
-                address: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-                pub_key: PubKey {
-                    proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y")
-                        .unwrap(),
-                },
-                account_number: Uint64::new(0),
-                sequence: Uint64::new(15),
-            },
-            dtag: "goldrake".to_string(),
-            nickname: "Goldrake".to_string(),
-            bio: "This is Goldrake".to_string(),
-            pictures: Pictures {
-                profile: "".to_string(),
-                cover: "".to_string(),
-            },
-            creation_date: "2022-02-21T13:18:27.257641Z".to_string(),
+            /// Account information should not be used in the contract layer.
+            account: None,
+            dtag: MOCK_DTAG.into(),
+            nickname: "Goldrake".into(),
+            bio: "This is Goldrake".into(),
+            pictures: Some(Pictures {
+                profile: "ipfs://profile.com".into(),
+                cover: "ipfs://cover.com".to_string(),
+            }),
+            creation_date: Some(Timestamp::from(DateTime::from(
+                DateTime::parse_from_rfc3339("2022-02-21T13:18:27.257641Z").unwrap(),
+            ))),
         }
     }
 
-    /// Gets a mocked instance of [`DtagTransferRequest`].
-    pub fn get_mock_dtag_transfer_request() -> DtagTransferRequest {
-        DtagTransferRequest {
-            dtag_to_trade: "goldrake".to_string(),
-            sender: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            receiver: Addr::unchecked("desmos1rfv0f7mx7w9d3jv3h803u38vqym9ygg344asm3"),
+    /// Gets a mocked instance of [`DTagTransferRequest`].
+    pub fn get_mocked_dtag_transfer_request() -> DTagTransferRequest {
+        DTagTransferRequest {
+            dtag_to_trade: MOCK_DTAG.into(),
+            sender: MOCK_USER.into(),
+            receiver: MOCK_RECEIVER.into(),
         }
     }
 
     /// Gets a mocked instance of [`ChainLink`].
-    pub fn get_mock_chain_link() -> ChainLink {
+    pub fn get_mocked_chain_link() -> ChainLink {
         ChainLink {
-            user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            address: Address {
-                proto_type: "/desmos.profiles.v3.Bech32Addres".to_string(),
-                value: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
-                prefix: Some("cosmos".to_string()),
-            },
-            proof: Proof {
-                pub_key: PubKey {
-                    proto_type: "/cosmos.crypto.secp256k1.PubKey".to_string(),
-                    key: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap(),
-                },
-                signature: Signature {
-                    proto_type: "/desmos.profiles.v1beta1.SignatureData".to_string(),
-                    value_type: SignatureValueType::Raw,
-                    signature: Binary::from_base64("C7xppu4C4S3dgeC9TVqhyGN1hbMnMbnmWgXQI2WE8t0oHIHhDTqXyZgzhNNYiBO7ulno3G8EXO3Ep5KMFngyFg").unwrap(),
-                },
-                plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".to_string(),
-            },
-            chain_config: ChainConfig { name: "cosmos".to_string() },
-            creation_time: "2022-02-21T13:18:57.800827Z".to_string(),
+            user: MOCK_USER.into(),
+            address: Some(Bech32Address {
+                value: MOCK_CHAIN_LINK_ADDRESS.into(),
+                prefix: MOCK_CHAIN_LINK_ADDRESS_PREFIX.into(),
+            }.into()),
+            proof: Some(Proof {
+                pub_key: Some(Secp256k1PublicKey{
+                    key: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap().to_vec(),
+                }.into()),
+                signature: Some(SingleSignature {
+                    value_type: SignatureValueType::Raw.into(),
+                    signature: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap().to_vec(),
+                }.into()),
+                plain_text: "636f736d6f733138786e6d6c7a71727172367a74353236706e637a786536357a6b33663478676d6e6470786e32".into(),
+            }),
+            chain_config: Some(ChainConfig { name: MOCK_CHAIN_LINK_CHAIN_NAME.into() }),
+            creation_time: Some(Timestamp::from(DateTime::from(
+                DateTime::parse_from_rfc3339("2022-02-21T13:18:57.800827Z").unwrap(),
+            ))),
         }
     }
 
     /// Gets a mocked instance of [`ChainLinkOwnerDetails`].
-    pub fn get_mock_chain_link_owner() -> ChainLinkOwnerDetails {
+    pub fn get_mocked_chain_link_owner_details() -> ChainLinkOwnerDetails {
         ChainLinkOwnerDetails {
-            user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            chain_name: "cosmos".to_string(),
-            target: "cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string(),
+            user: MOCK_USER.into(),
+            chain_name: MOCK_CHAIN_LINK_CHAIN_NAME.into(),
+            target: MOCK_CHAIN_LINK_ADDRESS.into(),
         }
     }
 
     /// Gets a mocked instance of [`ApplicationLink`].
-    pub fn get_mock_application_link() -> ApplicationLink {
+    pub fn get_mocked_application_link() -> ApplicationLink {
         ApplicationLink {
-            user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            data: Data {
-                application: "twitter".to_string(),
-                username: "goldrake".to_string(),
-            },
-            state: ApplicationLinkState::VerificationSuccess,
-            oracle_request: OracleRequest {
-                id: Uint64::new(537807),
-                oracle_script_id: Uint64::new(32),
-                call_data: CallData {
-                    application: "twitter".to_string(),
-                    call_data: "7b22757365726e616d65223a224c756361675f5f2335323337227d".to_string(),
-                },
-                client_id: "desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc-twitter-goldrake"
-                    .to_string(),
-            },
-            result: Some(AppLinkResult::Success {
-                value: "4c756361675f5f2345423337".to_string(),
-                signature: "9690d734171298eb4cc9636c36d8507535264c1fdb136c9095a6a50c41ccffa"
-                    .to_string(),
+            user: MOCK_USER.into(),
+            data: Some(Data {
+                application: MOCK_APPLICATION_LINK_APPLICATION.into(),
+                username: MOCK_APPLICATION_LINK_USERNAME.into(),
             }),
-            creation_time: "2022-02-21T13:18:57.800827Z".to_string(),
-            expiration_time: "2023-02-21T13:18:57.800827Z".to_string(),
+            state: ApplicationLinkState::VerificationSuccess.into(),
+            oracle_request: Some(OracleRequest {
+                id: 537807,
+                oracle_script_id: 32,
+                call_data: Some(CallData {
+                    application: MOCK_APPLICATION_LINK_APPLICATION.into(),
+                    call_data: "7b22757365726e616d65223a224c756361675f5f2335323337227d".into(),
+                }),
+                client_id: MOCK_APPLICATION_LINK_CLIENT_ID.into(),
+            }),
+            result: Some(AppResult {
+                sum: Some(Sum::Success(Success {
+                    value: "4c756361675f5f2345423337".into(),
+                    signature: "9690d734171298eb4cc9636c36d8507535264c1fdb136c9095a6a50c41ccffa"
+                        .into(),
+                })),
+            }),
+            creation_time: Some(Timestamp::from(DateTime::from(
+                DateTime::parse_from_rfc3339("2022-02-21T13:18:57.800827Z").unwrap(),
+            ))),
+            expiration_time: Some(Timestamp::from(DateTime::from(
+                DateTime::parse_from_rfc3339("2023-02-21T13:18:57.800827Z").unwrap(),
+            ))),
         }
     }
 
     /// Gets a mocked instance of [`ApplicationLinkOwnerDetails`].
-    pub fn get_mock_application_link_owner() -> ApplicationLinkOwnerDetails {
+    pub fn get_mocked_application_link_owner_details() -> ApplicationLinkOwnerDetails {
         ApplicationLinkOwnerDetails {
-            user: Addr::unchecked("desmos1nwp8gxrnmrsrzjdhvk47vvmthzxjtphgxp5ftc"),
-            application: "twitter".to_string(),
-            username: "goldrake".to_string(),
+            user: MOCK_USER.into(),
+            application: MOCK_APPLICATION_LINK_APPLICATION.into(),
+            username: MOCK_APPLICATION_LINK_USERNAME.into(),
         }
     }
-}
 
-/// Functions that mocks the profile query responses.
-pub fn mock_profiles_query_response(query: &ProfilesQuery) -> ContractResult<Binary> {
-    let response = match query {
-        ProfilesQuery::Profile { .. } => {
-            let profile = MockProfilesQueries::get_mock_profile();
-            to_binary(&QueryProfileResponse { profile })
+    /// Function that mocks a [`QueryProfileResponse`].
+    pub fn get_mocked_profile_response() -> QueryProfileResponse {
+        QueryProfileResponse {
+            profile: Some(Self::get_mocked_profile().into()),
         }
-        ProfilesQuery::IncomingDtagTransferRequests { .. } => {
-            let incoming_dtag_requests = MockProfilesQueries::get_mock_dtag_transfer_request();
-            to_binary(&QueryIncomingDtagTransferRequestsResponse {
-                requests: vec![incoming_dtag_requests],
-                pagination: Default::default(),
-            })
-        }
-        ProfilesQuery::ChainLinks { .. } => {
-            let chain_link = MockProfilesQueries::get_mock_chain_link();
-            to_binary(&QueryChainLinksResponse {
-                links: vec![chain_link],
-                pagination: Default::default(),
-            })
-        }
-        ProfilesQuery::ChainLinkOwners { .. } => {
-            let owner = MockProfilesQueries::get_mock_chain_link_owner();
-            to_binary(&QueryChainLinkOwnersResponse {
-                owners: vec![owner],
-                pagination: Default::default(),
-            })
-        }
-        ProfilesQuery::DefaultExternalAddresses { .. } => {
-            let chain_link = MockProfilesQueries::get_mock_chain_link();
-            to_binary(&QueryDefaultExternalAddressesResponse {
-                links: vec![chain_link],
-                pagination: Default::default(),
-            })
-        }
-        ProfilesQuery::ApplicationLinks { .. } => {
-            let app_link = MockProfilesQueries::get_mock_application_link();
-            to_binary(&QueryApplicationLinksResponse {
-                links: vec![app_link],
-                pagination: Default::default(),
-            })
-        }
-        ProfilesQuery::ApplicationLinkByClientID { .. } => {
-            let app_link = MockProfilesQueries::get_mock_application_link();
-            to_binary(&QueryApplicationLinkByClientIDResponse { link: app_link })
-        }
-        ProfilesQuery::ApplicationLinkOwners { .. } => {
-            let owner = MockProfilesQueries::get_mock_application_link_owner();
-            to_binary(&QueryApplicationLinkOwnersResponse {
-                owners: vec![owner],
-                pagination: Default::default(),
-            })
-        }
-    };
-    response.into()
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use cosmwasm_std::{to_binary, Addr};
-
-    #[test]
-    fn test_query_profile() {
-        let query = ProfilesQuery::Profile {
-            user: "".to_string(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryProfileResponse {
-            profile: MockProfilesQueries::get_mock_profile(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
     }
 
-    #[test]
-    fn test_query_incoming_dtag_transfer_requests() {
-        let query = ProfilesQuery::IncomingDtagTransferRequests {
-            receiver: Addr::unchecked(""),
-            pagination: Default::default(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryIncomingDtagTransferRequestsResponse {
-            requests: vec![MockProfilesQueries::get_mock_dtag_transfer_request()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryIncomingDTagTransferRequestsResponse`].
+    pub fn get_mocked_incoming_dtag_transfer_requests_response(
+    ) -> QueryIncomingDTagTransferRequestsResponse {
+        QueryIncomingDTagTransferRequestsResponse {
+            requests: vec![Self::get_mocked_dtag_transfer_request()],
+            pagination: None,
+        }
     }
 
-    #[test]
-    fn test_query_chain_links() {
-        let query = ProfilesQuery::ChainLinks {
-            user: Some(Addr::unchecked("")),
-            chain_name: Some("".to_string()),
-            target: Some("".to_string()),
-            pagination: Default::default(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryChainLinksResponse {
-            links: vec![MockProfilesQueries::get_mock_chain_link()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryChainLinksResponse`].
+    pub fn get_mocked_chain_links_response() -> QueryChainLinksResponse {
+        QueryChainLinksResponse {
+            links: vec![Self::get_mocked_chain_link()],
+            pagination: None,
+        }
     }
 
-    #[test]
-    fn test_query_chain_link_owners() {
-        let query = ProfilesQuery::ChainLinkOwners {
-            chain_name: Some("".to_string()),
-            target: Some("".to_string()),
-            pagination: Default::default(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryChainLinkOwnersResponse {
-            owners: vec![MockProfilesQueries::get_mock_chain_link_owner()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryChainLinkOwnersResponse`].
+    pub fn get_mocked_chain_link_owners_response() -> QueryChainLinkOwnersResponse {
+        QueryChainLinkOwnersResponse {
+            owners: vec![Self::get_mocked_chain_link_owner_details()],
+            pagination: None,
+        }
     }
 
-    #[test]
-    fn test_query_default_external_addresses() {
-        let query = ProfilesQuery::DefaultExternalAddresses {
-            owner: Some(Addr::unchecked("")),
-            chain_name: Some("".to_string()),
-            pagination: Default::default(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryDefaultExternalAddressesResponse {
-            links: vec![MockProfilesQueries::get_mock_chain_link()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryDefaultExternalAddressesResponse`].
+    pub fn get_mocked_default_external_addresses_response() -> QueryDefaultExternalAddressesResponse
+    {
+        QueryDefaultExternalAddressesResponse {
+            links: vec![Self::get_mocked_chain_link()],
+            pagination: None,
+        }
     }
 
-    #[test]
-    fn test_query_app_links() {
-        let query = ProfilesQuery::ApplicationLinks {
-            user: Some(Addr::unchecked("")),
-            application: Some("".to_string()),
-            username: Some("".to_string()),
-            pagination: Default::default(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryApplicationLinksResponse {
-            links: vec![MockProfilesQueries::get_mock_application_link()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryApplicationLinksResponse`]
+    pub fn get_mocked_application_links_response() -> QueryApplicationLinksResponse {
+        QueryApplicationLinksResponse {
+            links: vec![Self::get_mocked_application_link()],
+            pagination: None,
+        }
     }
 
-    #[test]
-    fn test_query_application_link_by_chain_id() {
-        let query = ProfilesQuery::ApplicationLinkByClientID {
-            client_id: "".to_string(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryApplicationLinkByClientIDResponse {
-            link: MockProfilesQueries::get_mock_application_link(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryApplicationLinkByClientIdResponse`]
+    pub fn get_mocked_application_link_by_client_id_response(
+    ) -> QueryApplicationLinkByClientIdResponse {
+        QueryApplicationLinkByClientIdResponse {
+            link: Some(Self::get_mocked_application_link()),
+        }
     }
 
-    #[test]
-    fn test_query_app_link_owners() {
-        let query = ProfilesQuery::ApplicationLinkOwners {
-            application: Some("".to_string()),
-            username: Some("".to_string()),
-            pagination: Default::default(),
-        };
-        let response = mock_profiles_query_response(&query);
-        let expected = to_binary(&QueryApplicationLinkOwnersResponse {
-            owners: vec![MockProfilesQueries::get_mock_application_link_owner()],
-            pagination: Default::default(),
-        });
-        assert_eq!(response.into_result().ok(), expected.ok())
+    /// Function that mocks a [`QueryApplicationLinkOwnersResponse`]
+    pub fn get_mocked_application_link_owners_response() -> QueryApplicationLinkOwnersResponse {
+        QueryApplicationLinkOwnersResponse {
+            owners: vec![Self::get_mocked_application_link_owner_details()],
+            pagination: None,
+        }
     }
 }

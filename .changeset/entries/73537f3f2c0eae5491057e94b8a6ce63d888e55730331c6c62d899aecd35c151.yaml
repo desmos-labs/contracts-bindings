@@ -1,0 +1,6 @@
+type: feat
+module: none
+pull_request: 116
+description: Add stargate support
+backward_compatible: false
+date: 2023-03-06T11:37:22.0289097Z

@@ -3,24 +3,18 @@
 #[cfg(feature = "iterators")]
 use crate::{
     iter::page_iterator::{Page, PageIterator},
-    relationships::models::{Relationship, UserBlock},
+    relationships::types::{Relationship, UserBlock},
 };
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::{
-    query::DesmosQuery,
-    relationships::{
-        models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
-        query::RelationshipsQuery,
-    },
-    types::PageRequest,
-};
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
+use crate::relationships::types::*;
+use crate::types::PageRequest;
+use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/relationships module.
+/// Querier allows to query data from the Desmos x/relationships module.
 pub struct RelationshipsQuerier<'a> {
-    querier: QuerierWrapper<'a, DesmosQuery>,
+    querier: crate::relationships::types::RelationshipsQuerier<'a, Empty>,
 }
 
 impl<'a> RelationshipsQuerier<'a> {
@@ -28,17 +22,16 @@ impl<'a> RelationshipsQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::relationships::querier::RelationshipsQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = RelationshipsQuerier::new(deps.querier.deref());
+    ///     let querier = RelationshipsQuerier::new(&deps.querier);
     /// }
     /// ```
-    pub fn new(querier: &'a dyn Querier) -> Self {
+    pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: QuerierWrapper::<'a, DesmosQuery>::new(querier),
+            querier: crate::relationships::types::RelationshipsQuerier::new(querier),
         }
     }
 
@@ -56,15 +49,12 @@ impl<'a> RelationshipsQuerier<'a> {
         counterparty: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryRelationshipsResponse> {
-        let request = DesmosQuery::Relationships(RelationshipsQuery::Relationships {
-            subspace_id: subspace_id.into(),
-            user,
-            counterparty,
-            pagination,
-        });
-
-        let res: QueryRelationshipsResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.relationships(
+            subspace_id,
+            user.unwrap_or_else(|| Addr::unchecked("")).into(),
+            counterparty.unwrap_or_else(|| Addr::unchecked("")).into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over a user's relationships created in a subspace or
@@ -87,18 +77,18 @@ impl<'a> RelationshipsQuerier<'a> {
                     user.clone(),
                     None,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.relationships,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|pagination| pagination.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -119,15 +109,12 @@ impl<'a> RelationshipsQuerier<'a> {
         blocked: Option<Addr>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryBlocksResponse> {
-        let request = DesmosQuery::Relationships(RelationshipsQuery::Blocks {
-            subspace_id: subspace_id.into(),
-            blocker,
-            blocked,
-            pagination,
-        });
-
-        let res: QueryBlocksResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.blocks(
+            subspace_id,
+            blocker.unwrap_or_else(|| Addr::unchecked("")).into(),
+            blocked.unwrap_or_else(|| Addr::unchecked("")).into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over the users blocked from a specific user in a subspace or
@@ -150,18 +137,18 @@ impl<'a> RelationshipsQuerier<'a> {
                     blocker.clone(),
                     None,
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.blocks,
-                    next_page_key: response
-                        .pagination
-                        .and_then(|pagination| pagination.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -171,49 +158,36 @@ impl<'a> RelationshipsQuerier<'a> {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::relationships::{
-        mocks::MockRelationshipsQueries,
-        models_query::{QueryBlocksResponse, QueryRelationshipsResponse},
-        querier::RelationshipsQuerier,
-    };
+    use crate::relationships::mocks::{MockRelationshipsQueries, MOCK_TARGET, MOCK_USER};
     use cosmwasm_std::Addr;
-    use std::ops::Deref;
 
     #[test]
     fn test_query_relationships() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
-
-        let response = relationships_querier
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let response = querier
             .query_relationships(
                 0,
-                Some(Addr::unchecked("")),
-                Some(Addr::unchecked("")),
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(Addr::unchecked(MOCK_TARGET)),
                 None,
             )
             .unwrap();
-        let expected = QueryRelationshipsResponse {
-            relationships: vec![MockRelationshipsQueries::get_mock_relationship()],
-            pagination: Default::default(),
-        };
-
-        assert_eq!(response, expected)
+        let expected = MockRelationshipsQueries::get_mocked_relationships_response();
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_iterate_relationships() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
-
-        let mut it = relationships_querier.iterate_relationships(0, Some(Addr::unchecked("")), 10);
-
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockRelationshipsQueries::get_mock_relationship()
-        );
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let mut it = querier.iterate_relationships(0, Some(Addr::unchecked("")), 10);
+        let expected = MockRelationshipsQueries::get_mocked_relationships_response();
+        assert_eq!(expected.relationships[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
@@ -221,36 +195,27 @@ mod tests {
     fn test_query_blocks() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
-
-        let response = relationships_querier
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let response = querier
             .query_blocks(
                 0,
-                Some(Addr::unchecked("")),
-                Some(Addr::unchecked("")),
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(Addr::unchecked(MOCK_TARGET)),
                 None,
             )
             .unwrap();
-        let expected = QueryBlocksResponse {
-            blocks: vec![MockRelationshipsQueries::get_mock_user_block()],
-            pagination: Default::default(),
-        };
-
-        assert_eq!(response, expected)
+        let expected = MockRelationshipsQueries::get_mocked_blocks_response();
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_iterate_blocks() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let relationships_querier = RelationshipsQuerier::new(deps.querier.deref());
-
-        let mut it = relationships_querier.iterate_blocks(0, Some(Addr::unchecked("")), 10);
-
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockRelationshipsQueries::get_mock_user_block()
-        );
+        let querier = RelationshipsQuerier::new(&deps.querier);
+        let mut it = querier.iterate_blocks(0, Some(Addr::unchecked("")), 10);
+        let expected = MockRelationshipsQueries::get_mocked_blocks_response();
+        assert_eq!(expected.blocks[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 }

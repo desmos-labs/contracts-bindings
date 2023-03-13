@@ -1,33 +1,17 @@
 //! Contains the querier that can be used to query data related to the x/profiles module.
 
 #[cfg(feature = "iterators")]
-use crate::{
-    iter::page_iterator::{Page, PageIterator},
-    profiles::models_app_links::{ApplicationLink, ApplicationLinkOwnerDetails},
-    profiles::models_chain_links::{ChainLink, ChainLinkOwnerDetails},
-    profiles::models_dtag_requests::DtagTransferRequest,
-};
+use crate::iter::page_iterator::{Page, PageIterator};
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
-use crate::{
-    profiles::{
-        models_query::{
-            QueryApplicationLinkByClientIDResponse, QueryApplicationLinkOwnersResponse,
-            QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
-            QueryDefaultExternalAddressesResponse, QueryIncomingDtagTransferRequestsResponse,
-            QueryProfileResponse,
-        },
-        query::ProfilesQuery,
-    },
-    query::DesmosQuery,
-    types::PageRequest,
-};
-use cosmwasm_std::{Addr, Querier, QuerierWrapper, StdResult};
+use crate::profiles::types::*;
+use crate::types::PageRequest;
+use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
-/// Querier able to query data from the Desmos x/profiles module.
+/// Querier allows to query data from the Desmos x/profiles module.
 pub struct ProfilesQuerier<'a> {
-    querier: QuerierWrapper<'a, DesmosQuery>,
+    querier: crate::profiles::types::ProfilesQuerier<'a, Empty>,
 }
 
 impl<'a> ProfilesQuerier<'a> {
@@ -35,17 +19,16 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// # Example
     /// ```
-    /// use std::ops::Deref;
     /// use cosmwasm_std::{DepsMut, MessageInfo};
     /// use desmos_bindings::profiles::querier::ProfilesQuerier;
     ///
     /// pub fn contract_action(deps: DepsMut, _: MessageInfo) {
-    ///     let querier = ProfilesQuerier::new(deps.querier.deref());
+    ///     let querier = ProfilesQuerier::new(&deps.querier);
     /// }
     /// ```
-    pub fn new(querier: &'a dyn Querier) -> Self {
+    pub fn new(querier: &'a QuerierWrapper<'a, Empty>) -> Self {
         Self {
-            querier: QuerierWrapper::<'a, DesmosQuery>::new(querier),
+            querier: crate::profiles::types::ProfilesQuerier::new(querier),
         }
     }
 
@@ -53,12 +36,7 @@ impl<'a> ProfilesQuerier<'a> {
     ///
     /// * `user` - Address of the user to query the profile for.
     pub fn query_profile(&self, user: Addr) -> StdResult<QueryProfileResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::Profile {
-            user: user.to_string(),
-        });
-
-        let res: QueryProfileResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.profile(user.into())
     }
 
     /// Queries the user's dtag transfer requests.
@@ -69,14 +47,9 @@ impl<'a> ProfilesQuerier<'a> {
         &self,
         receiver: Addr,
         pagination: Option<PageRequest>,
-    ) -> StdResult<QueryIncomingDtagTransferRequestsResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::IncomingDtagTransferRequests {
-            receiver,
-            pagination,
-        });
-
-        let res: QueryIncomingDtagTransferRequestsResponse = self.querier.query(&request.into())?;
-        Ok(res)
+    ) -> StdResult<QueryIncomingDTagTransferRequestsResponse> {
+        self.querier
+            .incoming_d_tag_transfer_requests(receiver.into(), pagination.map(Into::into))
     }
 
     /// Gives an iterator to scan over a user's dtag transfer requests.
@@ -88,22 +61,24 @@ impl<'a> ProfilesQuerier<'a> {
         &self,
         receiver: Addr,
         page_size: u64,
-    ) -> PageIterator<DtagTransferRequest, Binary> {
+    ) -> PageIterator<DTagTransferRequest, Binary> {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_incoming_dtag_transfer_requests(
                     receiver.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.requests,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -122,19 +97,16 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_chain_links(
         &self,
         user: Option<Addr>,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&str>,
+        target: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryChainLinksResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ChainLinks {
-            user,
-            chain_name,
-            target,
-            pagination,
-        });
-
-        let res: QueryChainLinksResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.chain_links(
+            user.unwrap_or_else(|| Addr::unchecked("")).into(),
+            chain_name.unwrap_or_default().into(),
+            target.unwrap_or_default().into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over a user's chain links or all the performed chain links.
@@ -147,11 +119,11 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if chain_name is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_chain_links(
-        &self,
+    pub fn iterate_chain_links<'b>(
+        &'b self,
         user: Option<Addr>,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&'b str>,
+        target: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<ChainLink, Binary> {
         PageIterator::new(
@@ -161,16 +133,18 @@ impl<'a> ProfilesQuerier<'a> {
                     chain_name.clone(),
                     target.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -185,18 +159,15 @@ impl<'a> ProfilesQuerier<'a> {
     /// * `pagination` - Optional pagination configs.
     pub fn query_chain_link_owners(
         &self,
-        chain_name: Option<String>,
-        target: Option<String>,
+        chain_name: Option<&str>,
+        target: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryChainLinkOwnersResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ChainLinkOwners {
-            chain_name,
-            target,
-            pagination,
-        });
-
-        let res: QueryChainLinkOwnersResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.chain_link_owners(
+            chain_name.unwrap_or_default().into(),
+            target.unwrap_or_default().into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over chain link owners.
@@ -206,28 +177,30 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if chain_name is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_chain_link_owners(
-        &self,
-        chain_name: Option<String>,
-        target: Option<String>,
+    pub fn iterate_chain_link_owners<'b>(
+        &'b self,
+        chain_name: Option<&'b str>,
+        target: Option<&'b str>,
         page_size: u64,
-    ) -> PageIterator<ChainLinkOwnerDetails, Binary> {
+    ) -> PageIterator<query_chain_link_owners_response::ChainLinkOwnerDetails, Binary> {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_chain_link_owners(
                     chain_name.clone(),
                     target.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.owners,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -243,16 +216,14 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_default_external_addresses(
         &self,
         owner: Option<Addr>,
-        chain_name: Option<String>,
+        chain_name: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryDefaultExternalAddressesResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::DefaultExternalAddresses {
-            owner,
-            chain_name,
-            pagination,
-        });
-        let res: QueryDefaultExternalAddressesResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.default_external_addresses(
+            owner.unwrap_or_else(|| Addr::unchecked("")).into(),
+            chain_name.unwrap_or_default().into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over chain link owners.
@@ -262,10 +233,10 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if owner is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_default_external_addresses(
-        &self,
+    pub fn iterate_default_external_addresses<'b>(
+        &'b self,
         owner: Option<Addr>,
-        chain_name: Option<String>,
+        chain_name: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<ChainLink, Binary> {
         PageIterator::new(
@@ -274,16 +245,18 @@ impl<'a> ProfilesQuerier<'a> {
                     owner.clone(),
                     chain_name.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -302,19 +275,16 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_application_links(
         &self,
         user: Option<Addr>,
-        application: Option<String>,
-        username: Option<String>,
+        application: Option<&str>,
+        username: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinksResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinks {
-            user,
-            application,
-            username,
-            pagination,
-        });
-
-        let res: QueryApplicationLinksResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.application_links(
+            user.unwrap_or_else(|| Addr::unchecked("")).into(),
+            application.unwrap_or_default().into(),
+            username.unwrap_or_default().into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over a user's app links or all the performed app links.
@@ -327,11 +297,11 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if application is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_application_links(
-        &self,
+    pub fn iterate_application_links<'b>(
+        &'b self,
         user: Option<Addr>,
-        application: Option<String>,
-        username: Option<String>,
+        application: Option<&'b str>,
+        username: Option<&'b str>,
         page_size: u64,
     ) -> PageIterator<ApplicationLink, Binary> {
         PageIterator::new(
@@ -341,16 +311,18 @@ impl<'a> ProfilesQuerier<'a> {
                     application.clone(),
                     username.clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.links,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -363,13 +335,8 @@ impl<'a> ProfilesQuerier<'a> {
     pub fn query_application_link_by_client_id(
         &self,
         client_id: &str,
-    ) -> StdResult<QueryApplicationLinkByClientIDResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkByClientID {
-            client_id: client_id.to_owned(),
-        });
-
-        let res: QueryApplicationLinkByClientIDResponse = self.querier.query(&request.into())?;
-        Ok(res)
+    ) -> StdResult<QueryApplicationLinkByClientIdResponse> {
+        self.querier.application_link_by_client_id(client_id.into())
     }
 
     /// Queries app link owners.
@@ -380,18 +347,15 @@ impl<'a> ProfilesQuerier<'a> {
     /// * `page_size` - Size of the page requested to the chain.
     pub fn query_application_link_owners(
         &self,
-        application: Option<String>,
-        username: Option<String>,
+        application: Option<&str>,
+        username: Option<&str>,
         pagination: Option<PageRequest>,
     ) -> StdResult<QueryApplicationLinkOwnersResponse> {
-        let request = DesmosQuery::Profiles(ProfilesQuery::ApplicationLinkOwners {
-            application,
-            username,
-            pagination,
-        });
-
-        let res: QueryApplicationLinkOwnersResponse = self.querier.query(&request.into())?;
-        Ok(res)
+        self.querier.application_link_owners(
+            application.unwrap_or_default().into(),
+            username.unwrap_or_default().into(),
+            pagination.map(Into::into),
+        )
     }
 
     /// Gives an iterator to scan over app link owners.
@@ -402,28 +366,31 @@ impl<'a> ProfilesQuerier<'a> {
     /// Used only if application is also set.
     /// * `page_size` - Size of the page requested to the chain.
     #[cfg(feature = "iterators")]
-    pub fn iterate_application_link_owners(
-        &self,
-        application: Option<String>,
-        username: Option<String>,
+    pub fn iterate_application_link_owners<'b>(
+        &'b self,
+        application: Option<&'b str>,
+        username: Option<&'b str>,
         page_size: u64,
-    ) -> PageIterator<ApplicationLinkOwnerDetails, Binary> {
+    ) -> PageIterator<query_application_link_owners_response::ApplicationLinkOwnerDetails, Binary>
+    {
         PageIterator::new(
             Box::new(move |key, limit| {
                 self.query_application_link_owners(
-                    application.clone(),
-                    username.clone(),
+                    application.map(Into::into).clone(),
+                    username.map(Into::into).clone(),
                     Some(PageRequest {
-                        key,
+                        key: key.unwrap_or_default().to_vec(),
                         limit: limit.into(),
                         reverse: false,
                         count_total: false,
-                        offset: None,
+                        offset: 0,
                     }),
                 )
                 .map(|response| Page {
                     items: response.owners,
-                    next_page_key: response.pagination.and_then(|response| response.next_key),
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
                 })
             }),
             page_size,
@@ -435,54 +402,48 @@ impl<'a> ProfilesQuerier<'a> {
 mod tests {
     use super::*;
     use crate::mocks::mock_queriers::mock_desmos_dependencies;
-    use crate::profiles::mocks::MockProfilesQueries;
-    use cosmwasm_std::Addr;
-    use std::ops::Deref;
-
+    use crate::profiles::mocks::{
+        MockProfilesQueries, MOCK_APPLICATION_LINK_APPLICATION, MOCK_APPLICATION_LINK_CLIENT_ID,
+        MOCK_APPLICATION_LINK_USERNAME, MOCK_CHAIN_LINK_ADDRESS, MOCK_CHAIN_LINK_CHAIN_NAME,
+        MOCK_USER,
+    };
     #[test]
     fn test_query_profile() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier.query_profile(Addr::unchecked("")).unwrap();
-        let expected = QueryProfileResponse {
-            profile: MockProfilesQueries::get_mock_profile(),
-        };
+        let response = querier.query_profile(Addr::unchecked(MOCK_USER)).unwrap();
+        let expected = MockProfilesQueries::get_mocked_profile_response();
 
-        assert_eq!(response, expected)
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_query_incoming_dtag_transfer_requests() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier
-            .query_incoming_dtag_transfer_requests(Addr::unchecked(""), None)
+        let response = querier
+            .query_incoming_dtag_transfer_requests(Addr::unchecked(MOCK_USER), None)
             .unwrap();
-        let expected = QueryIncomingDtagTransferRequestsResponse {
-            requests: vec![MockProfilesQueries::get_mock_dtag_transfer_request()],
-            pagination: Default::default(),
-        };
+        let expected = MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response();
 
-        assert_eq!(response, expected)
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_iterate_incoming_dtag_transfer_requests() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
         let mut it =
-            profiles_querier.iterate_incoming_dtag_transfer_requests(Addr::unchecked(""), 10);
+            querier.iterate_incoming_dtag_transfer_requests(Addr::unchecked(MOCK_USER), 10);
+        let expected = MockProfilesQueries::get_mocked_incoming_dtag_transfer_requests_response();
 
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mock_dtag_transfer_request()
-        );
+        assert_eq!(expected.requests[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
@@ -490,41 +451,36 @@ mod tests {
     fn test_query_chain_links() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier
+        let response = querier
             .query_chain_links(
-                Some(Addr::unchecked("")),
-                Some("cosmos".to_string()),
-                Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(MOCK_CHAIN_LINK_CHAIN_NAME),
+                Some(MOCK_CHAIN_LINK_ADDRESS),
                 None,
             )
             .unwrap();
-        let expected = QueryChainLinksResponse {
-            links: vec![MockProfilesQueries::get_mock_chain_link()],
-            pagination: Default::default(),
-        };
+        let expected = MockProfilesQueries::get_mocked_chain_links_response();
 
-        assert_eq!(response, expected)
+        assert_eq!(expected, response);
     }
 
     #[test]
     fn test_iterate_chain_links() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let mut it = profiles_querier.iterate_chain_links(
-            Some(Addr::unchecked("")),
-            Some("cosmos".to_string()),
-            Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+        let mut it = querier.iterate_chain_links(
+            Some(Addr::unchecked(MOCK_USER)),
+            Some(MOCK_CHAIN_LINK_CHAIN_NAME),
+            Some(MOCK_CHAIN_LINK_ADDRESS),
             10,
         );
+        let expected = MockProfilesQueries::get_mocked_chain_links_response();
 
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mock_chain_link()
-        );
+        assert_eq!(expected.links[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
 
@@ -532,39 +488,34 @@ mod tests {
     fn test_query_chain_link_owners() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier
+        let response = querier
             .query_chain_link_owners(
-                Some("cosmos".to_string()),
-                Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+                Some(MOCK_CHAIN_LINK_CHAIN_NAME),
+                Some(MOCK_CHAIN_LINK_ADDRESS),
                 None,
             )
             .unwrap();
-        let expected = QueryChainLinkOwnersResponse {
-            owners: vec![MockProfilesQueries::get_mock_chain_link_owner()],
-            pagination: Default::default(),
-        };
+        let expected = MockProfilesQueries::get_mocked_chain_link_owners_response();
 
-        assert_eq!(response, expected)
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_iterate_chain_link_owners() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let mut it = profiles_querier.iterate_chain_link_owners(
-            Some("cosmos".to_string()),
-            Some("cosmos18xnmlzqrqr6zt526pnczxe65zk3f4xgmndpxn2".to_string()),
+        let mut it = querier.iterate_chain_link_owners(
+            Some(MOCK_CHAIN_LINK_CHAIN_NAME),
+            Some(MOCK_CHAIN_LINK_ADDRESS),
             10,
         );
+        let expected = MockProfilesQueries::get_mocked_chain_link_owners_response();
 
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mock_chain_link_owner()
-        );
+        assert_eq!(expected.owners[0], it.next().unwrap().unwrap());
         assert!(it.next().is_none());
     }
 
@@ -572,133 +523,120 @@ mod tests {
     fn test_query_default_external_addresses() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
-        let response = profiles_querier
+        let querier = ProfilesQuerier::new(&deps.querier);
+
+        let response = querier
             .query_default_external_addresses(
-                Some(Addr::unchecked("")),
-                Some("".to_string()),
-                Default::default(),
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(MOCK_CHAIN_LINK_CHAIN_NAME),
+                None,
             )
             .unwrap();
-        let expected = QueryDefaultExternalAddressesResponse {
-            links: vec![MockProfilesQueries::get_mock_chain_link()],
-            pagination: Default::default(),
-        };
-        assert_eq!(response, expected)
+        let expected = MockProfilesQueries::get_mocked_default_external_addresses_response();
+
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_iterate_default_external_addresses() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
-        let mut it = profiles_querier.iterate_default_external_addresses(
-            Some(Addr::unchecked("")),
-            Some("".to_string()),
+        let querier = ProfilesQuerier::new(&deps.querier);
+
+        let mut it = querier.iterate_default_external_addresses(
+            Some(Addr::unchecked(MOCK_USER)),
+            Some(MOCK_CHAIN_LINK_CHAIN_NAME),
             10,
         );
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mock_chain_link()
-        );
+        let expected = MockProfilesQueries::get_mocked_default_external_addresses_response();
+
+        assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
     #[test]
-    fn test_query_app_links() {
+    fn test_query_query_application_links() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier
+        let response = querier
             .query_application_links(
-                Some(Addr::unchecked("")),
-                Some("twitter".to_string()),
-                Some("goldrake".to_string()),
-                None,
+                Some(Addr::unchecked(MOCK_USER)),
+                Some(MOCK_APPLICATION_LINK_APPLICATION),
+                Some(MOCK_APPLICATION_LINK_USERNAME),
+                Default::default(),
             )
             .unwrap();
-        let expected = QueryApplicationLinksResponse {
-            links: vec![MockProfilesQueries::get_mock_application_link()],
-            pagination: Default::default(),
-        };
 
-        assert_eq!(response, expected)
+        let expected = MockProfilesQueries::get_mocked_application_links_response();
+        assert_eq!(expected, response)
     }
 
     #[test]
-    fn test_iterate_app_links() {
+    fn test_iterate_application_links() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let mut it = profiles_querier.iterate_application_links(
-            Some(Addr::unchecked("")),
-            Some("twitter".to_string()),
-            Some("goldrake".to_string()),
+        let mut it = querier.iterate_application_links(
+            Some(Addr::unchecked(MOCK_USER)),
+            Some(MOCK_APPLICATION_LINK_APPLICATION),
+            Some(MOCK_APPLICATION_LINK_USERNAME),
             10,
         );
+        let expected = MockProfilesQueries::get_mocked_application_links_response();
 
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mock_application_link()
-        );
+        assert_eq!(expected.links[0], it.next().unwrap().unwrap(),);
         assert!(it.next().is_none());
     }
 
     #[test]
-    fn test_query_application_link_by_chain_id() {
+    fn test_query_application_link_by_client_id() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier
-            .query_application_link_by_client_id("")
+        let response = querier
+            .query_application_link_by_client_id(MOCK_APPLICATION_LINK_CLIENT_ID)
             .unwrap();
-        let expected = QueryApplicationLinkByClientIDResponse {
-            link: MockProfilesQueries::get_mock_application_link(),
-        };
+        let expected = MockProfilesQueries::get_mocked_application_link_by_client_id_response();
 
-        assert_eq!(response, expected)
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_query_app_link_owners() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
+        let querier = ProfilesQuerier::new(&deps.querier);
 
-        let response = profiles_querier
+        let response = querier
             .query_application_link_owners(
-                Some("twitter".to_string()),
-                Some("goldrake".to_string()),
+                Some(MOCK_APPLICATION_LINK_APPLICATION),
+                Some(MOCK_APPLICATION_LINK_USERNAME),
                 None,
             )
             .unwrap();
-        let expected = QueryApplicationLinkOwnersResponse {
-            owners: vec![MockProfilesQueries::get_mock_application_link_owner()],
-            pagination: Default::default(),
-        };
+        let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
 
-        assert_eq!(response, expected)
+        assert_eq!(expected, response)
     }
 
     #[test]
     fn test_iterate_app_link_owners() {
         let owned_deps = mock_desmos_dependencies();
         let deps = owned_deps.as_ref();
-        let profiles_querier = ProfilesQuerier::new(deps.querier.deref());
 
-        let mut it = profiles_querier.iterate_application_link_owners(
-            Some("twitter".to_string()),
-            Some("goldrake".to_string()),
+        let querier = ProfilesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_application_link_owners(
+            Some(MOCK_APPLICATION_LINK_APPLICATION),
+            Some(MOCK_APPLICATION_LINK_USERNAME),
             10,
         );
+        let expected = MockProfilesQueries::get_mocked_application_link_owners_response();
 
-        assert_eq!(
-            it.next().unwrap().unwrap(),
-            MockProfilesQueries::get_mock_application_link_owner()
-        );
-        assert!(it.next().is_none());
+        assert_eq!(expected.owners[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none())
     }
 }

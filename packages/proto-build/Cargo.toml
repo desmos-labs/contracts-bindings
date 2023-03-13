@@ -1,0 +1,24 @@
+[package]
+edition = "2021"
+name = "proto-build"
+publish = false
+version = "0.1.0"
+
+[dependencies]
+heck = "0.4.0"
+itertools = "0.10.5"
+log = "0.4.17"
+pretty_env_logger = "0.4.0"
+prettyplease = "0.1.21"
+prost = "0.11.0"
+prost-build = "0.11.1"
+prost-types = "0.11.1"
+regex = "1"
+syn = {version = "1.0.103", features = ["full", "parsing", "extra-traits"]}
+tonic = "0.8.2"
+tonic-build = "0.8.2"
+walkdir = "2"
+proc-macro2 = "1.0.18"
+pbjson = "0.5.1"
+pbjson-types = "0.5.1"
+pbjson-build = "0.5.1"

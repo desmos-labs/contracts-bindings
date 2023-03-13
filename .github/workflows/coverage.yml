@@ -26,7 +26,7 @@ jobs:
         if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: 1.61.0
+          toolchain: 1.66.0
           override: true
 
       - name: Prepare rust cache 🗄️
