@@ -22,7 +22,7 @@ all-features = true
 
 [dependencies]
 chrono = {version = "0.4.22", default-features = false}
-cosmwasm-std = { version = "1.2.1", features = ["stargate"]}
+cosmwasm-std = { version = "1.2.2", features = ["stargate"]}
 cosmwasm-schema = "1.2.1"
 anyhow = "1.0.69"
 serde = { version = "1.0.152", default-features = false, features = ["derive"] }
