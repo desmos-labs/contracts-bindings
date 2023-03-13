@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: desmos-labs/desmos
-          #ref: paul/set-stargate-querier-accepted-list
+          ref: master
           path: ./desmos-src
   
       - name: Build desmos chain ⚙

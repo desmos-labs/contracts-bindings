@@ -25,11 +25,11 @@ const OUT_DIR: &str = "../std/src/proto/";
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 pub fn run() {
-    git::try_init_modules();
+    git::try_clone_desmos_repo();
 
     let args: Vec<String> = env::args().collect();
     if args.iter().any(|arg| arg == "--update-deps") {
-        git::update_dependencies();
+        git::update_desmos_repo();
     }
 
     let tmp_build_dir: PathBuf = TMP_BUILD_DIR.parse().unwrap();

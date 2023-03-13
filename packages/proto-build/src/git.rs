@@ -23,7 +23,7 @@ fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     run_command("git", args)
 }
 
-pub fn update_dependencies() {
+pub fn update_desmos_repo() {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
     info!("Update desmos repository...");
@@ -36,7 +36,7 @@ pub fn update_dependencies() {
     ]);
 }
 
-pub fn try_init_modules() {
+pub fn try_clone_desmos_repo() {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
     if fs::metadata(full_path(DESMOS_DIR).to_str().unwrap()).is_ok() {
