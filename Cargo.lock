@@ -1344,7 +1344,7 @@ dependencies = [
  "prost-build",
  "prost-types",
  "regex",
- "syn 1.0.109",
+ "syn 2.0.4",
  "tonic",
  "tonic-build",
  "walkdir",
@@ -1663,7 +1663,7 @@ dependencies = [
  "prost 0.11.8",
  "quote",
  "serde",
- "syn 1.0.109",
+ "syn 2.0.4",
  "trybuild",
 ]
 
