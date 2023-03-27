@@ -18,7 +18,7 @@ syn = {version = "1.0.103", features = ["full", "parsing", "extra-traits"]}
 tonic = "0.8.2"
 tonic-build = "0.8.2"
 walkdir = "2"
-proc-macro2 = "1.0.18"
+proc-macro2 = "1.0.54"
 pbjson = "0.5.1"
 pbjson-types = "0.5.1"
 pbjson-build = "0.5.1"
