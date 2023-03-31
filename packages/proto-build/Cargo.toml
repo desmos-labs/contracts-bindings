@@ -15,7 +15,7 @@ prost-build = "0.11.1"
 prost-types = "0.11.1"
 regex = "1"
 syn = {version = "1.0.103", features = ["full", "parsing", "extra-traits"]}
-tonic = "0.8.2"
+tonic = "0.9.0"
 tonic-build = "0.8.2"
 walkdir = "2"
 proc-macro2 = "1.0.18"
