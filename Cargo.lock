@@ -388,9 +388,9 @@ dependencies = [
 
 [[package]]
 name = "cw-multi-test"
-version = "0.16.2"
+version = "0.16.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2eb84554bbfa6b66736abcd6a9bfdf237ee0ecb83910f746dff7f799093c80a"
+checksum = "d09dcedf6e747839af86de6eec7678ea9d41e8b5675391e19b2eace9b3e87da1"
 dependencies = [
  "anyhow",
  "cosmwasm-std",
