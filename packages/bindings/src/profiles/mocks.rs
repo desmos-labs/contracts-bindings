@@ -12,7 +12,7 @@ use crate::profiles::types::{
     QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
     QueryProfileResponse, Result as AppResult, SignatureValueType, SingleSignature,
 };
-use crate::types::Secp256k1PublicKey;
+use crate::types::secp256k1;
 
 use chrono::DateTime;
 use cosmwasm_std::Binary;
@@ -87,7 +87,7 @@ impl MockProfilesQueries {
                 prefix: MOCK_CHAIN_LINK_ADDRESS_PREFIX.into(),
             }.into()),
             proof: Some(Proof {
-                pub_key: Some(Secp256k1PublicKey{
+                pub_key: Some(secp256k1::PubKey {
                     key: Binary::from_base64("AyRUhKXAY6zOCjjFkPN78Q29sBKHjUx4VSZQ4HXh66IM").unwrap().to_vec(),
                 }.into()),
                 signature: Some(SingleSignature {

@@ -157,7 +157,7 @@ pub struct StandardReason {
     #[prost(string, tag = "3")]
     pub description: ::prost::alloc::string::String,
 }
-/// QueryReportsResponse is the request type for Query/Reports RPC method
+/// GenesisState defines the reports module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -168,53 +168,19 @@ pub struct StandardReason {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReportsRequest")]
+#[proto_message(type_url = "/desmos.reports.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reports.v1.Query/Reports",
-    response_type = QueryReportsResponse
-)]
-pub struct QueryReportsRequest {
-    /// Id of the subspace to query the reports for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// (optional) Target to query the reports for
-    #[prost(message, optional, tag = "2")]
-    pub target: ::core::option::Option<crate::shim::Any>,
-    /// (optional) User that reported the target.
-    /// This is going to be used only if the target is also specified
-    #[prost(string, tag = "3")]
-    pub reporter: ::prost::alloc::string::String,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "4")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryReportsResponse is the response type for Query/Reports RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReportsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReportsResponse {
+pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
+    pub subspaces_data: ::prost::alloc::vec::Vec<SubspaceDataEntry>,
+    #[prost(message, repeated, tag = "2")]
+    pub reasons: ::prost::alloc::vec::Vec<Reason>,
+    #[prost(message, repeated, tag = "3")]
     pub reports: ::prost::alloc::vec::Vec<Report>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+    #[prost(message, optional, tag = "4")]
+    pub params: ::core::option::Option<Params>,
 }
-/// QueryReportRequest is the request type for Query/Report RPC method
+/// SubspaceDataEntry contains the data related to a single subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -225,175 +191,26 @@ pub struct QueryReportsResponse {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReportRequest")]
+#[proto_message(type_url = "/desmos.reports.v1.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reports.v1.Query/Report",
-    response_type = QueryReportResponse
-)]
-pub struct QueryReportRequest {
-    /// Id of the subspace that holds the report to query for
+pub struct SubspaceDataEntry {
+    /// Id of the subspace to which the data relates
     #[prost(uint64, tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub subspace_id: u64,
-    /// Id of the report to query for
-    #[prost(uint64, tag = "2")]
+    /// Id of the next reason inside the subspace
+    #[prost(uint32, tag = "2")]
+    pub reason_id: u32,
+    /// Id of the next report inside the subspace
+    #[prost(uint64, tag = "3")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub report_id: u64,
-}
-/// QueryReportResponse is the response type for Query/Report RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReportResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReportResponse {
-    #[prost(message, optional, tag = "1")]
-    pub report: ::core::option::Option<Report>,
-}
-/// QueryReasonsRequest is the request type for Query/Reasons RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReasonsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reports.v1.Query/Reasons",
-    response_type = QueryReasonsResponse
-)]
-pub struct QueryReasonsRequest {
-    /// Id of the subspace to query the supported reporting reasons for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryReasonsResponse is the response type for Query/Reasons RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReasonsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReasonsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub reasons: ::prost::alloc::vec::Vec<Reason>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryReasonRequest is the request type for Query/Reason RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReasonRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reports.v1.Query/Reason",
-    response_type = QueryReasonResponse
-)]
-pub struct QueryReasonRequest {
-    /// Id of the subspace that holds the reason to query for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the reason to query for
-    #[prost(uint32, tag = "2")]
-    pub reason_id: u32,
-}
-/// QueryReasonResponse is the response type for Query/Reason RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryReasonResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReasonResponse {
-    #[prost(message, optional, tag = "1")]
-    pub reason: ::core::option::Option<Reason>,
-}
-/// QueryParamsRequest is the request type for Query/Params RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryParamsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reports.v1.Query/Params",
-    response_type = QueryParamsResponse
-)]
-pub struct QueryParamsRequest {}
-/// QueryParamsResponse is the response type for Query/Params RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reports.v1.QueryParamsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryParamsResponse {
-    #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<Params>,
 }
 /// MsgCreateReport represents the message to be used to create a report
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -641,6 +458,244 @@ pub struct MsgRemoveReason {
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReasonResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgRemoveReasonResponse {}
+/// QueryReportsResponse is the request type for Query/Reports RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReportsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reports.v1.Query/Reports",
+    response_type = QueryReportsResponse
+)]
+pub struct QueryReportsRequest {
+    /// Id of the subspace to query the reports for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// (optional) Target to query the reports for
+    #[prost(message, optional, tag = "2")]
+    pub target: ::core::option::Option<crate::shim::Any>,
+    /// (optional) User that reported the target.
+    /// This is going to be used only if the target is also specified
+    #[prost(string, tag = "3")]
+    pub reporter: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "4")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryReportsResponse is the response type for Query/Reports RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReportsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReportsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub reports: ::prost::alloc::vec::Vec<Report>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryReportRequest is the request type for Query/Report RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReportRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reports.v1.Query/Report",
+    response_type = QueryReportResponse
+)]
+pub struct QueryReportRequest {
+    /// Id of the subspace that holds the report to query for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the report to query for
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub report_id: u64,
+}
+/// QueryReportResponse is the response type for Query/Report RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReportResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReportResponse {
+    #[prost(message, optional, tag = "1")]
+    pub report: ::core::option::Option<Report>,
+}
+/// QueryReasonsRequest is the request type for Query/Reasons RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReasonsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reports.v1.Query/Reasons",
+    response_type = QueryReasonsResponse
+)]
+pub struct QueryReasonsRequest {
+    /// Id of the subspace to query the supported reporting reasons for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryReasonsResponse is the response type for Query/Reasons RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReasonsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReasonsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub reasons: ::prost::alloc::vec::Vec<Reason>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryReasonRequest is the request type for Query/Reason RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReasonRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reports.v1.Query/Reason",
+    response_type = QueryReasonResponse
+)]
+pub struct QueryReasonRequest {
+    /// Id of the subspace that holds the reason to query for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the reason to query for
+    #[prost(uint32, tag = "2")]
+    pub reason_id: u32,
+}
+/// QueryReasonResponse is the response type for Query/Reason RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryReasonResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReasonResponse {
+    #[prost(message, optional, tag = "1")]
+    pub reason: ::core::option::Option<Reason>,
+}
+/// QueryParamsRequest is the request type for Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryParamsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reports.v1.Query/Params",
+    response_type = QueryParamsResponse
+)]
+pub struct QueryParamsRequest {}
+/// QueryParamsResponse is the response type for Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.QueryParamsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryParamsResponse {
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+}
 pub struct ReportsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }

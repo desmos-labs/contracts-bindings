@@ -11,7 +11,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.MultiSignature")]
+#[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.MultiSignatureMultiSignature")]
 #[serde(rename_all = "snake_case")]
 pub struct MultiSignature {
     #[prost(bytes = "vec", repeated, tag = "1")]
@@ -31,7 +31,7 @@ pub struct MultiSignature {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.CompactBitArray")]
+#[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.CompactBitArrayCompactBitArray")]
 #[serde(rename_all = "snake_case")]
 pub struct CompactBitArray {
     #[prost(uint32, tag = "1")]

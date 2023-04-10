@@ -533,8 +533,7 @@ impl ReplySetting {
         }
     }
 }
-/// QuerySubspacePostsRequest is the request type for the Query/SubspacePosts RPC
-/// method
+/// GenesisState contains the data of the genesis state for the posts module
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -545,209 +544,25 @@ impl ReplySetting {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsRequest")]
+#[proto_message(type_url = "/desmos.posts.v3.GenesisState")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.posts.v3.Query/SubspacePosts",
-    response_type = QuerySubspacePostsResponse
-)]
-pub struct QuerySubspacePostsRequest {
-    /// Id of the subspace to query the posts for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QuerySubspacePostsResponse is the response type for the Query/SubspacePosts
-/// RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QuerySubspacePostsResponse {
+pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
+    pub subspaces_data: ::prost::alloc::vec::Vec<SubspaceDataEntry>,
+    #[prost(message, repeated, tag = "2")]
+    pub posts_data: ::prost::alloc::vec::Vec<PostDataEntry>,
+    #[prost(message, repeated, tag = "3")]
     pub posts: ::prost::alloc::vec::Vec<Post>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QuerySectionPostsRequest is the request type for the Query/SectionPosts RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.posts.v3.Query/SectionPosts",
-    response_type = QuerySectionPostsResponse
-)]
-pub struct QuerySectionPostsRequest {
-    /// Id of the subspace to query the posts for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the section to query the posts for
-    #[prost(uint32, tag = "2")]
-    pub section_id: u32,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QuerySectionPostsResponse is the response type for the Query/SectionPosts RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QuerySectionPostsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub posts: ::prost::alloc::vec::Vec<Post>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryPostRequest is the request type for the Query/Post RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryPostRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(path = "/desmos.posts.v3.Query/Post", response_type = QueryPostResponse)]
-pub struct QueryPostRequest {
-    /// Id of the subspace inside which the post lies
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the post to query for
-    #[prost(uint64, tag = "2")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub post_id: u64,
-}
-/// QueryPostResponse is the response type for the Query/Post RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryPostResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryPostResponse {
-    #[prost(message, optional, tag = "1")]
-    pub post: ::core::option::Option<Post>,
-}
-/// QueryPostsRequest is the request type for the Query/PostAttachments RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.posts.v3.Query/PostAttachments",
-    response_type = QueryPostAttachmentsResponse
-)]
-pub struct QueryPostAttachmentsRequest {
-    /// Id of the subspace where the post is stored
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the post to query the attachments for
-    #[prost(uint64, tag = "2")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub post_id: u64,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryPostAttachmentsResponse is the response type for the
-/// Query/PostAttachments RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryPostAttachmentsResponse {
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag = "4")]
     pub attachments: ::prost::alloc::vec::Vec<Attachment>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+    #[prost(message, repeated, tag = "5")]
+    pub active_polls: ::prost::alloc::vec::Vec<ActivePollData>,
+    #[prost(message, repeated, tag = "6")]
+    pub user_answers: ::prost::alloc::vec::Vec<UserAnswer>,
+    #[prost(message, optional, tag = "7")]
+    pub params: ::core::option::Option<Params>,
 }
-/// QueryPollAnswersRequest is the request type for the Query/PollAnswers RPC
-/// method
+/// SubspaceDataEntry contains the data for a given subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -758,93 +573,81 @@ pub struct QueryPostAttachmentsResponse {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersRequest")]
+#[proto_message(type_url = "/desmos.posts.v3.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.posts.v3.Query/PollAnswers",
-    response_type = QueryPollAnswersResponse
-)]
-pub struct QueryPollAnswersRequest {
-    /// Id of the subspace where the post is stored
+pub struct SubspaceDataEntry {
     #[prost(uint64, tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub subspace_id: u64,
-    /// Id of the post that holds the poll
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub initial_post_id: u64,
+}
+/// PostDataEntry contains the data of a given post
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.PostDataEntry")]
+#[serde(rename_all = "snake_case")]
+pub struct PostDataEntry {
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
     #[prost(uint64, tag = "2")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub post_id: u64,
-    /// Id of the poll to query the answers for
+    #[prost(uint32, tag = "3")]
+    pub initial_attachment_id: u32,
+}
+/// ActivePollData contains the data of an active poll
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.ActivePollData")]
+#[serde(rename_all = "snake_case")]
+pub struct ActivePollData {
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
     #[prost(uint32, tag = "3")]
     pub poll_id: u32,
-    /// (Optional) Address of the user to query the responses for
-    #[prost(string, tag = "4")]
-    pub user: ::prost::alloc::string::String,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "5")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryPollAnswersResponse is the response type for the Query/PollAnswers RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryPollAnswersResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub answers: ::prost::alloc::vec::Vec<UserAnswer>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryParamsRequest is the request type for the Query/Params RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryParamsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.posts.v3.Query/Params",
-    response_type = QueryParamsResponse
-)]
-pub struct QueryParamsRequest {}
-/// QueryParamsResponse is the response type for the Query/Params RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.posts.v3.QueryParamsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryParamsResponse {
-    #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<Params>,
+    #[prost(message, optional, tag = "4")]
+    pub end_date: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// MsgCreatePost represents the message to be used to create a post.
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1203,6 +1006,319 @@ pub struct MsgAnswerPoll {
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPollResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgAnswerPollResponse {}
+/// QuerySubspacePostsRequest is the request type for the Query/SubspacePosts RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.posts.v3.Query/SubspacePosts",
+    response_type = QuerySubspacePostsResponse
+)]
+pub struct QuerySubspacePostsRequest {
+    /// Id of the subspace to query the posts for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QuerySubspacePostsResponse is the response type for the Query/SubspacePosts
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySubspacePostsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub posts: ::prost::alloc::vec::Vec<Post>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QuerySectionPostsRequest is the request type for the Query/SectionPosts RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.posts.v3.Query/SectionPosts",
+    response_type = QuerySectionPostsResponse
+)]
+pub struct QuerySectionPostsRequest {
+    /// Id of the subspace to query the posts for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the section to query the posts for
+    #[prost(uint32, tag = "2")]
+    pub section_id: u32,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QuerySectionPostsResponse is the response type for the Query/SectionPosts RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySectionPostsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub posts: ::prost::alloc::vec::Vec<Post>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryPostRequest is the request type for the Query/Post RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryPostRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(path = "/desmos.posts.v3.Query/Post", response_type = QueryPostResponse)]
+pub struct QueryPostRequest {
+    /// Id of the subspace inside which the post lies
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post to query for
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+}
+/// QueryPostResponse is the response type for the Query/Post RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryPostResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryPostResponse {
+    #[prost(message, optional, tag = "1")]
+    pub post: ::core::option::Option<Post>,
+}
+/// QueryPostsRequest is the request type for the Query/PostAttachments RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.posts.v3.Query/PostAttachments",
+    response_type = QueryPostAttachmentsResponse
+)]
+pub struct QueryPostAttachmentsRequest {
+    /// Id of the subspace where the post is stored
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post to query the attachments for
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryPostAttachmentsResponse is the response type for the
+/// Query/PostAttachments RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryPostAttachmentsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub attachments: ::prost::alloc::vec::Vec<Attachment>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryPollAnswersRequest is the request type for the Query/PollAnswers RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.posts.v3.Query/PollAnswers",
+    response_type = QueryPollAnswersResponse
+)]
+pub struct QueryPollAnswersRequest {
+    /// Id of the subspace where the post is stored
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post that holds the poll
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Id of the poll to query the answers for
+    #[prost(uint32, tag = "3")]
+    pub poll_id: u32,
+    /// (Optional) Address of the user to query the responses for
+    #[prost(string, tag = "4")]
+    pub user: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "5")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryPollAnswersResponse is the response type for the Query/PollAnswers RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryPollAnswersResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub answers: ::prost::alloc::vec::Vec<UserAnswer>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryParamsRequest is the request type for the Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryParamsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.posts.v3.Query/Params",
+    response_type = QueryParamsResponse
+)]
+pub struct QueryParamsRequest {}
+/// QueryParamsResponse is the response type for the Query/Params RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryParamsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryParamsResponse {
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<Params>,
+}
 pub struct PostsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }
