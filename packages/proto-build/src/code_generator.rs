@@ -169,8 +169,6 @@ impl CodeGenerator {
                 .map(|e| e.path().parent().unwrap().to_path_buf())
                 .unwrap();
 
-            
-
             let mut cmd = Command::new("buf");
             cmd.arg("generate")
                 .arg(buf_root.to_string_lossy().to_string())

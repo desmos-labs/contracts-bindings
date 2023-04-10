@@ -43,11 +43,7 @@ pub fn try_clone_repo(name: &str, repo: &str, dir: &str, rev: &str) {
     };
 
     info!("Clone {} repository...", name);
-    run_git(&[
-        "clone",
-        repo,
-        full_path(dir).to_str().unwrap(),
-    ]);
+    run_git(&["clone", repo, full_path(dir).to_str().unwrap()]);
     run_git(&[
         "-C",
         full_path(dir).to_str().unwrap(),

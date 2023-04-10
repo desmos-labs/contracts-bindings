@@ -210,8 +210,8 @@ impl ProfilesMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use cosmwasm_std::Binary;
     use crate::types::secp256k1;
+    use cosmwasm_std::Binary;
 
     #[test]
     fn test_save_profile() {

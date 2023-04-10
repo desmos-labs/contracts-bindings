@@ -36,7 +36,6 @@ const IBC_REV: &str = "v7.0.0";
 /// URL where the IBC repository is located
 const IBC_REPO_URL: &str = "https://github.com/cosmos/ibc-go.git";
 
-
 /// The directory generated proto files go into in this repo
 const OUT_DIR: &str = "../std/src/proto/";
 
@@ -45,8 +44,13 @@ const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";
 
 pub fn run() {
     git::try_clone_repo("Desmos", DESMOS_REPO_URL, DESMOS_DIR, DESMOS_REV);
-    git::try_clone_repo("Cosmos SDK",COSMOS_SDK_REPO_URL, COSMOS_SDK_DIR, COSMOS_SDK_REV);
-    git::try_clone_repo("IBC",IBC_REPO_URL, IBC_DIR, IBC_REV);
+    git::try_clone_repo(
+        "Cosmos SDK",
+        COSMOS_SDK_REPO_URL,
+        COSMOS_SDK_DIR,
+        COSMOS_SDK_REV,
+    );
+    git::try_clone_repo("IBC", IBC_REPO_URL, IBC_DIR, IBC_REV);
 
     let args: Vec<String> = env::args().collect();
     if args.iter().any(|arg| arg == "--update-deps") {
@@ -93,12 +97,15 @@ pub fn run() {
         name: "ibc".to_string(),
         version: IBC_REV.to_string(),
         project_dir: IBC_DIR.to_string(),
-        include_mods: vec![
-            "core/client/v1/client.proto".to_string(),
-        ],
+        include_mods: vec!["core/client/v1/client.proto".to_string()],
     };
 
-    let code_generator = CodeGenerator::new(out_dir, tmp_build_dir, desmos_project, vec![cosmos_project, ibc_project]);
+    let code_generator = CodeGenerator::new(
+        out_dir,
+        tmp_build_dir,
+        desmos_project,
+        vec![cosmos_project, ibc_project],
+    );
 
     code_generator.generate();
 }
