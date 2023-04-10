@@ -10,7 +10,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.IdentifiedClientStateIdentifiedClientState")]
+#[proto_message(type_url = "/ibc.core.client.v1.IdentifiedClientState")]
 #[serde(rename_all = "snake_case")]
 pub struct IdentifiedClientState {
     /// client identifier
@@ -32,7 +32,7 @@ pub struct IdentifiedClientState {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.ConsensusStateWithHeightConsensusStateWithHeight")]
+#[proto_message(type_url = "/ibc.core.client.v1.ConsensusStateWithHeight")]
 #[serde(rename_all = "snake_case")]
 pub struct ConsensusStateWithHeight {
     /// consensus state height
@@ -54,7 +54,7 @@ pub struct ConsensusStateWithHeight {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.ClientConsensusStatesClientConsensusStates")]
+#[proto_message(type_url = "/ibc.core.client.v1.ClientConsensusStates")]
 #[serde(rename_all = "snake_case")]
 pub struct ClientConsensusStates {
     /// client identifier
@@ -78,7 +78,7 @@ pub struct ClientConsensusStates {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.ClientUpdateProposalClientUpdateProposal")]
+#[proto_message(type_url = "/ibc.core.client.v1.ClientUpdateProposal")]
 #[serde(rename_all = "snake_case")]
 pub struct ClientUpdateProposal {
     /// the title of the update proposal
@@ -107,7 +107,7 @@ pub struct ClientUpdateProposal {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.UpgradeProposalUpgradeProposal")]
+#[proto_message(type_url = "/ibc.core.client.v1.UpgradeProposal")]
 #[serde(rename_all = "snake_case")]
 pub struct UpgradeProposal {
     #[prost(string, tag = "1")]
@@ -145,7 +145,7 @@ pub struct UpgradeProposal {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.HeightHeight")]
+#[proto_message(type_url = "/ibc.core.client.v1.Height")]
 #[serde(rename_all = "snake_case")]
 pub struct Height {
     /// the revision that the client is currently on
@@ -174,7 +174,7 @@ pub struct Height {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/ibc.core.client.v1.ParamsParams")]
+#[proto_message(type_url = "/ibc.core.client.v1.Params")]
 #[serde(rename_all = "snake_case")]
 pub struct Params {
     /// allowed_clients defines the list of allowed client state types.

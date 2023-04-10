@@ -346,7 +346,7 @@ fn get_type_url(src: &Path, ident: &Ident, descriptor: &FileDescriptorSet) -> St
     let type_path = src.file_stem().unwrap().to_str().unwrap();
     let init_path = "";
 
-    let name: Option<String> = descriptor
+    let names: Vec<String> = descriptor
         .file
         .clone()
         .into_iter()
@@ -358,10 +358,10 @@ fn get_type_url(src: &Path, ident: &Ident, descriptor: &FileDescriptorSet) -> St
                 extract_type_path_from_descriptor(&target, &f.message_type, init_path),
             ]
         })
-        .filter(|r| r.is_some())
+        .flatten()
         .collect();
 
-    format!("/{}.{}", type_path, name.unwrap())
+    format!("/{}.{}", type_path, names.first().unwrap())
 }
 
 fn extract_type_path_from_descriptor(

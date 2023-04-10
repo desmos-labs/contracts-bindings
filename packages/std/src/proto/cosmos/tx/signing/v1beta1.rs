@@ -9,7 +9,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptorsSignatureDescriptors")]
+#[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptors")]
 #[serde(rename_all = "snake_case")]
 pub struct SignatureDescriptors {
     /// signatures are the signature descriptors
@@ -30,7 +30,7 @@ pub struct SignatureDescriptors {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptorSignatureDescriptor")]
+#[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor")]
 #[serde(rename_all = "snake_case")]
 pub struct SignatureDescriptor {
     /// public_key is the public key of the signer
@@ -61,9 +61,7 @@ pub mod signature_descriptor {
         serde::Deserialize,
         std_derive::CosmwasmExt,
     )]
-    #[proto_message(
-        type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.DataSignatureDescriptor.Data"
-    )]
+    #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data")]
     #[serde(rename_all = "snake_case")]
     pub struct Data {
         /// sum is the oneof that specifies whether this represents single or multi-signature data
@@ -84,9 +82,7 @@ pub mod signature_descriptor {
             serde::Deserialize,
             std_derive::CosmwasmExt,
         )]
-        #[proto_message(
-            type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.SingleSignatureDescriptor.Data.Single"
-        )]
+        #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single")]
         #[serde(rename_all = "snake_case")]
         pub struct Single {
             /// mode is the signing mode of the single signer
@@ -115,9 +111,7 @@ pub mod signature_descriptor {
             serde::Deserialize,
             std_derive::CosmwasmExt,
         )]
-        #[proto_message(
-            type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.MultiSignatureDescriptor.Data.Multi"
-        )]
+        #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi")]
         #[serde(rename_all = "snake_case")]
         pub struct Multi {
             /// bitarray specifies which keys within the multisig are signing

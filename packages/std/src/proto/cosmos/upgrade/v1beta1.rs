@@ -9,7 +9,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.upgrade.v1beta1.PlanPlanPlan")]
+#[proto_message(type_url = "/cosmos.upgrade.v1beta1.Plan")]
 #[serde(rename_all = "snake_case")]
 pub struct Plan {
     /// Sets the name for the upgrade. This name will be used by the upgraded
@@ -59,9 +59,7 @@ pub struct Plan {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(
-    type_url = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposalSoftwareUpgradeProposalSoftwareUpgradeProposal"
-)]
+#[proto_message(type_url = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal")]
 #[serde(rename_all = "snake_case")]
 pub struct SoftwareUpgradeProposal {
     /// title of the proposal
@@ -88,9 +86,7 @@ pub struct SoftwareUpgradeProposal {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(
-    type_url = "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposalCancelSoftwareUpgradeProposalCancelSoftwareUpgradeProposal"
-)]
+#[proto_message(type_url = "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal")]
 #[serde(rename_all = "snake_case")]
 pub struct CancelSoftwareUpgradeProposal {
     /// title of the proposal
@@ -113,7 +109,7 @@ pub struct CancelSoftwareUpgradeProposal {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.upgrade.v1beta1.ModuleVersionModuleVersionModuleVersion")]
+#[proto_message(type_url = "/cosmos.upgrade.v1beta1.ModuleVersion")]
 #[serde(rename_all = "snake_case")]
 pub struct ModuleVersion {
     /// name of the app module

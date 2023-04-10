@@ -10,7 +10,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.authz.v1beta1.GenericAuthorizationGenericAuthorization")]
+#[proto_message(type_url = "/cosmos.authz.v1beta1.GenericAuthorization")]
 #[serde(rename_all = "snake_case")]
 pub struct GenericAuthorization {
     /// Msg, identified by it's type URL, to grant unrestricted permissions to execute
@@ -29,7 +29,7 @@ pub struct GenericAuthorization {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.authz.v1beta1.GrantGrant")]
+#[proto_message(type_url = "/cosmos.authz.v1beta1.Grant")]
 #[serde(rename_all = "snake_case")]
 pub struct Grant {
     #[prost(message, optional, tag = "1")]
@@ -52,7 +52,7 @@ pub struct Grant {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.authz.v1beta1.GrantAuthorizationGrantAuthorization")]
+#[proto_message(type_url = "/cosmos.authz.v1beta1.GrantAuthorization")]
 #[serde(rename_all = "snake_case")]
 pub struct GrantAuthorization {
     #[prost(string, tag = "1")]
@@ -75,7 +75,7 @@ pub struct GrantAuthorization {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.authz.v1beta1.GrantQueueItemGrantQueueItem")]
+#[proto_message(type_url = "/cosmos.authz.v1beta1.GrantQueueItem")]
 #[serde(rename_all = "snake_case")]
 pub struct GrantQueueItem {
     /// msg_type_urls contains the list of TypeURL of a sdk.Msg.

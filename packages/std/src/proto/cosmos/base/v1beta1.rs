@@ -12,7 +12,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.base.v1beta1.CoinCoin")]
+#[proto_message(type_url = "/cosmos.base.v1beta1.Coin")]
 #[serde(rename_all = "snake_case")]
 pub struct Coin {
     #[prost(string, tag = "1")]
@@ -34,7 +34,7 @@ pub struct Coin {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.base.v1beta1.DecCoinDecCoin")]
+#[proto_message(type_url = "/cosmos.base.v1beta1.DecCoin")]
 #[serde(rename_all = "snake_case")]
 pub struct DecCoin {
     #[prost(string, tag = "1")]
@@ -53,7 +53,7 @@ pub struct DecCoin {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.base.v1beta1.IntProtoIntProto")]
+#[proto_message(type_url = "/cosmos.base.v1beta1.IntProto")]
 #[serde(rename_all = "snake_case")]
 pub struct IntProto {
     #[prost(string, tag = "1")]
@@ -70,7 +70,7 @@ pub struct IntProto {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.base.v1beta1.DecProtoDecProto")]
+#[proto_message(type_url = "/cosmos.base.v1beta1.DecProto")]
 #[serde(rename_all = "snake_case")]
 pub struct DecProto {
     #[prost(string, tag = "1")]

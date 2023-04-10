@@ -15,7 +15,7 @@
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.base.query.v1beta1.PageRequestPageRequest")]
+#[proto_message(type_url = "/cosmos.base.query.v1beta1.PageRequest")]
 #[serde(rename_all = "snake_case")]
 pub struct PageRequest {
     /// key is a value returned in PageResponse.next_key to begin
@@ -73,7 +73,7 @@ pub struct PageRequest {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.base.query.v1beta1.PageResponsePageResponse")]
+#[proto_message(type_url = "/cosmos.base.query.v1beta1.PageResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct PageResponse {
     /// next_key is the key to be passed to PageRequest.key to
