@@ -21,7 +21,7 @@ mod tests {
             TEST_SUBSPACE,
             TEST_REACTIONS_POST_ID,
             ReactionValue::FreeText(FreeTextValue {
-                text: "test".into(),
+                text: "text".into(),
             }),
             Addr::unchecked(&contract_address),
         );
