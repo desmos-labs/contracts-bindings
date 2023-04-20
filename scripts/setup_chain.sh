@@ -27,34 +27,34 @@ set -e
 echo "Create user1 profile"
 echo $KEYRING_PASS | desmos tx profiles save --from $USER1 \
   --dtag user1 --nickname user1 --bio "user1 bio" \
-  --chain-id=testchain --keyring-backend=file -b=block -y
+  --chain-id=testchain --keyring-backend=file -b=sync -y
 
 # Link a cosmos address
 echo "Link cosmos address"
 echo $KEYRING_PASS | desmos tx profiles link-chain "$COSMOS_CHAIN_LINK_DATA" --from $USER1 \
-  --chain-id=testchain --keyring-backend=file -b=block -y
+  --chain-id=testchain --keyring-backend=file -b=sync -y
 
 # Link a osmosis address
 echo "Link osmosis address"
 echo $KEYRING_PASS | desmos tx profiles link-chain "$OSMOSIS_CHAIN_LINK_DATA" --from $USER1 \
-  --chain-id=testchain --keyring-backend=file -b=block -y
+  --chain-id=testchain --keyring-backend=file -b=sync -y
 
 # Create user2 profile
 echo "Create user2 profile"
 echo $KEYRING_PASS | desmos tx profiles save --from $USER2 \
   --dtag user2 --nickname user2 --bio "user2 bio" \
-  --chain-id=testchain --keyring-backend=file -b=block -y
+  --chain-id=testchain --keyring-backend=file -b=sync -y
 
 # Create a dtag transfer request from user2 to user1
 echo $KEYRING_PASS | desmos tx profiles request-dtag-transfer $USER1_ADDRESS --from $USER2 \
-  --keyring-backend=file --chain-id=testchain -b=block -y
+  --keyring-backend=file --chain-id=testchain -b=sync -y
 ``
 # Create a relationships between user1 and user2
 echo "Create relationship between user1 and user2"
 echo $KEYRING_PASS | desmos tx relationships create-relationship $USER2_ADDRESS 1 --from $USER1 \
-  --chain-id=testchain --keyring-backend=file -b=block -y
+  --chain-id=testchain --keyring-backend=file -b=sync -y
 
 # Create a block from user2 to user1
 echo "Create block from user2 to user1"
 echo $KEYRING_PASS | desmos tx relationships block $USER1_ADDRESS 1 --from $USER2 \
-  --chain-id=testchain --keyring-backend=file -b=block -y
+  --chain-id=testchain --keyring-backend=file -b=sync -y

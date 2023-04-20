@@ -22,12 +22,12 @@ set -e
 echo "Uploading contract..."
 echo $KEYRING_PASS | desmos tx wasm store "$SMART_CONTRACT" \
   --from $USER1 --chain-id=testchain --keyring-backend=file -y --gas 3000000 \
-  -b=block
+  -b=sync
 
 # Initialize the contract
 echo "Initializing contract..."
 echo $KEYRING_PASS | desmos --keyring-backend=file tx wasm instantiate 1 "{}" \
-  --from $USER1 --label "test-contract" --admin $USER1_ADDRESS --chain-id=testchain -b=block -y
+  --from $USER1 --label "test-contract" --admin $USER1_ADDRESS --chain-id=testchain -b=sync -y
 echo "Contract initialized"
 
 

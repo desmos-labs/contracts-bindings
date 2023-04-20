@@ -9,4 +9,4 @@ desmos() {
 	"$SCRIPT_DIR/desmos" --home="$DESMOS_HOME" "$@"
 }
 
-echo $KEYRING_PASS | desmos tx "$@" --keyring-backend=file -b=block -y
+echo $KEYRING_PASS | desmos tx "$@" --keyring-backend=file -b=sync -y
