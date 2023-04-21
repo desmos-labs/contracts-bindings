@@ -7,6 +7,9 @@ KEYRING_PASS=pass1234
 
 desmos() {
 	"$SCRIPT_DIR/desmos" --home="$DESMOS_HOME" "$@"
+
+	# Wait tx including block
+	sleep 1
 }
 
 echo $KEYRING_PASS | desmos tx "$@" --keyring-backend=file -b=sync -y

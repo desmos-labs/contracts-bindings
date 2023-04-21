@@ -18,6 +18,9 @@ OSMOSIS_CHAIN_LINK_DATA="$SCRIPT_DIR/osmosis-chain-link-data.json"
 
 desmos() {
 	"$SCRIPT_DIR/desmos" --home="$DESMOS_HOME" "$@"
+
+  # Wait tx including block
+  sleep 1
 }
 
 # Force the script to exit at the first error
