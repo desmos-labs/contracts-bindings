@@ -458,6 +458,49 @@ pub struct MsgRemoveReason {
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReasonResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgRemoveReasonResponse {}
+/// MsgUpdateParams is the Msg/UpdateParams request type.
+///
+/// Since: desmos 5.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.MsgUpdateParams")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgUpdateParams {
+    /// authority is the address that controls the module (defaults to x/gov unless
+    /// overwritten).
+    #[prost(string, tag = "1")]
+    pub authority: ::prost::alloc::string::String,
+    /// params defines the parameters to update.
+    ///
+    /// NOTE: All parameters must be supplied.
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<Params>,
+}
+/// MsgUpdateParamsResponse defines the response structure for executing a
+/// MsgUpdateParams message.
+///
+/// Since: desmos 5.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reports.v1.MsgUpdateParamsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgUpdateParamsResponse {}
 /// QueryReportsResponse is the request type for Query/Reports RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
