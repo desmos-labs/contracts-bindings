@@ -1,3 +1,4 @@
+pub mod client;
 /// Reaction contains the data of a single post reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
@@ -178,7 +179,7 @@ pub struct RegisteredReactionValueParams {
     #[prost(bool, tag = "1")]
     pub enabled: bool,
 }
-/// QueryReactionsRequest is the request type for the Query/Reactions RPC method
+/// GenesisState contains the data of the genesis state for the reactions module
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -189,59 +190,21 @@ pub struct RegisteredReactionValueParams {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsRequest")]
+#[proto_message(type_url = "/desmos.reactions.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reactions.v1.Query/Reactions",
-    response_type = QueryReactionsResponse
-)]
-pub struct QueryReactionsRequest {
-    /// Id of the subspace that contains the post to query the reactions for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Post id to query the reactions for
-    #[prost(uint64, tag = "2")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub post_id: u64,
-    /// (optional) User to query the reactions for.
-    /// This is going to be used only if a post id is specified as well.
-    #[prost(string, tag = "3")]
-    pub user: ::prost::alloc::string::String,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "4")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryReactionsResponse is the response type for the Query/Reactions RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReactionsResponse {
+pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
+    pub subspaces_data: ::prost::alloc::vec::Vec<SubspaceDataEntry>,
+    #[prost(message, repeated, tag = "2")]
+    pub registered_reactions: ::prost::alloc::vec::Vec<RegisteredReaction>,
+    #[prost(message, repeated, tag = "3")]
+    pub posts_data: ::prost::alloc::vec::Vec<PostDataEntry>,
+    #[prost(message, repeated, tag = "4")]
     pub reactions: ::prost::alloc::vec::Vec<Reaction>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+    #[prost(message, repeated, tag = "5")]
+    pub subspaces_params: ::prost::alloc::vec::Vec<SubspaceReactionsParams>,
 }
-/// QueryReactionRequest is the request type for the Query/ReactionRequest RPC
-/// method
+/// SubspaceDataEntry contains the data related to a single subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -252,193 +215,46 @@ pub struct QueryReactionsResponse {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionRequest")]
+#[proto_message(type_url = "/desmos.reactions.v1.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reactions.v1.Query/Reaction",
-    response_type = QueryReactionResponse
-)]
-pub struct QueryReactionRequest {
-    /// Id of the subspace that contains the post to query the reactions for
+pub struct SubspaceDataEntry {
     #[prost(uint64, tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub subspace_id: u64,
-    /// Post id to query the reactions for
+    #[prost(uint32, tag = "2")]
+    pub registered_reaction_id: u32,
+}
+/// PostDataEntry contains the data related to a single post
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.PostDataEntry")]
+#[serde(rename_all = "snake_case")]
+pub struct PostDataEntry {
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
     #[prost(uint64, tag = "2")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub post_id: u64,
-    /// Id of the reaction to query
     #[prost(uint32, tag = "3")]
     pub reaction_id: u32,
-}
-/// QueryReactionResponse is the response type for the Query/Reaction RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReactionResponse {
-    #[prost(message, optional, tag = "1")]
-    pub reaction: ::core::option::Option<Reaction>,
-}
-/// QueryRegisteredReactionsRequest is the request type for the
-/// Query/RegisteredReactions RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reactions.v1.Query/RegisteredReactions",
-    response_type = QueryRegisteredReactionsResponse
-)]
-pub struct QueryRegisteredReactionsRequest {
-    /// Id of the subspace to query the registered reactions for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryRegisteredReactionsResponse is the response type for the
-/// Query/RegisteredReactions RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryRegisteredReactionsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub registered_reactions: ::prost::alloc::vec::Vec<RegisteredReaction>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryRegisteredReactionRequest is the request type for the
-/// Query/RegisteredReaction RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reactions.v1.Query/RegisteredReaction",
-    response_type = QueryRegisteredReactionResponse
-)]
-pub struct QueryRegisteredReactionRequest {
-    /// Id of the subspace to query the registered reactions for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the registered reaction to query for
-    #[prost(uint32, tag = "2")]
-    pub reaction_id: u32,
-}
-/// QueryRegisteredReactionResponse is the response type for the
-/// Query/RegisteredReaction RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryRegisteredReactionResponse {
-    #[prost(message, optional, tag = "1")]
-    pub registered_reaction: ::core::option::Option<RegisteredReaction>,
-}
-/// QueryReactionsParamsRequest is the request type for the Query/ReactionsParams
-/// RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.reactions.v1.Query/ReactionsParams",
-    response_type = QueryReactionsParamsResponse
-)]
-pub struct QueryReactionsParamsRequest {
-    /// Id of the subspace for which to query the params
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-}
-/// QueryReactionsParamsResponse is the response type for the
-/// Query/ReactionsParam RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryReactionsParamsResponse {
-    #[prost(message, optional, tag = "1")]
-    pub params: ::core::option::Option<SubspaceReactionsParams>,
 }
 /// MsgAddReaction represents the message to be used to add a post reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -735,6 +551,268 @@ pub struct MsgSetReactionsParams {
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParamsResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgSetReactionsParamsResponse {}
+/// QueryReactionsRequest is the request type for the Query/Reactions RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reactions.v1.Query/Reactions",
+    response_type = QueryReactionsResponse
+)]
+pub struct QueryReactionsRequest {
+    /// Id of the subspace that contains the post to query the reactions for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Post id to query the reactions for
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// (optional) User to query the reactions for.
+    /// This is going to be used only if a post id is specified as well.
+    #[prost(string, tag = "3")]
+    pub user: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "4")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryReactionsResponse is the response type for the Query/Reactions RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReactionsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub reactions: ::prost::alloc::vec::Vec<Reaction>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryReactionRequest is the request type for the Query/ReactionRequest RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reactions.v1.Query/Reaction",
+    response_type = QueryReactionResponse
+)]
+pub struct QueryReactionRequest {
+    /// Id of the subspace that contains the post to query the reactions for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Post id to query the reactions for
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Id of the reaction to query
+    #[prost(uint32, tag = "3")]
+    pub reaction_id: u32,
+}
+/// QueryReactionResponse is the response type for the Query/Reaction RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReactionResponse {
+    #[prost(message, optional, tag = "1")]
+    pub reaction: ::core::option::Option<Reaction>,
+}
+/// QueryRegisteredReactionsRequest is the request type for the
+/// Query/RegisteredReactions RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reactions.v1.Query/RegisteredReactions",
+    response_type = QueryRegisteredReactionsResponse
+)]
+pub struct QueryRegisteredReactionsRequest {
+    /// Id of the subspace to query the registered reactions for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryRegisteredReactionsResponse is the response type for the
+/// Query/RegisteredReactions RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryRegisteredReactionsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub registered_reactions: ::prost::alloc::vec::Vec<RegisteredReaction>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryRegisteredReactionRequest is the request type for the
+/// Query/RegisteredReaction RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reactions.v1.Query/RegisteredReaction",
+    response_type = QueryRegisteredReactionResponse
+)]
+pub struct QueryRegisteredReactionRequest {
+    /// Id of the subspace to query the registered reactions for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the registered reaction to query for
+    #[prost(uint32, tag = "2")]
+    pub reaction_id: u32,
+}
+/// QueryRegisteredReactionResponse is the response type for the
+/// Query/RegisteredReaction RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryRegisteredReactionResponse {
+    #[prost(message, optional, tag = "1")]
+    pub registered_reaction: ::core::option::Option<RegisteredReaction>,
+}
+/// QueryReactionsParamsRequest is the request type for the Query/ReactionsParams
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.reactions.v1.Query/ReactionsParams",
+    response_type = QueryReactionsParamsResponse
+)]
+pub struct QueryReactionsParamsRequest {
+    /// Id of the subspace for which to query the params
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+}
+/// QueryReactionsParamsResponse is the response type for the
+/// Query/ReactionsParam RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryReactionsParamsResponse {
+    #[prost(message, optional, tag = "1")]
+    pub params: ::core::option::Option<SubspaceReactionsParams>,
+}
 pub struct ReactionsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }

@@ -210,8 +210,8 @@ impl ProfilesMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::types::secp256k1;
     use cosmwasm_std::Binary;
-    use desmos_std::public_keys::Secp256k1PublicKey;
 
     #[test]
     fn test_save_profile() {
@@ -317,7 +317,7 @@ mod tests {
         });
 
         let proof = Proof {
-            pub_key: Some(Secp256k1PublicKey{
+            pub_key: Some(secp256k1::PubKey {
                 key: Binary::from_base64("ArlRm0a5fFTHFfKha1LpDd+g3kZlyRBBF4R8PSM8Zo4Y").unwrap().to_vec(),
             }.into()),
             signature: Some(SingleSignature{

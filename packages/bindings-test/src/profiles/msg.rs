@@ -7,7 +7,7 @@ mod tests {
     use desmos_bindings::profiles::types::{
         AddressData, Bech32Address, ChainConfig, Proof, SignatureValueType, SingleSignature,
     };
-    use desmos_bindings::types::Secp256k1PublicKey;
+    use desmos_bindings::types::secp256k1;
     use test_contract::msg::ExecuteMsg;
 
     fn build_save_profile_msg(contract_address: &str) -> ExecuteMsg {
@@ -213,7 +213,7 @@ mod tests {
             prefix:"cosmos".into()
             }),
             Proof{
-                pub_key: Some(Secp256k1PublicKey{ key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap().into() }.into()),
+                pub_key: Some(secp256k1::PubKey{ key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap().into() }.into()),
                 signature: Some(SingleSignature{
                     value_type: SignatureValueType::Raw.into(),
                     signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap().into(),
@@ -268,7 +268,7 @@ mod tests {
             prefix:"cosmos".into()
             }),
             Proof{
-                pub_key: Some(Secp256k1PublicKey{ key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap().into() }.into()),
+                pub_key: Some(secp256k1::PubKey{ key: Binary::from_base64("A6p7imM9YY/uFgZFV/ZiNQ45Ki2xbyR4zjG//BFzkVtY").unwrap().into() }.into()),
                 signature: Some(SingleSignature{
                     value_type: SignatureValueType::Raw.into(),
                     signature: Binary::from_base64("tNuudGWFCKhjzN1twCYMkZHWYNxlCcXPeD7PL1rGiO0oUjhYglADFT6mjecKiHQLyW4COeRpvKSnGByQkCZZkA==").unwrap().into(),
@@ -286,7 +286,7 @@ mod tests {
             prefix:"cosmos".into()
             }),
             Proof{
-                pub_key: Some(Secp256k1PublicKey{ key: Binary::from_base64("AqYZhHKaeBcrYktZEvor/SUDlHCkv5JBplaG2vc2bvfS").unwrap().into() }.into()),
+                pub_key: Some(secp256k1::PubKey{ key: Binary::from_base64("AqYZhHKaeBcrYktZEvor/SUDlHCkv5JBplaG2vc2bvfS").unwrap().into() }.into()),
                 signature: Some(SingleSignature{
                     value_type: SignatureValueType::Raw.into(),
                     signature: Binary::from_base64("gLIWKbyZ8nUtCVvr8TfPGDYU1rybwPDi6neMuEjfvkwNXJVuNcmthqVeuvxEln7K15PIEPUGTMTV/kU0n3iGPw==").unwrap().into(),

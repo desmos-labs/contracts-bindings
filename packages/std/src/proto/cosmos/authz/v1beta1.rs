@@ -34,13 +34,14 @@ pub struct GenericAuthorization {
 pub struct Grant {
     #[prost(message, optional, tag = "1")]
     pub authorization: ::core::option::Option<crate::shim::Any>,
+    /// time when the grant will expire and will be pruned. If null, then the grant
+    /// doesn't have a time expiration (other conditions  in `authorization`
+    /// may apply to invalidate the grant)
     #[prost(message, optional, tag = "2")]
     pub expiration: ::core::option::Option<crate::shim::Timestamp>,
 }
 /// GrantAuthorization extends a grant with both the addresses of the grantee and granter.
 /// It is used in genesis.proto and query.proto
-///
-/// Since: cosmos-sdk 0.45.2
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -62,4 +63,22 @@ pub struct GrantAuthorization {
     pub authorization: ::core::option::Option<crate::shim::Any>,
     #[prost(message, optional, tag = "4")]
     pub expiration: ::core::option::Option<crate::shim::Timestamp>,
+}
+/// GrantQueueItem contains the list of TypeURL of a sdk.Msg.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/cosmos.authz.v1beta1.GrantQueueItem")]
+#[serde(rename_all = "snake_case")]
+pub struct GrantQueueItem {
+    /// msg_type_urls contains the list of TypeURL of a sdk.Msg.
+    #[prost(string, repeated, tag = "1")]
+    pub msg_type_urls: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }

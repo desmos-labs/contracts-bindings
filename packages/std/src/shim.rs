@@ -267,9 +267,9 @@ macro_rules! expand_as_any {
 // [HACK] Register all types that can convert to Any manually for now.
 expand_as_any!(
     // public keys
-    crate::public_keys::Ed25519PublicKey,
-    crate::public_keys::Secp256k1PublicKey,
-    crate::public_keys::Secp256r1PublicKey,
+    crate::proto::cosmos::crypto::ed25519::PubKey,
+    crate::proto::cosmos::crypto::secp256k1::PubKey,
+    crate::proto::cosmos::crypto::secp256r1::PubKey,
     // profiles module
     crate::proto::desmos::profiles::v3::Profile,
     crate::proto::desmos::profiles::v3::Bech32Address,

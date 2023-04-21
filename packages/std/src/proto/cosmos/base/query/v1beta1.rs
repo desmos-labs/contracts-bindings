@@ -77,7 +77,8 @@ pub struct PageRequest {
 #[serde(rename_all = "snake_case")]
 pub struct PageResponse {
     /// next_key is the key to be passed to PageRequest.key to
-    /// query the next page most efficiently
+    /// query the next page most efficiently. It will be empty if
+    /// there are no more results.
     #[prost(bytes = "vec", tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_base64::serialize",

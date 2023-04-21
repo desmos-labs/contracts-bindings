@@ -1,54 +1,3 @@
-/// Relationship is the struct of a relationship.
-/// It represent the concept of "follow" of traditional social networks.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v1beta1.Relationship")]
-#[serde(rename_all = "snake_case")]
-pub struct Relationship {
-    #[prost(string, tag = "1")]
-    pub creator: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub recipient: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub subspace_id: ::prost::alloc::string::String,
-}
-/// UserBlock represents the fact that the Blocker has blocked the given Blocked
-/// user.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v1beta1.UserBlock")]
-#[serde(rename_all = "snake_case")]
-pub struct UserBlock {
-    /// Blocker represents the address of the user blocking another one
-    #[prost(string, tag = "1")]
-    pub blocker: ::prost::alloc::string::String,
-    /// Blocked represents the address of the blocked user
-    #[prost(string, tag = "2")]
-    pub blocked: ::prost::alloc::string::String,
-    /// Reason represents the optional reason the user has been blocked for.
-    #[prost(string, tag = "3")]
-    pub reason: ::prost::alloc::string::String,
-    /// SubspaceID represents the ID of the subspace inside which the user should
-    /// be blocked
-    #[prost(string, tag = "4")]
-    pub subspace_id: ::prost::alloc::string::String,
-}
 /// ApplicationLink contains the data of a link to a centralized application
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
@@ -321,61 +270,6 @@ impl ApplicationLinkState {
         }
     }
 }
-/// Profile represents a generic first on Desmos, containing the information of a
-/// single user
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v1beta1.Profile")]
-#[serde(rename_all = "snake_case")]
-pub struct Profile {
-    /// Account represents the base Cosmos account associated with this profile
-    #[prost(message, optional, tag = "1")]
-    pub account: ::core::option::Option<crate::shim::Any>,
-    /// DTag represents the unique tag of this profile
-    #[prost(string, tag = "2")]
-    pub dtag: ::prost::alloc::string::String,
-    /// Nickname contains the custom human readable name of the profile
-    #[prost(string, tag = "3")]
-    pub nickname: ::prost::alloc::string::String,
-    /// Bio contains the biography of the profile
-    #[prost(string, tag = "4")]
-    pub bio: ::prost::alloc::string::String,
-    /// Pictures contains the data about the pictures associated with he profile
-    #[prost(message, optional, tag = "5")]
-    pub pictures: ::core::option::Option<Pictures>,
-    /// CreationTime represents the time in which the profile has been created
-    #[prost(message, optional, tag = "6")]
-    pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
-}
-/// Pictures contains the data of a user profile's related pictures
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v1beta1.Pictures")]
-#[serde(rename_all = "snake_case")]
-pub struct Pictures {
-    /// Profile contains the URL to the profile picture
-    #[prost(string, tag = "1")]
-    pub profile: ::prost::alloc::string::String,
-    /// Cover contains the URL to the cover picture
-    #[prost(string, tag = "2")]
-    pub cover: ::prost::alloc::string::String,
-}
 /// ChainLink contains the data representing either an inter- or cross- chain
 /// link
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -539,4 +433,110 @@ pub struct DTagTransferRequest {
     /// give to the sender their DTag
     #[prost(string, tag = "3")]
     pub receiver: ::prost::alloc::string::String,
+}
+/// Profile represents a generic first on Desmos, containing the information of a
+/// single user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Profile")]
+#[serde(rename_all = "snake_case")]
+pub struct Profile {
+    /// Account represents the base Cosmos account associated with this profile
+    #[prost(message, optional, tag = "1")]
+    pub account: ::core::option::Option<crate::shim::Any>,
+    /// DTag represents the unique tag of this profile
+    #[prost(string, tag = "2")]
+    pub dtag: ::prost::alloc::string::String,
+    /// Nickname contains the custom human readable name of the profile
+    #[prost(string, tag = "3")]
+    pub nickname: ::prost::alloc::string::String,
+    /// Bio contains the biography of the profile
+    #[prost(string, tag = "4")]
+    pub bio: ::prost::alloc::string::String,
+    /// Pictures contains the data about the pictures associated with he profile
+    #[prost(message, optional, tag = "5")]
+    pub pictures: ::core::option::Option<Pictures>,
+    /// CreationTime represents the time in which the profile has been created
+    #[prost(message, optional, tag = "6")]
+    pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
+}
+/// Pictures contains the data of a user profile's related pictures
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Pictures")]
+#[serde(rename_all = "snake_case")]
+pub struct Pictures {
+    /// Profile contains the URL to the profile picture
+    #[prost(string, tag = "1")]
+    pub profile: ::prost::alloc::string::String,
+    /// Cover contains the URL to the cover picture
+    #[prost(string, tag = "2")]
+    pub cover: ::prost::alloc::string::String,
+}
+/// Relationship is the struct of a relationship.
+/// It represent the concept of "follow" of traditional social networks.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.Relationship")]
+#[serde(rename_all = "snake_case")]
+pub struct Relationship {
+    #[prost(string, tag = "1")]
+    pub creator: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub recipient: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub subspace_id: ::prost::alloc::string::String,
+}
+/// UserBlock represents the fact that the Blocker has blocked the given Blocked
+/// user.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v1beta1.UserBlock")]
+#[serde(rename_all = "snake_case")]
+pub struct UserBlock {
+    /// Blocker represents the address of the user blocking another one
+    #[prost(string, tag = "1")]
+    pub blocker: ::prost::alloc::string::String,
+    /// Blocked represents the address of the blocked user
+    #[prost(string, tag = "2")]
+    pub blocked: ::prost::alloc::string::String,
+    /// Reason represents the optional reason the user has been blocked for.
+    #[prost(string, tag = "3")]
+    pub reason: ::prost::alloc::string::String,
+    /// SubspaceID represents the ID of the subspace inside which the user should
+    /// be blocked
+    #[prost(string, tag = "4")]
+    pub subspace_id: ::prost::alloc::string::String,
 }

@@ -204,7 +204,7 @@ pub struct GroupGrantee {
     #[prost(uint32, tag = "1")]
     pub group_id: u32,
 }
-/// QuerySubspacesRequest is the request type for the Query/Subspaces RPC method
+/// GenesisState contains the data of the genesis state for the subspaces module
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -215,133 +215,31 @@ pub struct GroupGrantee {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesRequest")]
+#[proto_message(type_url = "/desmos.subspaces.v3.GenesisState")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/Subspaces",
-    response_type = QuerySubspacesResponse
-)]
-pub struct QuerySubspacesRequest {
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "1")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QuerySubspacesResponse is the response type for the Query/Subspaces RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QuerySubspacesResponse {
-    #[prost(message, repeated, tag = "1")]
+pub struct GenesisState {
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub initial_subspace_id: u64,
+    #[prost(message, repeated, tag = "2")]
+    pub subspaces_data: ::prost::alloc::vec::Vec<SubspaceData>,
+    #[prost(message, repeated, tag = "3")]
     pub subspaces: ::prost::alloc::vec::Vec<Subspace>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QuerySubspace is the request type for the Query/Subspace RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/Subspace",
-    response_type = QuerySubspaceResponse
-)]
-pub struct QuerySubspaceRequest {
-    /// Id of the subspace to query
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-}
-/// QuerySubspaceResponse is the response type for the Query/Subspace method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QuerySubspaceResponse {
-    #[prost(message, optional, tag = "1")]
-    pub subspace: ::core::option::Option<Subspace>,
-}
-/// QuerySectionsRequest is the request type for Query/Sections RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/Sections",
-    response_type = QuerySectionsResponse
-)]
-pub struct QuerySectionsRequest {
-    /// Id of the subspace to query the sections for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QuerySectionsResponse is the response type for Query/Sections RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QuerySectionsResponse {
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag = "4")]
     pub sections: ::prost::alloc::vec::Vec<Section>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+    #[prost(message, repeated, tag = "5")]
+    pub user_permissions: ::prost::alloc::vec::Vec<UserPermission>,
+    #[prost(message, repeated, tag = "6")]
+    pub user_groups: ::prost::alloc::vec::Vec<UserGroup>,
+    #[prost(message, repeated, tag = "7")]
+    pub user_groups_members: ::prost::alloc::vec::Vec<UserGroupMemberEntry>,
+    #[prost(message, repeated, tag = "8")]
+    pub grants: ::prost::alloc::vec::Vec<Grant>,
 }
-/// QuerySectionRequest is the request type for Query/Section RPC method
+/// SubspaceData contains the genesis data for a single subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -352,25 +250,21 @@ pub struct QuerySectionsResponse {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionRequest")]
+#[proto_message(type_url = "/desmos.subspaces.v3.SubspaceData")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/Section",
-    response_type = QuerySectionResponse
-)]
-pub struct QuerySectionRequest {
-    /// Id of the subspace inside which to search for
+pub struct SubspaceData {
     #[prost(uint64, tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub subspace_id: u64,
-    /// Id of the searched section
     #[prost(uint32, tag = "2")]
-    pub section_id: u32,
+    pub next_group_id: u32,
+    #[prost(uint32, tag = "3")]
+    pub next_section_id: u32,
 }
-/// QuerySectionResponse is the response type for Query/Section RPC method
+/// UserGroupMemberEntry contains the details of a user group member
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -381,423 +275,19 @@ pub struct QuerySectionRequest {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionResponse")]
+#[proto_message(type_url = "/desmos.subspaces.v3.UserGroupMemberEntry")]
 #[serde(rename_all = "snake_case")]
-pub struct QuerySectionResponse {
-    #[prost(message, optional, tag = "1")]
-    pub section: ::core::option::Option<Section>,
-}
-/// QueryUserGroupsRequest is the request type for the Query/UserGroups RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/UserGroups",
-    response_type = QueryUserGroupsResponse
-)]
-pub struct QueryUserGroupsRequest {
-    /// Id of the subspace to query the groups for
+pub struct UserGroupMemberEntry {
     #[prost(uint64, tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
         deserialize_with = "crate::serde::as_str::deserialize"
     )]
     pub subspace_id: u64,
-    /// (optional) Section id to query the groups for
-    #[prost(uint32, tag = "2")]
-    pub section_id: u32,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryUserGroupsResponse is the response type for the Query/UserGroups RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryUserGroupsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub groups: ::prost::alloc::vec::Vec<UserGroup>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryUserGroupRequest is the request type for the Query/UserGroup RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/UserGroup",
-    response_type = QueryUserGroupResponse
-)]
-pub struct QueryUserGroupRequest {
-    /// Id of the subspace that contains the group
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the group to query
     #[prost(uint32, tag = "2")]
     pub group_id: u32,
-}
-/// QueryUserGroupResponse is the response type for the Query/UserGroup RPC
-/// method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryUserGroupResponse {
-    #[prost(message, optional, tag = "1")]
-    pub group: ::core::option::Option<UserGroup>,
-}
-/// QueryUserGroupMembersRequest is the request type for the
-/// Query/UserGroupMembers RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/UserGroupMembers",
-    response_type = QueryUserGroupMembersResponse
-)]
-pub struct QueryUserGroupMembersRequest {
-    /// Id of the subspace that contains the group
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the user group to query the members for
-    #[prost(uint32, tag = "2")]
-    pub group_id: u32,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryUserGroupMembersResponse is the response type for the
-/// Query/UserGroupMembers RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryUserGroupMembersResponse {
-    #[prost(string, repeated, tag = "1")]
-    pub members: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryUserPermissionsRequest is the request type for the Query/UserPermissions
-/// RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/UserPermissions",
-    response_type = QueryUserPermissionsResponse
-)]
-pub struct QueryUserPermissionsRequest {
-    /// Id of the subspace to query the permissions for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the section to query the permissions for
-    #[prost(uint32, tag = "2")]
-    pub section_id: u32,
-    /// Address of the user to query the permissions for
     #[prost(string, tag = "3")]
     pub user: ::prost::alloc::string::String,
-}
-/// QueryUserPermissionsRequest is the response type for the
-/// Query/UserPermissions method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryUserPermissionsResponse {
-    #[prost(string, repeated, tag = "1")]
-    pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    #[prost(message, repeated, tag = "2")]
-    pub details: ::prost::alloc::vec::Vec<PermissionDetail>,
-}
-/// PermissionDetail contains the details data of a permission
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail")]
-#[serde(rename_all = "snake_case")]
-pub struct PermissionDetail {
-    /// Id of the subspace for which this permission is valid
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Id of the section for which this permission is valid
-    #[prost(uint32, tag = "2")]
-    pub section_id: u32,
-    /// sum is the oneof that specifies whether this represents a user or
-    /// group permission detail
-    #[prost(oneof = "permission_detail::Sum", tags = "3, 4")]
-    #[serde(flatten)]
-    pub sum: ::core::option::Option<permission_detail::Sum>,
-}
-/// Nested message and enum types in `PermissionDetail`.
-pub mod permission_detail {
-    /// User is a permission that has been set to a specific user
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(
-        Clone,
-        PartialEq,
-        ::prost::Message,
-        schemars::JsonSchema,
-        serde::Serialize,
-        serde::Deserialize,
-        std_derive::CosmwasmExt,
-    )]
-    #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.User")]
-    #[serde(rename_all = "snake_case")]
-    pub struct User {
-        /// User for which the permission was set
-        #[prost(string, tag = "1")]
-        pub user: ::prost::alloc::string::String,
-        /// Permissions set to the user
-        #[prost(string, repeated, tag = "2")]
-        pub permission: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    }
-    /// Group is a permission that has been set to a user group
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(
-        Clone,
-        PartialEq,
-        ::prost::Message,
-        schemars::JsonSchema,
-        serde::Serialize,
-        serde::Deserialize,
-        std_derive::CosmwasmExt,
-    )]
-    #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.Group")]
-    #[serde(rename_all = "snake_case")]
-    pub struct Group {
-        /// Unique id of the group
-        #[prost(uint32, tag = "1")]
-        pub group_id: u32,
-        /// Permissions set to the group
-        #[prost(string, repeated, tag = "2")]
-        pub permission: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    }
-    /// sum is the oneof that specifies whether this represents a user or
-    /// group permission detail
-    #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(
-        Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
-    )]
-    #[serde(rename_all = "snake_case")]
-    pub enum Sum {
-        /// User represents a user permission
-        #[prost(message, tag = "3")]
-        User(User),
-        /// Group represents a group permission
-        #[prost(message, tag = "4")]
-        Group(Group),
-    }
-}
-/// QueryUserAllowancesRequest is the request type for the Query/UserAllowances
-/// RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/UserAllowances",
-    response_type = QueryUserAllowancesResponse
-)]
-pub struct QueryUserAllowancesRequest {
-    /// Id of the subspace for which to get the grant(s)
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// (Optional) Address of the user that was granted an allowance
-    #[prost(string, tag = "2")]
-    pub grantee: ::prost::alloc::string::String,
-    /// pagination defines an pagination for the request
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryUserAllowancesResponse is the response type for the Query/UserAllowances
-/// RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryUserAllowancesResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub grants: ::prost::alloc::vec::Vec<Grant>,
-    /// pagination defines an pagination for the response
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryGroupAllowancesRequest is the request type for the Query/GroupAllowances
-/// RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.subspaces.v3.Query/GroupAllowances",
-    response_type = QueryGroupAllowancesResponse
-)]
-pub struct QueryGroupAllowancesRequest {
-    /// Id of the subspace for which to get the grant(s)
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// (optional) Address of the user group that was granted the allowance(s)
-    #[prost(uint32, tag = "2")]
-    pub group_id: u32,
-    /// pagination defines an pagination for the request
-    #[prost(message, optional, tag = "3")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryGroupAllowancesResponse is the response type for the
-/// Query/GroupAllowances RPC method
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryGroupAllowancesResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub grants: ::prost::alloc::vec::Vec<Grant>,
-    /// pagination defines an pagination for the response
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// MsgGrantTreasuryAuthorization grants an authorization on behalf of the
 /// treasury to a user
@@ -1698,6 +1188,601 @@ pub struct MsgSetUserPermissions {
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserPermissionsResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgSetUserPermissionsResponse {}
+/// QuerySubspacesRequest is the request type for the Query/Subspaces RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/Subspaces",
+    response_type = QuerySubspacesResponse
+)]
+pub struct QuerySubspacesRequest {
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "1")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QuerySubspacesResponse is the response type for the Query/Subspaces RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspacesResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySubspacesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub subspaces: ::prost::alloc::vec::Vec<Subspace>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QuerySubspace is the request type for the Query/Subspace RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/Subspace",
+    response_type = QuerySubspaceResponse
+)]
+pub struct QuerySubspaceRequest {
+    /// Id of the subspace to query
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+}
+/// QuerySubspaceResponse is the response type for the Query/Subspace method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySubspaceResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySubspaceResponse {
+    #[prost(message, optional, tag = "1")]
+    pub subspace: ::core::option::Option<Subspace>,
+}
+/// QuerySectionsRequest is the request type for Query/Sections RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/Sections",
+    response_type = QuerySectionsResponse
+)]
+pub struct QuerySectionsRequest {
+    /// Id of the subspace to query the sections for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QuerySectionsResponse is the response type for Query/Sections RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySectionsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub sections: ::prost::alloc::vec::Vec<Section>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QuerySectionRequest is the request type for Query/Section RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/Section",
+    response_type = QuerySectionResponse
+)]
+pub struct QuerySectionRequest {
+    /// Id of the subspace inside which to search for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the searched section
+    #[prost(uint32, tag = "2")]
+    pub section_id: u32,
+}
+/// QuerySectionResponse is the response type for Query/Section RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QuerySectionResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QuerySectionResponse {
+    #[prost(message, optional, tag = "1")]
+    pub section: ::core::option::Option<Section>,
+}
+/// QueryUserGroupsRequest is the request type for the Query/UserGroups RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/UserGroups",
+    response_type = QueryUserGroupsResponse
+)]
+pub struct QueryUserGroupsRequest {
+    /// Id of the subspace to query the groups for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// (optional) Section id to query the groups for
+    #[prost(uint32, tag = "2")]
+    pub section_id: u32,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryUserGroupsResponse is the response type for the Query/UserGroups RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryUserGroupsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub groups: ::prost::alloc::vec::Vec<UserGroup>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryUserGroupRequest is the request type for the Query/UserGroup RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/UserGroup",
+    response_type = QueryUserGroupResponse
+)]
+pub struct QueryUserGroupRequest {
+    /// Id of the subspace that contains the group
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the group to query
+    #[prost(uint32, tag = "2")]
+    pub group_id: u32,
+}
+/// QueryUserGroupResponse is the response type for the Query/UserGroup RPC
+/// method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryUserGroupResponse {
+    #[prost(message, optional, tag = "1")]
+    pub group: ::core::option::Option<UserGroup>,
+}
+/// QueryUserGroupMembersRequest is the request type for the
+/// Query/UserGroupMembers RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/UserGroupMembers",
+    response_type = QueryUserGroupMembersResponse
+)]
+pub struct QueryUserGroupMembersRequest {
+    /// Id of the subspace that contains the group
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the user group to query the members for
+    #[prost(uint32, tag = "2")]
+    pub group_id: u32,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryUserGroupMembersResponse is the response type for the
+/// Query/UserGroupMembers RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserGroupMembersResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryUserGroupMembersResponse {
+    #[prost(string, repeated, tag = "1")]
+    pub members: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryUserPermissionsRequest is the request type for the Query/UserPermissions
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/UserPermissions",
+    response_type = QueryUserPermissionsResponse
+)]
+pub struct QueryUserPermissionsRequest {
+    /// Id of the subspace to query the permissions for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the section to query the permissions for
+    #[prost(uint32, tag = "2")]
+    pub section_id: u32,
+    /// Address of the user to query the permissions for
+    #[prost(string, tag = "3")]
+    pub user: ::prost::alloc::string::String,
+}
+/// QueryUserPermissionsRequest is the response type for the
+/// Query/UserPermissions method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserPermissionsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryUserPermissionsResponse {
+    #[prost(string, repeated, tag = "1")]
+    pub permissions: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, repeated, tag = "2")]
+    pub details: ::prost::alloc::vec::Vec<PermissionDetail>,
+}
+/// PermissionDetail contains the details data of a permission
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail")]
+#[serde(rename_all = "snake_case")]
+pub struct PermissionDetail {
+    /// Id of the subspace for which this permission is valid
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the section for which this permission is valid
+    #[prost(uint32, tag = "2")]
+    pub section_id: u32,
+    /// sum is the oneof that specifies whether this represents a user or
+    /// group permission detail
+    #[prost(oneof = "permission_detail::Sum", tags = "3, 4")]
+    #[serde(flatten)]
+    pub sum: ::core::option::Option<permission_detail::Sum>,
+}
+/// Nested message and enum types in `PermissionDetail`.
+pub mod permission_detail {
+    /// User is a permission that has been set to a specific user
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(
+        Clone,
+        PartialEq,
+        ::prost::Message,
+        schemars::JsonSchema,
+        serde::Serialize,
+        serde::Deserialize,
+        std_derive::CosmwasmExt,
+    )]
+    #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.User")]
+    #[serde(rename_all = "snake_case")]
+    pub struct User {
+        /// User for which the permission was set
+        #[prost(string, tag = "1")]
+        pub user: ::prost::alloc::string::String,
+        /// Permissions set to the user
+        #[prost(string, repeated, tag = "2")]
+        pub permission: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    /// Group is a permission that has been set to a user group
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(
+        Clone,
+        PartialEq,
+        ::prost::Message,
+        schemars::JsonSchema,
+        serde::Serialize,
+        serde::Deserialize,
+        std_derive::CosmwasmExt,
+    )]
+    #[proto_message(type_url = "/desmos.subspaces.v3.PermissionDetail.Group")]
+    #[serde(rename_all = "snake_case")]
+    pub struct Group {
+        /// Unique id of the group
+        #[prost(uint32, tag = "1")]
+        pub group_id: u32,
+        /// Permissions set to the group
+        #[prost(string, repeated, tag = "2")]
+        pub permission: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    }
+    /// sum is the oneof that specifies whether this represents a user or
+    /// group permission detail
+    #[allow(clippy::derive_partial_eq_without_eq)]
+    #[derive(
+        Clone, PartialEq, ::prost::Oneof, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
+    )]
+    #[serde(rename_all = "snake_case")]
+    pub enum Sum {
+        /// User represents a user permission
+        #[prost(message, tag = "3")]
+        User(User),
+        /// Group represents a group permission
+        #[prost(message, tag = "4")]
+        Group(Group),
+    }
+}
+/// QueryUserAllowancesRequest is the request type for the Query/UserAllowances
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/UserAllowances",
+    response_type = QueryUserAllowancesResponse
+)]
+pub struct QueryUserAllowancesRequest {
+    /// Id of the subspace for which to get the grant(s)
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// (Optional) Address of the user that was granted an allowance
+    #[prost(string, tag = "2")]
+    pub grantee: ::prost::alloc::string::String,
+    /// pagination defines an pagination for the request
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryUserAllowancesResponse is the response type for the Query/UserAllowances
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryUserAllowancesResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryUserAllowancesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub grants: ::prost::alloc::vec::Vec<Grant>,
+    /// pagination defines an pagination for the response
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryGroupAllowancesRequest is the request type for the Query/GroupAllowances
+/// RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.subspaces.v3.Query/GroupAllowances",
+    response_type = QueryGroupAllowancesResponse
+)]
+pub struct QueryGroupAllowancesRequest {
+    /// Id of the subspace for which to get the grant(s)
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// (optional) Address of the user group that was granted the allowance(s)
+    #[prost(uint32, tag = "2")]
+    pub group_id: u32,
+    /// pagination defines an pagination for the request
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryGroupAllowancesResponse is the response type for the
+/// Query/GroupAllowances RPC method
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.QueryGroupAllowancesResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryGroupAllowancesResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub grants: ::prost::alloc::vec::Vec<Grant>,
+    /// pagination defines an pagination for the response
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
 pub struct SubspacesQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }

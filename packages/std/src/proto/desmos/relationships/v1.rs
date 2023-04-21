@@ -61,8 +61,7 @@ pub struct UserBlock {
     )]
     pub subspace_id: u64,
 }
-/// QueryRelationshipsRequest is the request type for the
-/// Query/Relationships RPC method.
+/// GenesisState defines the profiles module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -73,111 +72,13 @@ pub struct UserBlock {
     serde::Deserialize,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsRequest")]
+#[proto_message(type_url = "/desmos.relationships.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.relationships.v1.Query/Relationships",
-    response_type = QueryRelationshipsResponse
-)]
-pub struct QueryRelationshipsRequest {
-    /// subspace to query the relationships for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// optional address of the user for which to query the relationships
-    #[prost(string, tag = "2")]
-    pub user: ::prost::alloc::string::String,
-    /// optional address of the counterparty of the relationships (used only if the
-    /// user is provided)
-    #[prost(string, tag = "3")]
-    pub counterparty: ::prost::alloc::string::String,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "4")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryRelationshipsResponse is the response type for the
-/// Query/Relationships RPC method.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryRelationshipsResponse {
+pub struct GenesisState {
     #[prost(message, repeated, tag = "1")]
     pub relationships: ::prost::alloc::vec::Vec<Relationship>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
-}
-/// QueryBlocksRequest is the request type for the Query/Blocks RPC
-/// endpoint
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksRequest")]
-#[serde(rename_all = "snake_case")]
-#[proto_query(
-    path = "/desmos.relationships.v1.Query/Blocks",
-    response_type = QueryBlocksResponse
-)]
-pub struct QueryBlocksRequest {
-    /// subspace to query the blocks for
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// optional address of the blocker to query the blocks for
-    #[prost(string, tag = "2")]
-    pub blocker: ::prost::alloc::string::String,
-    /// optional address of the blocked user to query the block for (used only if
-    /// the blocker is provided)
-    #[prost(string, tag = "3")]
-    pub blocked: ::prost::alloc::string::String,
-    /// pagination defines an optional pagination for the request.
-    #[prost(message, optional, tag = "4")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
-}
-/// QueryBlocksResponse is the response type for the Query/Blocks RPC
-/// method.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct QueryBlocksResponse {
-    #[prost(message, repeated, tag = "1")]
+    #[prost(message, repeated, tag = "2")]
     pub blocks: ::prost::alloc::vec::Vec<UserBlock>,
-    #[prost(message, optional, tag = "2")]
-    pub pagination:
-        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// MsgCreateRelationship represents a message to create a relationship
 /// between two users on a specific subspace.
@@ -355,6 +256,124 @@ pub struct MsgUnblockUser {
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUserResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgUnblockUserResponse {}
+/// QueryRelationshipsRequest is the request type for the
+/// Query/Relationships RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.relationships.v1.Query/Relationships",
+    response_type = QueryRelationshipsResponse
+)]
+pub struct QueryRelationshipsRequest {
+    /// subspace to query the relationships for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// optional address of the user for which to query the relationships
+    #[prost(string, tag = "2")]
+    pub user: ::prost::alloc::string::String,
+    /// optional address of the counterparty of the relationships (used only if the
+    /// user is provided)
+    #[prost(string, tag = "3")]
+    pub counterparty: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "4")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryRelationshipsResponse is the response type for the
+/// Query/Relationships RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryRelationshipsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub relationships: ::prost::alloc::vec::Vec<Relationship>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
+/// QueryBlocksRequest is the request type for the Query/Blocks RPC
+/// endpoint
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.relationships.v1.Query/Blocks",
+    response_type = QueryBlocksResponse
+)]
+pub struct QueryBlocksRequest {
+    /// subspace to query the blocks for
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// optional address of the blocker to query the blocks for
+    #[prost(string, tag = "2")]
+    pub blocker: ::prost::alloc::string::String,
+    /// optional address of the blocked user to query the block for (used only if
+    /// the blocker is provided)
+    #[prost(string, tag = "3")]
+    pub blocked: ::prost::alloc::string::String,
+    /// pagination defines an optional pagination for the request.
+    #[prost(message, optional, tag = "4")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryBlocksResponse is the response type for the Query/Blocks RPC
+/// method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryBlocksResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub blocks: ::prost::alloc::vec::Vec<UserBlock>,
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
 pub struct RelationshipsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }

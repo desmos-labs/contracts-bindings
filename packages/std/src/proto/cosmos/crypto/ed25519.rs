@@ -3,17 +3,19 @@
 /// It must not be used in a non Tendermint key context because it doesn't implement
 /// ADR-28. Nevertheless, you will like to use ed25519 in app user level
 /// then you must create a new proto message and follow ADR-28 for Address construction.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
     ::prost::Message,
+    schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.ed25519.PubKey")]
-pub struct Ed25519PublicKey {
+#[serde(rename_all = "snake_case")]
+pub struct PubKey {
     #[prost(bytes = "vec", tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_base64::serialize",
@@ -21,45 +23,21 @@ pub struct Ed25519PublicKey {
     )]
     pub key: ::prost::alloc::vec::Vec<u8>,
 }
-
-/// PubKey defines a secp256k1 public key
-/// Key is the compressed form of the pubkey. The first byte depends is a 0x02 byte
-/// if the y-coordinate is the lexicographically largest of the two associated with
-/// the x-coordinate. Otherwise the first byte is a 0x03.
-/// This prefix is followed with the x-coordinate.
+/// Deprecated: PrivKey defines a ed25519 private key.
+/// NOTE: ed25519 keys must not be used in SDK apps except in a tendermint validator context.
+#[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
     PartialEq,
     ::prost::Message,
+    schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    schemars::JsonSchema,
     std_derive::CosmwasmExt,
 )]
-#[proto_message(type_url = "/cosmos.crypto.secp256k1.PubKey")]
-pub struct Secp256k1PublicKey {
-    #[prost(bytes = "vec", tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_base64::serialize",
-        deserialize_with = "crate::serde::as_base64::deserialize"
-    )]
-    pub key: ::prost::alloc::vec::Vec<u8>,
-}
-
-/// PubKey defines a secp256r1 ECDSA public key.
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    serde::Serialize,
-    serde::Deserialize,
-    schemars::JsonSchema,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/cosmos.crypto.secp256r1.PubKey")]
-pub struct Secp256r1PublicKey {
-    /// Point on secp256r1 curve in a compressed representation as specified in section
-    /// 4.3.6 of ANSI X9.62: <https://webstore.ansi.org/standards/ascx9/ansix9621998>
+#[proto_message(type_url = "/cosmos.crypto.ed25519.PrivKey")]
+#[serde(rename_all = "snake_case")]
+pub struct PrivKey {
     #[prost(bytes = "vec", tag = "1")]
     #[serde(
         serialize_with = "crate::serde::as_base64::serialize",

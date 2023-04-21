@@ -1,4 +1,3 @@
-use crate::{DESMOS_DIR, DESMOS_REPO_URL, DESMOS_REV};
 use log::info;
 use std::ffi::OsStr;
 use std::fs;
@@ -23,37 +22,33 @@ fn run_git(args: impl IntoIterator<Item = impl AsRef<OsStr>>) {
     run_command("git", args)
 }
 
-pub fn update_desmos_repo() {
+pub fn update_repo(name: &str, dir: &str, rev: &str) {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
-    info!("Update desmos repository...");
+    info!("Update {} repository...", name);
     run_git(&[
         "-C",
-        full_path(DESMOS_DIR).to_str().unwrap(),
+        full_path(dir).to_str().unwrap(),
         "reset",
         "--hard",
-        DESMOS_REV,
+        rev,
     ]);
 }
 
-pub fn try_clone_desmos_repo() {
+pub fn try_clone_repo(name: &str, repo: &str, dir: &str, rev: &str) {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
-    if fs::metadata(full_path(DESMOS_DIR).to_str().unwrap()).is_ok() {
+    if fs::metadata(full_path(dir).to_str().unwrap()).is_ok() {
         return;
     };
 
-    info!("Clone desmos repository...");
-    run_git(&[
-        "clone",
-        DESMOS_REPO_URL,
-        full_path(DESMOS_DIR).to_str().unwrap(),
-    ]);
+    info!("Clone {} repository...", name);
+    run_git(&["clone", repo, full_path(dir).to_str().unwrap()]);
     run_git(&[
         "-C",
-        full_path(DESMOS_DIR).to_str().unwrap(),
+        full_path(dir).to_str().unwrap(),
         "reset",
         "--hard",
-        DESMOS_REV,
+        rev,
     ]);
 }

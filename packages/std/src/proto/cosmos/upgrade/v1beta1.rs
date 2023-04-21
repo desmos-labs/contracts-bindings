@@ -28,7 +28,6 @@ pub struct Plan {
     #[prost(message, optional, tag = "2")]
     pub time: ::core::option::Option<crate::shim::Timestamp>,
     /// The height at which the upgrade must be performed.
-    /// Only used if Time is not set.
     #[prost(int64, tag = "3")]
     #[serde(
         serialize_with = "crate::serde::as_str::serialize",
@@ -48,6 +47,8 @@ pub struct Plan {
 }
 /// SoftwareUpgradeProposal is a gov Content type for initiating a software
 /// upgrade.
+/// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
+/// proposals, see MsgSoftwareUpgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -61,15 +62,20 @@ pub struct Plan {
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal")]
 #[serde(rename_all = "snake_case")]
 pub struct SoftwareUpgradeProposal {
+    /// title of the proposal
     #[prost(string, tag = "1")]
     pub title: ::prost::alloc::string::String,
+    /// description of the proposal
     #[prost(string, tag = "2")]
     pub description: ::prost::alloc::string::String,
+    /// plan of the proposal
     #[prost(message, optional, tag = "3")]
     pub plan: ::core::option::Option<Plan>,
 }
 /// CancelSoftwareUpgradeProposal is a gov Content type for cancelling a software
 /// upgrade.
+/// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
+/// proposals, see MsgCancelUpgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -83,8 +89,10 @@ pub struct SoftwareUpgradeProposal {
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal")]
 #[serde(rename_all = "snake_case")]
 pub struct CancelSoftwareUpgradeProposal {
+    /// title of the proposal
     #[prost(string, tag = "1")]
     pub title: ::prost::alloc::string::String,
+    /// description of the proposal
     #[prost(string, tag = "2")]
     pub description: ::prost::alloc::string::String,
 }

@@ -270,61 +270,6 @@ impl ApplicationLinkState {
         }
     }
 }
-/// Profile represents a generic first on Desmos, containing the information of a
-/// single user
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.Profile")]
-#[serde(rename_all = "snake_case")]
-pub struct Profile {
-    /// Account represents the base Cosmos account associated with this profile
-    #[prost(message, optional, tag = "1")]
-    pub account: ::core::option::Option<crate::shim::Any>,
-    /// DTag represents the unique tag of this profile
-    #[prost(string, tag = "2")]
-    pub dtag: ::prost::alloc::string::String,
-    /// Nickname contains the custom human readable name of the profile
-    #[prost(string, tag = "3")]
-    pub nickname: ::prost::alloc::string::String,
-    /// Bio contains the biography of the profile
-    #[prost(string, tag = "4")]
-    pub bio: ::prost::alloc::string::String,
-    /// Pictures contains the data about the pictures associated with he profile
-    #[prost(message, optional, tag = "5")]
-    pub pictures: ::core::option::Option<Pictures>,
-    /// CreationTime represents the time in which the profile has been created
-    #[prost(message, optional, tag = "6")]
-    pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
-}
-/// Pictures contains the data of a user profile's related pictures
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.profiles.v2.Pictures")]
-#[serde(rename_all = "snake_case")]
-pub struct Pictures {
-    /// Profile contains the URL to the profile picture
-    #[prost(string, tag = "1")]
-    pub profile: ::prost::alloc::string::String,
-    /// Cover contains the URL to the cover picture
-    #[prost(string, tag = "2")]
-    pub cover: ::prost::alloc::string::String,
-}
 /// ChainLink contains the data representing either an inter- or cross- chain
 /// link
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -703,4 +648,59 @@ pub struct OracleParams {
     /// oracle script
     #[prost(message, repeated, tag = "6")]
     pub fee_amount: ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+}
+/// Profile represents a generic first on Desmos, containing the information of a
+/// single user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v2.Profile")]
+#[serde(rename_all = "snake_case")]
+pub struct Profile {
+    /// Account represents the base Cosmos account associated with this profile
+    #[prost(message, optional, tag = "1")]
+    pub account: ::core::option::Option<crate::shim::Any>,
+    /// DTag represents the unique tag of this profile
+    #[prost(string, tag = "2")]
+    pub dtag: ::prost::alloc::string::String,
+    /// Nickname contains the custom human readable name of the profile
+    #[prost(string, tag = "3")]
+    pub nickname: ::prost::alloc::string::String,
+    /// Bio contains the biography of the profile
+    #[prost(string, tag = "4")]
+    pub bio: ::prost::alloc::string::String,
+    /// Pictures contains the data about the pictures associated with he profile
+    #[prost(message, optional, tag = "5")]
+    pub pictures: ::core::option::Option<Pictures>,
+    /// CreationTime represents the time in which the profile has been created
+    #[prost(message, optional, tag = "6")]
+    pub creation_date: ::core::option::Option<crate::shim::Timestamp>,
+}
+/// Pictures contains the data of a user profile's related pictures
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.profiles.v2.Pictures")]
+#[serde(rename_all = "snake_case")]
+pub struct Pictures {
+    /// Profile contains the URL to the profile picture
+    #[prost(string, tag = "1")]
+    pub profile: ::prost::alloc::string::String,
+    /// Cover contains the URL to the cover picture
+    #[prost(string, tag = "2")]
+    pub cover: ::prost::alloc::string::String,
 }
