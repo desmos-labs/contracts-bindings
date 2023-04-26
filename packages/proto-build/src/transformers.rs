@@ -461,9 +461,9 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
                 return Ok(());
             }
 
-            let value = meta.value()?;
-            let s: syn::LitStr = value.parse()?;
+            let s: syn::LitStr = meta.value()?.parse()?;
             enumeration_value = Some(s.value());
+
             return Ok(());
         })
         .unwrap_or_else(|e| {
