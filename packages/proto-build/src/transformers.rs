@@ -3,11 +3,11 @@ use std::path::Path;
 
 use heck::ToSnakeCase;
 use heck::ToUpperCamelCase;
+use proc_macro2::TokenStream as TokenStream2;
 use prost_types::{
     DescriptorProto, EnumDescriptorProto, FileDescriptorSet, ServiceDescriptorProto,
 };
 use regex::Regex;
-use proc_macro2::TokenStream as TokenStream2;
 use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl, ItemStruct, Type};
 
 use crate::{format_ident, quote};
@@ -456,16 +456,17 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
 
         // Search all nested attributes and look for the "enumeration" attribute, then getting its value.
         let mut enumeration_value = None::<String>;
-        attr.parse_nested_meta(|meta|{
+        attr.parse_nested_meta(|meta| {
             if !meta.path.is_ident("enumeration") {
                 return Ok(());
             }
 
             let value = meta.value()?;
-            let s : syn::LitStr = value.parse()?;
+            let s: syn::LitStr = value.parse()?;
             enumeration_value = Some(s.value());
             return Ok(());
-        }).unwrap_or_else(|e|{
+        })
+        .unwrap_or_else(|e| {
             // Do nothing if the error is "expected `,`"
             if e.to_string() != "expected `,`".to_string() {
                 panic!("{}", e)
@@ -486,12 +487,13 @@ fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
         }
 
         // Search all nested attributes and look for the "oneof" attribute.
-        attr.parse_nested_meta(|meta|{
+        attr.parse_nested_meta(|meta| {
             if meta.path.is_ident("oneof") {
                 has_one_of = true;
             }
             Ok(())
-        }).unwrap_or_else(|e|{
+        })
+        .unwrap_or_else(|e| {
             // Do nothing if the error is "expected `,`"
             if e.to_string() != "expected `,`".to_string() {
                 panic!("{}", e)
