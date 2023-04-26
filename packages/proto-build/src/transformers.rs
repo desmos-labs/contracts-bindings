@@ -7,7 +7,7 @@ use prost_types::{
     DescriptorProto, EnumDescriptorProto, FileDescriptorSet, ServiceDescriptorProto,
 };
 use regex::Regex;
-use syn::__private::quote::__private::TokenStream as TokenStream2;
+use proc_macro2::TokenStream as TokenStream2;
 use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl, ItemStruct, Type};
 
 use crate::{format_ident, quote};
@@ -195,19 +195,19 @@ pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
     let has_as_str_name = item
         .items
         .iter()
-        .any(|item| matches!(item, syn::ImplItem::Method(m) if m.sig.ident == "as_str_name"));
+        .any(|item| matches!(item, syn::ImplItem::Fn(m) if m.sig.ident == "as_str_name"));
 
     let has_from_str_name = item
         .items
         .iter()
-        .any(|item| matches!(item, syn::ImplItem::Method(m) if m.sig.ident == "from_str_name"));
+        .any(|item| matches!(item, syn::ImplItem::Fn(m) if m.sig.ident == "from_str_name"));
 
     if !has_as_str_name || !has_from_str_name {
         return item;
     }
 
     // Add a custom serde methods for impl
-    let serialize_method: syn::ImplItemMethod = parse_quote! {
+    let serialize_method: syn::ImplItemFn = parse_quote! {
         pub  fn serialize<S>(v: &i32, serializer: S) -> std::result::Result<S::Ok, S::Error>
         where  S: serde::Serializer {
             let enum_value = Self::from_repr(*v);
@@ -218,7 +218,7 @@ pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
         }
     };
 
-    let deserialize_method: syn::ImplItemMethod = parse_quote! {
+    let deserialize_method: syn::ImplItemFn = parse_quote! {
         pub  fn deserialize<'de, D>(deserializer: D) -> std::result::Result<i32, D::Error>
         where  D: serde::Deserializer<'de> {
             use serde::de::Deserialize;
@@ -436,22 +436,12 @@ fn append_type_path(path: &str, name: &str) -> String {
 
 fn has_repr_attribute(attrs: &[Attribute]) -> bool {
     attrs.iter().any(|attr| {
-        // Parse the attribute's meta information.
-        let meta = match attr.parse_meta() {
-            Ok(meta) => meta,
-            Err(_) => return false,
-        };
-
-        // Check if the attribute name is "prost".
-        match meta {
-            syn::Meta::List(list) => list
-                .path
-                .get_ident()
-                .filter(|ident| ident.to_string() == "repr")
-                .is_some(),
-
-            _ => return false,
+        // Check if the attribute name is "repr".
+        if attr.path().is_ident("repr") {
+            return true;
         }
+
+        false
     })
 }
 
@@ -459,69 +449,54 @@ fn has_repr_attribute(attrs: &[Attribute]) -> bool {
 /// #[prost(enumeration = "target" )] and returns the target value if it does exist.
 fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
     attrs.iter().find_map(|attr| {
-        // Parse the attribute's meta information.
-        let meta = match attr.parse_meta() {
-            Ok(meta) => meta,
-            Err(_) => return None,
-        };
-
         // Check if the attribute name is "prost".
-        let list = match meta {
-            syn::Meta::List(list)
-                if list
-                    .path
-                    .get_ident()
-                    .filter(|ident| ident.to_string() == "prost")
-                    .is_some() =>
-            {
-                list
-            }
-            _ => return None,
-        };
+        if !attr.path().is_ident("prost") {
+            return None;
+        }
 
-        // Search all nested attributes and look for the "enumeration" attribute.
-        list.nested.iter().find_map(|nested| {
-            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
-                if nv.path.is_ident("enumeration") {
-                    if let syn::Lit::Str(s) = &nv.lit {
-                        return Some(s.value());
-                    }
-                }
+        // Search all nested attributes and look for the "enumeration" attribute, then getting its value.
+        let mut enumeration_value = None::<String>;
+        attr.parse_nested_meta(|meta|{
+            if !meta.path.is_ident("enumeration") {
+                return Ok(());
             }
-            None
-        })
+
+            let value = meta.value()?;
+            let s : syn::LitStr = value.parse()?;
+            enumeration_value = Some(s.value());
+            return Ok(());
+        }).unwrap_or_else(|e|{
+            // Do nothing if the error is "expected `,`"
+            if e.to_string() != "expected `,`".to_string() {
+                panic!("{}", e)
+            }
+        });
+
+        enumeration_value
     })
 }
 
 fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
     attrs.iter().any(|attr| {
-        // Parse the attribute's meta information.
-        let meta = match attr.parse_meta() {
-            Ok(meta) => meta,
-            Err(_) => return false,
-        };
+        let mut has_one_of = false;
 
         // Check if the attribute name is "prost".
-        let list = match meta {
-            syn::Meta::List(list)
-                if list
-                    .path
-                    .get_ident()
-                    .filter(|ident| ident.to_string() == "prost")
-                    .is_some() =>
-            {
-                list
-            }
-            _ => return false,
-        };
+        if !attr.path().is_ident("prost") {
+            return false;
+        }
 
         // Search all nested attributes and look for the "oneof" attribute.
-        list.nested.iter().any(|nested| {
-            if let syn::NestedMeta::Meta(syn::Meta::NameValue(nv)) = nested {
-                return nv.path.is_ident("oneof");
+        attr.parse_nested_meta(|meta|{
+            if meta.path.is_ident("oneof") {
+                has_one_of = true;
             }
-
-            false
-        })
+            Ok(())
+        }).unwrap_or_else(|e|{
+            // Do nothing if the error is "expected `,`"
+            if e.to_string() != "expected `,`".to_string() {
+                panic!("{}", e)
+            }
+        });
+        return has_one_of;
     })
 }

@@ -6,9 +6,10 @@ use std::ffi::OsStr;
 use std::fs::{create_dir_all, remove_dir_all};
 use std::path::{Path, PathBuf};
 use std::{fs, io};
-use syn::__private::ToTokens;
+use quote::ToTokens;
 use syn::{parse_quote, File, Item, ItemMod};
 use walkdir::WalkDir;
+use prettyplease;
 
 use crate::transformers;
 
