@@ -2,7 +2,7 @@ use itertools::Itertools;
 use proc_macro::TokenStream;
 use proc_macro2::TokenTree;
 use quote::quote;
-use syn::{parse_macro_input, DeriveInput};
+use syn::{parse_macro_input, punctuated::Punctuated, DeriveInput};
 
 macro_rules! match_kv_attr {
     ($key:expr, $value_type:tt) => {
@@ -127,25 +127,28 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
 }
 
 fn get_type_url(attrs: &Vec<syn::Attribute>) -> proc_macro2::TokenStream {
-    let proto_message = get_attr("proto_message", attrs).and_then(|a| a.parse_meta().ok());
+    let proto_message = get_attr("proto_message", attrs).and_then(|a| Some(a.meta.clone()));
 
     if let Some(syn::Meta::List(meta)) = proto_message.clone() {
-        match meta.nested[0].clone() {
-            syn::NestedMeta::Meta(syn::Meta::NameValue(meta)) => {
-                if meta.path.is_ident("type_url") {
-                    match meta.lit {
-                        syn::Lit::Str(s) => quote!(#s),
-                        _ => proto_message_attr_error(meta.lit),
-                    }
-                } else {
-                    proto_message_attr_error(meta.path)
+        let nested = meta
+            .parse_args_with(Punctuated::<syn::Meta, syn::Token![,]>::parse_terminated)
+            .unwrap();
+        if let syn::Meta::NameValue(meta) = nested[0].clone() {
+            if !meta.path.is_ident("type_url") {
+                return proto_message_attr_error(meta.value);
+            }
+
+            if let syn::Expr::Lit(expr_lit) = &meta.value {
+                if let syn::Lit::Str(lit_str) = &expr_lit.lit {
+                    return quote!(#lit_str);
                 }
             }
-            t => proto_message_attr_error(t),
+
+            return proto_message_attr_error(meta.value);
         }
-    } else {
-        proto_message_attr_error(proto_message)
     }
+
+    proto_message_attr_error(proto_message)
 }
 
 fn get_query_attrs<F>(attrs: &Vec<syn::Attribute>, f: F) -> proc_macro2::TokenStream
@@ -155,41 +158,35 @@ where
     let proto_query = get_attr("proto_query", attrs);
 
     if let Some(attr) = proto_query {
-        if attr.tokens.clone().into_iter().count() != 1 {
-            return proto_query_attr_error(proto_query);
-        }
+        let list = attr.meta.require_list().unwrap();
 
-        if let Some(TokenTree::Group(group)) = attr.tokens.clone().into_iter().next() {
-            let kv_groups = group.stream().into_iter().group_by(|t| {
-                if let TokenTree::Punct(punct) = t {
-                    punct.as_char() != ','
-                } else {
-                    true
-                }
-            });
-            let mut key_values: Vec<Vec<TokenTree>> = vec![];
-
-            for (non_sep, g) in &kv_groups {
-                if non_sep {
-                    key_values.push(g.collect());
-                }
+        let kv_groups = list.tokens.clone().into_iter().group_by(|t| {
+            if let TokenTree::Punct(punct) = t {
+                punct.as_char() != ','
+            } else {
+                true
             }
+        });
+        let mut key_values: Vec<Vec<TokenTree>> = vec![];
 
-            return key_values
-                .iter()
-                .find_map(f)
-                .unwrap_or_else(|| proto_query_attr_error(proto_query));
+        for (non_sep, g) in &kv_groups {
+            if non_sep {
+                key_values.push(g.collect());
+            }
         }
 
-        proto_query_attr_error(proto_query)
-    } else {
-        proto_query_attr_error(proto_query)
+        return key_values
+            .iter()
+            .find_map(f)
+            .unwrap_or_else(|| proto_query_attr_error(proto_query));
     }
+
+    proto_query_attr_error(proto_query)
 }
 
 fn get_attr<'a>(attr_ident: &str, attrs: &'a Vec<syn::Attribute>) -> Option<&'a syn::Attribute> {
     for attr in attrs {
-        if attr.path.segments.len() == 1 && attr.path.segments[0].ident == attr_ident {
+        if attr.path().segments.len() == 1 && attr.path().segments[0].ident == attr_ident {
             return Some(attr);
         }
     }
