@@ -8,7 +8,10 @@ use prost_types::{
     DescriptorProto, EnumDescriptorProto, FileDescriptorSet, ServiceDescriptorProto,
 };
 use regex::Regex;
-use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl, ItemStruct, Type, punctuated::Punctuated, Token, Meta};
+use syn::{
+    parse_quote, punctuated::Punctuated, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl,
+    ItemStruct, Meta, Token, Type,
+};
 
 use crate::{format_ident, quote};
 
@@ -455,10 +458,12 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
         }
 
         let list = attr.meta.require_list().unwrap();
-    
+
         // Search all nested attributes and look for the "enumeration" attribute, then getting its value.
-        let nested = list.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated).unwrap();
-        
+        let nested = list
+            .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
+            .unwrap();
+
         nested.iter().find_map(|meta| {
             if let syn::Meta::NameValue(nv) = meta {
                 if !nv.path.is_ident("enumeration") {
@@ -471,17 +476,9 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
                     }
                 }
             }
-            
+
             None
         })
-        .unwrap_or_else(|e| {
-            // Do nothing if the error is "expected `,`"
-            if e.to_string() != "expected `,`".to_string() {
-                panic!("{}", e)
-            }
-        });
-
-        enumeration_value
     })
 }
 
@@ -494,8 +491,10 @@ fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
         let list = attr.meta.require_list().unwrap();
 
         // Search all nested attributes and look for the "oneof" attribute.
-        let nested = list.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated).unwrap();
-        
+        let nested = list
+            .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
+            .unwrap();
+
         nested.iter().any(|meta| meta.path().is_ident("oneof"))
     })
 }
