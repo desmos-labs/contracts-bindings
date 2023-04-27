@@ -8,7 +8,7 @@ use prost_types::{
     DescriptorProto, EnumDescriptorProto, FileDescriptorSet, ServiceDescriptorProto,
 };
 use regex::Regex;
-use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl, ItemStruct, Type};
+use syn::{parse_quote, Attribute, Fields, Ident, Item, ItemEnum, ItemImpl, ItemStruct, Type, punctuated::Punctuated, Token, Meta};
 
 use crate::{format_ident, quote};
 
@@ -454,51 +454,40 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
             return None;
         }
 
+        let list = attr.meta.require_list().unwrap();
+    
         // Search all nested attributes and look for the "enumeration" attribute, then getting its value.
-        let mut enumeration_value = None::<String>;
-        attr.parse_nested_meta(|meta| {
-            if !meta.path.is_ident("enumeration") {
-                return Ok(());
+        let nested = list.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated).unwrap();
+        
+        nested.iter().find_map(|meta| {
+            if let syn::Meta::NameValue(nv) = meta {
+                if !nv.path.is_ident("enumeration") {
+                    return None;
+                }
+
+                if let syn::Expr::Lit(expr_lit) = &nv.value {
+                    if let syn::Lit::Str(lit_str) = &expr_lit.lit {
+                        return Some(lit_str.value());
+                    }
+                }
             }
-
-            let s: syn::LitStr = meta.value()?.parse()?;
-            enumeration_value = Some(s.value());
-
-            return Ok(());
+            
+            None
         })
-        .unwrap_or_else(|e| {
-            // Do nothing if the error is "expected `,`"
-            if e.to_string() != "expected `,`".to_string() {
-                panic!("{}", e)
-            }
-        });
-
-        enumeration_value
     })
 }
 
 fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
     attrs.iter().any(|attr| {
-        let mut has_one_of = false;
-
         // Check if the attribute name is "prost".
         if !attr.path().is_ident("prost") {
             return false;
         }
+        let list = attr.meta.require_list().unwrap();
 
         // Search all nested attributes and look for the "oneof" attribute.
-        attr.parse_nested_meta(|meta| {
-            if meta.path.is_ident("oneof") {
-                has_one_of = true;
-            }
-            Ok(())
-        })
-        .unwrap_or_else(|e| {
-            // Do nothing if the error is "expected `,`"
-            if e.to_string() != "expected `,`".to_string() {
-                panic!("{}", e)
-            }
-        });
-        return has_one_of;
+        let nested = list.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated).unwrap();
+        
+        nested.iter().any(|meta| meta.path().is_ident("oneof"))
     })
 }
