@@ -457,13 +457,13 @@ fn find_prost_enumeration_value(attrs: &[Attribute]) -> Option<String> {
             return None;
         }
 
+        // Parse all nested items inside the attribute
         let list = attr.meta.require_list().unwrap();
-
-        // Search all nested attributes and look for the "enumeration" attribute, then getting its value.
         let nested = list
             .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
             .unwrap();
 
+        // Search all nested items and look for the "enumeration" attribute, then getting its value.
         nested.iter().find_map(|meta| {
             if let syn::Meta::NameValue(nv) = meta {
                 if !nv.path.is_ident("enumeration") {
@@ -488,13 +488,14 @@ fn has_prost_one_of_attr(attrs: &[Attribute]) -> bool {
         if !attr.path().is_ident("prost") {
             return false;
         }
-        let list = attr.meta.require_list().unwrap();
 
-        // Search all nested attributes and look for the "oneof" attribute.
+        // Parse all nested items inside the attribute
+        let list = attr.meta.require_list().unwrap();
         let nested = list
             .parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)
             .unwrap();
 
+        // Search all nested items and look for the "oneof" attribute.
         nested.iter().any(|meta| meta.path().is_ident("oneof"))
     })
 }
