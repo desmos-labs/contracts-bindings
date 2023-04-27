@@ -1305,7 +1305,7 @@ dependencies = [
  "prost 0.11.8",
  "quote",
  "serde",
- "syn 1.0.109",
+ "syn 2.0.12",
  "trybuild",
 ]
 
