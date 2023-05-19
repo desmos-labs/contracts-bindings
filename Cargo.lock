@@ -919,9 +919,9 @@ dependencies = [
 
 [[package]]
 name = "prettyplease"
-version = "0.2.4"
+version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1ceca8aaf45b5c46ec7ed39fff75f57290368c1846d33d24a122ca81416ab058"
+checksum = "617feabb81566b593beb4886fb8c1f38064169dae4dccad0e3220160c3b37203"
 dependencies = [
  "proc-macro2",
  "syn 2.0.16",
@@ -1021,7 +1021,7 @@ dependencies = [
  "itertools",
  "log",
  "pretty_env_logger",
- "prettyplease 0.2.4",
+ "prettyplease 0.2.5",
  "proc-macro2",
  "prost 0.11.9",
  "prost-build",
