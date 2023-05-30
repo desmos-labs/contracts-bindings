@@ -460,7 +460,7 @@ pub struct MsgRemoveReason {
 pub struct MsgRemoveReasonResponse {}
 /// MsgUpdateParams is the Msg/UpdateParams request type.
 ///
-/// Since: desmos 5.0.0
+/// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -487,7 +487,7 @@ pub struct MsgUpdateParams {
 /// MsgUpdateParamsResponse defines the response structure for executing a
 /// MsgUpdateParams message.
 ///
-/// Since: desmos 5.0.0
+/// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
