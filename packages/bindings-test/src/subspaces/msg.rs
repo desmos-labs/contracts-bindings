@@ -3,10 +3,10 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER2_ADDRESS};
     use chrono::DateTime;
-    use cosmwasm_std::{Addr, Coin, Uint64};
+    use cosmwasm_std::{Addr, Coin};
     use desmos_bindings::subspaces::msg::SubspacesMsg;
     use desmos_bindings::subspaces::types::{Allowance, Grantee, Permission, UserGrantee};
-    use desmos_bindings::types::{AuthzGrant, BasicAllowance};
+    use desmos_bindings::types::{AuthzGrant, BasicAllowance, GenericAuthorization};
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
@@ -283,6 +283,7 @@ mod tests {
     pub fn test_grant_revoke_treasury_authorization() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
+        let subspace_id = TEST_SUBSPACE;
 
         let grant_treasury_authorization = SubspacesMsg::grant_treasury_authorization(
             subspace_id.into(),
@@ -327,6 +328,7 @@ mod tests {
     pub fn test_grant_revoke_allowance() {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
+        let subspace_id = TEST_SUBSPACE;
 
         let grant_allowance = SubspacesMsg::grant_allowance(
             subspace_id.into(),
@@ -335,7 +337,7 @@ mod tests {
                 user: USER2_ADDRESS.into(),
             }),
             Allowance::BasicAllowance(BasicAllowance {
-                spend_limit: vec![Coin:new(1000, "stake")],
+                spend_limit: vec![Coin::new(1000, "stake").into()],
                 expiration: Some(
                     DateTime::from(
                         DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
