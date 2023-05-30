@@ -90,6 +90,7 @@ pub fn run() {
             "crypto/multisig".to_string(),
             "tx/signing".to_string(),
             "upgrade/v1beta1/upgrade.proto".to_string(),
+            "feegrant/v1beta1/feegrant.proto".to_string(),
         ],
     };
 

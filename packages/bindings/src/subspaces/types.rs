@@ -2,6 +2,10 @@
 
 pub use desmos_std::proto::desmos::subspaces::v3::*;
 
+use crate::types::{BasicAllowance, PeriodicAllowance, AllowedMsgAllowance};
+
+use crate::types::Any;
+
 /// Represents the permission to perform operations inside the subspace.
 pub enum Permission {
     /// Allows to change the information of the subspace.
@@ -59,6 +63,48 @@ impl Into<String> for Permission {
             Permission::EditOwnContent => "EDIT_OWN_CONTENT".into(),
 
             Permission::ModerateContent => "MODERATE_CONTENT".into(),
+        }
+    }
+}
+
+
+/// Represents a generic grantee.
+#[derive(Clone)]
+pub enum Grantee {
+    /// Represents a user grantee.
+    UserGrantee(UserGrantee),
+
+    /// Represents a group grantee.
+    GroupGrantee(GroupGrantee),
+}
+
+impl Into<Any> for Grantee {
+    fn into(self) -> Any {
+        match self {
+            Grantee::UserGrantee(grantee) => grantee.into(),
+            Grantee::GroupGrantee(grantee) => grantee.into(),
+        }
+    }
+}
+
+/// Represents a generic fee allowance.
+pub enum Allowance {
+    /// Represents a basic allowance
+    BasicAllowance(BasicAllowance),
+
+    /// Represents a periodic allowance
+    PeriodicAllowance(PeriodicAllowance),
+
+    /// Represents a msg allowance
+    AllowedMsgAllowance(AllowedMsgAllowance),
+}
+
+impl Into<Any> for Allowance {
+    fn into(self) -> Any {
+        match self {
+            Allowance::BasicAllowance(allowance) => allowance.into(),
+            Allowance::PeriodicAllowance(allowance) => allowance.into(),
+            Allowance::AllowedMsgAllowance(allowance) => allowance.into(),
         }
     }
 }

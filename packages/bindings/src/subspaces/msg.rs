@@ -2,6 +2,7 @@
 
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::*;
+use crate::types::AuthzGrant;
 use cosmwasm_std::Addr;
 
 /// SubspacesMsg is the builder to generate Desmos x/subspaces messages.
@@ -12,9 +13,6 @@ impl SubspacesMsg {
     ///
     /// * `name` - Subspace name.
     /// * `description` - Subspace description.
-    /// * `treasury` - Treasury address.
-    /// Represents the address that will pay for the fees
-    /// needed to performs application links.
     /// * `owner` - Address of who will be the subspace owner.
     /// * `creator` - Address of who wants to create the subspace.
     pub fn create_subspace(
@@ -36,7 +34,6 @@ impl SubspacesMsg {
     /// * `subspace_id` - Id of the subspace to edit.
     /// * `name` - New subspace name.
     /// * `description` - New subspace description.
-    /// * `treasury` - New subspace treasury.
     /// * `owner` - Address of who will be the subspace owner.
     /// * `signer` - Address of who wants edit the subspace.
     pub fn edit_subspace(
@@ -311,11 +308,91 @@ impl SubspacesMsg {
             signer: signer.into(),
         }
     }
+
+    /// Creates a new instance of [`MsgGrantTreasuryAuthorization`].
+    ///
+    /// * `subspace_id` - Id of the subspace where the authorization should be granted.
+    /// * `granter` - Address of the user granting a treasury authorization.
+    /// * `grantee` - Address of the user who is being granted a treasury authorization.
+    /// * `grant` - Grant represents the authorization to execute the provided methods.
+    pub fn grant_treasury_authorization(
+        subspace_id: u64,
+        granter: Addr,
+        grantee: Addr,
+        grant: AuthzGrant,
+    ) -> MsgGrantTreasuryAuthorization {
+        MsgGrantTreasuryAuthorization { 
+            subspace_id, 
+            granter: granter.into(), 
+            grantee: grantee.into(),
+            grant: Some(grant), 
+        }
+    }
+
+    /// Creates a new instance of [`MsgRevokeTreasuryAuthorization`].
+    /// 
+    /// * `subspace_id` - Id of the subspace from which the authorization should be revoked.
+    /// * `granter` - Address of the user revoking the treasury authorization.
+    /// * `grantee` - Address of the user who is being revoked the treasury authorization.
+    /// * `msg_type_url` - Type url of the authorized message which is being revoked.
+    pub fn revoke_treasury_authorization(
+        subspace_id: u64,
+        granter: Addr,
+        grantee: Addr,
+        msg_type_url: &str,
+    ) -> MsgRevokeTreasuryAuthorization {
+        MsgRevokeTreasuryAuthorization {
+            subspace_id,
+            granter: granter.into(),
+            grantee: grantee.into(),
+            msg_type_url: msg_type_url.into()
+        }
+    }
+
+    /// Creates a new instance of [`MsgGrantAllowance`].
+    /// 
+    /// * `subspace_id` - Id of the subspace inside which where the allowance should be granted.
+    /// * `granter` - Address of the user granting the allowance.
+    /// * `grantee` - Target being granted the allowance.
+    /// * `allowance` - Allowance to be granted to the grantee.
+    pub fn grant_allowance(
+        subspace_id: u64,
+        granter: Addr,
+        grantee: Grantee,
+        allowance: Allowance,
+    ) -> MsgGrantAllowance {
+        MsgGrantAllowance {
+            subspace_id,
+            granter: granter.into(),
+            grantee: Some(grantee.into()),
+            allowance: Some(allowance.into()),
+        }
+    }
+
+    /// Creates a new instance of [`MsgRevokeAllowance`].
+    /// 
+    /// * `subspace_id` - Id of the subspace inside which the allowance to be deleted is.
+    /// * `granter` - Address of the user being revoking the allowance.
+    /// * `grantee` - Target being revoked the allowance.
+    pub fn revoke_allowance(
+        subspace_id: u64,
+        granter: Addr,
+        grantee: Grantee,
+    ) -> MsgRevokeAllowance {
+        MsgRevokeAllowance {
+            subspace_id,
+            granter: granter.into(),
+            grantee: Some(grantee.into()),
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use chrono::DateTime;
+    use crate::types::Timestamp;
+    use crate::types::{GenericAuthorization, BasicAllowance};
 
     #[test]
     fn test_create_subspace() {
@@ -575,6 +652,109 @@ mod tests {
             user: "user".into(),
             permissions: vec![],
             signer: "signer".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+
+    #[test]
+    fn test_grant_treasury_authorization() {
+        let msg = SubspacesMsg::grant_treasury_authorization(
+            1,
+            Addr::unchecked("granter"),
+            Addr::unchecked("grantee"),
+            AuthzGrant{
+                authorization: Some(GenericAuthorization{
+                    msg: "test.v1beta1.MsgTest".into(),
+                }.into()),
+                expiration: Some(Timestamp::from(DateTime::from(
+                    DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                ))),
+            },
+        );
+
+        let expected = MsgGrantTreasuryAuthorization {
+            subspace_id: 1,
+            granter: "granter".into(),
+            grantee: "grantee".into(),
+            grant: Some(AuthzGrant{
+                authorization: Some(GenericAuthorization{
+                    msg: "test.v1beta1.MsgTest".into(),
+                }.into()),
+                expiration: Some(Timestamp::from(DateTime::from(
+                    DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                ))),
+            }),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_revoke_treasury_authorization() {
+        let msg = SubspacesMsg::revoke_treasury_authorization(
+            1,
+            Addr::unchecked("granter"),
+            Addr::unchecked("grantee"),
+            "test.v1beta1.MsgTest",
+        );
+
+        let expected = MsgRevokeTreasuryAuthorization {
+            subspace_id: 1,
+            granter: "granter".into(),
+            grantee: "grantee".into(),
+            msg_type_url: "test.v1beta1.MsgTest".into()
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_grant_allowance() {
+        let msg = SubspacesMsg::grant_allowance(
+            1,
+            Addr::unchecked("granter"),
+            Grantee::UserGrantee(UserGrantee{
+                user: "grantee".into(),
+            }),
+            Allowance::BasicAllowance(BasicAllowance{
+                spend_limit: [].into(),
+                expiration: None,
+            }),
+        );
+
+        let expected = MsgGrantAllowance {
+            subspace_id: 1,
+            granter: "granter".into(),
+            grantee: Some(UserGrantee{
+                user: "grantee".into(),
+            }.into()),
+            allowance: Some(Allowance::BasicAllowance(BasicAllowance{
+                spend_limit: [].into(),
+                expiration: None,
+            }).into()),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_revoke_allowance() {
+        let msg = SubspacesMsg::revoke_allowance(
+            1,
+            Addr::unchecked("granter"),
+            Grantee::UserGrantee(UserGrantee{
+                user: "grantee".into(),
+            }),
+        );
+
+        let expected = MsgRevokeAllowance {
+            subspace_id: 1,
+            granter: "granter".into(),
+            grantee: Some(UserGrantee{
+                user: "grantee".into(),
+            }.into()),
         };
 
         assert_eq!(expected, msg)
