@@ -7,8 +7,9 @@ use crate::subspaces::types::{
     QuerySubspacesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
     QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
+use crate::types::Timestamp;
+
 use chrono::DateTime;
-use desmos_std::shim::Timestamp;
 
 /// Represents the mock subspace owner for unit test.
 pub const MOCK_SUBSPACE_OWNER: &str = "owner";

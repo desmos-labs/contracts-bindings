@@ -2,7 +2,7 @@
 
 pub use desmos_std::proto::desmos::subspaces::v3::*;
 
-use crate::types::{BasicAllowance, PeriodicAllowance, AllowedMsgAllowance};
+use crate::types::{AllowedMsgAllowance, BasicAllowance, PeriodicAllowance};
 
 use crate::types::Any;
 
@@ -66,7 +66,6 @@ impl Into<String> for Permission {
         }
     }
 }
-
 
 /// Represents a generic grantee.
 #[derive(Clone)]

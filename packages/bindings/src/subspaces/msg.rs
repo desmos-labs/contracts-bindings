@@ -321,16 +321,16 @@ impl SubspacesMsg {
         grantee: Addr,
         grant: AuthzGrant,
     ) -> MsgGrantTreasuryAuthorization {
-        MsgGrantTreasuryAuthorization { 
-            subspace_id, 
-            granter: granter.into(), 
+        MsgGrantTreasuryAuthorization {
+            subspace_id,
+            granter: granter.into(),
             grantee: grantee.into(),
-            grant: Some(grant), 
+            grant: Some(grant),
         }
     }
 
     /// Creates a new instance of [`MsgRevokeTreasuryAuthorization`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace from which the authorization should be revoked.
     /// * `granter` - Address of the user revoking the treasury authorization.
     /// * `grantee` - Address of the user who is being revoked the treasury authorization.
@@ -345,12 +345,12 @@ impl SubspacesMsg {
             subspace_id,
             granter: granter.into(),
             grantee: grantee.into(),
-            msg_type_url: msg_type_url.into()
+            msg_type_url: msg_type_url.into(),
         }
     }
 
     /// Creates a new instance of [`MsgGrantAllowance`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace inside which where the allowance should be granted.
     /// * `granter` - Address of the user granting the allowance.
     /// * `grantee` - Target being granted the allowance.
@@ -370,7 +370,7 @@ impl SubspacesMsg {
     }
 
     /// Creates a new instance of [`MsgRevokeAllowance`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace inside which the allowance to be deleted is.
     /// * `granter` - Address of the user being revoking the allowance.
     /// * `grantee` - Target being revoked the allowance.
@@ -390,9 +390,9 @@ impl SubspacesMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::DateTime;
     use crate::types::Timestamp;
-    use crate::types::{GenericAuthorization, BasicAllowance};
+    use crate::types::{BasicAllowance, GenericAuthorization};
+    use chrono::DateTime;
 
     #[test]
     fn test_create_subspace() {
@@ -657,17 +657,19 @@ mod tests {
         assert_eq!(expected, msg)
     }
 
-
     #[test]
     fn test_grant_treasury_authorization() {
         let msg = SubspacesMsg::grant_treasury_authorization(
             1,
             Addr::unchecked("granter"),
             Addr::unchecked("grantee"),
-            AuthzGrant{
-                authorization: Some(GenericAuthorization{
-                    msg: "test.v1beta1.MsgTest".into(),
-                }.into()),
+            AuthzGrant {
+                authorization: Some(
+                    GenericAuthorization {
+                        msg: "test.v1beta1.MsgTest".into(),
+                    }
+                    .into(),
+                ),
                 expiration: Some(Timestamp::from(DateTime::from(
                     DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
                 ))),
@@ -678,10 +680,13 @@ mod tests {
             subspace_id: 1,
             granter: "granter".into(),
             grantee: "grantee".into(),
-            grant: Some(AuthzGrant{
-                authorization: Some(GenericAuthorization{
-                    msg: "test.v1beta1.MsgTest".into(),
-                }.into()),
+            grant: Some(AuthzGrant {
+                authorization: Some(
+                    GenericAuthorization {
+                        msg: "test.v1beta1.MsgTest".into(),
+                    }
+                    .into(),
+                ),
                 expiration: Some(Timestamp::from(DateTime::from(
                     DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
                 ))),
@@ -704,7 +709,7 @@ mod tests {
             subspace_id: 1,
             granter: "granter".into(),
             grantee: "grantee".into(),
-            msg_type_url: "test.v1beta1.MsgTest".into()
+            msg_type_url: "test.v1beta1.MsgTest".into(),
         };
 
         assert_eq!(expected, msg)
@@ -715,10 +720,10 @@ mod tests {
         let msg = SubspacesMsg::grant_allowance(
             1,
             Addr::unchecked("granter"),
-            Grantee::UserGrantee(UserGrantee{
+            Grantee::UserGrantee(UserGrantee {
                 user: "grantee".into(),
             }),
-            Allowance::BasicAllowance(BasicAllowance{
+            Allowance::BasicAllowance(BasicAllowance {
                 spend_limit: [].into(),
                 expiration: None,
             }),
@@ -727,13 +732,19 @@ mod tests {
         let expected = MsgGrantAllowance {
             subspace_id: 1,
             granter: "granter".into(),
-            grantee: Some(UserGrantee{
-                user: "grantee".into(),
-            }.into()),
-            allowance: Some(Allowance::BasicAllowance(BasicAllowance{
-                spend_limit: [].into(),
-                expiration: None,
-            }).into()),
+            grantee: Some(
+                UserGrantee {
+                    user: "grantee".into(),
+                }
+                .into(),
+            ),
+            allowance: Some(
+                Allowance::BasicAllowance(BasicAllowance {
+                    spend_limit: [].into(),
+                    expiration: None,
+                })
+                .into(),
+            ),
         };
 
         assert_eq!(expected, msg)
@@ -744,7 +755,7 @@ mod tests {
         let msg = SubspacesMsg::revoke_allowance(
             1,
             Addr::unchecked("granter"),
-            Grantee::UserGrantee(UserGrantee{
+            Grantee::UserGrantee(UserGrantee {
                 user: "grantee".into(),
             }),
         );
@@ -752,9 +763,12 @@ mod tests {
         let expected = MsgRevokeAllowance {
             subspace_id: 1,
             granter: "granter".into(),
-            grantee: Some(UserGrantee{
-                user: "grantee".into(),
-            }.into()),
+            grantee: Some(
+                UserGrantee {
+                    user: "grantee".into(),
+                }
+                .into(),
+            ),
         };
 
         assert_eq!(expected, msg)
