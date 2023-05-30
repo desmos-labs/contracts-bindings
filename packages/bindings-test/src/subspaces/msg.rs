@@ -354,10 +354,7 @@ mod tests {
         );
 
         let msg = DesmosMessages {
-            msgs: vec![
-                grant_allowance.into(),
-                revoke_allowance.into(),
-            ],
+            msgs: vec![grant_allowance.into(), revoke_allowance.into()],
         };
 
         desmos_cli
