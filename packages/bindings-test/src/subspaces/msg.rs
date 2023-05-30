@@ -328,7 +328,7 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
-        let grant_treasury_authorization = SubspacesMsg::grant_allowance(
+        let grant_allowance = SubspacesMsg::grant_allowance(
             subspace_id.into(),
             Addr::unchecked(&contract_address),
             Grantee::UserGrantee(UserGrantee {
@@ -345,16 +345,18 @@ mod tests {
             }),
         );
 
-        let revoke_treasury_authorization = SubspacesMsg::revoke_allowance(
+        let revoke_allowance = SubspacesMsg::revoke_allowance(
             subspace_id.into(),
             Addr::unchecked(&contract_address),
-            Addr::unchecked(USER2_ADDRESS),
+            Grantee::UserGrantee(UserGrantee {
+                user: USER2_ADDRESS.into(),
+            }),
         );
 
         let msg = DesmosMessages {
             msgs: vec![
-                grant_treasury_authorization.into(),
-                revoke_treasury_authorization.into(),
+                grant_allowance.into(),
+                revoke_allowance.into(),
             ],
         };
 
