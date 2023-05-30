@@ -1359,7 +1359,7 @@ pub struct MsgUnlinkApplication {
 pub struct MsgUnlinkApplicationResponse {}
 /// MsgUpdateParams is the Msg/UpdateParams request type.
 ///
-/// Since: desmos 5.0.0
+/// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -1373,7 +1373,8 @@ pub struct MsgUnlinkApplicationResponse {}
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUpdateParams")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgUpdateParams {
-    /// authority is the address that controls the module (defaults to x/gov unless overwritten).
+    /// authority is the address that controls the module (defaults to x/gov unless
+    /// overwritten).
     #[prost(string, tag = "1")]
     pub authority: ::prost::alloc::string::String,
     /// params defines the parameters to update.
@@ -1385,7 +1386,7 @@ pub struct MsgUpdateParams {
 /// MsgUpdateParamsResponse defines the response structure for executing a
 /// MsgUpdateParams message.
 ///
-/// Since: desmos 5.0.0
+/// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,

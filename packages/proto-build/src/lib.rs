@@ -22,7 +22,7 @@ const DESMOS_REPO_URL: &str = "https://github.com/desmos-labs/desmos.git";
 const COSMOS_SDK_DIR: &str = "../../dependencies/cosmos-sdk/";
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.47.1-desmos";
+const COSMOS_SDK_REV: &str = "v0.47.2-desmos";
 
 /// URL where the Cosmos SDK repository is located
 const COSMOS_SDK_REPO_URL: &str = "https://github.com/desmos-labs/cosmos-sdk.git";
@@ -31,7 +31,7 @@ const COSMOS_SDK_REPO_URL: &str = "https://github.com/desmos-labs/cosmos-sdk.git
 const IBC_DIR: &str = "../../dependencies/ibc/";
 
 /// The IBC commit or tag to be cloned and used to build the proto files
-const IBC_REV: &str = "v7.0.0";
+const IBC_REV: &str = "v7.0.1";
 
 /// URL where the IBC repository is located
 const IBC_REPO_URL: &str = "https://github.com/cosmos/ibc-go.git";
@@ -67,12 +67,12 @@ pub fn run() {
         version: DESMOS_REV.into(),
         project_dir: DESMOS_DIR.into(),
         include_mods: vec![
-            "profiles".to_string(),
-            "relationships".to_string(),
-            "subspaces".to_string(),
-            "posts".to_string(),
-            "reactions".to_string(),
-            "reports".to_string(),
+            "profiles/v3".to_string(),
+            "relationships/v1".to_string(),
+            "subspaces/v3".to_string(),
+            "posts/v3".to_string(),
+            "reactions/v1".to_string(),
+            "reports/v1".to_string(),
         ],
     };
 
