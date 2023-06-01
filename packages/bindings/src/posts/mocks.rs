@@ -1,12 +1,12 @@
 //! Contains useful mocks of the Desmos x/posts module's types made to be used in any test.
 
+use crate::cosmos_types::Timestamp;
 use crate::posts::types::AttachmentContent;
 use crate::posts::types::{
     Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
     UserAnswer,
 };
-use crate::cosmos_types::Timestamp;
 
 use chrono::DateTime;
 use cosmwasm_std::Addr;

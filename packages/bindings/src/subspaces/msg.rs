@@ -1,8 +1,8 @@
 //! Contains the messages that can be sent to the chain to interact with the x/subspaces module.
 
+use crate::cosmos_types::{Allowance, AuthzGrant};
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::*;
-use crate::cosmos_types::{Allowance, AuthzGrant};
 use cosmwasm_std::Addr;
 
 /// SubspacesMsg is the builder to generate Desmos x/subspaces messages.

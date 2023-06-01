@@ -1,7 +1,7 @@
 //! Contains the querier that can be used to query data related to the x/posts module.
 
-use crate::posts::types::*;
 use crate::cosmos_types::PageRequest;
+use crate::posts::types::*;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {

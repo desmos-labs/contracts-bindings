@@ -3,6 +3,7 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
     use cosmwasm_std::Coin;
+    use desmos_bindings::cosmos_types::{Allowance, BasicAllowance};
     use desmos_bindings::subspaces::types::{
         permission_detail, Grant, Grantee, Permission, PermissionDetail,
     };
@@ -14,7 +15,6 @@ mod tests {
         QueryUserGroupsRequest, QueryUserGroupsResponse, QueryUserPermissionsRequest,
         QueryUserPermissionsResponse,
     };
-    use desmos_bindings::types::{Allowance, BasicAllowance};
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
