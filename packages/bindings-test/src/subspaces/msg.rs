@@ -2,9 +2,11 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER2_ADDRESS};
-    use cosmwasm_std::{Addr, Uint64};
+    use chrono::DateTime;
+    use cosmwasm_std::{Addr, Coin};
     use desmos_bindings::subspaces::msg::SubspacesMsg;
-    use desmos_bindings::subspaces::types::Permission;
+    use desmos_bindings::subspaces::types::{Grantee, Permission, UserGrantee};
+    use desmos_bindings::types::{Allowance, AuthzGrant, BasicAllowance, GenericAuthorization};
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 
@@ -270,6 +272,91 @@ mod tests {
 
         let msg = DesmosMessages {
             msgs: vec![set_user_permissions.into()],
+        };
+
+        desmos_cli
+            .wasm_execute(&contract_address, &msg)
+            .assert_success();
+    }
+
+    #[test]
+    pub fn test_grant_revoke_treasury_authorization() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+        let subspace_id = TEST_SUBSPACE;
+
+        let grant_treasury_authorization = SubspacesMsg::grant_treasury_authorization(
+            subspace_id.into(),
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER2_ADDRESS),
+            AuthzGrant {
+                authorization: Some(
+                    GenericAuthorization {
+                        msg: "test.v1beta1.MsgTest".into(),
+                    }
+                    .into(),
+                ),
+                expiration: Some(
+                    DateTime::from(
+                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                    )
+                    .into(),
+                ),
+            },
+        );
+
+        let revoke_treasury_authorization = SubspacesMsg::revoke_treasury_authorization(
+            subspace_id.into(),
+            Addr::unchecked(&contract_address),
+            Addr::unchecked(USER2_ADDRESS),
+            "test.v1beta1.MsgTest",
+        );
+
+        let msg = DesmosMessages {
+            msgs: vec![
+                grant_treasury_authorization.into(),
+                revoke_treasury_authorization.into(),
+            ],
+        };
+
+        desmos_cli
+            .wasm_execute(&contract_address, &msg)
+            .assert_success();
+    }
+
+    #[test]
+    pub fn test_grant_revoke_allowance() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+        let subspace_id = TEST_SUBSPACE;
+
+        let grant_allowance = SubspacesMsg::grant_allowance(
+            subspace_id.into(),
+            Addr::unchecked(&contract_address),
+            Grantee::UserGrantee(UserGrantee {
+                user: USER2_ADDRESS.into(),
+            }),
+            Allowance::BasicAllowance(BasicAllowance {
+                spend_limit: vec![Coin::new(1000, "stake").into()],
+                expiration: Some(
+                    DateTime::from(
+                        DateTime::parse_from_rfc3339("2140-01-01T10:00:20.021Z").unwrap(),
+                    )
+                    .into(),
+                ),
+            }),
+        );
+
+        let revoke_allowance = SubspacesMsg::revoke_allowance(
+            subspace_id.into(),
+            Addr::unchecked(&contract_address),
+            Grantee::UserGrantee(UserGrantee {
+                user: USER2_ADDRESS.into(),
+            }),
+        );
+
+        let msg = DesmosMessages {
+            msgs: vec![grant_allowance.into(), revoke_allowance.into()],
         };
 
         desmos_cli

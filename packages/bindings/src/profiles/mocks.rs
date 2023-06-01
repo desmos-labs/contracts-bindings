@@ -12,11 +12,10 @@ use crate::profiles::types::{
     QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
     QueryProfileResponse, Result as AppResult, SignatureValueType, SingleSignature,
 };
-use crate::types::secp256k1;
+use crate::types::{secp256k1, Timestamp};
 
 use chrono::DateTime;
 use cosmwasm_std::Binary;
-use desmos_std::shim::Timestamp;
 
 /// Represents the mock dtag for unit test.
 pub const MOCK_DTAG: &str = "dtag";

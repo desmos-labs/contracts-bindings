@@ -4,8 +4,9 @@ use crate::reports::types::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
     Report, UserTarget,
 };
+use crate::types::Timestamp;
+
 use chrono::DateTime;
-use desmos_std::shim::Timestamp;
 
 /// Represents the mock reporter for unit test.
 pub const MOCK_REPORTER: &str = "reporter";

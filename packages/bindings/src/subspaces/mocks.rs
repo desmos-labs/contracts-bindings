@@ -3,12 +3,13 @@
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::{
     permission_detail::{Sum, User},
-    PermissionDetail, QuerySectionResponse, QuerySectionsResponse, QuerySubspaceResponse,
-    QuerySubspacesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
+    Grant, Grantee, PermissionDetail, QueryGroupAllowancesResponse, QuerySectionResponse,
+    QuerySectionsResponse, QuerySubspaceResponse, QuerySubspacesResponse,
+    QueryUserAllowancesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
     QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
+use crate::types::{Allowance, BasicAllowance, Timestamp};
 use chrono::DateTime;
-use desmos_std::shim::Timestamp;
 
 /// Represents the mock subspace owner for unit test.
 pub const MOCK_SUBSPACE_OWNER: &str = "owner";
@@ -21,6 +22,15 @@ pub const MOCK_SUBSPACE_CREATOR: &str = "creator";
 
 /// Represents the mock permissioned user in the subspace for unit test.
 pub const MOCK_PERMISSIONED_USER: &str = "permissioned_user";
+
+/// Represents the mock allowance granter in the subspace for unit test.
+pub const MOCK_ALLOWANCE_GRANTER: &str = "granter";
+
+/// Represents the mock allowance user grantee in the subspace for unit test.
+pub const MOCK_ALLOWANCE_USER_GRANTEE: &str = "grantee";
+
+/// Represents the mock allowance group grantee in the subspace for unit test.
+pub const MOCK_ALLOWANCE_GROUP_GRANTEE: u32 = 1;
 
 /// Struct that contains some utility methods to mock data of the Desmos
 /// x/subspaces module.
@@ -135,6 +145,44 @@ impl MockSubspacesQueries {
         QueryUserPermissionsResponse {
             permissions: vec![Permission::EditSubspace.into()],
             details: vec![Self::get_mocked_permission_detail(1, 0)],
+        }
+    }
+
+    /// Gets a mocked instance of [`QueryUserAllowancesResponse`]
+    pub fn get_mocked_user_allowances_response() -> QueryUserAllowancesResponse {
+        QueryUserAllowancesResponse {
+            grants: vec![Grant {
+                subspace_id: 1,
+                granter: MOCK_ALLOWANCE_GRANTER.into(),
+                grantee: Some(Grantee::user_grantee(MOCK_ALLOWANCE_USER_GRANTEE).into()),
+                allowance: Some(
+                    Allowance::BasicAllowance(BasicAllowance {
+                        spend_limit: [].into(),
+                        expiration: None,
+                    })
+                    .into(),
+                ),
+            }],
+            pagination: None,
+        }
+    }
+
+    /// Gets a mocked instance of [`QueryGroupAllowancesResponse`]
+    pub fn get_mocked_group_allowances_response() -> QueryGroupAllowancesResponse {
+        QueryGroupAllowancesResponse {
+            grants: vec![Grant {
+                subspace_id: 1,
+                granter: MOCK_ALLOWANCE_GRANTER.into(),
+                grantee: Some(Grantee::group_grantee(MOCK_ALLOWANCE_GROUP_GRANTEE).into()),
+                allowance: Some(
+                    Allowance::BasicAllowance(BasicAllowance {
+                        spend_limit: [].into(),
+                        expiration: None,
+                    })
+                    .into(),
+                ),
+            }],
+            pagination: None,
         }
     }
 }

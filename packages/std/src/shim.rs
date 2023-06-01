@@ -270,6 +270,12 @@ expand_as_any!(
     crate::proto::cosmos::crypto::ed25519::PubKey,
     crate::proto::cosmos::crypto::secp256k1::PubKey,
     crate::proto::cosmos::crypto::secp256r1::PubKey,
+    // authz module
+    crate::proto::cosmos::authz::v1beta1::GenericAuthorization,
+    // feegrant module
+    crate::proto::cosmos::feegrant::v1beta1::BasicAllowance,
+    crate::proto::cosmos::feegrant::v1beta1::PeriodicAllowance,
+    crate::proto::cosmos::feegrant::v1beta1::AllowedMsgAllowance,
     // profiles module
     crate::proto::desmos::profiles::v3::Profile,
     crate::proto::desmos::profiles::v3::Bech32Address,
@@ -286,6 +292,10 @@ expand_as_any!(
     // reports module
     crate::proto::desmos::reports::v1::UserTarget,
     crate::proto::desmos::reports::v1::PostTarget,
+    // subspaces module
+    crate::proto::desmos::subspaces::v3::UserGrantee,
+    crate::proto::desmos::subspaces::v3::GroupGrantee,
+    crate::proto::desmos::subspaces::v3::authz::GenericSubspaceAuthorization,
 );
 
 macro_rules! impl_prost_types_exact_conversion {

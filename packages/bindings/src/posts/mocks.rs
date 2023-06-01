@@ -6,9 +6,10 @@ use crate::posts::types::{
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
     UserAnswer,
 };
+use crate::types::Timestamp;
+
 use chrono::DateTime;
 use cosmwasm_std::Addr;
-use desmos_std::shim::Timestamp;
 
 /// Represents the mock author of the post for unit test.
 pub const MOCK_AUTHOR: &str = "author";
