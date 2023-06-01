@@ -3,13 +3,13 @@
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::{
     permission_detail::{Sum, User},
-    Allowance, Grant, GroupGrantee, PermissionDetail, QueryGroupAllowancesResponse,
-    QuerySectionResponse, QuerySectionsResponse, QuerySubspaceResponse, QuerySubspacesResponse,
+    Grant, GroupGrantee, PermissionDetail, QueryGroupAllowancesResponse, QuerySectionResponse,
+    QuerySectionsResponse, QuerySubspaceResponse, QuerySubspacesResponse,
     QueryUserAllowancesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
     QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGrantee,
     UserGroup,
 };
-use crate::types::{BasicAllowance, Timestamp};
+use crate::types::{Allowance, BasicAllowance, Timestamp};
 use chrono::DateTime;
 
 /// Represents the mock subspace owner for unit test.

@@ -2,8 +2,6 @@
 
 pub use desmos_std::proto::desmos::subspaces::v3::*;
 
-use crate::types::{AllowedMsgAllowance, BasicAllowance, PeriodicAllowance};
-
 use crate::types::Any;
 
 /// Represents the permission to perform operations inside the subspace.
@@ -82,28 +80,6 @@ impl Into<Any> for Grantee {
         match self {
             Grantee::UserGrantee(grantee) => grantee.into(),
             Grantee::GroupGrantee(grantee) => grantee.into(),
-        }
-    }
-}
-
-/// Represents a generic fee allowance.
-pub enum Allowance {
-    /// Represents a basic allowance
-    BasicAllowance(BasicAllowance),
-
-    /// Represents a periodic allowance
-    PeriodicAllowance(PeriodicAllowance),
-
-    /// Represents a msg allowance
-    AllowedMsgAllowance(AllowedMsgAllowance),
-}
-
-impl Into<Any> for Allowance {
-    fn into(self) -> Any {
-        match self {
-            Allowance::BasicAllowance(allowance) => allowance.into(),
-            Allowance::PeriodicAllowance(allowance) => allowance.into(),
-            Allowance::AllowedMsgAllowance(allowance) => allowance.into(),
         }
     }
 }

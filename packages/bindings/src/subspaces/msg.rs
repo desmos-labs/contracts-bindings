@@ -2,7 +2,7 @@
 
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::*;
-use crate::types::AuthzGrant;
+use crate::types::{Allowance, AuthzGrant};
 use cosmwasm_std::Addr;
 
 /// SubspacesMsg is the builder to generate Desmos x/subspaces messages.

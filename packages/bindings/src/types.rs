@@ -8,3 +8,25 @@ pub use desmos_std::proto::cosmos::feegrant::v1beta1::{
 };
 pub use desmos_std::proto::ibc::core::client::v1::Height;
 pub use desmos_std::shim::{Any, Timestamp};
+
+/// Represents a generic fee allowance.
+pub enum Allowance {
+    /// Represents a basic allowance
+    BasicAllowance(BasicAllowance),
+
+    /// Represents a periodic allowance
+    PeriodicAllowance(PeriodicAllowance),
+
+    /// Represents a msg allowance
+    AllowedMsgAllowance(AllowedMsgAllowance),
+}
+
+impl Into<Any> for Allowance {
+    fn into(self) -> Any {
+        match self {
+            Allowance::BasicAllowance(allowance) => allowance.into(),
+            Allowance::PeriodicAllowance(allowance) => allowance.into(),
+            Allowance::AllowedMsgAllowance(allowance) => allowance.into(),
+        }
+    }
+}
