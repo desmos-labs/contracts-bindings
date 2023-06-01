@@ -255,7 +255,8 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     {
         use crate::subspaces::mocks::MockSubspacesQueries;
         use crate::subspaces::types::{
-            QuerySectionRequest, QuerySectionsRequest, QuerySubspaceRequest, QuerySubspacesRequest,
+            QueryGroupAllowancesRequest, QuerySectionRequest, QuerySectionsRequest,
+            QuerySubspaceRequest, QuerySubspacesRequest, QueryUserAllowancesRequest,
             QueryUserGroupMembersRequest, QueryUserGroupRequest, QueryUserGroupsRequest,
             QueryUserPermissionsRequest,
         };
@@ -298,6 +299,16 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
         QueryUserPermissionsRequest::mock_response(
             querier,
             MockSubspacesQueries::get_mocked_user_permissions_response(),
+        );
+
+        QueryUserAllowancesRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_user_allowances_response(),
+        );
+
+        QueryGroupAllowancesRequest::mock_response(
+            querier,
+            MockSubspacesQueries::get_mocked_group_allowances_response(),
         );
     }
 }

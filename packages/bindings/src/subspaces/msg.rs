@@ -393,6 +393,7 @@ mod tests {
     use crate::types::Timestamp;
     use crate::types::{BasicAllowance, GenericAuthorization};
     use chrono::DateTime;
+    use cosmwasm_std::Coin;
 
     #[test]
     fn test_create_subspace() {
@@ -724,7 +725,7 @@ mod tests {
                 user: "grantee".into(),
             }),
             Allowance::BasicAllowance(BasicAllowance {
-                spend_limit: [].into(),
+                spend_limit: vec![Coin::new(100, "stake").into()],
                 expiration: None,
             }),
         );
@@ -740,7 +741,7 @@ mod tests {
             ),
             allowance: Some(
                 Allowance::BasicAllowance(BasicAllowance {
-                    spend_limit: [].into(),
+                    spend_limit: vec![Coin::new(100, "stake").into()],
                     expiration: None,
                 })
                 .into(),
