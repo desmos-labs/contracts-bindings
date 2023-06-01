@@ -7,11 +7,12 @@ mod tests {
         permission_detail, Grant, Grantee, Permission, PermissionDetail,
     };
     use desmos_bindings::subspaces::types::{
-        QuerySubspaceRequest, QuerySubspaceResponse, QuerySubspacesRequest, QuerySubspacesResponse,
+        QueryGroupAllowancesRequest, QueryGroupAllowancesResponse, QuerySubspaceRequest,
+        QuerySubspaceResponse, QuerySubspacesRequest, QuerySubspacesResponse,
         QueryUserAllowancesRequest, QueryUserAllowancesResponse, QueryUserGroupMembersRequest,
         QueryUserGroupMembersResponse, QueryUserGroupRequest, QueryUserGroupResponse,
         QueryUserGroupsRequest, QueryUserGroupsResponse, QueryUserPermissionsRequest,
-        QueryUserPermissionsResponse, QueryGroupAllowancesRequest, QueryGroupAllowancesResponse,
+        QueryUserPermissionsResponse,
     };
     use desmos_bindings::types::{Allowance, BasicAllowance};
     use test_contract::msg::QueryMsg::DesmosChain;
