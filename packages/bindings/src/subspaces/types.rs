@@ -75,6 +75,18 @@ pub enum Grantee {
     GroupGrantee(GroupGrantee),
 }
 
+impl Grantee {
+    /// Creates a new [`Grantee::UserGrantee`] instance
+    pub fn user_grantee(user: impl Into<String>) -> Self {
+        Self::UserGrantee(UserGrantee { user: user.into() })
+    }
+
+    /// Creates a new [`Grantee::GroupGrantee`] instance
+    pub fn group_grantee(group_id: u32) -> Self {
+        Self::GroupGrantee(GroupGrantee { group_id })
+    }
+}
+
 impl Into<Any> for Grantee {
     fn into(self) -> Any {
         match self {

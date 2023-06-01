@@ -3,11 +3,10 @@
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::{
     permission_detail::{Sum, User},
-    Grant, GroupGrantee, PermissionDetail, QueryGroupAllowancesResponse, QuerySectionResponse,
+    Grant, Grantee, PermissionDetail, QueryGroupAllowancesResponse, QuerySectionResponse,
     QuerySectionsResponse, QuerySubspaceResponse, QuerySubspacesResponse,
     QueryUserAllowancesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
-    QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGrantee,
-    UserGroup,
+    QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
 use crate::types::{Allowance, BasicAllowance, Timestamp};
 use chrono::DateTime;
@@ -155,12 +154,7 @@ impl MockSubspacesQueries {
             grants: vec![Grant {
                 subspace_id: 1,
                 granter: MOCK_ALLOWANCE_GRANTER.into(),
-                grantee: Some(
-                    UserGrantee {
-                        user: MOCK_ALLOWANCE_USER_GRANTEE.into(),
-                    }
-                    .into(),
-                ),
+                grantee: Some(Grantee::user_grantee(MOCK_ALLOWANCE_USER_GRANTEE).into()),
                 allowance: Some(
                     Allowance::BasicAllowance(BasicAllowance {
                         spend_limit: [].into(),
@@ -179,12 +173,7 @@ impl MockSubspacesQueries {
             grants: vec![Grant {
                 subspace_id: 1,
                 granter: MOCK_ALLOWANCE_GRANTER.into(),
-                grantee: Some(
-                    GroupGrantee {
-                        group_id: MOCK_ALLOWANCE_GROUP_GRANTEE,
-                    }
-                    .into(),
-                ),
+                grantee: Some(Grantee::group_grantee(MOCK_ALLOWANCE_GROUP_GRANTEE).into()),
                 allowance: Some(
                     Allowance::BasicAllowance(BasicAllowance {
                         spend_limit: [].into(),
