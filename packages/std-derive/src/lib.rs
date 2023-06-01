@@ -119,6 +119,7 @@ pub fn derive_cosmwasm_ext(input: TokenStream) -> TokenStream {
                             binary.to_vec(),
                             e
                         ),
+                        backtrace: std::backtrace::Backtrace::capture(),
                     }
                 })
             }
