@@ -4,7 +4,7 @@ use chrono::DateTime;
 
 use cosmwasm_std::{Addr, Coin};
 
-use desmos_bindings::types::{Allowance, BasicAllowance};
+use desmos_bindings::cosmos_types::{Allowance, BasicAllowance};
 
 use desmos_bindings::posts::{
     msg::PostsMsg,

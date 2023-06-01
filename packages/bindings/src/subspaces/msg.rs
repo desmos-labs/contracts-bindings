@@ -2,7 +2,7 @@
 
 use crate::subspaces::types::Permission;
 use crate::subspaces::types::*;
-use crate::types::{Allowance, AuthzGrant};
+use crate::cosmos_types::{Allowance, AuthzGrant};
 use cosmwasm_std::Addr;
 
 /// SubspacesMsg is the builder to generate Desmos x/subspaces messages.
@@ -390,8 +390,8 @@ impl SubspacesMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::Timestamp;
-    use crate::types::{BasicAllowance, GenericAuthorization};
+    use crate::cosmos_types::Timestamp;
+    use crate::cosmos_types::{BasicAllowance, GenericAuthorization};
     use chrono::DateTime;
     use cosmwasm_std::Coin;
 

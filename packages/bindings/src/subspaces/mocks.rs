@@ -8,7 +8,7 @@ use crate::subspaces::types::{
     QueryUserAllowancesResponse, QueryUserGroupMembersResponse, QueryUserGroupResponse,
     QueryUserGroupsResponse, QueryUserPermissionsResponse, Section, Subspace, UserGroup,
 };
-use crate::types::{Allowance, BasicAllowance, Timestamp};
+use crate::cosmos_types::{Allowance, BasicAllowance, Timestamp};
 use chrono::DateTime;
 
 /// Represents the mock subspace owner for unit test.

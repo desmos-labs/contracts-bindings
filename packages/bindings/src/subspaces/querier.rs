@@ -1,7 +1,7 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
 use crate::subspaces::types::*;
-use crate::types::PageRequest;
+use crate::cosmos_types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {

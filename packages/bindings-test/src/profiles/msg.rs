@@ -7,7 +7,7 @@ mod tests {
     use desmos_bindings::profiles::types::{
         AddressData, Bech32Address, ChainConfig, Proof, SignatureValueType, SingleSignature,
     };
-    use desmos_bindings::types::secp256k1;
+    use desmos_bindings::cosmos_types::secp256k1;
     use test_contract::msg::ExecuteMsg;
 
     fn build_save_profile_msg(contract_address: &str) -> ExecuteMsg {

@@ -2,7 +2,7 @@
 
 pub use desmos_std::proto::desmos::reactions::v1::*;
 
-use crate::types::Any;
+use crate::cosmos_types::Any;
 
 /// Represents a generic reaction value.
 pub enum ReactionValue {

@@ -4,7 +4,7 @@ use crate::reports::types::{
     QueryReasonResponse, QueryReasonsResponse, QueryReportResponse, QueryReportsResponse, Reason,
     Report, UserTarget,
 };
-use crate::types::Timestamp;
+use crate::cosmos_types::Timestamp;
 
 use chrono::DateTime;
 

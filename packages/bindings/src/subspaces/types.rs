@@ -2,7 +2,7 @@
 
 pub use desmos_std::proto::desmos::subspaces::v3::*;
 
-use crate::types::Any;
+use crate::cosmos_types::Any;
 
 /// Represents the permission to perform operations inside the subspace.
 pub enum Permission {

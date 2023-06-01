@@ -28,4 +28,4 @@ pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
 
-pub mod types;
+pub mod cosmos_types;

@@ -2,7 +2,7 @@
 
 use crate::reports::types::ReportTarget;
 use crate::reports::types::*;
-use crate::types::PageRequest;
+use crate::cosmos_types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {

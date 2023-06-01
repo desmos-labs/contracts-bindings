@@ -6,7 +6,7 @@ use crate::posts::types::{
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
     UserAnswer,
 };
-use crate::types::Timestamp;
+use crate::cosmos_types::Timestamp;
 
 use chrono::DateTime;
 use cosmwasm_std::Addr;

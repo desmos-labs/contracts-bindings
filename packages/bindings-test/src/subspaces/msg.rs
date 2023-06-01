@@ -6,7 +6,7 @@ mod tests {
     use cosmwasm_std::{Addr, Coin};
     use desmos_bindings::subspaces::msg::SubspacesMsg;
     use desmos_bindings::subspaces::types::{Grantee, Permission, UserGrantee};
-    use desmos_bindings::types::{Allowance, AuthzGrant, BasicAllowance, GenericAuthorization};
+    use desmos_bindings::cosmos_types::{Allowance, AuthzGrant, BasicAllowance, GenericAuthorization};
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 

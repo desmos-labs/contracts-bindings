@@ -12,7 +12,7 @@ use crate::profiles::types::{
     QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
     QueryProfileResponse, Result as AppResult, SignatureValueType, SingleSignature,
 };
-use crate::types::{secp256k1, Timestamp};
+use crate::cosmos_types::{secp256k1, Timestamp};
 
 use chrono::DateTime;
 use cosmwasm_std::Binary;
