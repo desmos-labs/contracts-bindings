@@ -5,8 +5,8 @@ mod tests {
     use chrono::DateTime;
     use cosmwasm_std::{Addr, Coin};
     use desmos_bindings::subspaces::msg::SubspacesMsg;
-    use desmos_bindings::subspaces::types::{Allowance, Grantee, Permission, UserGrantee};
-    use desmos_bindings::types::{AuthzGrant, BasicAllowance, GenericAuthorization};
+    use desmos_bindings::subspaces::types::{Grantee, Permission, UserGrantee};
+    use desmos_bindings::types::{Allowance, AuthzGrant, BasicAllowance, GenericAuthorization};
     use test_contract::msg::ExecuteMsg;
     use test_contract::msg::ExecuteMsg::DesmosMessages;
 

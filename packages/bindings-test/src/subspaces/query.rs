@@ -2,14 +2,18 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS};
-    use desmos_bindings::subspaces::types::{permission_detail, Permission, PermissionDetail};
+    use cosmwasm_std::Coin;
+    use desmos_bindings::subspaces::types::{
+        permission_detail, Grant, Grantee, Permission, PermissionDetail,
+    };
     use desmos_bindings::subspaces::types::{
         QuerySubspaceRequest, QuerySubspaceResponse, QuerySubspacesRequest, QuerySubspacesResponse,
         QueryUserAllowancesRequest, QueryUserAllowancesResponse, QueryUserGroupMembersRequest,
         QueryUserGroupMembersResponse, QueryUserGroupRequest, QueryUserGroupResponse,
         QueryUserGroupsRequest, QueryUserGroupsResponse, QueryUserPermissionsRequest,
-        QueryUserPermissionsResponse,
+        QueryUserPermissionsResponse, QueryGroupAllowancesRequest, QueryGroupAllowancesResponse,
     };
+    use desmos_bindings::types::{Allowance, BasicAllowance};
     use test_contract::msg::QueryMsg::DesmosChain;
 
     #[test]
@@ -218,58 +222,20 @@ mod tests {
 
         let grants = response.grants;
 
-        // Should be only the user1 grant
-        assert_eq!(1, grants.len());
-        assert_eq!(
-            &Grant {
-                subspace_id: TEST_SUBSPACE,
-                granter: contract.into(),
-                grantee: Some(Grantee::user_grantee(USER1_ADDRESS).into()),
-                allowance: Some(Allowance::BasicAllowance(
-                    BasicAllowance {
-                        spend_limit: vec![Coin::new(1000, "stake").into()],
-                        expiration: None,
-                    }
-                    .into()
-                )),
-            },
-            grants.first().unwrap()
-        )
-    }
-
-    #[test]
-    fn test_query_user_allowances() {
-        let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
-
-        let query = DesmosChain {
-            request: QueryUserAllowancesRequest {
-                subspace_id: TEST_SUBSPACE,
-                grantee: USER1_ADDRESS.into(),
-                pagination: None,
-            }
-            .into(),
-        };
-
-        let response: QueryUserAllowancesResponse =
-            desmos_cli.wasm_query(&contract_address, &query).to_object();
-
-        let grants = response.grants;
-
         // Should be only the user group 1 grant
         assert_eq!(1, grants.len());
         assert_eq!(
             &Grant {
                 subspace_id: TEST_SUBSPACE,
-                granter: contract.into(),
+                granter: contract_address.into(),
                 grantee: Some(Grantee::user_grantee(USER1_ADDRESS).into()),
-                allowance: Some(Allowance::BasicAllowance(
-                    BasicAllowance {
+                allowance: Some(
+                    Allowance::BasicAllowance(BasicAllowance {
                         spend_limit: vec![Coin::new(1000, "stake").into()],
                         expiration: None,
-                    }
+                    })
                     .into()
-                )),
+                ),
             },
             grants.first().unwrap()
         )
@@ -299,15 +265,15 @@ mod tests {
         assert_eq!(
             &Grant {
                 subspace_id: TEST_SUBSPACE,
-                granter: contract.into(),
+                granter: contract_address.into(),
                 grantee: Some(Grantee::group_grantee(TEST_SUBSPACE_USER_GROUP).into()),
-                allowance: Some(Allowance::BasicAllowance(
-                    BasicAllowance {
+                allowance: Some(
+                    Allowance::BasicAllowance(BasicAllowance {
                         spend_limit: vec![Coin::new(1000, "stake").into()],
                         expiration: None,
-                    }
+                    })
                     .into()
-                )),
+                ),
             },
             grants.first().unwrap()
         )
