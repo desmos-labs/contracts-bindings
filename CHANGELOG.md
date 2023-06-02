@@ -1,8 +1,25 @@
 # Changelog
 
+## Version 2.0.0
+### Breaking changes
+With this version, all the methods now are base on stargate feature. For this reason, the following changes have been made:
+- `DepsMut<DesmosQuery>` and `Deps<DesmosQuery>` have to be replaced into `DepMut<Empty>` and `Deps<Empty>`
+- `Response<DesmosMsg>` has to be replaced into `Response<Empty>`
+- all the modules message builders have to be replace to the new version builders, i.e., `ProfilesMsg`, `PostsMsg` and etc.
+- all the modules queriers have to be replace to the new version queriers, i.e., `ProfilesQuerier`, `PostsQuerier` and etc.
+- `mock_apps` library has to be removed since cw_multi_test does not support stargate feature
+
+### Features
+- ([\#116](https://github.com/desmos-labs/desmos-bindings/pull/116)) Added stargate support
+- ([\#116](https://github.com/desmos-labs/desmos-bindings/pull/116)) Updated subspace from v2 to v3
+- ([\#213](https://github.com/desmos-labs/desmos-bindings/pull/213)) Added subspace v3 new methods: `MsgGrantTreasuryAuthorization`, `MsgGrantAllowance`, `MsgRevokeAllowance`, `QueryUserAllowances` and `QueryGroupAllowances`.
+
+### Dependencies
+- ([\#194](https://github.com/desmos-labs/desmos-bindings/pull/119)) Bumped cosmwasm-std to 1.2.5
+
 ## Version 1.2.1
 ### Features
-- ([\#110](https://github.com/desmos-labs/desmos-bindings.git/pull/110)) Removed msg,query and mocks features
+- ([\#110](https://github.com/desmos-labs/desmos-bindings/pull/110)) Removed msg,query and mocks features
 
 ### Dependencies
 - ([\#119](https://github.com/desmos-labs/desmos-bindings/pull/119)) Bumped cosmwasm-std to 1.1.9

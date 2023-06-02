@@ -1,6 +1,6 @@
 [package]
 name = "desmos-bindings"
-version = "1.2.1"
+version = "2.0.0"
 authors = [
     "Leonardo Bragagnolo <leonardo@forbole.com>",
     "Paul Chen <paul@forbole.com>",
@@ -24,7 +24,6 @@ all-features = true
 chrono = {version = "0.4.24", default-features = false}
 cosmwasm-std = { version = "1.2.5", features = ["stargate"]}
 cosmwasm-schema = "1.2.5"
-anyhow = "1.0.71"
 serde = { version = "1.0.163", default-features = false, features = ["derive"] }
 thiserror = "1.0.40"
 std-derive = { version = "0.1.0", path = "../std-derive" }
