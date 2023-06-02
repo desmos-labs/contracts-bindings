@@ -5,8 +5,8 @@ use crate::iter::page_iterator::{Page, PageIterator};
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
+use crate::cosmos_types::PageRequest;
 use crate::profiles::types::*;
-use crate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier allows to query data from the Desmos x/profiles module.

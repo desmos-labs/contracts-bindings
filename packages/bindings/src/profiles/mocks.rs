@@ -1,5 +1,6 @@
 //! Contains useful mocks of the Desmos x/profiles module's types made to be used in any test.
 
+use crate::cosmos_types::{secp256k1, Timestamp};
 use crate::profiles::types::{
     oracle_request::CallData,
     query_application_link_owners_response::ApplicationLinkOwnerDetails,
@@ -12,7 +13,6 @@ use crate::profiles::types::{
     QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
     QueryProfileResponse, Result as AppResult, SignatureValueType, SingleSignature,
 };
-use crate::types::{secp256k1, Timestamp};
 
 use chrono::DateTime;
 use cosmwasm_std::Binary;

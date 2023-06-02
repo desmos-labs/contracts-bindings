@@ -153,7 +153,7 @@ impl PostsMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::Timestamp;
+    use crate::cosmos_types::Timestamp;
     use chrono::DateTime;
 
     #[test]

@@ -1,8 +1,8 @@
 //! Contains the messages that can be sent to the Desmos blockchain to interact with the x/profiles module.
 
+use crate::cosmos_types::Height;
 use crate::profiles::types::AddressData;
 use crate::profiles::types::*;
-use crate::types::Height;
 use cosmwasm_std::Addr;
 
 /// ProfilesMsg is the builder to generate Desmos x/profiles messages.
@@ -210,7 +210,7 @@ impl ProfilesMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::secp256k1;
+    use crate::cosmos_types::secp256k1;
     use cosmwasm_std::Binary;
 
     #[test]
