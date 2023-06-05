@@ -1,7 +1,0 @@
-type: feat
-module: none
-pull_request: 213
-description: 'Add subspace v3 new methods: `MsgGrantTreasuryAuthorization`, `MsgGrantAllowance`
-  and `MsgRevokeAllowance``'
-backward_compatible: true
-date: 2023-05-30T12:42:45.003172948Z
