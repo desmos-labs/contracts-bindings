@@ -1,6 +1,6 @@
 //! Contains the types definitions of x/reports.
 
-use crate::types::Any;
+use crate::cosmos_types::Any;
 
 pub use desmos_std::proto::desmos::reports::v1::*;
 

@@ -2,7 +2,7 @@
 
 pub use desmos_std::proto::desmos::profiles::v3::*;
 
-use crate::types::Any;
+use crate::cosmos_types::Any;
 
 /// Represents a generic address data.
 #[derive(Clone)]

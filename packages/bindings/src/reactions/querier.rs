@@ -8,8 +8,8 @@ use crate::{
 #[cfg(feature = "iterators")]
 use cosmwasm_std::Binary;
 
+use crate::cosmos_types::PageRequest;
 use crate::reactions::types::*;
-use crate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 
 /// Querier allows to query data from the Desmos x/reactions module.
