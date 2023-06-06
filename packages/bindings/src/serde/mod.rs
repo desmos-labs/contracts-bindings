@@ -23,8 +23,8 @@ pub mod as_str {
 
 pub mod as_base64 {
     use base64;
+    use base64::{engine::general_purpose, Engine as _};
     use serde::{Deserialize, Deserializer, Serialize, Serializer};
-    use base64::{Engine as _, engine::general_purpose};
 
     pub fn serialize<S: Serializer>(v: &Vec<u8>, s: S) -> Result<S::Ok, S::Error> {
         let base64_value = general_purpose::STANDARD.encode(v);
@@ -37,6 +37,8 @@ pub mod as_base64 {
     {
         let opt = Option::<String>::deserialize(deserializer)?;
         let base64_value = opt.unwrap_or_default();
-        general_purpose::STANDARD.decode(base64_value.as_bytes()).map_err(serde::de::Error::custom)
+        general_purpose::STANDARD
+            .decode(base64_value.as_bytes())
+            .map_err(serde::de::Error::custom)
     }
 }
