@@ -8,7 +8,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.Relationship")]
 #[serde(rename_all = "snake_case")]
@@ -38,7 +38,7 @@ pub struct Relationship {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.UserBlock")]
 #[serde(rename_all = "snake_case")]
@@ -70,7 +70,7 @@ pub struct UserBlock {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -90,7 +90,7 @@ pub struct GenesisState {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationship")]
 #[serde(rename_all = "snake_case")]
@@ -119,7 +119,7 @@ pub struct MsgCreateRelationship {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationshipResponse")]
 #[serde(rename_all = "snake_case")]
@@ -134,7 +134,7 @@ pub struct MsgCreateRelationshipResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationship")]
 #[serde(rename_all = "snake_case")]
@@ -163,7 +163,7 @@ pub struct MsgDeleteRelationship {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationshipResponse")]
 #[serde(rename_all = "snake_case")]
@@ -178,7 +178,7 @@ pub struct MsgDeleteRelationshipResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUser")]
 #[serde(rename_all = "snake_case")]
@@ -209,7 +209,7 @@ pub struct MsgBlockUser {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUserResponse")]
 #[serde(rename_all = "snake_case")]
@@ -223,7 +223,7 @@ pub struct MsgBlockUserResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUser")]
 #[serde(rename_all = "snake_case")]
@@ -251,7 +251,7 @@ pub struct MsgUnblockUser {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUserResponse")]
 #[serde(rename_all = "snake_case")]
@@ -266,7 +266,7 @@ pub struct MsgUnblockUserResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -304,7 +304,7 @@ pub struct QueryRelationshipsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -325,7 +325,7 @@ pub struct QueryRelationshipsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksRequest")]
 #[serde(rename_all = "snake_case")]
@@ -363,7 +363,7 @@ pub struct QueryBlocksRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksResponse")]
 #[serde(rename_all = "snake_case")]

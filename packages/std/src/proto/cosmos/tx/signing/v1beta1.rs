@@ -7,7 +7,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptors")]
 #[serde(rename_all = "snake_case")]
@@ -28,7 +28,7 @@ pub struct SignatureDescriptors {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor")]
 #[serde(rename_all = "snake_case")]
@@ -59,7 +59,7 @@ pub mod signature_descriptor {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data")]
     #[serde(rename_all = "snake_case")]
@@ -80,7 +80,7 @@ pub mod signature_descriptor {
             schemars::JsonSchema,
             serde::Serialize,
             serde::Deserialize,
-            std_derive::CosmwasmExt,
+            desmos_std_derive::CosmwasmExt,
         )]
         #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single")]
         #[serde(rename_all = "snake_case")]
@@ -109,7 +109,7 @@ pub mod signature_descriptor {
             schemars::JsonSchema,
             serde::Serialize,
             serde::Deserialize,
-            std_derive::CosmwasmExt,
+            desmos_std_derive::CosmwasmExt,
         )]
         #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi")]
         #[serde(rename_all = "snake_case")]

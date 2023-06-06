@@ -8,7 +8,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.client.SetReactionsParamsJSON")]
 #[serde(rename_all = "snake_case")]

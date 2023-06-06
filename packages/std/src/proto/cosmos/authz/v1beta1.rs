@@ -8,7 +8,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GenericAuthorization")]
 #[serde(rename_all = "snake_case")]
@@ -27,7 +27,7 @@ pub struct GenericAuthorization {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.Grant")]
 #[serde(rename_all = "snake_case")]
@@ -50,7 +50,7 @@ pub struct Grant {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GrantAuthorization")]
 #[serde(rename_all = "snake_case")]
@@ -73,7 +73,7 @@ pub struct GrantAuthorization {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GrantQueueItem")]
 #[serde(rename_all = "snake_case")]

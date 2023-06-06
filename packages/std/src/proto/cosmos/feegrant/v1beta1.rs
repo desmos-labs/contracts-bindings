@@ -8,7 +8,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.BasicAllowance")]
 #[serde(rename_all = "snake_case")]
@@ -32,7 +32,7 @@ pub struct BasicAllowance {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.PeriodicAllowance")]
 #[serde(rename_all = "snake_case")]
@@ -66,7 +66,7 @@ pub struct PeriodicAllowance {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.AllowedMsgAllowance")]
 #[serde(rename_all = "snake_case")]
@@ -87,7 +87,7 @@ pub struct AllowedMsgAllowance {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.Grant")]
 #[serde(rename_all = "snake_case")]

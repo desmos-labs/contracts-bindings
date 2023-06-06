@@ -10,7 +10,7 @@ pub mod v1beta1;
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.LegacyAminoPubKey")]
 #[serde(rename_all = "snake_case")]

@@ -7,7 +7,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Post")]
 #[serde(rename_all = "snake_case")]
@@ -77,7 +77,7 @@ pub struct Post {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PostReference")]
 #[serde(rename_all = "snake_case")]
@@ -114,7 +114,7 @@ pub struct PostReference {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Entities")]
 #[serde(rename_all = "snake_case")]
@@ -138,7 +138,7 @@ pub struct Entities {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.TextTag")]
 #[serde(rename_all = "snake_case")]
@@ -170,7 +170,7 @@ pub struct TextTag {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Url")]
 #[serde(rename_all = "snake_case")]
@@ -205,7 +205,7 @@ pub struct Url {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Attachment")]
 #[serde(rename_all = "snake_case")]
@@ -241,7 +241,7 @@ pub struct Attachment {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Media")]
 #[serde(rename_all = "snake_case")]
@@ -260,7 +260,7 @@ pub struct Media {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Poll")]
 #[serde(rename_all = "snake_case")]
@@ -295,7 +295,7 @@ pub mod poll {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v3.Poll.ProvidedAnswer")]
     #[serde(rename_all = "snake_case")]
@@ -317,7 +317,7 @@ pub mod poll {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.UserAnswer")]
 #[serde(rename_all = "snake_case")]
@@ -355,7 +355,7 @@ pub struct UserAnswer {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PollTallyResults")]
 #[serde(rename_all = "snake_case")]
@@ -374,7 +374,7 @@ pub mod poll_tally_results {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v3.PollTallyResults.AnswerResult")]
     #[serde(rename_all = "snake_case")]
@@ -400,7 +400,7 @@ pub mod poll_tally_results {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Params")]
 #[serde(rename_all = "snake_case")]
@@ -542,7 +542,7 @@ impl ReplySetting {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -571,7 +571,7 @@ pub struct GenesisState {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -598,7 +598,7 @@ pub struct SubspaceDataEntry {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PostDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -627,7 +627,7 @@ pub struct PostDataEntry {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.ActivePollData")]
 #[serde(rename_all = "snake_case")]
@@ -658,7 +658,7 @@ pub struct ActivePollData {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgCreatePost")]
 #[serde(rename_all = "snake_case")]
@@ -718,7 +718,7 @@ pub struct MsgCreatePost {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgCreatePostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -743,7 +743,7 @@ pub struct MsgCreatePostResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgEditPost")]
 #[serde(rename_all = "snake_case")]
@@ -787,7 +787,7 @@ pub struct MsgEditPost {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgEditPostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -805,7 +805,7 @@ pub struct MsgEditPostResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgDeletePost")]
 #[serde(rename_all = "snake_case")]
@@ -837,7 +837,7 @@ pub struct MsgDeletePost {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgDeletePostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -852,7 +852,7 @@ pub struct MsgDeletePostResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAddPostAttachment")]
 #[serde(rename_all = "snake_case")]
@@ -887,7 +887,7 @@ pub struct MsgAddPostAttachment {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAddPostAttachmentResponse")]
 #[serde(rename_all = "snake_case")]
@@ -909,7 +909,7 @@ pub struct MsgAddPostAttachmentResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgRemovePostAttachment")]
 #[serde(rename_all = "snake_case")]
@@ -945,7 +945,7 @@ pub struct MsgRemovePostAttachment {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgRemovePostAttachmentResponse")]
 #[serde(rename_all = "snake_case")]
@@ -963,7 +963,7 @@ pub struct MsgRemovePostAttachmentResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPoll")]
 #[serde(rename_all = "snake_case")]
@@ -1001,7 +1001,7 @@ pub struct MsgAnswerPoll {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPollResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1017,7 +1017,7 @@ pub struct MsgAnswerPollResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgUpdateParams")]
 #[serde(rename_all = "snake_case")]
@@ -1044,7 +1044,7 @@ pub struct MsgUpdateParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgUpdateParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1059,7 +1059,7 @@ pub struct MsgUpdateParamsResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1090,7 +1090,7 @@ pub struct QuerySubspacePostsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1111,7 +1111,7 @@ pub struct QuerySubspacePostsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1145,7 +1145,7 @@ pub struct QuerySectionPostsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1165,7 +1165,7 @@ pub struct QuerySectionPostsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1195,7 +1195,7 @@ pub struct QueryPostRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1213,7 +1213,7 @@ pub struct QueryPostResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1251,7 +1251,7 @@ pub struct QueryPostAttachmentsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1272,7 +1272,7 @@ pub struct QueryPostAttachmentsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1316,7 +1316,7 @@ pub struct QueryPollAnswersRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1336,7 +1336,7 @@ pub struct QueryPollAnswersResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryParamsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1354,7 +1354,7 @@ pub struct QueryParamsRequest {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryParamsResponse")]
 #[serde(rename_all = "snake_case")]

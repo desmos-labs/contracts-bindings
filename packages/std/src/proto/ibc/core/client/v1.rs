@@ -8,7 +8,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.IdentifiedClientState")]
 #[serde(rename_all = "snake_case")]
@@ -30,7 +30,7 @@ pub struct IdentifiedClientState {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ConsensusStateWithHeight")]
 #[serde(rename_all = "snake_case")]
@@ -52,7 +52,7 @@ pub struct ConsensusStateWithHeight {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientConsensusStates")]
 #[serde(rename_all = "snake_case")]
@@ -76,7 +76,7 @@ pub struct ClientConsensusStates {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientUpdateProposal")]
 #[serde(rename_all = "snake_case")]
@@ -105,7 +105,7 @@ pub struct ClientUpdateProposal {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.UpgradeProposal")]
 #[serde(rename_all = "snake_case")]
@@ -143,7 +143,7 @@ pub struct UpgradeProposal {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Height")]
 #[serde(rename_all = "snake_case")]
@@ -172,7 +172,7 @@ pub struct Height {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Params")]
 #[serde(rename_all = "snake_case")]

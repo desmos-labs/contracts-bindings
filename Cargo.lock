@@ -427,14 +427,20 @@ dependencies = [
  "cosmwasm-schema",
  "cosmwasm-std",
  "cw-multi-test",
+ "desmos-mock",
  "desmos-std",
- "mock",
  "prost 0.11.9",
  "prost-types",
  "serde",
  "serde-cw-value",
- "std-derive",
  "thiserror",
+]
+
+[[package]]
+name = "desmos-mock"
+version = "0.1.0"
+dependencies = [
+ "cosmwasm-std",
 ]
 
 [[package]]
@@ -444,14 +450,29 @@ dependencies = [
  "base64 0.21.0",
  "chrono",
  "cosmwasm-std",
- "mock",
+ "desmos-mock",
+ "desmos-std-derive",
  "prost 0.11.9",
  "prost-types",
  "schemars",
  "serde",
  "serde-cw-value",
- "std-derive",
  "strum_macros",
+]
+
+[[package]]
+name = "desmos-std-derive"
+version = "0.1.0"
+dependencies = [
+ "cosmwasm-std",
+ "desmos-mock",
+ "itertools",
+ "proc-macro2",
+ "prost 0.11.9",
+ "quote",
+ "serde",
+ "syn 2.0.16",
+ "trybuild",
 ]
 
 [[package]]
@@ -843,13 +864,6 @@ name = "memchr"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
-
-[[package]]
-name = "mock"
-version = "0.1.0"
-dependencies = [
- "cosmwasm-std",
-]
 
 [[package]]
 name = "multimap"
@@ -1312,21 +1326,6 @@ name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
-
-[[package]]
-name = "std-derive"
-version = "0.1.0"
-dependencies = [
- "cosmwasm-std",
- "itertools",
- "mock",
- "proc-macro2",
- "prost 0.11.9",
- "quote",
- "serde",
- "syn 2.0.16",
- "trybuild",
-]
 
 [[package]]
 name = "strum_macros"

@@ -8,7 +8,7 @@ pub mod client;
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.Reaction")]
 #[serde(rename_all = "snake_case")]
@@ -47,7 +47,7 @@ pub struct Reaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReactionValue")]
 #[serde(rename_all = "snake_case")]
@@ -66,7 +66,7 @@ pub struct RegisteredReactionValue {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.FreeTextValue")]
 #[serde(rename_all = "snake_case")]
@@ -84,7 +84,7 @@ pub struct FreeTextValue {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -116,7 +116,7 @@ pub struct RegisteredReaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.SubspaceReactionsParams")]
 #[serde(rename_all = "snake_case")]
@@ -144,7 +144,7 @@ pub struct SubspaceReactionsParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.FreeTextValueParams")]
 #[serde(rename_all = "snake_case")]
@@ -170,7 +170,7 @@ pub struct FreeTextValueParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReactionValueParams")]
 #[serde(rename_all = "snake_case")]
@@ -188,7 +188,7 @@ pub struct RegisteredReactionValueParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -213,7 +213,7 @@ pub struct GenesisState {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -236,7 +236,7 @@ pub struct SubspaceDataEntry {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.PostDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -265,7 +265,7 @@ pub struct PostDataEntry {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddReaction")]
 #[serde(rename_all = "snake_case")]
@@ -300,7 +300,7 @@ pub struct MsgAddReaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -319,7 +319,7 @@ pub struct MsgAddReactionResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveReaction")]
 #[serde(rename_all = "snake_case")]
@@ -354,7 +354,7 @@ pub struct MsgRemoveReaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -369,7 +369,7 @@ pub struct MsgRemoveReactionResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddRegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -401,7 +401,7 @@ pub struct MsgAddRegisteredReaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -420,7 +420,7 @@ pub struct MsgAddRegisteredReactionResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgEditRegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -455,7 +455,7 @@ pub struct MsgEditRegisteredReaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgEditRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -470,7 +470,7 @@ pub struct MsgEditRegisteredReactionResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveRegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -499,7 +499,7 @@ pub struct MsgRemoveRegisteredReaction {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -514,7 +514,7 @@ pub struct MsgRemoveRegisteredReactionResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParams")]
 #[serde(rename_all = "snake_case")]
@@ -546,7 +546,7 @@ pub struct MsgSetReactionsParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -560,7 +560,7 @@ pub struct MsgSetReactionsParamsResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -602,7 +602,7 @@ pub struct QueryReactionsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -623,7 +623,7 @@ pub struct QueryReactionsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionRequest")]
 #[serde(rename_all = "snake_case")]
@@ -660,7 +660,7 @@ pub struct QueryReactionRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -678,7 +678,7 @@ pub struct QueryReactionResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -709,7 +709,7 @@ pub struct QueryRegisteredReactionsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -730,7 +730,7 @@ pub struct QueryRegisteredReactionsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionRequest")]
 #[serde(rename_all = "snake_case")]
@@ -760,7 +760,7 @@ pub struct QueryRegisteredReactionRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -778,7 +778,7 @@ pub struct QueryRegisteredReactionResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -805,7 +805,7 @@ pub struct QueryReactionsParamsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsResponse")]
 #[serde(rename_all = "snake_case")]

@@ -9,7 +9,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.MultiSignature")]
 #[serde(rename_all = "snake_case")]
@@ -29,7 +29,7 @@ pub struct MultiSignature {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.CompactBitArray")]
 #[serde(rename_all = "snake_case")]

@@ -11,7 +11,7 @@
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.secp256k1.PubKey")]
 #[serde(rename_all = "snake_case")]
@@ -32,7 +32,7 @@ pub struct PubKey {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.secp256k1.PrivKey")]
 #[serde(rename_all = "snake_case")]

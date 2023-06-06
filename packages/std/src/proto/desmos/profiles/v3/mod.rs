@@ -9,7 +9,7 @@ pub mod client;
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ChainLink")]
 #[serde(rename_all = "snake_case")]
@@ -40,7 +40,7 @@ pub struct ChainLink {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ChainConfig")]
 #[serde(rename_all = "snake_case")]
@@ -58,7 +58,7 @@ pub struct ChainConfig {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Proof")]
 #[serde(rename_all = "snake_case")]
@@ -84,7 +84,7 @@ pub struct Proof {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Bech32Address")]
 #[serde(rename_all = "snake_case")]
@@ -105,7 +105,7 @@ pub struct Bech32Address {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Base58Address")]
 #[serde(rename_all = "snake_case")]
@@ -124,7 +124,7 @@ pub struct Base58Address {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.HexAddress")]
 #[serde(rename_all = "snake_case")]
@@ -146,7 +146,7 @@ pub struct HexAddress {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.SingleSignature")]
 #[serde(rename_all = "snake_case")]
@@ -175,7 +175,7 @@ pub struct SingleSignature {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.CosmosMultiSignature")]
 #[serde(rename_all = "snake_case")]
@@ -269,7 +269,7 @@ impl SignatureValueType {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Params")]
 #[serde(rename_all = "snake_case")]
@@ -294,7 +294,7 @@ pub struct Params {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.NicknameParams")]
 #[serde(rename_all = "snake_case")]
@@ -321,7 +321,7 @@ pub struct NicknameParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.DTagParams")]
 #[serde(rename_all = "snake_case")]
@@ -350,7 +350,7 @@ pub struct DTagParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.BioParams")]
 #[serde(rename_all = "snake_case")]
@@ -373,7 +373,7 @@ pub struct BioParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.OracleParams")]
 #[serde(rename_all = "snake_case")]
@@ -431,7 +431,7 @@ pub struct OracleParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.AppLinksParams")]
 #[serde(rename_all = "snake_case")]
@@ -449,7 +449,7 @@ pub struct AppLinksParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.DTagTransferRequest")]
 #[serde(rename_all = "snake_case")]
@@ -475,7 +475,7 @@ pub struct DTagTransferRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.ApplicationLink")]
 #[serde(rename_all = "snake_case")]
@@ -517,7 +517,7 @@ pub struct ApplicationLink {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Data")]
 #[serde(rename_all = "snake_case")]
@@ -539,7 +539,7 @@ pub struct Data {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.OracleRequest")]
 #[serde(rename_all = "snake_case")]
@@ -577,7 +577,7 @@ pub mod oracle_request {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.profiles.v3.OracleRequest.CallData")]
     #[serde(rename_all = "snake_case")]
@@ -600,7 +600,7 @@ pub mod oracle_request {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Result")]
 #[serde(rename_all = "snake_case")]
@@ -623,7 +623,7 @@ pub mod result {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.profiles.v3.Result.Success")]
     #[serde(rename_all = "snake_case")]
@@ -645,7 +645,7 @@ pub mod result {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.profiles.v3.Result.Failed")]
     #[serde(rename_all = "snake_case")]
@@ -750,7 +750,7 @@ impl ApplicationLinkState {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -777,7 +777,7 @@ pub struct GenesisState {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.DefaultExternalAddressEntry")]
 #[serde(rename_all = "snake_case")]
@@ -800,7 +800,7 @@ pub struct DefaultExternalAddressEntry {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.LinkChainAccountPacketData")]
 #[serde(rename_all = "snake_case")]
@@ -831,7 +831,7 @@ pub struct LinkChainAccountPacketData {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.LinkChainAccountPacketAck")]
 #[serde(rename_all = "snake_case")]
@@ -851,7 +851,7 @@ pub struct LinkChainAccountPacketAck {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Profile")]
 #[serde(rename_all = "snake_case")]
@@ -884,7 +884,7 @@ pub struct Profile {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.Pictures")]
 #[serde(rename_all = "snake_case")]
@@ -905,7 +905,7 @@ pub struct Pictures {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSaveProfile")]
 #[serde(rename_all = "snake_case")]
@@ -943,7 +943,7 @@ pub struct MsgSaveProfile {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSaveProfileResponse")]
 #[serde(rename_all = "snake_case")]
@@ -957,7 +957,7 @@ pub struct MsgSaveProfileResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgDeleteProfile")]
 #[serde(rename_all = "snake_case")]
@@ -975,7 +975,7 @@ pub struct MsgDeleteProfile {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgDeleteProfileResponse")]
 #[serde(rename_all = "snake_case")]
@@ -990,7 +990,7 @@ pub struct MsgDeleteProfileResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRequestDTagTransfer")]
 #[serde(rename_all = "snake_case")]
@@ -1014,7 +1014,7 @@ pub struct MsgRequestDTagTransfer {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRequestDTagTransferResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1029,7 +1029,7 @@ pub struct MsgRequestDTagTransferResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgCancelDTagTransferRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1051,7 +1051,7 @@ pub struct MsgCancelDTagTransferRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgCancelDTagTransferRequestResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1066,7 +1066,7 @@ pub struct MsgCancelDTagTransferRequestResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgAcceptDTagTransferRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1092,7 +1092,7 @@ pub struct MsgAcceptDTagTransferRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgAcceptDTagTransferRequestResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1107,7 +1107,7 @@ pub struct MsgAcceptDTagTransferRequestResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRefuseDTagTransferRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1129,7 +1129,7 @@ pub struct MsgRefuseDTagTransferRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgRefuseDTagTransferRequestResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1143,7 +1143,7 @@ pub struct MsgRefuseDTagTransferRequestResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkChainAccount")]
 #[serde(rename_all = "snake_case")]
@@ -1172,7 +1172,7 @@ pub struct MsgLinkChainAccount {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkChainAccountResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1187,7 +1187,7 @@ pub struct MsgLinkChainAccountResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkChainAccount")]
 #[serde(rename_all = "snake_case")]
@@ -1212,7 +1212,7 @@ pub struct MsgUnlinkChainAccount {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkChainAccountResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1227,7 +1227,7 @@ pub struct MsgUnlinkChainAccountResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSetDefaultExternalAddress")]
 #[serde(rename_all = "snake_case")]
@@ -1252,7 +1252,7 @@ pub struct MsgSetDefaultExternalAddress {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgSetDefaultExternalAddressResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1267,7 +1267,7 @@ pub struct MsgSetDefaultExternalAddressResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkApplication")]
 #[serde(rename_all = "snake_case")]
@@ -1311,7 +1311,7 @@ pub struct MsgLinkApplication {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgLinkApplicationResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1326,7 +1326,7 @@ pub struct MsgLinkApplicationResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkApplication")]
 #[serde(rename_all = "snake_case")]
@@ -1352,7 +1352,7 @@ pub struct MsgUnlinkApplication {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUnlinkApplicationResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1368,7 +1368,7 @@ pub struct MsgUnlinkApplicationResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUpdateParams")]
 #[serde(rename_all = "snake_case")]
@@ -1395,7 +1395,7 @@ pub struct MsgUpdateParams {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.MsgUpdateParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1409,7 +1409,7 @@ pub struct MsgUpdateParamsResponse {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryProfileRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1431,7 +1431,7 @@ pub struct QueryProfileRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryProfileResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1449,7 +1449,7 @@ pub struct QueryProfileResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryIncomingDTagTransferRequestsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1477,7 +1477,7 @@ pub struct QueryIncomingDTagTransferRequestsRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryIncomingDTagTransferRequestsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1500,7 +1500,7 @@ pub struct QueryIncomingDTagTransferRequestsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryParamsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1518,7 +1518,7 @@ pub struct QueryParamsRequest {}
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1537,7 +1537,7 @@ pub struct QueryParamsResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinksRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1573,7 +1573,7 @@ pub struct QueryChainLinksRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinksResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1595,7 +1595,7 @@ pub struct QueryChainLinksResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinkOwnersRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1627,7 +1627,7 @@ pub struct QueryChainLinkOwnersRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryChainLinkOwnersResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1651,7 +1651,7 @@ pub mod query_chain_link_owners_response {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(
         type_url = "/desmos.profiles.v3.QueryChainLinkOwnersResponse.ChainLinkOwnerDetails"
@@ -1676,7 +1676,7 @@ pub mod query_chain_link_owners_response {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryDefaultExternalAddressesRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1706,7 +1706,7 @@ pub struct QueryDefaultExternalAddressesRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryDefaultExternalAddressesResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1729,7 +1729,7 @@ pub struct QueryDefaultExternalAddressesResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinksRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1765,7 +1765,7 @@ pub struct QueryApplicationLinksRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinksResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1787,7 +1787,7 @@ pub struct QueryApplicationLinksResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkByClientIDRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1810,7 +1810,7 @@ pub struct QueryApplicationLinkByClientIdRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkByClientIDResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1828,7 +1828,7 @@ pub struct QueryApplicationLinkByClientIdResponse {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkOwnersRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1860,7 +1860,7 @@ pub struct QueryApplicationLinkOwnersRequest {
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    std_derive::CosmwasmExt,
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.profiles.v3.QueryApplicationLinkOwnersResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1887,7 +1887,7 @@ pub mod query_application_link_owners_response {
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        std_derive::CosmwasmExt,
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(
         type_url = "/desmos.profiles.v3.QueryApplicationLinkOwnersResponse.ApplicationLinkOwnerDetails"
