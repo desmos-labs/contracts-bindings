@@ -1,11 +1,13 @@
 /// SignatureDescriptors wraps multiple SignatureDescriptor's.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptors")]
 #[serde(rename_all = "snake_case")]
@@ -19,12 +21,14 @@ pub struct SignatureDescriptors {
 /// signature itself. It is primarily used for coordinating signatures between
 /// clients.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor")]
 #[serde(rename_all = "snake_case")]
@@ -48,12 +52,14 @@ pub struct SignatureDescriptor {
 pub mod signature_descriptor {
     /// Data represents signature data
     #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Message)]
     #[derive(
+        Clone,
+        PartialEq,
+        ::prost::Message,
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        desmos_std_derive::CosmwasmExt
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data")]
     #[serde(rename_all = "snake_case")]
@@ -67,23 +73,23 @@ pub mod signature_descriptor {
     pub mod data {
         /// Single is the signature data for a single signer
         #[allow(clippy::derive_partial_eq_without_eq)]
-        #[derive(Clone, PartialEq, ::prost::Message)]
         #[derive(
+            Clone,
+            PartialEq,
+            ::prost::Message,
             schemars::JsonSchema,
             serde::Serialize,
             serde::Deserialize,
-            desmos_std_derive::CosmwasmExt
+            desmos_std_derive::CosmwasmExt,
         )]
-        #[proto_message(
-            type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single"
-        )]
+        #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Single")]
         #[serde(rename_all = "snake_case")]
         pub struct Single {
             /// mode is the signing mode of the single signer
             #[prost(enumeration = "super::super::SignMode", tag = "1")]
             #[serde(
                 serialize_with = "super::super::SignMode::serialize",
-                deserialize_with = "super::super::SignMode::deserialize",
+                deserialize_with = "super::super::SignMode::deserialize"
             )]
             pub mode: i32,
             /// signature is the raw signature bytes
@@ -96,16 +102,16 @@ pub mod signature_descriptor {
         }
         /// Multi is the signature data for a multisig public key
         #[allow(clippy::derive_partial_eq_without_eq)]
-        #[derive(Clone, PartialEq, ::prost::Message)]
         #[derive(
+            Clone,
+            PartialEq,
+            ::prost::Message,
             schemars::JsonSchema,
             serde::Serialize,
             serde::Deserialize,
-            desmos_std_derive::CosmwasmExt
+            desmos_std_derive::CosmwasmExt,
         )]
-        #[proto_message(
-            type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi"
-        )]
+        #[proto_message(type_url = "/cosmos.tx.signing.v1beta1.SignatureDescriptor.Data.Multi")]
         #[serde(rename_all = "snake_case")]
         pub struct Multi {
             /// bitarray specifies which keys within the multisig are signing
@@ -119,8 +125,14 @@ pub mod signature_descriptor {
         }
         /// sum is the oneof that specifies whether this represents single or multi-signature data
         #[allow(clippy::derive_partial_eq_without_eq)]
-        #[derive(Clone, PartialEq, ::prost::Oneof)]
-        #[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+        #[derive(
+            Clone,
+            PartialEq,
+            ::prost::Oneof,
+            serde::Serialize,
+            serde::Deserialize,
+            schemars::JsonSchema,
+        )]
         #[serde(rename_all = "snake_case")]
         pub enum Sum {
             /// single represents a single signer
@@ -142,8 +154,7 @@ pub mod signature_descriptor {
 /// apps have a consistent version of this enum.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(strum_macros::FromRepr)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum SignMode {
     /// SIGN_MODE_UNSPECIFIED specifies an unknown signing mode and will be

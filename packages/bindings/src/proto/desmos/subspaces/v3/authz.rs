@@ -1,12 +1,14 @@
 /// GenericSubspaceAuthorization defines an authorization to perform any
 /// operation only inside a specific subspace.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.subspaces.v3.authz.GenericSubspaceAuthorization")]
 #[serde(rename_all = "snake_case")]

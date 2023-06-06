@@ -3,12 +3,14 @@
 /// NOTE: The amount field is an Int which implements the custom method
 /// signatures required by gogoproto.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.Coin")]
 #[serde(rename_all = "snake_case")]
@@ -23,12 +25,14 @@ pub struct Coin {
 /// NOTE: The amount field is an Dec which implements the custom method
 /// signatures required by gogoproto.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.DecCoin")]
 #[serde(rename_all = "snake_case")]
@@ -40,12 +44,14 @@ pub struct DecCoin {
 }
 /// IntProto defines a Protobuf wrapper around an Int object.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.IntProto")]
 #[serde(rename_all = "snake_case")]
@@ -55,12 +61,14 @@ pub struct IntProto {
 }
 /// DecProto defines a Protobuf wrapper around a Dec object.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.v1beta1.DecProto")]
 #[serde(rename_all = "snake_case")]

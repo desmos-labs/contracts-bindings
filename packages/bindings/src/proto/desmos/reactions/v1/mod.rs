@@ -1,12 +1,14 @@
 pub mod client;
 /// Reaction contains the data of a single post reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.Reaction")]
 #[serde(rename_all = "snake_case")]
@@ -38,12 +40,14 @@ pub struct Reaction {
 /// RegisteredReactionValue contains the details of a reaction value that
 /// references a reaction registered within the subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReactionValue")]
 #[serde(rename_all = "snake_case")]
@@ -55,12 +59,14 @@ pub struct RegisteredReactionValue {
 /// FreeTextValue contains the details of a reaction value that
 /// is made of free text
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.FreeTextValue")]
 #[serde(rename_all = "snake_case")]
@@ -71,12 +77,14 @@ pub struct FreeTextValue {
 /// RegisteredReaction contains the details of a registered reaction within a
 /// subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -101,12 +109,14 @@ pub struct RegisteredReaction {
 /// SubspaceReactionsParams contains the params related to a single subspace
 /// reactions
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.SubspaceReactionsParams")]
 #[serde(rename_all = "snake_case")]
@@ -127,12 +137,14 @@ pub struct SubspaceReactionsParams {
 }
 /// FreeTextValueParams contains the params for FreeTextValue based reactions
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.FreeTextValueParams")]
 #[serde(rename_all = "snake_case")]
@@ -151,12 +163,14 @@ pub struct FreeTextValueParams {
 /// RegisteredReactionValueParams contains the params for RegisteredReactionValue
 /// based reactions
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.RegisteredReactionValueParams")]
 #[serde(rename_all = "snake_case")]
@@ -167,12 +181,14 @@ pub struct RegisteredReactionValueParams {
 }
 /// GenesisState contains the data of the genesis state for the reactions module
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -190,12 +206,14 @@ pub struct GenesisState {
 }
 /// SubspaceDataEntry contains the data related to a single subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -211,12 +229,14 @@ pub struct SubspaceDataEntry {
 }
 /// PostDataEntry contains the data related to a single post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.PostDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -238,12 +258,14 @@ pub struct PostDataEntry {
 }
 /// MsgAddReaction represents the message to be used to add a post reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddReaction")]
 #[serde(rename_all = "snake_case")]
@@ -271,12 +293,14 @@ pub struct MsgAddReaction {
 }
 /// MsgAddReactionResponse represents the Msg/AddReaction response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -288,12 +312,14 @@ pub struct MsgAddReactionResponse {
 /// MsgRemoveReaction represents the message to be used to remove an
 /// existing reaction from a post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveReaction")]
 #[serde(rename_all = "snake_case")]
@@ -321,12 +347,14 @@ pub struct MsgRemoveReaction {
 }
 /// MsgRemoveReactionResponse represents the Msg/RemoveReaction response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -334,12 +362,14 @@ pub struct MsgRemoveReactionResponse {}
 /// MsgAddRegisteredReaction represents the message to be used to
 /// register a new supported reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddRegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -364,12 +394,14 @@ pub struct MsgAddRegisteredReaction {
 /// MsgAddRegisteredReactionResponse represents the
 /// Msg/AddRegisteredReaction response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgAddRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -381,12 +413,14 @@ pub struct MsgAddRegisteredReactionResponse {
 /// MsgEditRegisteredReaction represents the message to be used to edit a
 /// registered reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgEditRegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -414,12 +448,14 @@ pub struct MsgEditRegisteredReaction {
 /// MsgEditRegisteredReactionResponse represents the Msg/EditRegisteredReaction
 /// response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgEditRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -427,12 +463,14 @@ pub struct MsgEditRegisteredReactionResponse {}
 /// MsgRemoveRegisteredReaction represents the message to be used to
 /// remove an existing registered reaction
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveRegisteredReaction")]
 #[serde(rename_all = "snake_case")]
@@ -454,12 +492,14 @@ pub struct MsgRemoveRegisteredReaction {
 /// MsgRemoveRegisteredReactionResponse represents the
 /// Msg/RemoveRegisteredReaction response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgRemoveRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -467,12 +507,14 @@ pub struct MsgRemoveRegisteredReactionResponse {}
 /// MsgSetReactionsParams represents the message to be used when setting
 /// a subspace reactions params
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParams")]
 #[serde(rename_all = "snake_case")]
@@ -497,24 +539,28 @@ pub struct MsgSetReactionsParams {
 /// MsgSetReactionsParamsResponse represents the Msg/SetReactionsParams response
 /// type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.MsgSetReactionsParamsResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgSetReactionsParamsResponse {}
 /// QueryReactionsRequest is the request type for the Query/Reactions RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -543,19 +589,20 @@ pub struct QueryReactionsRequest {
     pub user: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "4")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryReactionsResponse is the response type for the Query/Reactions RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -563,19 +610,20 @@ pub struct QueryReactionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub reactions: ::prost::alloc::vec::Vec<Reaction>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryReactionRequest is the request type for the Query/ReactionRequest RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionRequest")]
 #[serde(rename_all = "snake_case")]
@@ -605,12 +653,14 @@ pub struct QueryReactionRequest {
 /// QueryReactionResponse is the response type for the Query/Reaction RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -621,12 +671,14 @@ pub struct QueryReactionResponse {
 /// QueryRegisteredReactionsRequest is the request type for the
 /// Query/RegisteredReactions RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -644,19 +696,20 @@ pub struct QueryRegisteredReactionsRequest {
     pub subspace_id: u64,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "3")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryRegisteredReactionsResponse is the response type for the
 /// Query/RegisteredReactions RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -664,19 +717,20 @@ pub struct QueryRegisteredReactionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub registered_reactions: ::prost::alloc::vec::Vec<RegisteredReaction>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryRegisteredReactionRequest is the request type for the
 /// Query/RegisteredReaction RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionRequest")]
 #[serde(rename_all = "snake_case")]
@@ -699,12 +753,14 @@ pub struct QueryRegisteredReactionRequest {
 /// QueryRegisteredReactionResponse is the response type for the
 /// Query/RegisteredReaction RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryRegisteredReactionResponse")]
 #[serde(rename_all = "snake_case")]
@@ -715,12 +771,14 @@ pub struct QueryRegisteredReactionResponse {
 /// QueryReactionsParamsRequest is the request type for the Query/ReactionsParams
 /// RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -740,12 +798,14 @@ pub struct QueryReactionsParamsRequest {
 /// QueryReactionsParamsResponse is the response type for the
 /// Query/ReactionsParam RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reactions.v1.QueryReactionsParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -775,7 +835,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReactionsQuerier<'a, Q> {
             user,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn reaction(
         &self,
@@ -788,7 +848,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReactionsQuerier<'a, Q> {
             post_id,
             reaction_id,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn registered_reactions(
         &self,
@@ -801,7 +861,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReactionsQuerier<'a, Q> {
             subspace_id,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn registered_reaction(
         &self,
@@ -812,15 +872,12 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReactionsQuerier<'a, Q> {
             subspace_id,
             reaction_id,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn reactions_params(
         &self,
         subspace_id: u64,
     ) -> std::result::Result<QueryReactionsParamsResponse, cosmwasm_std::StdError> {
-        QueryReactionsParamsRequest {
-            subspace_id,
-        }
-            .query(self.querier)
+        QueryReactionsParamsRequest { subspace_id }.query(self.querier)
     }
 }

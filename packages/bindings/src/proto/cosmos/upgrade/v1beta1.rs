@@ -1,11 +1,13 @@
 /// Plan specifies information about a planned upgrade and when it should occur.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.Plan")]
 #[serde(rename_all = "snake_case")]
@@ -48,12 +50,14 @@ pub struct Plan {
 /// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
 /// proposals, see MsgSoftwareUpgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal")]
 #[serde(rename_all = "snake_case")]
@@ -73,12 +77,14 @@ pub struct SoftwareUpgradeProposal {
 /// Deprecated: This legacy proposal is deprecated in favor of Msg-based gov
 /// proposals, see MsgCancelUpgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal")]
 #[serde(rename_all = "snake_case")]
@@ -94,12 +100,14 @@ pub struct CancelSoftwareUpgradeProposal {
 ///
 /// Since: cosmos-sdk 0.43
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.upgrade.v1beta1.ModuleVersion")]
 #[serde(rename_all = "snake_case")]

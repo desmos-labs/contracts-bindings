@@ -6,12 +6,14 @@
 ///           PageRequest pagination = 2;
 ///   }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.query.v1beta1.PageRequest")]
 #[serde(rename_all = "snake_case")]
@@ -62,12 +64,14 @@ pub struct PageRequest {
 ///           PageResponse page = 2;
 ///   }
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.base.query.v1beta1.PageResponse")]
 #[serde(rename_all = "snake_case")]

@@ -1,11 +1,13 @@
 /// Post contains all the information about a single post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Post")]
 #[serde(rename_all = "snake_case")]
@@ -56,7 +58,7 @@ pub struct Post {
     #[prost(enumeration = "ReplySetting", tag = "11")]
     #[serde(
         serialize_with = "ReplySetting::serialize",
-        deserialize_with = "ReplySetting::deserialize",
+        deserialize_with = "ReplySetting::deserialize"
     )]
     pub reply_settings: i32,
     /// Creation date of the post
@@ -68,12 +70,14 @@ pub struct Post {
 }
 /// PostReference contains the details of a post reference
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PostReference")]
 #[serde(rename_all = "snake_case")]
@@ -82,7 +86,7 @@ pub struct PostReference {
     #[prost(enumeration = "PostReferenceType", tag = "1")]
     #[serde(
         serialize_with = "PostReferenceType::serialize",
-        deserialize_with = "PostReferenceType::deserialize",
+        deserialize_with = "PostReferenceType::deserialize"
     )]
     pub r#type: i32,
     /// Id of the referenced post
@@ -103,12 +107,14 @@ pub struct PostReference {
 }
 /// Contains the details of entities parsed out of the post text
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Entities")]
 #[serde(rename_all = "snake_case")]
@@ -125,12 +131,14 @@ pub struct Entities {
 }
 /// TextTag represents a tag within the post text
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.TextTag")]
 #[serde(rename_all = "snake_case")]
@@ -155,12 +163,14 @@ pub struct TextTag {
 }
 /// Url contains the details of a generic URL
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Url")]
 #[serde(rename_all = "snake_case")]
@@ -188,12 +198,14 @@ pub struct Url {
 }
 /// Attachment contains the data of a single post attachment
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Attachment")]
 #[serde(rename_all = "snake_case")]
@@ -222,12 +234,14 @@ pub struct Attachment {
 }
 /// Media represents a media attachment
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Media")]
 #[serde(rename_all = "snake_case")]
@@ -239,12 +253,14 @@ pub struct Media {
 }
 /// Poll represents a poll attachment
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Poll")]
 #[serde(rename_all = "snake_case")]
@@ -272,12 +288,14 @@ pub struct Poll {
 pub mod poll {
     /// Provided answer contains the details of a possible poll answer
     #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Message)]
     #[derive(
+        Clone,
+        PartialEq,
+        ::prost::Message,
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        desmos_std_derive::CosmwasmExt
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v3.Poll.ProvidedAnswer")]
     #[serde(rename_all = "snake_case")]
@@ -292,12 +310,14 @@ pub mod poll {
 }
 /// UserAnswer represents a user answer to a poll
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.UserAnswer")]
 #[serde(rename_all = "snake_case")]
@@ -328,12 +348,14 @@ pub struct UserAnswer {
 }
 /// PollTallyResults contains the tally results for a poll
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PollTallyResults")]
 #[serde(rename_all = "snake_case")]
@@ -345,12 +367,14 @@ pub struct PollTallyResults {
 pub mod poll_tally_results {
     /// AnswerResult contains the result of a single poll provided answer
     #[allow(clippy::derive_partial_eq_without_eq)]
-    #[derive(Clone, PartialEq, ::prost::Message)]
     #[derive(
+        Clone,
+        PartialEq,
+        ::prost::Message,
         schemars::JsonSchema,
         serde::Serialize,
         serde::Deserialize,
-        desmos_std_derive::CosmwasmExt
+        desmos_std_derive::CosmwasmExt,
     )]
     #[proto_message(type_url = "/desmos.posts.v3.PollTallyResults.AnswerResult")]
     #[serde(rename_all = "snake_case")]
@@ -369,12 +393,14 @@ pub mod poll_tally_results {
 }
 /// Params contains the parameters for the posts module
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.Params")]
 #[serde(rename_all = "snake_case")]
@@ -386,8 +412,7 @@ pub struct Params {
 /// PostReferenceType represents the different types of references
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(strum_macros::FromRepr)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum PostReferenceType {
     /// No reference specified
@@ -447,8 +472,7 @@ impl PostReferenceType {
 /// ReplySetting contains the possible reply settings that a post can have
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
-#[derive(strum_macros::FromRepr)]
-#[derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(strum_macros::FromRepr, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 #[serde(rename_all = "snake_case")]
 pub enum ReplySetting {
     /// No reply setting specified
@@ -511,12 +535,14 @@ impl ReplySetting {
 }
 /// GenesisState contains the data of the genesis state for the posts module
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -538,12 +564,14 @@ pub struct GenesisState {
 }
 /// SubspaceDataEntry contains the data for a given subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -563,12 +591,14 @@ pub struct SubspaceDataEntry {
 }
 /// PostDataEntry contains the data of a given post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.PostDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -590,12 +620,14 @@ pub struct PostDataEntry {
 }
 /// ActivePollData contains the data of an active poll
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.ActivePollData")]
 #[serde(rename_all = "snake_case")]
@@ -619,12 +651,14 @@ pub struct ActivePollData {
 }
 /// MsgCreatePost represents the message to be used to create a post.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgCreatePost")]
 #[serde(rename_all = "snake_case")]
@@ -668,7 +702,7 @@ pub struct MsgCreatePost {
     #[prost(enumeration = "ReplySetting", tag = "10")]
     #[serde(
         serialize_with = "ReplySetting::serialize",
-        deserialize_with = "ReplySetting::deserialize",
+        deserialize_with = "ReplySetting::deserialize"
     )]
     pub reply_settings: i32,
     /// A list this posts references (either as a reply, repost or quote)
@@ -677,12 +711,14 @@ pub struct MsgCreatePost {
 }
 /// MsgCreatePostResponse defines the Msg/CreatePost response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgCreatePostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -700,12 +736,14 @@ pub struct MsgCreatePostResponse {
 }
 /// MsgEditPost represents the message to be used to edit a post.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgEditPost")]
 #[serde(rename_all = "snake_case")]
@@ -742,12 +780,14 @@ pub struct MsgEditPost {
 }
 /// MsgCreatePostResponse defines the Msg/EditPost response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgEditPostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -758,12 +798,14 @@ pub struct MsgEditPostResponse {
 }
 /// MsgDeletePost represents the message used when deleting a post.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgDeletePost")]
 #[serde(rename_all = "snake_case")]
@@ -788,12 +830,14 @@ pub struct MsgDeletePost {
 }
 /// MsgDeletePostResponse represents the Msg/DeletePost response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgDeletePostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -801,12 +845,14 @@ pub struct MsgDeletePostResponse {}
 /// MsgAddPostAttachment represents the message that should be
 /// used when adding an attachment to post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAddPostAttachment")]
 #[serde(rename_all = "snake_case")]
@@ -834,12 +880,14 @@ pub struct MsgAddPostAttachment {
 }
 /// MsgAddPostAttachmentResponse defines the Msg/AddPostAttachment response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAddPostAttachmentResponse")]
 #[serde(rename_all = "snake_case")]
@@ -854,12 +902,14 @@ pub struct MsgAddPostAttachmentResponse {
 /// MsgRemovePostAttachment represents the message to be used when
 /// removing an attachment from a post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgRemovePostAttachment")]
 #[serde(rename_all = "snake_case")]
@@ -888,12 +938,14 @@ pub struct MsgRemovePostAttachment {
 /// MsgRemovePostAttachmentResponse defines the
 /// Msg/RemovePostAttachment response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgRemovePostAttachmentResponse")]
 #[serde(rename_all = "snake_case")]
@@ -904,12 +956,14 @@ pub struct MsgRemovePostAttachmentResponse {
 }
 /// MsgAnswerPoll represents the message used to answer a poll
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPoll")]
 #[serde(rename_all = "snake_case")]
@@ -940,12 +994,14 @@ pub struct MsgAnswerPoll {
 }
 /// MsgAnswerPollResponse represents the MSg/AnswerPoll response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgAnswerPollResponse")]
 #[serde(rename_all = "snake_case")]
@@ -954,12 +1010,14 @@ pub struct MsgAnswerPollResponse {}
 ///
 /// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgUpdateParams")]
 #[serde(rename_all = "snake_case")]
@@ -979,12 +1037,14 @@ pub struct MsgUpdateParams {
 ///
 /// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.MsgUpdateParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -992,12 +1052,14 @@ pub struct MsgUpdateParamsResponse {}
 /// QuerySubspacePostsRequest is the request type for the Query/SubspacePosts RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1015,19 +1077,20 @@ pub struct QuerySubspacePostsRequest {
     pub subspace_id: u64,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QuerySubspacePostsResponse is the response type for the Query/SubspacePosts
 /// RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySubspacePostsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1035,19 +1098,20 @@ pub struct QuerySubspacePostsResponse {
     #[prost(message, repeated, tag = "1")]
     pub posts: ::prost::alloc::vec::Vec<Post>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QuerySectionPostsRequest is the request type for the Query/SectionPosts RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1068,19 +1132,20 @@ pub struct QuerySectionPostsRequest {
     pub section_id: u32,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "3")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QuerySectionPostsResponse is the response type for the Query/SectionPosts RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QuerySectionPostsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1088,18 +1153,19 @@ pub struct QuerySectionPostsResponse {
     #[prost(message, repeated, tag = "1")]
     pub posts: ::prost::alloc::vec::Vec<Post>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryPostRequest is the request type for the Query/Post RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1122,12 +1188,14 @@ pub struct QueryPostRequest {
 }
 /// QueryPostResponse is the response type for the Query/Post RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1138,12 +1206,14 @@ pub struct QueryPostResponse {
 /// QueryPostsRequest is the request type for the Query/PostAttachments RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1168,19 +1238,20 @@ pub struct QueryPostAttachmentsRequest {
     pub post_id: u64,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "3")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryPostAttachmentsResponse is the response type for the
 /// Query/PostAttachments RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPostAttachmentsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1188,19 +1259,20 @@ pub struct QueryPostAttachmentsResponse {
     #[prost(message, repeated, tag = "1")]
     pub attachments: ::prost::alloc::vec::Vec<Attachment>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryPollAnswersRequest is the request type for the Query/PollAnswers RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1231,19 +1303,20 @@ pub struct QueryPollAnswersRequest {
     pub user: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "5")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryPollAnswersResponse is the response type for the Query/PollAnswers RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryPollAnswersResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1251,18 +1324,19 @@ pub struct QueryPollAnswersResponse {
     #[prost(message, repeated, tag = "1")]
     pub answers: ::prost::alloc::vec::Vec<UserAnswer>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryParamsRequest is the request type for the Query/Params RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryParamsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -1273,12 +1347,14 @@ pub struct QueryPollAnswersResponse {
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for the Query/Params RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.posts.v3.QueryParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -1304,7 +1380,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> PostsQuerier<'a, Q> {
             subspace_id,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn section_posts(
         &self,
@@ -1319,7 +1395,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> PostsQuerier<'a, Q> {
             section_id,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn post(
         &self,
@@ -1330,7 +1406,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> PostsQuerier<'a, Q> {
             subspace_id,
             post_id,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn post_attachments(
         &self,
@@ -1345,7 +1421,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> PostsQuerier<'a, Q> {
             post_id,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn poll_answers(
         &self,
@@ -1364,11 +1440,9 @@ impl<'a, Q: cosmwasm_std::CustomQuery> PostsQuerier<'a, Q> {
             user,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
-    pub fn params(
-        &self,
-    ) -> std::result::Result<QueryParamsResponse, cosmwasm_std::StdError> {
+    pub fn params(&self) -> std::result::Result<QueryParamsResponse, cosmwasm_std::StdError> {
         QueryParamsRequest {}.query(self.querier)
     }
 }

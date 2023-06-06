@@ -7,6 +7,9 @@ use serde::de::Visitor;
 use std::fmt;
 use std::str::FromStr;
 
+/// Timestamp represents a point in time independent of any time zone or local
+/// calendar, encoded as a count of seconds and fractions of seconds at
+/// nanosecond resolution.
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
 pub struct Timestamp {
     /// Represents seconds of UTC time since Unix epoch
@@ -136,6 +139,7 @@ impl<'de> Deserialize<'de> for Duration {
     }
 }
 
+/// Any contains an arbitrary serialized protocol buffer message along with a URL that describes the type of the serialized message.
 #[derive(Clone, PartialEq, Eq, ::prost::Message, schemars::JsonSchema)]
 pub struct Any {
     /// A URL/resource name that uniquely identifies the type of the serialized

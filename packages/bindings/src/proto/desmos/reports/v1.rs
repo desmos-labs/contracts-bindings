@@ -1,11 +1,13 @@
 /// Report contains the data of a generic report
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Report")]
 #[serde(rename_all = "snake_case")]
@@ -42,12 +44,14 @@ pub struct Report {
 }
 /// UserTarget contains the data of a report about a user
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.UserTarget")]
 #[serde(rename_all = "snake_case")]
@@ -58,12 +62,14 @@ pub struct UserTarget {
 }
 /// PostTarget contains the data of a report about a post
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.PostTarget")]
 #[serde(rename_all = "snake_case")]
@@ -78,12 +84,14 @@ pub struct PostTarget {
 }
 /// Reason contains the data about a reporting reason
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Reason")]
 #[serde(rename_all = "snake_case")]
@@ -107,12 +115,14 @@ pub struct Reason {
 }
 /// Params contains the module parameters
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.Params")]
 #[serde(rename_all = "snake_case")]
@@ -125,12 +135,14 @@ pub struct Params {
 /// StandardReason contains the data of a standard reason that can be picked and
 /// used from different subspaces
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.StandardReason")]
 #[serde(rename_all = "snake_case")]
@@ -147,12 +159,14 @@ pub struct StandardReason {
 }
 /// GenesisState defines the reports module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -168,12 +182,14 @@ pub struct GenesisState {
 }
 /// SubspaceDataEntry contains the data related to a single subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.SubspaceDataEntry")]
 #[serde(rename_all = "snake_case")]
@@ -198,12 +214,14 @@ pub struct SubspaceDataEntry {
 }
 /// MsgCreateReport represents the message to be used to create a report
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgCreateReport")]
 #[serde(rename_all = "snake_case")]
@@ -230,12 +248,14 @@ pub struct MsgCreateReport {
 }
 /// MsgCreateReportResponse represents the Msg/CreateReport response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgCreateReportResponse")]
 #[serde(rename_all = "snake_case")]
@@ -253,12 +273,14 @@ pub struct MsgCreateReportResponse {
 }
 /// MsgDeleteReport represents the message to be used when deleting a report
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgDeleteReport")]
 #[serde(rename_all = "snake_case")]
@@ -283,12 +305,14 @@ pub struct MsgDeleteReport {
 }
 /// MsgDeleteReportResponse represents the Msg/DeleteReport response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgDeleteReportResponse")]
 #[serde(rename_all = "snake_case")]
@@ -296,12 +320,14 @@ pub struct MsgDeleteReportResponse {}
 /// MsgSupportStandardReason represents the message to be used when wanting to
 /// support one reason from the module params
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgSupportStandardReason")]
 #[serde(rename_all = "snake_case")]
@@ -323,12 +349,14 @@ pub struct MsgSupportStandardReason {
 /// MsgSupportStandardReasonResponse represents the Msg/SupportStandardReason
 /// response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgSupportStandardReasonResponse")]
 #[serde(rename_all = "snake_case")]
@@ -340,12 +368,14 @@ pub struct MsgSupportStandardReasonResponse {
 /// MsgAddReason represents the message to be used when adding a new supported
 /// reason
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgAddReason")]
 #[serde(rename_all = "snake_case")]
@@ -369,12 +399,14 @@ pub struct MsgAddReason {
 }
 /// MsgAddReasonResponse represents the Msg/AddReason response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgAddReasonResponse")]
 #[serde(rename_all = "snake_case")]
@@ -386,12 +418,14 @@ pub struct MsgAddReasonResponse {
 /// MsgRemoveReason represents the message to be used when removing an exiting
 /// reporting reason
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReason")]
 #[serde(rename_all = "snake_case")]
@@ -412,12 +446,14 @@ pub struct MsgRemoveReason {
 }
 /// MsgRemoveReasonResponse represents the Msg/RemoveReason response type
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgRemoveReasonResponse")]
 #[serde(rename_all = "snake_case")]
@@ -426,12 +462,14 @@ pub struct MsgRemoveReasonResponse {}
 ///
 /// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgUpdateParams")]
 #[serde(rename_all = "snake_case")]
@@ -451,24 +489,28 @@ pub struct MsgUpdateParams {
 ///
 /// Since: Desmos 5.0.0
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.MsgUpdateParamsResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgUpdateParamsResponse {}
 /// QueryReportsResponse is the request type for Query/Reports RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -493,18 +535,19 @@ pub struct QueryReportsRequest {
     pub reporter: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "4")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryReportsResponse is the response type for Query/Reports RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -512,18 +555,19 @@ pub struct QueryReportsResponse {
     #[prost(message, repeated, tag = "1")]
     pub reports: ::prost::alloc::vec::Vec<Report>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryReportRequest is the request type for Query/Report RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportRequest")]
 #[serde(rename_all = "snake_case")]
@@ -549,12 +593,14 @@ pub struct QueryReportRequest {
 }
 /// QueryReportResponse is the response type for Query/Report RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReportResponse")]
 #[serde(rename_all = "snake_case")]
@@ -564,12 +610,14 @@ pub struct QueryReportResponse {
 }
 /// QueryReasonsRequest is the request type for Query/Reasons RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -587,18 +635,19 @@ pub struct QueryReasonsRequest {
     pub subspace_id: u64,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "3")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryReasonsResponse is the response type for Query/Reasons RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -606,18 +655,19 @@ pub struct QueryReasonsResponse {
     #[prost(message, repeated, tag = "1")]
     pub reasons: ::prost::alloc::vec::Vec<Reason>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryReasonRequest is the request type for Query/Reason RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonRequest")]
 #[serde(rename_all = "snake_case")]
@@ -639,12 +689,14 @@ pub struct QueryReasonRequest {
 }
 /// QueryReasonResponse is the response type for Query/Reason RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryReasonResponse")]
 #[serde(rename_all = "snake_case")]
@@ -654,12 +706,14 @@ pub struct QueryReasonResponse {
 }
 /// QueryParamsRequest is the request type for Query/Params RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryParamsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -670,12 +724,14 @@ pub struct QueryReasonResponse {
 pub struct QueryParamsRequest {}
 /// QueryParamsResponse is the response type for Query/Params RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.reports.v1.QueryParamsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -705,7 +761,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReportsQuerier<'a, Q> {
             reporter,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn report(
         &self,
@@ -716,7 +772,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReportsQuerier<'a, Q> {
             subspace_id,
             report_id,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn reasons(
         &self,
@@ -729,7 +785,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReportsQuerier<'a, Q> {
             subspace_id,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn reason(
         &self,
@@ -740,11 +796,9 @@ impl<'a, Q: cosmwasm_std::CustomQuery> ReportsQuerier<'a, Q> {
             subspace_id,
             reason_id,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
-    pub fn params(
-        &self,
-    ) -> std::result::Result<QueryParamsResponse, cosmwasm_std::StdError> {
+    pub fn params(&self) -> std::result::Result<QueryParamsResponse, cosmwasm_std::StdError> {
         QueryParamsRequest {}.query(self.querier)
     }
 }

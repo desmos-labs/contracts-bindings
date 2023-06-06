@@ -2,12 +2,14 @@
 /// See cosmos.tx.v1betata1.ModeInfo.Multi for how to specify which signers
 /// signed and with which modes.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.MultiSignature")]
 #[serde(rename_all = "snake_case")]
@@ -20,12 +22,14 @@ pub struct MultiSignature {
 /// space after proto encoding.
 /// This is not thread safe, and is not intended for concurrent usage.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.multisig.v1beta1.CompactBitArray")]
 #[serde(rename_all = "snake_case")]

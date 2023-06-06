@@ -1,12 +1,14 @@
 /// GenericAuthorization gives the grantee unrestricted permissions to execute
 /// the provided method on behalf of the granter's account.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GenericAuthorization")]
 #[serde(rename_all = "snake_case")]
@@ -18,12 +20,14 @@ pub struct GenericAuthorization {
 /// Grant gives permissions to execute
 /// the provide method with expiration time.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.Grant")]
 #[serde(rename_all = "snake_case")]
@@ -39,12 +43,14 @@ pub struct Grant {
 /// GrantAuthorization extends a grant with both the addresses of the grantee and granter.
 /// It is used in genesis.proto and query.proto
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GrantAuthorization")]
 #[serde(rename_all = "snake_case")]
@@ -60,12 +66,14 @@ pub struct GrantAuthorization {
 }
 /// GrantQueueItem contains the list of TypeURL of a sdk.Msg.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.authz.v1beta1.GrantQueueItem")]
 #[serde(rename_all = "snake_case")]

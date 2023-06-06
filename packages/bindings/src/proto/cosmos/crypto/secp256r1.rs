@@ -1,11 +1,13 @@
 /// PubKey defines a secp256r1 ECDSA public key.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.secp256r1.PubKey")]
 #[serde(rename_all = "snake_case")]
@@ -21,12 +23,14 @@ pub struct PubKey {
 }
 /// PrivKey defines a secp256r1 ECDSA private key.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.secp256r1.PrivKey")]
 #[serde(rename_all = "snake_case")]

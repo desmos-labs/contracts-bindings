@@ -4,12 +4,14 @@
 /// ADR-28. Nevertheless, you will like to use ed25519 in app user level
 /// then you must create a new proto message and follow ADR-28 for Address construction.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.ed25519.PubKey")]
 #[serde(rename_all = "snake_case")]
@@ -24,12 +26,14 @@ pub struct PubKey {
 /// Deprecated: PrivKey defines a ed25519 private key.
 /// NOTE: ed25519 keys must not be used in SDK apps except in a tendermint validator context.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.crypto.ed25519.PrivKey")]
 #[serde(rename_all = "snake_case")]

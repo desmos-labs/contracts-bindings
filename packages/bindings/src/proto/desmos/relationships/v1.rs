@@ -1,12 +1,14 @@
 /// Relationship is the struct of a relationship.
 /// It represent the concept of "follow" of traditional social networks.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.Relationship")]
 #[serde(rename_all = "snake_case")]
@@ -29,12 +31,14 @@ pub struct Relationship {
 /// UserBlock represents the fact that the Blocker has blocked the given Blocked
 /// user.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.UserBlock")]
 #[serde(rename_all = "snake_case")]
@@ -59,12 +63,14 @@ pub struct UserBlock {
 }
 /// GenesisState defines the profiles module's genesis state.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.GenesisState")]
 #[serde(rename_all = "snake_case")]
@@ -77,12 +83,14 @@ pub struct GenesisState {
 /// MsgCreateRelationship represents a message to create a relationship
 /// between two users on a specific subspace.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationship")]
 #[serde(rename_all = "snake_case")]
@@ -104,12 +112,14 @@ pub struct MsgCreateRelationship {
 /// MsgCreateRelationshipResponse defines the Msg/CreateRelationship response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgCreateRelationshipResponse")]
 #[serde(rename_all = "snake_case")]
@@ -117,12 +127,14 @@ pub struct MsgCreateRelationshipResponse {}
 /// MsgDeleteRelationship represents a message to delete the relationship
 /// between two users.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationship")]
 #[serde(rename_all = "snake_case")]
@@ -144,12 +156,14 @@ pub struct MsgDeleteRelationship {
 /// MsgDeleteRelationshipResponse defines the Msg/DeleteRelationship response
 /// type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgDeleteRelationshipResponse")]
 #[serde(rename_all = "snake_case")]
@@ -157,12 +171,14 @@ pub struct MsgDeleteRelationshipResponse {}
 /// MsgBlockUser represents a message to block another user specifying an
 /// optional reason.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUser")]
 #[serde(rename_all = "snake_case")]
@@ -186,24 +202,28 @@ pub struct MsgBlockUser {
 }
 /// MsgBlockUserResponse defines the Msg/BlockUser response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgBlockUserResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgBlockUserResponse {}
 /// MsgUnblockUser represents a message to unblock a previously blocked user.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUser")]
 #[serde(rename_all = "snake_case")]
@@ -224,12 +244,14 @@ pub struct MsgUnblockUser {
 }
 /// MsgUnblockUserResponse defines the Msg/UnblockUser response type.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.MsgUnblockUserResponse")]
 #[serde(rename_all = "snake_case")]
@@ -237,12 +259,14 @@ pub struct MsgUnblockUserResponse {}
 /// QueryRelationshipsRequest is the request type for the
 /// Query/Relationships RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsRequest")]
 #[serde(rename_all = "snake_case")]
@@ -267,19 +291,20 @@ pub struct QueryRelationshipsRequest {
     pub counterparty: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "4")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryRelationshipsResponse is the response type for the
 /// Query/Relationships RPC method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryRelationshipsResponse")]
 #[serde(rename_all = "snake_case")]
@@ -287,19 +312,20 @@ pub struct QueryRelationshipsResponse {
     #[prost(message, repeated, tag = "1")]
     pub relationships: ::prost::alloc::vec::Vec<Relationship>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 /// QueryBlocksRequest is the request type for the Query/Blocks RPC
 /// endpoint
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksRequest")]
 #[serde(rename_all = "snake_case")]
@@ -324,19 +350,20 @@ pub struct QueryBlocksRequest {
     pub blocked: ::prost::alloc::string::String,
     /// pagination defines an optional pagination for the request.
     #[prost(message, optional, tag = "4")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageRequest,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
 }
 /// QueryBlocksResponse is the response type for the Query/Blocks RPC
 /// method.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/desmos.relationships.v1.QueryBlocksResponse")]
 #[serde(rename_all = "snake_case")]
@@ -344,9 +371,8 @@ pub struct QueryBlocksResponse {
     #[prost(message, repeated, tag = "1")]
     pub blocks: ::prost::alloc::vec::Vec<UserBlock>,
     #[prost(message, optional, tag = "2")]
-    pub pagination: ::core::option::Option<
-        super::super::super::cosmos::base::query::v1beta1::PageResponse,
-    >,
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
 }
 pub struct RelationshipsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
@@ -370,7 +396,7 @@ impl<'a, Q: cosmwasm_std::CustomQuery> RelationshipsQuerier<'a, Q> {
             counterparty,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
     pub fn blocks(
         &self,
@@ -387,6 +413,6 @@ impl<'a, Q: cosmwasm_std::CustomQuery> RelationshipsQuerier<'a, Q> {
             blocked,
             pagination,
         }
-            .query(self.querier)
+        .query(self.querier)
     }
 }

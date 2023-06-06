@@ -1,12 +1,14 @@
 /// BasicAllowance implements Allowance with a one-time grant of coins
 /// that optionally expires. The grantee can use up to SpendLimit to cover fees.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.BasicAllowance")]
 #[serde(rename_all = "snake_case")]
@@ -23,12 +25,14 @@ pub struct BasicAllowance {
 /// PeriodicAllowance extends Allowance to allow for both a maximum cap,
 /// as well as a limit per time period.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.PeriodicAllowance")]
 #[serde(rename_all = "snake_case")]
@@ -55,12 +59,14 @@ pub struct PeriodicAllowance {
 }
 /// AllowedMsgAllowance creates allowance only for specified message types.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.AllowedMsgAllowance")]
 #[serde(rename_all = "snake_case")]
@@ -74,12 +80,14 @@ pub struct AllowedMsgAllowance {
 }
 /// Grant is stored in the KVStore to record a grant with full context
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/cosmos.feegrant.v1beta1.Grant")]
 #[serde(rename_all = "snake_case")]

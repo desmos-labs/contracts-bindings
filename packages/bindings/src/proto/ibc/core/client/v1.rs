@@ -1,12 +1,14 @@
 /// IdentifiedClientState defines a client state with an additional client
 /// identifier field.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.IdentifiedClientState")]
 #[serde(rename_all = "snake_case")]
@@ -21,12 +23,14 @@ pub struct IdentifiedClientState {
 /// ConsensusStateWithHeight defines a consensus state with an additional height
 /// field.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ConsensusStateWithHeight")]
 #[serde(rename_all = "snake_case")]
@@ -41,12 +45,14 @@ pub struct ConsensusStateWithHeight {
 /// ClientConsensusStates defines all the stored consensus states for a given
 /// client.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientConsensusStates")]
 #[serde(rename_all = "snake_case")]
@@ -63,12 +69,14 @@ pub struct ClientConsensusStates {
 /// handler may fail if the subject and the substitute do not match in client and
 /// chain parameters (with exception to latest height, frozen height, and chain-id).
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.ClientUpdateProposal")]
 #[serde(rename_all = "snake_case")]
@@ -90,12 +98,14 @@ pub struct ClientUpdateProposal {
 /// UpgradeProposal is a gov Content type for initiating an IBC breaking
 /// upgrade.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.UpgradeProposal")]
 #[serde(rename_all = "snake_case")]
@@ -105,9 +115,7 @@ pub struct UpgradeProposal {
     #[prost(string, tag = "2")]
     pub description: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
-    pub plan: ::core::option::Option<
-        super::super::super::super::cosmos::upgrade::v1beta1::Plan,
-    >,
+    pub plan: ::core::option::Option<super::super::super::super::cosmos::upgrade::v1beta1::Plan>,
     /// An UpgradedClientState must be provided to perform an IBC breaking upgrade.
     /// This will make the chain commit to the correct upgraded (self) client state
     /// before the upgrade occurs, so that connecting chains can verify that the
@@ -128,12 +136,14 @@ pub struct UpgradeProposal {
 /// height continues to be monitonically increasing even as the RevisionHeight
 /// gets reset
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Height")]
 #[serde(rename_all = "snake_case")]
@@ -155,12 +165,14 @@ pub struct Height {
 }
 /// Params defines the set of IBC light client parameters.
 #[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
 #[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
     schemars::JsonSchema,
     serde::Serialize,
     serde::Deserialize,
-    desmos_std_derive::CosmwasmExt
+    desmos_std_derive::CosmwasmExt,
 )]
 #[proto_message(type_url = "/ibc.core.client.v1.Params")]
 #[serde(rename_all = "snake_case")]
