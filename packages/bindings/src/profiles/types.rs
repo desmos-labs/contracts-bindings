@@ -1,6 +1,6 @@
 //! Contains the types definitions of x/profiles.
 
-pub use desmos_std::proto::desmos::profiles::v3::*;
+pub use crate::proto::desmos::profiles::v3::*;
 
 use crate::cosmos_types::Any;
 

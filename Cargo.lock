@@ -423,35 +423,42 @@ dependencies = [
 name = "desmos-bindings"
 version = "2.0.0"
 dependencies = [
+ "base64 0.21.0",
  "chrono",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cw-multi-test",
- "desmos-std",
- "mock",
- "prost 0.11.9",
- "prost-types",
- "serde",
- "serde-cw-value",
- "std-derive",
- "thiserror",
-]
-
-[[package]]
-name = "desmos-std"
-version = "0.1.0"
-dependencies = [
- "base64 0.21.0",
- "chrono",
- "cosmwasm-std",
- "mock",
+ "desmos-mock",
+ "desmos-std-derive",
  "prost 0.11.9",
  "prost-types",
  "schemars",
  "serde",
  "serde-cw-value",
- "std-derive",
  "strum_macros",
+ "thiserror",
+]
+
+[[package]]
+name = "desmos-mock"
+version = "0.1.0"
+dependencies = [
+ "cosmwasm-std",
+]
+
+[[package]]
+name = "desmos-std-derive"
+version = "0.1.0"
+dependencies = [
+ "cosmwasm-std",
+ "desmos-mock",
+ "itertools",
+ "proc-macro2",
+ "prost 0.11.9",
+ "quote",
+ "serde",
+ "syn 2.0.16",
+ "trybuild",
 ]
 
 [[package]]
@@ -845,13 +852,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
-name = "mock"
-version = "0.1.0"
-dependencies = [
- "cosmwasm-std",
-]
-
-[[package]]
 name = "multimap"
 version = "0.8.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1134,9 +1134,9 @@ dependencies = [
 
 [[package]]
 name = "rustversion"
-version = "1.0.11"
+version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5583e89e108996506031660fe09baa5011b9dd0341b89029313006d1fb508d70"
+checksum = "4f3208ce4d8448b3f3e7d168a73f5e0c43a61e32930de3bceeccedb388b6bf06"
 
 [[package]]
 name = "ryu"
@@ -1312,21 +1312,6 @@ name = "static_assertions"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
-
-[[package]]
-name = "std-derive"
-version = "0.1.0"
-dependencies = [
- "cosmwasm-std",
- "itertools",
- "mock",
- "proc-macro2",
- "prost 0.11.9",
- "quote",
- "serde",
- "syn 2.0.16",
- "trybuild",
-]
 
 [[package]]
 name = "strum_macros"

@@ -6,7 +6,7 @@ use cosmwasm_std::{
     SystemResult,
 };
 
-use mock::MockableQuerier;
+use desmos_mock::MockableQuerier;
 use serde::de::DeserializeOwned;
 use std::collections::HashMap;
 use std::marker::PhantomData;

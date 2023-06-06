@@ -1,6 +1,6 @@
 //! Contains the types definitions of x/posts.
 
-pub use desmos_std::proto::desmos::posts::v3::*;
+pub use crate::proto::desmos::posts::v3::*;
 
 use crate::cosmos_types::Any;
 
