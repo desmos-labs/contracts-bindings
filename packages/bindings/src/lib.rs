@@ -29,3 +29,9 @@ pub mod reports;
 pub mod subspaces;
 
 pub mod cosmos_types;
+
+mod serde;
+
+mod proto;
+
+mod shim;

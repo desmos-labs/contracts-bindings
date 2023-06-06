@@ -1,6 +1,6 @@
 //! Contains the types definitions of x/reactions.
 
-pub use desmos_std::proto::desmos::reactions::v1::*;
+pub use crate::proto::desmos::reactions::v1::*;
 
 use crate::cosmos_types::Any;
 
