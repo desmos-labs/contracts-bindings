@@ -63,9 +63,9 @@ checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
 
 [[package]]
 name = "base64"
-version = "0.21.0"
+version = "0.21.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a4a4ddaa51a5bc52a6948f74c06d20aaaddb71924eab79b8c97a8c556e942d6a"
+checksum = "604178f6c5c21f02dc555784810edfb88d34ac2c73b2eae109655649ee73ce3d"
 
 [[package]]
 name = "base64ct"
@@ -86,7 +86,7 @@ dependencies = [
 name = "bindings-test"
 version = "1.0.0"
 dependencies = [
- "base64 0.21.0",
+ "base64 0.21.2",
  "chrono",
  "cosmwasm-std",
  "desmos-bindings",
@@ -188,9 +188,9 @@ checksum = "5827cebf4670468b8772dd191856768aedcb1b0278a04f989f7766351917b9dc"
 
 [[package]]
 name = "cosmwasm-crypto"
-version = "1.2.5"
+version = "1.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75836a10cb9654c54e77ee56da94d592923092a10b369cdb0dbd56acefc16340"
+checksum = "41c0e41be7e6c7d7ab3c61cdc32fcfaa14f948491a401cbc1c74bb33b6f4b851"
 dependencies = [
  "digest 0.10.6",
  "ed25519-zebra",
@@ -201,9 +201,9 @@ dependencies = [
 
 [[package]]
 name = "cosmwasm-derive"
-version = "1.2.5"
+version = "1.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1c9f7f0e51bfc7295f7b2664fe8513c966428642aa765dad8a74acdab5e0c773"
+checksum = "3a7ee2798c92c00dd17bebb4210f81d5f647e5e92d847959b7977e0fd29a3500"
 dependencies = [
  "syn 1.0.109",
 ]
@@ -234,9 +234,9 @@ dependencies = [
 
 [[package]]
 name = "cosmwasm-std"
-version = "1.2.5"
+version = "1.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a49b85345e811c8e80ec55d0d091e4fcb4f00f97ab058f9be5f614c444a730cb"
+checksum = "92d5fdfd112b070055f068fad079d490117c8e905a588b92a5a7c9276d029930"
 dependencies = [
  "base64 0.13.1",
  "cosmwasm-crypto",
@@ -429,7 +429,7 @@ dependencies = [
 name = "desmos-bindings"
 version = "2.0.0"
 dependencies = [
- "base64 0.21.0",
+ "base64 0.21.2",
  "chrono",
  "cosmwasm-schema",
  "cosmwasm-std",

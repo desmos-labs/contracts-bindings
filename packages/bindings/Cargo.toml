@@ -22,7 +22,7 @@ all-features = true
 
 [dependencies]
 chrono = {version = "0.4.26", default-features = false}
-cosmwasm-std = { version = "1.2.5", features = ["stargate"]}
+cosmwasm-std = { version = "1.2.6", features = ["stargate"]}
 cosmwasm-schema = "1.2.5"
 serde = { version = "1.0.163", default-features = false, features = ["derive"] }
 thiserror = "1.0.40"
@@ -32,7 +32,7 @@ serde-cw-value = "0.7.0"
 desmos-mock = { version = "0.1.0", path = "../mock" }
 schemars = "0.8.11"
 strum_macros = "0.24.3"
-base64 = "0.21.0"
+base64 = "0.21.2"
 desmos-std-derive = {version = "0.1.0", path = "../std-derive"}
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
