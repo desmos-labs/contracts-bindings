@@ -153,8 +153,8 @@ impl PostsMsg {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::cosmos_types::Timestamp;
     use chrono::DateTime;
-    use desmos_std::shim::Timestamp;
 
     #[test]
     fn test_create_post() {

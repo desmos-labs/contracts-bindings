@@ -1,8 +1,8 @@
 //! Contains the querier that can be used to query data related to the x/reports module.
 
+use crate::cosmos_types::PageRequest;
 use crate::reports::types::ReportTarget;
 use crate::reports::types::*;
-use crate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {

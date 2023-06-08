@@ -1,8 +1,11 @@
 use crate::chain_communication::DesmosCli;
-use crate::consts::{USER1_ADDRESS, USER2_ADDRESS};
+use crate::consts::{TEST_SUBSPACE, TEST_SUBSPACE_USER_GROUP, USER1_ADDRESS, USER2_ADDRESS};
 use chrono::DateTime;
 
-use cosmwasm_std::Addr;
+use cosmwasm_std::{Addr, Coin};
+
+use desmos_bindings::cosmos_types::{Allowance, BasicAllowance};
+
 use desmos_bindings::posts::{
     msg::PostsMsg,
     types::{poll::ProvidedAnswer, AttachmentContent, Entities, Media, Poll, ReplySetting, Url},
@@ -16,7 +19,10 @@ use desmos_bindings::reports::{
     msg::ReportsMsg,
     types::{PostTarget, ReportTarget, UserTarget},
 };
-use desmos_bindings::subspaces::{msg::SubspacesMsg, types::Permission};
+use desmos_bindings::subspaces::{
+    msg::SubspacesMsg,
+    types::{Grantee, Permission},
+};
 
 pub fn setup() {
     let cli = DesmosCli::default();
@@ -77,6 +83,36 @@ pub fn setup() {
                 Permission::ManageGroups,
             ],
             Addr::unchecked(&contract),
+        )],
+    )
+    .assert_success();
+
+    // Grant user1 an allowance inside the test subspace
+    cli.execute_contract(
+        &contract,
+        vec![SubspacesMsg::grant_allowance(
+            TEST_SUBSPACE,
+            Addr::unchecked(&contract),
+            Grantee::user_grantee(USER1_ADDRESS),
+            Allowance::BasicAllowance(BasicAllowance {
+                spend_limit: vec![Coin::new(1000, "stake").into()],
+                expiration: None,
+            }),
+        )],
+    )
+    .assert_success();
+
+    // Grant user group 1 an allowance inside the test subspace
+    cli.execute_contract(
+        &contract,
+        vec![SubspacesMsg::grant_allowance(
+            TEST_SUBSPACE,
+            Addr::unchecked(&contract),
+            Grantee::group_grantee(TEST_SUBSPACE_USER_GROUP),
+            Allowance::BasicAllowance(BasicAllowance {
+                spend_limit: vec![Coin::new(1000, "stake").into()],
+                expiration: None,
+            }),
         )],
     )
     .assert_success();

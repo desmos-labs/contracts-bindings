@@ -1,8 +1,8 @@
 [package]
 edition = "2021"
 name = "proto-build"
-publish = false
 version = "0.1.0"
+publish = false
 
 [dependencies]
 heck = "0.4.0"

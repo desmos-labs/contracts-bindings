@@ -3,11 +3,11 @@ mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{USER1_ADDRESS, USER1_KEY, USER2_ADDRESS, USER2_KEY};
     use cosmwasm_std::{Addr, Binary};
+    use desmos_bindings::cosmos_types::secp256k1;
     use desmos_bindings::profiles::msg::ProfilesMsg;
     use desmos_bindings::profiles::types::{
         AddressData, Bech32Address, ChainConfig, Proof, SignatureValueType, SingleSignature,
     };
-    use desmos_bindings::types::secp256k1;
     use test_contract::msg::ExecuteMsg;
 
     fn build_save_profile_msg(contract_address: &str) -> ExecuteMsg {

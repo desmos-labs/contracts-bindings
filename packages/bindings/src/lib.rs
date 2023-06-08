@@ -28,4 +28,11 @@ pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
 
-pub mod types;
+pub mod cosmos_types;
+
+mod serde;
+
+#[allow(missing_docs)]
+mod proto;
+
+mod shim;

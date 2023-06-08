@@ -1,6 +1,8 @@
 //! Contains the types definitions of x/subspaces.
 
-pub use desmos_std::proto::desmos::subspaces::v3::*;
+pub use crate::proto::desmos::subspaces::v3::*;
+
+use crate::cosmos_types::Any;
 
 /// Represents the permission to perform operations inside the subspace.
 pub enum Permission {
@@ -59,6 +61,37 @@ impl Into<String> for Permission {
             Permission::EditOwnContent => "EDIT_OWN_CONTENT".into(),
 
             Permission::ModerateContent => "MODERATE_CONTENT".into(),
+        }
+    }
+}
+
+/// Represents a generic grantee.
+#[derive(Clone)]
+pub enum Grantee {
+    /// Represents a user grantee.
+    UserGrantee(UserGrantee),
+
+    /// Represents a group grantee.
+    GroupGrantee(GroupGrantee),
+}
+
+impl Grantee {
+    /// Creates a new [`Grantee::UserGrantee`] instance
+    pub fn user_grantee(user: impl Into<String>) -> Self {
+        Self::UserGrantee(UserGrantee { user: user.into() })
+    }
+
+    /// Creates a new [`Grantee::GroupGrantee`] instance
+    pub fn group_grantee(group_id: u32) -> Self {
+        Self::GroupGrantee(GroupGrantee { group_id })
+    }
+}
+
+impl Into<Any> for Grantee {
+    fn into(self) -> Any {
+        match self {
+            Grantee::UserGrantee(grantee) => grantee.into(),
+            Grantee::GroupGrantee(grantee) => grantee.into(),
         }
     }
 }

@@ -1,7 +1,7 @@
 //! Contains a querier to query data from the Desmos x/subspaces module.
 
+use crate::cosmos_types::PageRequest;
 use crate::subspaces::types::*;
-use crate::types::PageRequest;
 use cosmwasm_std::{Addr, Empty, QuerierWrapper, StdResult};
 #[cfg(feature = "iterators")]
 use {
@@ -266,6 +266,111 @@ impl<'a> SubspacesQuerier<'a> {
         self.querier
             .user_permissions(subspace_id, section_id.unwrap_or_default(), user.into())
     }
+
+    /// Queries the user allowances inside a subspace.
+    ///
+    /// * `subspace_id` - Id of the subspace for which to get the grant(s).
+    /// * `user` - Optional address of the user that was granted an allowance.
+    /// * `pagination` - Optional pagination configs.
+    pub fn query_user_allowances(
+        &self,
+        subspace_id: u64,
+        grantee: Option<Addr>,
+        pagination: Option<PageRequest>,
+    ) -> StdResult<QueryUserAllowancesResponse> {
+        self.querier.user_allowances(
+            subspace_id,
+            grantee.unwrap_or_else(|| Addr::unchecked("")).into(),
+            pagination,
+        )
+    }
+
+    /// Gives an iterator to scan over all the user allowances inside a subspace.
+    ///
+    /// * `subspace_id` - Id of the subspace for which to get the grant(s).
+    /// * `grantee` - optional address of the user that was granted an allowance.
+    /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
+    pub fn iterate_user_allowances(
+        &self,
+        subspace_id: u64,
+        grantee: Option<Addr>,
+        page_size: u64,
+    ) -> PageIterator<Grant, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_user_allowances(
+                    subspace_id,
+                    grantee.clone(),
+                    Some(PageRequest {
+                        key: key.unwrap_or_default().to_vec(),
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: 0,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.grants,
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
+                })
+            }),
+            page_size,
+        )
+    }
+
+    /// Queries the group allowances inside a subspace.
+    ///
+    /// * `subspace_id` - Id of the subspace for which to get the grant(s).
+    /// * `group_id` - Optional id of the user group that was granted the allowance(s).
+    /// * `pagination` - Optional pagination configs.
+    pub fn query_group_allowances(
+        &self,
+        subspace_id: u64,
+        group_id: Option<u32>,
+        pagination: Option<PageRequest>,
+    ) -> StdResult<QueryGroupAllowancesResponse> {
+        self.querier
+            .group_allowances(subspace_id, group_id.unwrap_or_default(), pagination)
+    }
+
+    /// Gives an iterator to scan over all the user allowances inside a subspace.
+    ///
+    /// * `subspace_id` - Id of the subspace for which to get the grant(s).
+    /// * `group_id` - Optional id of the user group that was granted the allowance(s).
+    /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
+    pub fn iterate_group_allowances(
+        &self,
+        subspace_id: u64,
+        group_id: Option<u32>,
+        page_size: u64,
+    ) -> PageIterator<Grant, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_group_allowances(
+                    subspace_id,
+                    group_id,
+                    Some(PageRequest {
+                        key: key.unwrap_or_default().to_vec(),
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: 0,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.grants,
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
+                })
+            }),
+            page_size,
+        )
+    }
 }
 
 #[cfg(test)]
@@ -402,5 +507,47 @@ mod tests {
             .unwrap();
         let expected = MockSubspacesQueries::get_mocked_user_permissions_response();
         assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_query_user_allowances() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_user_allowances(1, None, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_user_allowances_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_iterate_user_allowances() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_user_allowances(1, None, 10);
+        let expected = MockSubspacesQueries::get_mocked_user_allowances_response();
+        assert_eq!(expected.grants[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
+    }
+
+    #[test]
+    fn test_query_group_allowances() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let response = querier.query_group_allowances(1, None, None).unwrap();
+        let expected = MockSubspacesQueries::get_mocked_group_allowances_response();
+        assert_eq!(expected, response);
+    }
+
+    #[test]
+    fn test_iterate_group_allowances() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = SubspacesQuerier::new(&deps.querier);
+        let mut it = querier.iterate_group_allowances(1, None, 10);
+        let expected = MockSubspacesQueries::get_mocked_group_allowances_response();
+        assert_eq!(expected.grants[0], it.next().unwrap().unwrap(),);
+        assert!(it.next().is_none());
     }
 }
