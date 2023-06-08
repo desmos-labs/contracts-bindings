@@ -10,7 +10,7 @@ mod transform;
 mod transformers;
 
 /// The desmos commit or tag to be cloned and used to build the proto files
-const DESMOS_REV: &str = "origin/master";
+const DESMOS_REV: &str = "v5.0.1";
 
 /// Directory where the desmos submodule is located
 const DESMOS_DIR: &str = "../../dependencies/desmos/";
@@ -37,7 +37,7 @@ const IBC_REV: &str = "v7.0.1";
 const IBC_REPO_URL: &str = "https://github.com/cosmos/ibc-go.git";
 
 /// The directory generated proto files go into in this repo
-const OUT_DIR: &str = "../std/src/proto/";
+const OUT_DIR: &str = "../bindings/src/proto/";
 
 /// A temporary directory for proto building
 const TMP_BUILD_DIR: &str = "/tmp/tmp-protobuf/";

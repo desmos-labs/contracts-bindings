@@ -1,6 +1,6 @@
 //! Contains the types definitions of x/subspaces.
 
-pub use desmos_std::proto::desmos::subspaces::v3::*;
+pub use crate::proto::desmos::subspaces::v3::*;
 
 use crate::cosmos_types::Any;
 

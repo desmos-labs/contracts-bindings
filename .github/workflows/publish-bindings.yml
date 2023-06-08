@@ -22,8 +22,7 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Publish to crates.io 📤
-        uses: katyo/publish-crates@v1
+      - name: Publish crates.io 📤
+        uses: katyo/publish-crates@v2
         with:
-          path: './packages/bindings'
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
