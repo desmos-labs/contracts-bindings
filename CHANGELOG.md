@@ -1,5 +1,18 @@
 # Changelog
 
+## Version 2.0.1
+### Dependencies
+- ([\#205](https://github.com/desmos-labs/desmos-bindings.git/pull/205)) Bump prettyplease from 0.2.5 to 0.2.6
+- ([\#206](https://github.com/desmos-labs/desmos-bindings.git/pull/206)) Bump base64 from 0.21.0 to 0.21.2
+- ([\#208](https://github.com/desmos-labs/desmos-bindings.git/pull/208)) Bump quote from 1.0.27 to 1.0.28
+- ([\#211](https://github.com/desmos-labs/desmos-bindings.git/pull/211)) Bump log from 0.4.17 to 0.4.18
+- ([\#215](https://github.com/desmos-labs/desmos-bindings.git/pull/215)) Bump chrono from 0.4.24 to 0.4.26
+- ([\#218](https://github.com/desmos-labs/desmos-bindings.git/pull/218)) Bump regex from 1.8.1 to 1.8.4
+- ([\#219](https://github.com/desmos-labs/desmos-bindings.git/pull/219)) Bump cosmwasm-schema from 1.2.5 to 1.2.6
+- ([\#220](https://github.com/desmos-labs/desmos-bindings.git/pull/220)) Bump cosmwasm-std from 1.2.5 to 1.2.6
+- ([\#223](https://github.com/desmos-labs/desmos-bindings.git/pull/223)) Bump cw-multi-test from 0.16.4 to 0.16.5
+- ([\#224](https://github.com/desmos-labs/desmos-bindings.git/pull/224)) Bump proc-macro2 from 1.0.58 to 1.0.60
+
 ## Version 2.0.0
 ### Breaking changes
 With this version, all the methods now are base on stargate feature. For this reason, the following changes have been made:
