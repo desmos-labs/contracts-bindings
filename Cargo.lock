@@ -427,7 +427,7 @@ dependencies = [
 
 [[package]]
 name = "desmos-bindings"
-version = "2.0.0"
+version = "2.0.1"
 dependencies = [
  "base64 0.21.2",
  "chrono",
@@ -447,14 +447,14 @@ dependencies = [
 
 [[package]]
 name = "desmos-mock"
-version = "0.1.0"
+version = "2.0.1"
 dependencies = [
  "cosmwasm-std",
 ]
 
 [[package]]
 name = "desmos-std-derive"
-version = "0.1.0"
+version = "2.0.1"
 dependencies = [
  "cosmwasm-std",
  "desmos-mock",
@@ -463,7 +463,7 @@ dependencies = [
  "prost 0.11.9",
  "quote",
  "serde",
- "syn 2.0.16",
+ "syn 2.0.18",
  "trybuild",
 ]
 
@@ -928,7 +928,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3b69d39aab54d069e7f2fe8cb970493e7834601ca2d8c65fd7bbd183578080d1"
 dependencies = [
  "proc-macro2",
- "syn 2.0.16",
+ "syn 2.0.18",
 ]
 
 [[package]]
@@ -1032,7 +1032,7 @@ dependencies = [
  "prost-types",
  "quote",
  "regex",
- "syn 2.0.16",
+ "syn 2.0.18",
  "walkdir",
 ]
 
@@ -1231,7 +1231,7 @@ checksum = "8c805777e3930c8883389c602315a24224bcc738b63905ef87cd1420353ea93e"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.16",
+ "syn 2.0.18",
 ]
 
 [[package]]
@@ -1338,9 +1338,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.16"
+version = "2.0.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a6f671d4b5ffdb8eadec19c0ae67fe2639df8684bd7bc4b83d986b8db549cf01"
+checksum = "32d41677bcbe24c20c52e7c70b0d8db04134c5d1066bf98662e2871ad200ea3e"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1397,7 +1397,7 @@ checksum = "f9456a42c5b0d803c8cd86e73dd7cc9edd429499f37a3550d286d5e86720569f"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.16",
+ "syn 2.0.18",
 ]
 
 [[package]]
