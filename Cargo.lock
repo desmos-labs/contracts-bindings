@@ -442,7 +442,6 @@ dependencies = [
  "serde",
  "serde-cw-value",
  "strum_macros",
- "thiserror",
 ]
 
 [[package]]
