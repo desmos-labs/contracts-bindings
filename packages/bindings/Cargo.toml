@@ -30,7 +30,7 @@ prost-types = {version = "0.11.9", default-features = false}
 serde-cw-value = "0.7.0"
 desmos-mock = { version = "2.0.1", path = "../mock" }
 schemars = "0.8.11"
-strum_macros = "0.24.3"
+strum_macros = "0.25.0"
 base64 = "0.21.2"
 desmos-std-derive = {version = "2.0.1", path = "../std-derive"}
 
