@@ -9,7 +9,7 @@ jobs:
   publish:
     name: Publish Desmos bindings on crates.io
     runs-on: ubuntu-latest
-
+    timeout-minutes: 6
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
