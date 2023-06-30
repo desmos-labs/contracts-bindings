@@ -16,7 +16,7 @@ proc-macro = true
 [dependencies]
 itertools = "0.10.3"
 proc-macro2 = "1.0.60"
-quote = "1.0.28"
+quote = "1.0.29"
 syn = "2.0.20"
 
 [dev-dependencies]
