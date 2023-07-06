@@ -14,7 +14,7 @@ backtraces = ["cosmwasm-std/backtraces"]
 proc-macro = true
 
 [dependencies]
-itertools = "0.10.3"
+itertools = "0.11.0"
 proc-macro2 = "1.0.60"
 quote = "1.0.29"
 syn = "2.0.20"
