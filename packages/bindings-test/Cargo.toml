@@ -10,7 +10,7 @@ publish = false
 cosmwasm-std = { version = "1.2.7", features = ["stargate"]}
 desmos-bindings = { path = "../bindings", version = "2.0.0" }
 test-contract = { path = "../../contracts/test-contract", version = "1.0.0" }
-serde = "1.0.163"
+serde = "1.0.167"
 serde_json = "1.0.100"
 base64 = "0.21.2"
 chrono = "0.4.26"
