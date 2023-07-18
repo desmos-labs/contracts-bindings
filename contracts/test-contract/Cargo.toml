@@ -35,4 +35,4 @@ cosmwasm-std = { version = "1.2.7", features = ["stargate"]}
 cw2 = "1.1.0"
 thiserror = { version = "1.0" }
 desmos-bindings = { path = "../../packages/bindings", version = "2.0.0" }
-cosmwasm-schema = { version = "1.2.7" }
+cosmwasm-schema = { version = "1.3.0" }
