@@ -1,0 +1,6 @@
+type: refactor
+module: none
+pull_request: 291
+description: Use `parse_err` constructor instead of literal
+backward_compatible: false
+date: 2023-08-18T07:06:29.63239721Z
