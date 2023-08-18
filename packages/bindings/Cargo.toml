@@ -46,4 +46,5 @@ relationships = []
 reports = []
 reactions = []
 iterators = []
-backtraces = ["cosmwasm-std/backtraces", "desmos-std-derive/backtraces"]
+# TODO: Enable backtraces feature when it becomes stable feature
+# backtraces = ["cosmwasm-std/backtraces"]
