@@ -28,7 +28,7 @@ jobs:
         if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: 1.71.1
           profile: minimal
           override: true
 
@@ -62,7 +62,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly
+          toolchain: 1.71.1
           override: true
           components: rustfmt, clippy
 
@@ -99,7 +99,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly
+          toolchain: 1.71.1
           override: true
           components: rustfmt, clippy
 
@@ -172,7 +172,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: nightly
+          toolchain: 1.71.1
           override: true
           components: rustfmt, clippy
 
