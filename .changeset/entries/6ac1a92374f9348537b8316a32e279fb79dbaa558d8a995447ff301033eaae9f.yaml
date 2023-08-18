@@ -1,0 +1,6 @@
+type: refactor
+module: none
+pull_request: 296
+description: Disable backtraces feature
+backward_compatible: false
+date: 2023-08-18T07:04:10.019998784Z
