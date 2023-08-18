@@ -27,7 +27,7 @@ jobs:
         if: env.GIT_DIFF
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: 1.71.1
           override: true
 
       - name: Prepare rust cache 🗄️
