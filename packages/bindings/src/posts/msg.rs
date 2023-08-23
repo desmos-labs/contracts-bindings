@@ -474,11 +474,7 @@ mod tests {
 
     #[test]
     fn test_accept_post_owner_transfer_request() {
-        let msg = PostsMsg::accept_post_owner_transfer_request(
-            1,
-            1,
-            Addr::unchecked("receiver"),
-        );
+        let msg = PostsMsg::accept_post_owner_transfer_request(1, 1, Addr::unchecked("receiver"));
 
         let expected = MsgAcceptPostOwnerTransferRequest {
             subspace_id: 1,
@@ -491,11 +487,7 @@ mod tests {
 
     #[test]
     fn test_refuse_post_owner_transfer_request() {
-        let msg = PostsMsg::refuse_post_owner_transfer_request(
-            1,
-            1,
-            Addr::unchecked("receiver"),
-        );
+        let msg = PostsMsg::refuse_post_owner_transfer_request(1, 1, Addr::unchecked("receiver"));
 
         let expected = MsgRefusePostOwnerTransferRequest {
             subspace_id: 1,

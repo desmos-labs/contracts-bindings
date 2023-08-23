@@ -3,9 +3,10 @@
 use crate::cosmos_types::Timestamp;
 use crate::posts::types::AttachmentContent;
 use crate::posts::types::{
-    Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
-    QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
-    UserAnswer, QueryIncomingPostOwnerTransferRequestsResponse, PostOwnerTransferRequest,
+    Attachment, Media, Post, PostOwnerTransferRequest,
+    QueryIncomingPostOwnerTransferRequestsResponse, QueryPollAnswersResponse,
+    QueryPostAttachmentsResponse, QueryPostResponse, QuerySectionPostsResponse,
+    QuerySubspacePostsResponse, ReplySetting, UserAnswer,
 };
 
 use chrono::DateTime;
@@ -142,13 +143,14 @@ impl MockPostsQueries {
     }
 
     /// Function that mocks a [`QueryIncomingPostOwnerTransferRequestsResponse`].
-    pub fn get_mocked_incoming_post_transfer_requests_response() -> QueryIncomingPostOwnerTransferRequestsResponse {
+    pub fn get_mocked_incoming_post_transfer_requests_response(
+    ) -> QueryIncomingPostOwnerTransferRequestsResponse {
         QueryIncomingPostOwnerTransferRequestsResponse {
-            requests: vec![PostOwnerTransferRequest{
+            requests: vec![PostOwnerTransferRequest {
                 subspace_id: 1,
                 post_id: 1,
                 sender: "sender".into(),
-                receiver: "receiver".into()
+                receiver: "receiver".into(),
             }],
             pagination: None,
         }

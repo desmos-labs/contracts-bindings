@@ -101,8 +101,9 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     {
         use crate::posts::mocks::MockPostsQueries;
         use crate::posts::types::{
-            QueryPollAnswersRequest, QueryPostAttachmentsRequest, QueryPostRequest,
-            QuerySectionPostsRequest, QuerySubspacePostsRequest, QueryIncomingPostOwnerTransferRequestsRequest,
+            QueryIncomingPostOwnerTransferRequestsRequest, QueryPollAnswersRequest,
+            QueryPostAttachmentsRequest, QueryPostRequest, QuerySectionPostsRequest,
+            QuerySubspacePostsRequest,
         };
 
         QuerySubspacePostsRequest::mock_response(
