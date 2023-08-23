@@ -49,6 +49,7 @@ impl MockSubspacesQueries {
             creation_time: Some(Timestamp::from(DateTime::from(
                 DateTime::parse_from_rfc3339("2022-02-21T13:18:57.800827Z").unwrap(),
             ))),
+            additional_fee_tokens: [].into(),
         }
     }
 

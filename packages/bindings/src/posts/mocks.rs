@@ -39,6 +39,7 @@ impl MockPostsQueries {
                 DateTime::parse_from_rfc3339("2011-11-11T11:11:11.111Z").unwrap(),
             ))),
             last_edited_date: None,
+            owner:  MOCK_AUTHOR.into(),
         }
     }
     /// Function that mocks a attachment.

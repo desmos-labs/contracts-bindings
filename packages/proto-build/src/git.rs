@@ -26,6 +26,13 @@ pub fn update_repo(name: &str, dir: &str, rev: &str) {
     let full_path = |p: &str| PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(p);
 
     info!("Update {} repository...", name);
+
+    run_git(&[
+        "-C",
+        full_path(dir).to_str().unwrap(),
+        "fetch",
+    ]);
+
     run_git(&[
         "-C",
         full_path(dir).to_str().unwrap(),
