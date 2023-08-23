@@ -5,7 +5,7 @@ use crate::posts::types::AttachmentContent;
 use crate::posts::types::{
     Attachment, Media, Post, QueryPollAnswersResponse, QueryPostAttachmentsResponse,
     QueryPostResponse, QuerySectionPostsResponse, QuerySubspacePostsResponse, ReplySetting,
-    UserAnswer,
+    UserAnswer, QueryIncomingPostOwnerTransferRequestsResponse, PostOwnerTransferRequest,
 };
 
 use chrono::DateTime;
@@ -137,6 +137,19 @@ impl MockPostsQueries {
     pub fn get_mocked_poll_answers_response() -> QueryPollAnswersResponse {
         QueryPollAnswersResponse {
             answers: Self::get_mocked_poll_answers(1, 1, 1),
+            pagination: None,
+        }
+    }
+
+    /// Function that mocks a [`QueryIncomingPostOwnerTransferRequestsResponse`].
+    pub fn get_mocked_incoming_post_transfer_requests_response() -> QueryIncomingPostOwnerTransferRequestsResponse {
+        QueryIncomingPostOwnerTransferRequestsResponse {
+            requests: vec![PostOwnerTransferRequest{
+                subspace_id: 1,
+                post_id: 1,
+                sender: "sender".into(),
+                receiver: "receiver".into()
+            }],
             pagination: None,
         }
     }

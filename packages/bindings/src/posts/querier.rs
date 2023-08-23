@@ -252,6 +252,60 @@ impl<'a> PostsQuerier<'a> {
             page_size,
         )
     }
+
+    /// Queries the incoming post transfer requests having the given `subspace_id`.
+    ///
+    /// * `subspace_id` - Id of the subspace where the requests are stored.
+    /// * `receiver` - Optional the address of the user to which query the incoming requests for.
+    /// * `pagination` - Optional pagination for the request.
+    pub fn query_incoming_post_transfer_requests(
+        &self,
+        subspace_id: u64,
+        receiver: Option<Addr>,
+        pagination: Option<PageRequest>,
+    ) -> StdResult<QueryIncomingPostOwnerTransferRequestsResponse> {
+        self.querier.incoming_post_owner_transfer_requests(
+            subspace_id,
+            receiver.unwrap_or_else(|| Addr::unchecked("")).into(),
+            pagination.map(Into::into),
+        )
+    }
+
+    /// Gives an iterator to scan over the incoming post transfer requests having the given `subspace_id`.
+    ///
+    /// * `subspace_id` - Id of the subspace where the requests are stored.
+    /// * `receiver` - Optional the address of the user to which query the incoming requests for.
+    /// * `page_size` - Size of the page requested to the chain.
+    #[cfg(feature = "iterators")]
+    pub fn iterate_incoming_post_transfer_requests(
+        &self,
+        subspace_id: u64,
+        receiver: Option<Addr>,
+        page_size: u64,
+    ) -> PageIterator<PostOwnerTransferRequest, Binary> {
+        PageIterator::new(
+            Box::new(move |key, limit| {
+                self.query_incoming_post_transfer_requests(
+                    subspace_id,
+                    receiver.clone(),
+                    Some(PageRequest {
+                        key: key.unwrap_or_default().to_vec(),
+                        limit: limit.into(),
+                        reverse: false,
+                        count_total: false,
+                        offset: 0,
+                    }),
+                )
+                .map(|response| Page {
+                    items: response.requests,
+                    next_page_key: response.pagination.and_then(|response| {
+                        (!response.next_key.is_empty()).then_some(Binary::from(response.next_key))
+                    }),
+                })
+            }),
+            page_size,
+        )
+    }
 }
 
 #[cfg(test)]
@@ -376,6 +430,32 @@ mod tests {
         let expected = MockPostsQueries::get_mocked_poll_answers_response();
 
         assert_eq!(expected.answers[0], iterator.next().unwrap().unwrap());
+        assert!(iterator.next().is_none())
+    }
+
+    #[test]
+    fn test_query_incoming_post_transfer_requests() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(&deps.querier);
+
+        let result = querier.query_incoming_post_transfer_requests(1, None, None);
+        let response = result.unwrap();
+        let expected = MockPostsQueries::get_mocked_incoming_post_transfer_requests_response();
+
+        assert_eq!(expected, response)
+    }
+
+    #[test]
+    fn test_iterate_incoming_post_transfer_requests() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = PostsQuerier::new(&deps.querier);
+
+        let mut iterator = querier.iterate_incoming_post_transfer_requests(1, None, 32);
+        let expected = MockPostsQueries::get_mocked_incoming_post_transfer_requests_response();
+
+        assert_eq!(expected.requests[0], iterator.next().unwrap().unwrap());
         assert!(iterator.next().is_none())
     }
 }
