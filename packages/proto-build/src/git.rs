@@ -27,11 +27,7 @@ pub fn update_repo(name: &str, dir: &str, rev: &str) {
 
     info!("Update {} repository...", name);
 
-    run_git(&[
-        "-C",
-        full_path(dir).to_str().unwrap(),
-        "fetch",
-    ]);
+    run_git(&["-C", full_path(dir).to_str().unwrap(), "fetch"]);
 
     run_git(&[
         "-C",
