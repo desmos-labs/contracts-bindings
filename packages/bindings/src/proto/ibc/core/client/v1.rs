@@ -177,7 +177,9 @@ pub struct Height {
 #[proto_message(type_url = "/ibc.core.client.v1.Params")]
 #[serde(rename_all = "snake_case")]
 pub struct Params {
-    /// allowed_clients defines the list of allowed client state types.
+    /// allowed_clients defines the list of allowed client state types which can be created
+    /// and interacted with. If a client type is removed from the allowed clients list, usage
+    /// of this client will be disabled until it is added again to the list.
     #[prost(string, repeated, tag = "1")]
     pub allowed_clients: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }

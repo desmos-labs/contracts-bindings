@@ -47,6 +47,7 @@ mod test {
             ),
             // Leave the last edited date None since we can't guess it at runtime.
             last_edited_date: None,
+            owner: contract_address.into(),
         }
     }
 

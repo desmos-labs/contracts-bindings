@@ -67,6 +67,9 @@ pub struct Post {
     /// (optional) Last edited time of the post
     #[prost(message, optional, tag = "13")]
     pub last_edited_date: ::core::option::Option<crate::shim::Timestamp>,
+    /// Owner of the post
+    #[prost(string, tag = "14")]
+    pub owner: ::prost::alloc::string::String,
 }
 /// PostReference contains the details of a post reference
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -409,6 +412,42 @@ pub struct Params {
     #[prost(uint32, tag = "1")]
     pub max_text_length: u32,
 }
+/// PostOwnerTransferRequest represents a request to transfer the ownership of a
+/// post from the sender to the receiver
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.PostOwnerTransferRequest")]
+#[serde(rename_all = "snake_case")]
+pub struct PostOwnerTransferRequest {
+    /// Id of the subspace that holds the post to transfer
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post which will be transferred
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Address of the sender
+    #[prost(string, tag = "3")]
+    pub sender: ::prost::alloc::string::String,
+    /// Address of the receiver
+    #[prost(string, tag = "4")]
+    pub receiver: ::prost::alloc::string::String,
+}
 /// PostReferenceType represents the different types of references
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
 #[repr(i32)]
@@ -561,6 +600,8 @@ pub struct GenesisState {
     pub user_answers: ::prost::alloc::vec::Vec<UserAnswer>,
     #[prost(message, optional, tag = "7")]
     pub params: ::core::option::Option<Params>,
+    #[prost(message, repeated, tag = "8")]
+    pub post_owner_transfer_requests: ::prost::alloc::vec::Vec<PostOwnerTransferRequest>,
 }
 /// SubspaceDataEntry contains the data for a given subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1049,6 +1090,286 @@ pub struct MsgUpdateParams {
 #[proto_message(type_url = "/desmos.posts.v3.MsgUpdateParamsResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgUpdateParamsResponse {}
+/// MsgMovePost moves a post to another subspace
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgMovePost")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgMovePost {
+    /// Id of the subspace where the post is currently located
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post to be moved
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Id of the target subspace to which the post will be moved
+    #[prost(uint64, tag = "3")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub target_subspace_id: u64,
+    /// Id of the target section to which the post will be moved
+    #[prost(uint32, tag = "4")]
+    pub target_section_id: u32,
+    /// Address of the post owner
+    #[prost(string, tag = "5")]
+    pub owner: ::prost::alloc::string::String,
+}
+/// MsgMovePostResponse defines the Msg/MsgMovePost response type
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgMovePostResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgMovePostResponse {
+    /// New id of the post in the target subspace
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+}
+/// MsgRequestPostOwnerTransfer represent a message used to transfer a post
+/// ownership to receiver
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgRequestPostOwnerTransfer")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRequestPostOwnerTransfer {
+    /// Id of the subspace that holds the post which ownership should be transfered
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post which will be transferred
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Address of the post ownership receiver
+    #[prost(string, tag = "3")]
+    pub receiver: ::prost::alloc::string::String,
+    /// Address of the sender who is creating a transfer request
+    #[prost(string, tag = "4")]
+    pub sender: ::prost::alloc::string::String,
+}
+/// MsgRequestPostOwnerTransferResponse defines the Msg/RequestPostOwnerTransfer
+/// response type
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgRequestPostOwnerTransferResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRequestPostOwnerTransferResponse {}
+/// MsgCancelPostOwnerTransferRequest represents a message used to cancel a
+/// outgoing post transfer request
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgCancelPostOwnerTransferRequest")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgCancelPostOwnerTransferRequest {
+    /// Id of the subspace that holds the post for which the request should be
+    /// canceled
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post for which the request will be cancelled
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Address of the transfer request sender
+    #[prost(string, tag = "3")]
+    pub sender: ::prost::alloc::string::String,
+}
+/// MsgCancelPostOwnerTransferRequestResponse defines the
+/// Msg/CancelPostOwnerTransferRequest response type
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgCancelPostOwnerTransferRequestResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgCancelPostOwnerTransferRequestResponse {}
+/// MsgAcceptPostOwnerTransferRequest represents a message used to accept a
+/// incoming post transfer request
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgAcceptPostOwnerTransferRequest")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgAcceptPostOwnerTransferRequest {
+    /// Id of the subspace holding the post for which the request will be accepted
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post for which the request will be accepted
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Address of the request receiver
+    #[prost(string, tag = "3")]
+    pub receiver: ::prost::alloc::string::String,
+}
+/// MsgAcceptPostOwnerTransferRequestResponse defines the
+/// Msg/AcceptPostOwnerTransferRequest response type
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgAcceptPostOwnerTransferRequestResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgAcceptPostOwnerTransferRequestResponse {}
+/// MsgRefusePostOwnerTransferRequest represents a message used to refuse a
+/// incoming post transfer request
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgRefusePostOwnerTransferRequest")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRefusePostOwnerTransferRequest {
+    /// Id of the subspace holding the post for which the request will be refused
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Id of the post for which the request will be refused
+    #[prost(uint64, tag = "2")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub post_id: u64,
+    /// Address of the request receiver
+    #[prost(string, tag = "3")]
+    pub receiver: ::prost::alloc::string::String,
+}
+/// MsgRefusePostOwnerTransferRequest defines the
+/// Msg/RefusePostOwnerTransferRequest response type
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.MsgRefusePostOwnerTransferRequestResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRefusePostOwnerTransferRequestResponse {}
 /// QuerySubspacePostsRequest is the request type for the Query/SubspacePosts RPC
 /// method
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -1362,6 +1683,65 @@ pub struct QueryParamsResponse {
     #[prost(message, optional, tag = "1")]
     pub params: ::core::option::Option<Params>,
 }
+/// QueryIncomingPostOwnerTransferRequestsRequest is the request type for the
+/// Query/IncomingPostOwnerTransferRequests RPC endpoint
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryIncomingPostOwnerTransferRequestsRequest")]
+#[serde(rename_all = "snake_case")]
+#[proto_query(
+    path = "/desmos.posts.v3.Query/IncomingPostOwnerTransferRequests",
+    response_type = QueryIncomingPostOwnerTransferRequestsResponse
+)]
+pub struct QueryIncomingPostOwnerTransferRequestsRequest {
+    /// Id of the subspace where the requests are stored
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// (optional) Receiver represents the address of the user to which query the
+    /// incoming requests for
+    #[prost(string, tag = "2")]
+    pub receiver: ::prost::alloc::string::String,
+    /// Pagination defines an optional pagination for the request
+    #[prost(message, optional, tag = "3")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageRequest>,
+}
+/// QueryIncomingPostOwnerTransferRequestsResponse is the response type for the
+/// Query/IncomingPostOwnerTransferRequests RPC method.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.posts.v3.QueryIncomingPostOwnerTransferRequestsResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct QueryIncomingPostOwnerTransferRequestsResponse {
+    /// Requests represent the list of all the post owner transfer requests made
+    /// towards the receiver
+    #[prost(message, repeated, tag = "1")]
+    pub requests: ::prost::alloc::vec::Vec<PostOwnerTransferRequest>,
+    /// Pagination defines the pagination response
+    #[prost(message, optional, tag = "2")]
+    pub pagination:
+        ::core::option::Option<super::super::super::cosmos::base::query::v1beta1::PageResponse>,
+}
 pub struct PostsQuerier<'a, Q: cosmwasm_std::CustomQuery> {
     querier: &'a cosmwasm_std::QuerierWrapper<'a, Q>,
 }
@@ -1444,5 +1824,21 @@ impl<'a, Q: cosmwasm_std::CustomQuery> PostsQuerier<'a, Q> {
     }
     pub fn params(&self) -> std::result::Result<QueryParamsResponse, cosmwasm_std::StdError> {
         QueryParamsRequest {}.query(self.querier)
+    }
+    pub fn incoming_post_owner_transfer_requests(
+        &self,
+        subspace_id: u64,
+        receiver: ::prost::alloc::string::String,
+        pagination: ::core::option::Option<
+            super::super::super::cosmos::base::query::v1beta1::PageRequest,
+        >,
+    ) -> std::result::Result<QueryIncomingPostOwnerTransferRequestsResponse, cosmwasm_std::StdError>
+    {
+        QueryIncomingPostOwnerTransferRequestsRequest {
+            subspace_id,
+            receiver,
+            pagination,
+        }
+        .query(self.querier)
     }
 }

@@ -26,8 +26,7 @@ pub struct Subspace {
     /// Optional description of this subspace
     #[prost(string, tag = "3")]
     pub description: ::prost::alloc::string::String,
-    /// Represents the account that is associated with the subspace and
-    /// should be used to connect external applications to verify this subspace
+    /// Represents the treasury account that is associated with the subspace
     #[prost(string, tag = "4")]
     pub treasury: ::prost::alloc::string::String,
     /// Address of the user that owns the subspace
@@ -39,6 +38,11 @@ pub struct Subspace {
     /// the creation time of the subspace
     #[prost(message, optional, tag = "7")]
     pub creation_time: ::core::option::Option<crate::shim::Timestamp>,
+    /// List of fee token denoms with default minimum gas prices allowed inside the
+    /// subspace
+    #[prost(message, repeated, tag = "8")]
+    pub additional_fee_tokens:
+        ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
 }
 /// Section contains the data of a single subspace section
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -289,191 +293,6 @@ pub struct UserGroupMemberEntry {
     #[prost(string, tag = "3")]
     pub user: ::prost::alloc::string::String,
 }
-/// MsgGrantTreasuryAuthorization grants an authorization on behalf of the
-/// treasury to a user
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorization")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgGrantTreasuryAuthorization {
-    /// Id of the subspace where the authorization should be granted
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Address of the user granting a treasury authorization
-    #[prost(string, tag = "2")]
-    pub granter: ::prost::alloc::string::String,
-    /// Address of the user who is being granted a treasury authorization
-    #[prost(string, tag = "3")]
-    pub grantee: ::prost::alloc::string::String,
-    /// Grant represents the authorization to execute the provided methods
-    #[prost(message, optional, tag = "4")]
-    pub grant: ::core::option::Option<super::super::super::cosmos::authz::v1beta1::Grant>,
-}
-/// MsgGrantTreasuryAuthorizationResponse defines the
-/// Msg/MsgGrantTreasuryAuthorization response type
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorizationResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgGrantTreasuryAuthorizationResponse {}
-/// MsgRevokeTreasuryAuthorization revokes an existing treasury authorization
-/// from a user
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorization")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgRevokeTreasuryAuthorization {
-    /// Id of the subspace from which the authorization should be revoked
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Address of the user revoking the treasury authorization
-    #[prost(string, tag = "2")]
-    pub granter: ::prost::alloc::string::String,
-    /// Address of the user who is being revoked the treasury authorization
-    #[prost(string, tag = "3")]
-    pub grantee: ::prost::alloc::string::String,
-    /// Type url of the authorized message which is being revoked
-    #[prost(string, tag = "4")]
-    pub msg_type_url: ::prost::alloc::string::String,
-}
-/// MsgRevokeTreasuryAuthorizationResponse defines the
-/// Msg/MsgRevokeTreasuryAuthorization response type
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorizationResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgRevokeTreasuryAuthorizationResponse {}
-/// MsgGrantAllowance adds grants for the grantee to spend up allowance of fees
-/// from the treasury inside the given subspace
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowance")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgGrantAllowance {
-    /// Id of the subspace inside which where the allowance should be granted
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Address of the user granting the allowance
-    #[prost(string, tag = "2")]
-    pub granter: ::prost::alloc::string::String,
-    /// Target being granted the allowance
-    #[prost(message, optional, tag = "3")]
-    pub grantee: ::core::option::Option<crate::shim::Any>,
-    /// Allowance can be any allowance type that implements AllowanceI
-    #[prost(message, optional, tag = "4")]
-    pub allowance: ::core::option::Option<crate::shim::Any>,
-}
-/// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response
-/// type.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowanceResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgGrantAllowanceResponse {}
-/// MsgRevokeAllowance removes any existing allowance to the grantee inside the
-/// subspace
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowance")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgRevokeAllowance {
-    /// If of the subspace inside which the allowance to be deleted is
-    #[prost(uint64, tag = "1")]
-    #[serde(
-        serialize_with = "crate::serde::as_str::serialize",
-        deserialize_with = "crate::serde::as_str::deserialize"
-    )]
-    pub subspace_id: u64,
-    /// Address of the user that created the allowance
-    #[prost(string, tag = "2")]
-    pub granter: ::prost::alloc::string::String,
-    /// Target being revoked the allowance
-    #[prost(message, optional, tag = "3")]
-    pub grantee: ::core::option::Option<crate::shim::Any>,
-}
-/// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse
-/// response type.
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(
-    Clone,
-    PartialEq,
-    ::prost::Message,
-    schemars::JsonSchema,
-    serde::Serialize,
-    serde::Deserialize,
-    desmos_std_derive::CosmwasmExt,
-)]
-#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowanceResponse")]
-#[serde(rename_all = "snake_case")]
-pub struct MsgRevokeAllowanceResponse {}
 /// MsgCreateSubspace represents the message used to create a subspace
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
@@ -910,7 +729,7 @@ pub struct MsgEditUserGroup {
 #[serde(rename_all = "snake_case")]
 pub struct MsgEditUserGroupResponse {}
 /// MsgMoveUserGroup represents the message used to move one user group from a
-/// section to anoter
+/// section to another
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
     Clone,
@@ -1188,6 +1007,243 @@ pub struct MsgSetUserPermissions {
 #[proto_message(type_url = "/desmos.subspaces.v3.MsgSetUserPermissionsResponse")]
 #[serde(rename_all = "snake_case")]
 pub struct MsgSetUserPermissionsResponse {}
+/// MsgGrantAllowance adds grants for the grantee to spend up allowance of fees
+/// from the treasury inside the given subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowance")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgGrantAllowance {
+    /// Id of the subspace inside which where the allowance should be granted
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Address of the user granting the allowance
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Target being granted the allowance
+    #[prost(message, optional, tag = "3")]
+    pub grantee: ::core::option::Option<crate::shim::Any>,
+    /// Allowance can be any allowance type that implements AllowanceI
+    #[prost(message, optional, tag = "4")]
+    pub allowance: ::core::option::Option<crate::shim::Any>,
+}
+/// MsgGrantAllowanceResponse defines the Msg/GrantAllowanceResponse response
+/// type.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantAllowanceResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgGrantAllowanceResponse {}
+/// MsgRevokeAllowance removes any existing allowance to the grantee inside the
+/// subspace
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowance")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRevokeAllowance {
+    /// If of the subspace inside which the allowance to be deleted is
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Address of the user that created the allowance
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Target being revoked the allowance
+    #[prost(message, optional, tag = "3")]
+    pub grantee: ::core::option::Option<crate::shim::Any>,
+}
+/// MsgRevokeAllowanceResponse defines the Msg/RevokeAllowanceResponse
+/// response type.
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeAllowanceResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRevokeAllowanceResponse {}
+/// MsgGrantTreasuryAuthorization grants an authorization on behalf of the
+/// treasury to a user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorization")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgGrantTreasuryAuthorization {
+    /// Id of the subspace where the authorization should be granted
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Address of the user granting a treasury authorization
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Address of the user who is being granted a treasury authorization
+    #[prost(string, tag = "3")]
+    pub grantee: ::prost::alloc::string::String,
+    /// Grant represents the authorization to execute the provided methods
+    #[prost(message, optional, tag = "4")]
+    pub grant: ::core::option::Option<super::super::super::cosmos::authz::v1beta1::Grant>,
+}
+/// MsgGrantTreasuryAuthorizationResponse defines the
+/// Msg/MsgGrantTreasuryAuthorization response type
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgGrantTreasuryAuthorizationResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgGrantTreasuryAuthorizationResponse {}
+/// MsgRevokeTreasuryAuthorization revokes an existing treasury authorization
+/// from a user
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorization")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRevokeTreasuryAuthorization {
+    /// Id of the subspace from which the authorization should be revoked
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// Address of the user revoking the treasury authorization
+    #[prost(string, tag = "2")]
+    pub granter: ::prost::alloc::string::String,
+    /// Address of the user who is being revoked the treasury authorization
+    #[prost(string, tag = "3")]
+    pub grantee: ::prost::alloc::string::String,
+    /// Type url of the authorized message which is being revoked
+    #[prost(string, tag = "4")]
+    pub msg_type_url: ::prost::alloc::string::String,
+}
+/// MsgRevokeTreasuryAuthorizationResponse defines the
+/// Msg/MsgRevokeTreasuryAuthorization response type
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgRevokeTreasuryAuthorizationResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgRevokeTreasuryAuthorizationResponse {}
+/// MsgUpdateSubspaceFeeTokens represents the message to be used to update the
+/// accepted fee tokens inside a given subspace, using an on-chain governance
+/// proposal
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgUpdateSubspaceFeeTokens")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgUpdateSubspaceFeeTokens {
+    /// Id of the subspace where the list of allowed fee tokens will be updated
+    #[prost(uint64, tag = "1")]
+    #[serde(
+        serialize_with = "crate::serde::as_str::serialize",
+        deserialize_with = "crate::serde::as_str::deserialize"
+    )]
+    pub subspace_id: u64,
+    /// List of tokens allowed to be fee tokens inside the given subspace,
+    /// represented as their gas prices
+    #[prost(message, repeated, tag = "2")]
+    pub additional_fee_tokens:
+        ::prost::alloc::vec::Vec<super::super::super::cosmos::base::v1beta1::Coin>,
+    /// authority is the address that controls the module (defaults to x/gov unless
+    /// overwritten).
+    #[prost(string, tag = "3")]
+    pub authority: ::prost::alloc::string::String,
+}
+/// MsgUpdateSubspaceFeeTokensResponse represents the Msg/UpdateSubspaceFeeTokens
+/// response type
+///
+/// Since: Desmos 6.0.0
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(
+    Clone,
+    PartialEq,
+    ::prost::Message,
+    schemars::JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,
+    desmos_std_derive::CosmwasmExt,
+)]
+#[proto_message(type_url = "/desmos.subspaces.v3.MsgUpdateSubspaceFeeTokensResponse")]
+#[serde(rename_all = "snake_case")]
+pub struct MsgUpdateSubspaceFeeTokensResponse {}
 /// QuerySubspacesRequest is the request type for the Query/Subspaces RPC method
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(
