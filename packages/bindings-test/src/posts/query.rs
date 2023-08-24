@@ -270,11 +270,14 @@ mod test {
             .to_object();
 
         let request = result.requests.first().unwrap();
-        assert_eq!(&PostOwnerTransferRequest {
-            subspace_id: TEST_SUBSPACE,
-            post_id: post.id,
-            sender: contract_address.clone(),
-            receiver: receiver_contract_address.clone(),
-        }, request)
+        assert_eq!(
+            &PostOwnerTransferRequest {
+                subspace_id: TEST_SUBSPACE,
+                post_id: post.id,
+                sender: contract_address.clone(),
+                receiver: receiver_contract_address.clone(),
+            },
+            request
+        )
     }
 }
