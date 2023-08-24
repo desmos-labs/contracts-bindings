@@ -2,7 +2,7 @@
 mod test {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_EDITABLE_POST_ID};
-    use crate::posts::create_sample_post;
+    use crate::posts::create_test_post;
     use chrono::DateTime;
     use cosmwasm_std::Addr;
     use desmos_bindings::posts::msg::PostsMsg;
@@ -242,7 +242,7 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
 
-        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let post = create_test_post(TEST_SUBSPACE, &contract_address);
         desmos_cli
             .execute_contract(
                 &contract_address,

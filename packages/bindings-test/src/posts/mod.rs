@@ -12,7 +12,8 @@ use desmos_bindings::posts::types::{
     Entities, Post, QuerySubspacePostsRequest, QuerySubspacePostsResponse, ReplySetting, Url,
 };
 
-pub fn create_sample_post(subspace_id: u64, contract_address: &str) -> Post {
+/// Creates a post inside the given subspace for interaction testing
+pub fn create_test_post(subspace_id: u64, contract_address: &str) -> Post {
     let desmos_cli = DesmosCli::default();
 
     // Create a post

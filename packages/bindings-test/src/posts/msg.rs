@@ -5,7 +5,7 @@ mod test {
         TEST_DELETABLE_ATTACHMENT_ID, TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_DELETABLE_POST_ID,
         TEST_SUBSPACE_EDITABLE_POST_ID,
     };
-    use crate::posts::create_sample_post;
+    use crate::posts::create_test_post;
 
     use chrono::DateTime;
     use cosmwasm_std::Addr;
@@ -230,7 +230,7 @@ mod test {
             .last()
             .unwrap()
             .clone();
-        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let post = create_test_post(TEST_SUBSPACE, &contract_address);
 
         let move_post_msg = PostsMsg::move_post(
             TEST_SUBSPACE,
@@ -251,7 +251,7 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
 
-        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let post = create_test_post(TEST_SUBSPACE, &contract_address);
         let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
             TEST_SUBSPACE,
             post.id,
@@ -283,7 +283,7 @@ mod test {
         let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
 
         // Create a post owner transfer request to receiver
-        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let post = create_test_post(TEST_SUBSPACE, &contract_address);
         let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
             TEST_SUBSPACE,
             post.id,
@@ -315,7 +315,7 @@ mod test {
         let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
 
         // Create a post owner transfer request to receiver
-        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let post = create_test_post(TEST_SUBSPACE, &contract_address);
         let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
             TEST_SUBSPACE,
             post.id,
