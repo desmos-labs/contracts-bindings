@@ -2,15 +2,18 @@
 mod test {
     use crate::chain_communication::DesmosCli;
     use crate::consts::{TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_EDITABLE_POST_ID};
+    use crate::posts::create_sample_post;
     use chrono::DateTime;
     use cosmwasm_std::Addr;
+    use desmos_bindings::posts::msg::PostsMsg;
     use desmos_bindings::posts::types::{
         poll::ProvidedAnswer, Entities, Poll, Post, ReplySetting, Url,
     };
     use desmos_bindings::posts::types::{
-        MsgAnswerPoll, QueryPollAnswersRequest, QueryPollAnswersResponse,
-        QueryPostAttachmentsRequest, QueryPostAttachmentsResponse, QueryPostRequest,
-        QueryPostResponse, QuerySectionPostsRequest, QuerySectionPostsResponse,
+        MsgAnswerPoll, PostOwnerTransferRequest, QueryIncomingPostOwnerTransferRequestsRequest,
+        QueryIncomingPostOwnerTransferRequestsResponse, QueryPollAnswersRequest,
+        QueryPollAnswersResponse, QueryPostAttachmentsRequest, QueryPostAttachmentsResponse,
+        QueryPostRequest, QueryPostResponse, QuerySectionPostsRequest, QuerySectionPostsResponse,
         QuerySubspacePostsRequest, QuerySubspacePostsResponse,
     };
     use test_contract::msg::ExecuteMsg;
@@ -231,5 +234,47 @@ mod test {
         let answer = result.answers.first().unwrap();
         assert_eq!(Addr::unchecked(&contract_address), answer.user);
         assert_eq!(vec![0], answer.answers_indexes)
+    }
+
+    #[test]
+    fn test_query_incoming_post_owner_transfer_requests() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
+        let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
+
+        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        desmos_cli
+            .execute_contract(
+                &contract_address,
+                [PostsMsg::request_post_owner_transfer(
+                    TEST_SUBSPACE,
+                    post.id,
+                    Addr::unchecked(&receiver_contract_address),
+                    Addr::unchecked(&contract_address),
+                )
+                .into()],
+            )
+            .assert_success();
+
+        let query_msg = DesmosChain {
+            request: QueryIncomingPostOwnerTransferRequestsRequest {
+                subspace_id: TEST_SUBSPACE,
+                receiver: receiver_contract_address.clone(),
+                pagination: None,
+            }
+            .into(),
+        };
+
+        let result: QueryIncomingPostOwnerTransferRequestsResponse = desmos_cli
+            .wasm_query(&contract_address, &query_msg)
+            .to_object();
+
+        let request = result.requests.first().unwrap();
+        assert_eq!(&PostOwnerTransferRequest {
+            subspace_id: TEST_SUBSPACE,
+            post_id: post.id,
+            sender: contract_address.clone(),
+            receiver: receiver_contract_address.clone(),
+        }, request)
     }
 }

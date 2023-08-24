@@ -44,6 +44,22 @@ pub fn setup() {
     )
     .assert_success();
 
+    // Create a profile for target contract
+    let target_contract = cli.get_contract_by_code(1, 1);
+    cli.execute_contract(
+        &target_contract,
+        vec![ProfilesMsg::save_profile(
+            Some("test_profile_posts"),
+            Some("contract_nick"),
+            Some("test_bio"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Addr::unchecked(&target_contract),
+        )
+        .into()],
+    )
+    .assert_success();
+
     // Create test subspace owned by the smart contract
     cli.execute_contract(
         &contract,
