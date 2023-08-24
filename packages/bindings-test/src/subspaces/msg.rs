@@ -27,7 +27,7 @@ mod tests {
     #[test]
     fn test_create_subspace() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let create_subspace_msg = build_create_subspace_msg(&contract_address);
 
@@ -39,7 +39,7 @@ mod tests {
     #[test]
     fn test_edit_subspace() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
         let new_subspace_name = "Test subspace";
 
@@ -66,7 +66,7 @@ mod tests {
     #[test]
     fn test_delete_subspace() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let create_subspace_msg = build_create_subspace_msg(&contract_address);
 
@@ -109,7 +109,7 @@ mod tests {
     #[test]
     pub fn test_create_user_group() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let create_user_group_msg = build_create_user_group_msg(TEST_SUBSPACE, &contract_address);
 
@@ -121,7 +121,7 @@ mod tests {
     #[test]
     pub fn test_delete_user_group() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
 
         // Create the user group to delete.
@@ -154,7 +154,7 @@ mod tests {
     #[test]
     pub fn test_edit_user_group() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
         let group_id = TEST_SUBSPACE_USER_GROUP;
         let new_user_group_name = "Test user group";
@@ -186,7 +186,7 @@ mod tests {
     #[test]
     pub fn test_set_user_group_permissions() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
         let group_id = TEST_SUBSPACE_USER_GROUP;
         let new_permissions = vec![Permission::EditSubspace];
@@ -210,7 +210,7 @@ mod tests {
     #[test]
     pub fn test_add_remove_user_from_user_group() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
         let group_id = TEST_SUBSPACE_USER_GROUP;
 
@@ -252,7 +252,7 @@ mod tests {
     #[test]
     pub fn test_set_user_permissions() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
         let new_permissions = vec![
             Permission::EditSubspace,
@@ -284,7 +284,7 @@ mod tests {
     #[test]
     pub fn test_grant_revoke_treasury_authorization() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
 
         let grant_treasury_authorization = SubspacesMsg::grant_treasury_authorization(
@@ -329,7 +329,7 @@ mod tests {
     #[test]
     pub fn test_grant_revoke_allowance() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subspace_id = TEST_SUBSPACE;
 
         let grant_allowance = SubspacesMsg::grant_allowance(

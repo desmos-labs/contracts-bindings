@@ -31,7 +31,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryReactionsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -66,7 +66,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryReactionResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -100,7 +100,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryReactionResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -133,7 +133,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryRegisteredReactionsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -161,7 +161,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryRegisteredReactionResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -187,7 +187,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryReactionsParamsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)

@@ -11,7 +11,7 @@ mod tests {
     #[test]
     fn test_query_all_relationships() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryRelationshipsRequest {
@@ -33,7 +33,7 @@ mod tests {
     #[test]
     fn test_query_user1_relationships() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryRelationshipsRequest {
@@ -61,7 +61,7 @@ mod tests {
     #[test]
     fn test_query_user1_user2_relationship() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryRelationshipsRequest {
@@ -89,7 +89,7 @@ mod tests {
     #[test]
     fn test_query_all_blocks() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryBlocksRequest {
@@ -111,7 +111,7 @@ mod tests {
     #[test]
     fn test_query_user2_blocks() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryBlocksRequest {
@@ -139,7 +139,7 @@ mod tests {
     #[test]
     fn test_query_user2_user1_block() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryBlocksRequest {

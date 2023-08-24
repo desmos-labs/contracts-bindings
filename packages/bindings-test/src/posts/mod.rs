@@ -4,16 +4,20 @@ mod query;
 use crate::chain_communication::DesmosCli;
 use cosmwasm_std::Addr;
 
+use test_contract::msg::QueryMsg::DesmosChain;
+
 use desmos_bindings::cosmos_types::PageRequest;
 use desmos_bindings::posts::msg::PostsMsg;
-use desmos_bindings::posts::types::Post;
+use desmos_bindings::posts::types::{
+    Entities, Post, QuerySubspacePostsRequest, QuerySubspacePostsResponse, ReplySetting, Url,
+};
 
-pub fn create_sample_post(subspace_id: u64, contract_address: &str) -> &Post {
+pub fn create_sample_post(subspace_id: u64, contract_address: &str) -> Post {
     let desmos_cli = DesmosCli::default();
 
     // Create a post
     desmos_cli
-        .execute_contract(contract, PostsMsg::create_post(
+        .execute_contract(contract_address, vec![PostsMsg::create_post(
             subspace_id,
             0,
             None,
@@ -35,26 +39,28 @@ pub fn create_sample_post(subspace_id: u64, contract_address: &str) -> &Post {
             None,
             ReplySetting::Everyone,
             vec![],
-        ))
+        )])
         .assert_success();
 
     // query the created post
-    let result: QuerySubspacePostsResponse = desmos_cli.wasm_query(
-        contract_address,
-        DesmosChain {
-            request: QuerySubspacePostsRequest {
-                subspace_id,
-                pagination: Some(PageRequest {
-                    key: vec![],
-                    limit: 1,
-                    offset: 0,
-                    count_total: false,
-                    reverse: true,
-                }),
-            }
-            .into(),
-        },
-    );
+    let result: QuerySubspacePostsResponse = desmos_cli
+        .wasm_query(
+            contract_address,
+            &DesmosChain {
+                request: QuerySubspacePostsRequest {
+                    subspace_id,
+                    pagination: Some(PageRequest {
+                        key: vec![],
+                        limit: 1,
+                        offset: 0,
+                        count_total: false,
+                        reverse: true,
+                    }),
+                }
+                .into(),
+            },
+        )
+        .to_object();
 
-    result.posts.first().unwrap()
+    result.posts.first().unwrap().clone()
 }

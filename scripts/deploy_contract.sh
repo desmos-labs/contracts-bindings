@@ -30,6 +30,12 @@ echo $KEYRING_PASS | desmos --keyring-backend=file tx wasm instantiate 1 "{}" \
   --from $USER1 --label "test-contract" --admin $USER1_ADDRESS --chain-id=testchain -b=sync -y
 echo "Contract initialized"
 
+# Initialize the second contract
+echo "Initializing second contract..."
+echo $KEYRING_PASS | desmos --keyring-backend=file tx wasm instantiate 1 "{}" \
+  --from $USER1 --label "test-contract" --admin $USER1_ADDRESS --chain-id=testchain -b=sync -y
+echo "Second contract initialized"
+
 # Print contract address
 CONTRACT=$(desmos query wasm list-contract-by-code 1 --output json | jq -r '.contracts[-1]')
 echo "Contract address $CONTRACT"

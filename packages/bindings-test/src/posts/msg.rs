@@ -20,7 +20,7 @@ mod test {
     #[test]
     fn test_create_post() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg = PostsMsg::create_post(
             TEST_SUBSPACE,
@@ -53,7 +53,7 @@ mod test {
     #[test]
     fn test_edit_post() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg = PostsMsg::edit_post(
             TEST_SUBSPACE,
@@ -88,7 +88,7 @@ mod test {
     #[test]
     fn test_delete_post() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg = PostsMsg::delete_post(
             TEST_SUBSPACE,
@@ -109,7 +109,7 @@ mod test {
     #[test]
     fn test_add_media_post_attachment() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg_add_media = PostsMsg::add_post_attachment(
             TEST_SUBSPACE,
@@ -162,7 +162,7 @@ mod test {
     #[test]
     fn test_remove_post_attachment() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg = PostsMsg::remove_post_attachment(
             TEST_SUBSPACE,
@@ -184,7 +184,7 @@ mod test {
     #[test]
     fn test_answer_poll() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg = PostsMsg::answer_poll(
             TEST_SUBSPACE,
@@ -207,7 +207,7 @@ mod test {
     #[test]
     fn test_move_post() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Create target subspace for moving post
         desmos_cli
@@ -216,14 +216,19 @@ mod test {
                 vec![SubspacesMsg::create_subspace(
                     "Test target subspace",
                     "",
-                    Addr::unchecked(&contract),
-                    Addr::unchecked(&contract),
+                    Addr::unchecked(&contract_address),
+                    Addr::unchecked(&contract_address),
                 )],
             )
             .assert_success();
 
         // Get target subspace and post
-        let target_subspace = desmos_cli.query_subspaces(None).subspaces.last().unwrap();
+        let target_subspace = desmos_cli
+            .query_subspaces(None)
+            .subspaces
+            .last()
+            .unwrap()
+            .clone();
         let post = create_sample_post(TEST_SUBSPACE, &contract_address);
 
         let move_post_msg = PostsMsg::move_post(
@@ -231,7 +236,7 @@ mod test {
             post.id,
             target_subspace.id,
             0,
-            contract_address,
+            Addr::unchecked(&contract_address),
         );
 
         desmos_cli

@@ -80,7 +80,7 @@ mod test {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QuerySubspacePostsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -103,7 +103,7 @@ mod test {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QuerySectionPostsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -125,7 +125,7 @@ mod test {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryPostResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -151,7 +151,7 @@ mod test {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryPostAttachmentsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -194,7 +194,7 @@ mod test {
     #[test]
     fn test_query_poll_answers() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let msg = MsgAnswerPoll {
             subspace_id: TEST_SUBSPACE,
