@@ -282,6 +282,7 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
 
+        // Create a post owner transfer request to receiver
         let post = create_sample_post(TEST_SUBSPACE, &contract_address);
         let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
             TEST_SUBSPACE,
@@ -289,20 +290,20 @@ mod test {
             Addr::unchecked(&receiver_contract_address),
             Addr::unchecked(&contract_address),
         );
+        desmos_cli
+            .execute_contract(&contract_address, [request_post_owner_transfer_msg.into()])
+            .assert_success();
 
+        // Receiver accepts a post owner transfer request
         let accept_post_owner_transfer_request_msg = PostsMsg::accept_post_owner_transfer_request(
             TEST_SUBSPACE,
             post.id,
             Addr::unchecked(&receiver_contract_address),
         );
-
         desmos_cli
             .execute_contract(
-                &contract_address,
-                [
-                    request_post_owner_transfer_msg.into(),
-                    accept_post_owner_transfer_request_msg.into(),
-                ],
+                &receiver_contract_address,
+                [accept_post_owner_transfer_request_msg.into()],
             )
             .assert_success()
     }
@@ -313,6 +314,7 @@ mod test {
         let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
 
+        // Create a post owner transfer request to receiver
         let post = create_sample_post(TEST_SUBSPACE, &contract_address);
         let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
             TEST_SUBSPACE,
@@ -320,20 +322,20 @@ mod test {
             Addr::unchecked(&receiver_contract_address),
             Addr::unchecked(&contract_address),
         );
+        desmos_cli
+            .execute_contract(&contract_address, [request_post_owner_transfer_msg.into()])
+            .assert_success();
 
+        // Receiver refuses a post owner transfer request
         let refuse_post_owner_transfer_request_msg = PostsMsg::refuse_post_owner_transfer_request(
             TEST_SUBSPACE,
             post.id,
             Addr::unchecked(&receiver_contract_address),
         );
-
         desmos_cli
             .execute_contract(
-                &contract_address,
-                [
-                    request_post_owner_transfer_msg.into(),
-                    refuse_post_owner_transfer_request_msg.into(),
-                ],
+                &receiver_contract_address,
+                [refuse_post_owner_transfer_request_msg.into()],
             )
             .assert_success()
     }
