@@ -5,6 +5,8 @@ mod test {
         TEST_DELETABLE_ATTACHMENT_ID, TEST_POLL_ID, TEST_SUBSPACE, TEST_SUBSPACE_DELETABLE_POST_ID,
         TEST_SUBSPACE_EDITABLE_POST_ID,
     };
+    use crate::posts::create_sample_post;
+
     use chrono::DateTime;
     use cosmwasm_std::Addr;
     use desmos_bindings::posts::msg::PostsMsg;
@@ -12,6 +14,7 @@ mod test {
         poll::ProvidedAnswer, AttachmentContent, Entities, Media, Poll, PostReference,
         PostReferenceType, ReplySetting, Url,
     };
+    use desmos_bindings::subspaces::msg::SubspacesMsg;
     use test_contract::msg::ExecuteMsg;
 
     #[test]
@@ -199,5 +202,40 @@ mod test {
                 },
             )
             .assert_success();
+    }
+
+    #[test]
+    fn test_move_post() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1);
+
+        // Create target subspace for moving post
+        desmos_cli
+            .execute_contract(
+                &contract_address,
+                vec![SubspacesMsg::create_subspace(
+                    "Test target subspace",
+                    "",
+                    Addr::unchecked(&contract),
+                    Addr::unchecked(&contract),
+                )],
+            )
+            .assert_success();
+
+        // Get target subspace and post
+        let target_subspace = desmos_cli.query_subspaces(None).subspaces.last().unwrap();
+        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+
+        let move_post_msg = PostsMsg::move_post(
+            TEST_SUBSPACE,
+            post.id,
+            target_subspace.id,
+            0,
+            contract_address,
+        );
+
+        desmos_cli
+            .execute_contract(&contract_address, [move_post_msg])
+            .assert_success()
     }
 }
