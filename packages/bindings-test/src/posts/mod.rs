@@ -16,30 +16,31 @@ pub fn create_sample_post(subspace_id: u64, contract_address: &str) -> Post {
     let desmos_cli = DesmosCli::default();
 
     // Create a post
+    let create_post_msg = PostsMsg::create_post(
+        subspace_id,
+        0,
+        None,
+        "Sample post",
+        Some(Entities {
+            urls: vec![Url {
+                start: 0,
+                end: 1,
+                url: "https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7"
+                    .into(),
+                display_url: "IPFS".into(),
+            }],
+            hashtags: vec![],
+            mentions: vec![],
+        }),
+        vec![],
+        vec![],
+        Addr::unchecked(contract_address),
+        None,
+        ReplySetting::Everyone,
+        vec![],
+    );
     desmos_cli
-        .execute_contract(contract_address, vec![PostsMsg::create_post(
-            subspace_id,
-            0,
-            None,
-            "Sample post",
-            Some(Entities {
-                urls: vec![Url {
-                    start: 0,
-                    end: 1,
-                    url: "https://ipfs.infura.io/ipfs/QmT3AenKHkhCeesTUdnarqUVu91mmBk1cxQknxnUd79gY7"
-                        .into(),
-                    display_url: "IPFS".into(),
-                }],
-                hashtags: vec![],
-                mentions: vec![],
-            }),
-            vec![],
-            vec![],
-            Addr::unchecked(contract_address),
-            None,
-            ReplySetting::Everyone,
-            vec![],
-        )])
+        .execute_contract(contract_address, vec![create_post_msg.into()])
         .assert_success();
 
     // query the created post

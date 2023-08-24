@@ -218,7 +218,8 @@ mod test {
                     "",
                     Addr::unchecked(&contract_address),
                     Addr::unchecked(&contract_address),
-                )],
+                )
+                .into()],
             )
             .assert_success();
 
@@ -240,7 +241,100 @@ mod test {
         );
 
         desmos_cli
-            .execute_contract(&contract_address, [move_post_msg])
+            .execute_contract(&contract_address, [move_post_msg.into()])
+            .assert_success()
+    }
+
+    #[test]
+    fn test_request_then_cancel_post_owner_transfer() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
+        let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
+
+        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
+            TEST_SUBSPACE,
+            post.id,
+            Addr::unchecked(&receiver_contract_address),
+            Addr::unchecked(&contract_address),
+        );
+
+        let cancel_post_owner_transfer_request_msg = PostsMsg::cancel_post_owner_transfer_request(
+            TEST_SUBSPACE,
+            post.id,
+            Addr::unchecked(&contract_address),
+        );
+
+        desmos_cli
+            .execute_contract(
+                &contract_address,
+                [
+                    request_post_owner_transfer_msg.into(),
+                    cancel_post_owner_transfer_request_msg.into(),
+                ],
+            )
+            .assert_success()
+    }
+
+    #[test]
+    fn test_request_then_accept_post_owner_transfer() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
+        let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
+
+        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
+            TEST_SUBSPACE,
+            post.id,
+            Addr::unchecked(&receiver_contract_address),
+            Addr::unchecked(&contract_address),
+        );
+
+        let accept_post_owner_transfer_request_msg = PostsMsg::accept_post_owner_transfer_request(
+            TEST_SUBSPACE,
+            post.id,
+            Addr::unchecked(&receiver_contract_address),
+        );
+
+        desmos_cli
+            .execute_contract(
+                &contract_address,
+                [
+                    request_post_owner_transfer_msg.into(),
+                    accept_post_owner_transfer_request_msg.into(),
+                ],
+            )
+            .assert_success()
+    }
+
+    #[test]
+    fn test_request_then_refuse_post_owner_transfer() {
+        let desmos_cli = DesmosCli::default();
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
+        let receiver_contract_address = desmos_cli.get_contract_by_code(1, 1);
+
+        let post = create_sample_post(TEST_SUBSPACE, &contract_address);
+        let request_post_owner_transfer_msg = PostsMsg::request_post_owner_transfer(
+            TEST_SUBSPACE,
+            post.id,
+            Addr::unchecked(&receiver_contract_address),
+            Addr::unchecked(&contract_address),
+        );
+
+        let refuse_post_owner_transfer_request_msg = PostsMsg::refuse_post_owner_transfer_request(
+            TEST_SUBSPACE,
+            post.id,
+            Addr::unchecked(&receiver_contract_address),
+        );
+
+        desmos_cli
+            .execute_contract(
+                &contract_address,
+                [
+                    request_post_owner_transfer_msg.into(),
+                    refuse_post_owner_transfer_request_msg.into(),
+                ],
+            )
             .assert_success()
     }
 }
