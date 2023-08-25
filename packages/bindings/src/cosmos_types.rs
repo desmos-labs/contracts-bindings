@@ -6,6 +6,7 @@ pub use crate::proto::cosmos::crypto::{ed25519, secp256k1, secp256r1};
 pub use crate::proto::cosmos::feegrant::v1beta1::{
     AllowedMsgAllowance, BasicAllowance, PeriodicAllowance,
 };
+pub use crate::proto::cosmos::bank::v1beta1::Metadata;
 pub use crate::proto::ibc::core::client::v1::Height;
 pub use crate::shim::{Any, Timestamp};
 
