@@ -36,7 +36,7 @@ impl TokenfactoryMsg {
     }
 
     /// Creates a new instance of [`MsgBurn`].
-    /// 
+    ///
     /// * `subspace_id` - Id of the subspace which manages the denom.
     /// * `sender` - Address of user having the permission to manage subspace denoms.
     /// * `amount` - Amount of the burning subspace tokens.
@@ -63,5 +63,84 @@ impl TokenfactoryMsg {
             sender: sender.into(),
             metadata: Some(metadata),
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_create_denom() {
+        let msg = TokenfactoryMsg::create_denom(1, Addr::unchecked("sender"), "subdenom");
+
+        let expected = MsgCreateDenom {
+            subspace_id: 1,
+            sender: "sender".into(),
+            subdenom: "subdenom".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_mint() {
+        let msg = TokenfactoryMsg::mint(1, Addr::unchecked("sender"), Coin::new(100, "denom"));
+
+        let expected = MsgMint {
+            subspace_id: 1,
+            sender: "sender".into(),
+            amount: Some(Coin::new(100, "denom").into()),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_burn() {
+        let msg = TokenfactoryMsg::burn(1, Addr::unchecked("sender"), Coin::new(100, "denom"));
+
+        let expected = MsgBurn {
+            subspace_id: 1,
+            sender: "sender".into(),
+            amount: Some(Coin::new(100, "denom").into()),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_set_denom_metadata() {
+        let msg = TokenfactoryMsg::set_denom_metadata(
+            1,
+            Addr::unchecked("sender"),
+            Metadata {
+                description: "metadata".into(),
+                denom_units: [].into(),
+                base: "denom".into(),
+                display: "metadata".into(),
+                name: "metadata".into(),
+                symbol: "metadata".into(),
+                uri: "https://metadata".into(),
+                uri_hash: "metadata hash".into(),
+            },
+        );
+
+        let expected = MsgSetDenomMetadata  {
+            subspace_id: 1,
+            sender: "sender".into(),
+            metadata:  Some(Metadata {
+                description: "metadata".into(),
+                denom_units: [].into(),
+                base: "denom".into(),
+                display: "metadata".into(),
+                name: "metadata".into(),
+                symbol: "metadata".into(),
+                uri: "https://metadata".into(),
+                uri_hash: "metadata hash".into(),
+            }),
+        };
+
+        assert_eq!(expected, msg)
     }
 }

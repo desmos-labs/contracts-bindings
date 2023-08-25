@@ -39,3 +39,21 @@ impl<'a> TokenfactoryQuerier<'a> {
         self.querier.subspace_denoms(subspace_id)
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::mocks::mock_queriers::mock_desmos_dependencies;
+    use crate::tokenfactory::mocks::MockTokenfactoryQueries;
+
+    #[test]
+    fn test_query_subspace_denoms() {
+        let owned_deps = mock_desmos_dependencies();
+        let deps = owned_deps.as_ref();
+        let querier = TokenfactoryQuerier::new(&deps.querier);
+        let response = querier.query_subspace_denoms(1).unwrap();
+        let expected = MockTokenfactoryQueries::get_mocked_subspace_denoms_response();
+        assert_eq!(expected, response);
+    }
+}
