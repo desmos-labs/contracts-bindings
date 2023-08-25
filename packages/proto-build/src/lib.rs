@@ -73,6 +73,7 @@ pub fn run() {
             "posts/v3".to_string(),
             "reactions/v1".to_string(),
             "reports/v1".to_string(),
+            "tokenfactory/v1".to_string(),
         ],
     };
 
