@@ -126,10 +126,10 @@ mod test {
             },
         );
 
-        let expected = MsgSetDenomMetadata  {
+        let expected = MsgSetDenomMetadata {
             subspace_id: 1,
             sender: "sender".into(),
-            metadata:  Some(Metadata {
+            metadata: Some(Metadata {
                 description: "metadata".into(),
                 denom_units: [].into(),
                 base: "denom".into(),
