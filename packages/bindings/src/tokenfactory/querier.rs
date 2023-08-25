@@ -29,6 +29,9 @@ impl<'a> TokenfactoryQuerier<'a> {
 }
 
 impl<'a> TokenfactoryQuerier<'a> {
+    /// Queries all the denoms created by the given subspace.
+    /// 
+    /// * `subspace_id` - Id of the subspace to query the managed denoms for.
     pub fn query_subspace_denoms(
         &self,
         subspace_id: u64,
