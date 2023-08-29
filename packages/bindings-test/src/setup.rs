@@ -39,7 +39,8 @@ pub fn setup() {
             Some("https://i.imgur.com/X2aK5Bq.jpeg"),
             Some("https://i.imgur.com/X2aK5Bq.jpeg"),
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -51,7 +52,8 @@ pub fn setup() {
             "",
             Addr::unchecked(&contract),
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -66,7 +68,8 @@ pub fn setup() {
             vec![Permission::EditSubspace],
             vec![Addr::unchecked(USER1_ADDRESS)],
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -83,7 +86,8 @@ pub fn setup() {
                 Permission::ManageGroups,
             ],
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -98,7 +102,8 @@ pub fn setup() {
                 spend_limit: vec![Coin::new(1000, "stake").into()],
                 expiration: None,
             }),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -113,7 +118,8 @@ pub fn setup() {
                 spend_limit: vec![Coin::new(1000, "stake").into()],
                 expiration: None,
             }),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -143,7 +149,8 @@ pub fn setup() {
             None,
             ReplySetting::Everyone,
             vec![],
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -177,7 +184,8 @@ pub fn setup() {
                     final_tally_results: None,
                 }),
                 Addr::unchecked(&contract),
-            ),
+            )
+            .into(),
             PostsMsg::add_post_attachment(
                 1,
                 1,
@@ -186,7 +194,8 @@ pub fn setup() {
                     uri: "https://test.com/image.png".into(),
                 }),
                 Addr::unchecked(&contract),
-            ),
+            )
+            .into(),
         ],
     )
     .assert_success();
@@ -206,7 +215,8 @@ pub fn setup() {
             None,
             ReplySetting::Everyone,
             vec![],
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -218,7 +228,8 @@ pub fn setup() {
             "editable_code",
             "editable_value",
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -230,7 +241,8 @@ pub fn setup() {
             "deletable_code",
             "deletable_value",
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -249,7 +261,8 @@ pub fn setup() {
             None,
             ReplySetting::Everyone,
             vec![],
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -263,7 +276,8 @@ pub fn setup() {
                 registered_reaction_id: 1,
             }),
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -277,7 +291,8 @@ pub fn setup() {
                 text: "test".into(),
             }),
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -289,7 +304,8 @@ pub fn setup() {
             3,
             ReactionValue::FreeText(FreeTextValue { text: "del".into() }),
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -301,7 +317,8 @@ pub fn setup() {
             "Test reason",
             "Test reason description",
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -313,7 +330,8 @@ pub fn setup() {
             "Deletable reason",
             "Deletable reason description",
             Addr::unchecked(&contract),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 
@@ -329,14 +347,16 @@ pub fn setup() {
                 ReportTarget::User(UserTarget {
                     user: USER1_ADDRESS.into(),
                 }),
-            ),
+            )
+            .into(),
             ReportsMsg::create_report(
                 1,
                 vec![1],
                 "",
                 Addr::unchecked(&contract),
                 ReportTarget::Post(PostTarget { post_id: 1 }),
-            ),
+            )
+            .into(),
         ],
     )
     .assert_success();
@@ -352,7 +372,8 @@ pub fn setup() {
             ReportTarget::User(UserTarget {
                 user: USER2_ADDRESS.into(),
             }),
-        )],
+        )
+        .into()],
     )
     .assert_success();
 }
