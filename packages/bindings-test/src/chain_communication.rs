@@ -160,7 +160,7 @@ impl DesmosCli {
     ///
     /// * `contract` - Address of the smart contract to execute.
     /// * `msgs` - Messages to send to the smart contract.
-    pub fn execute_contract<'a>(&self, contract: &str, msgs: Vec<CosmosMsg>) -> TxResponse {
+    pub fn execute_contract(&self, contract: &str, msgs: Vec<CosmosMsg>) -> TxResponse {
         self.wasm_execute(contract, &ExecuteMsg::DesmosMessages { msgs })
     }
 
