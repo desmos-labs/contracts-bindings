@@ -49,7 +49,7 @@ mod tests {
         desmos_cli
             .execute_contract(
                 &contract_address,
-                [create_denom_msg.into(), mint_msg.into(), burn_msg.into()],
+                vec![create_denom_msg.into(), mint_msg.into(), burn_msg.into()],
             )
             .assert_success();
     }
@@ -93,7 +93,7 @@ mod tests {
         desmos_cli
             .execute_contract(
                 &contract_address,
-                [create_denom_msg.into(), set_metadata_msg.into()],
+                vec![create_denom_msg.into(), set_metadata_msg.into()],
             )
             .assert_success();
     }
