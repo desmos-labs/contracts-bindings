@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
     use crate::chain_communication::DesmosCli;
+    use crate::consts::{TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM};
     use crate::subspaces::create_test_subspace;
     use crate::tokenfactory::get_denom;
 
@@ -14,6 +15,8 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let subspace = create_test_subspace(&contract_address);
+        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+
         let msg = TokenfactoryMsg::create_denom(
             subspace.id,
             Addr::unchecked(&contract_address),
@@ -31,6 +34,8 @@ mod tests {
         let subdenom = "test_mint_burn";
 
         let subspace = create_test_subspace(&contract_address);
+        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+
         let create_denom_msg = TokenfactoryMsg::create_denom(
             subspace.id,
             Addr::unchecked(&contract_address),
@@ -64,6 +69,8 @@ mod tests {
         let subdenom = "test_set_metadata";
 
         let subspace = create_test_subspace(&contract_address);
+        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+
         let create_denom_msg = TokenfactoryMsg::create_denom(
             subspace.id,
             Addr::unchecked(&contract_address),

@@ -1,4 +1,4 @@
-use cosmwasm_std::Uint64;
+use cosmwasm_std::{Uint64, Coin, Uint128};
 
 pub const GAS: Uint64 = Uint64::new(300000);
 
@@ -25,3 +25,6 @@ pub const TEST_REACTIONS_POST_ID: u64 = 3;
 pub const TEST_POST_REGISTERED_REACTION_ID: u32 = 1;
 pub const TEST_POST_FREE_TEXT_REACTION_ID: u32 = 2;
 pub const TEST_POST_DELETABLE_REACTION_ID: u32 = 3;
+
+pub const TEST_CREATION_DENOM_FEES_AMOUNT: u128 = 10000000000;
+pub const TEST_CREATION_DENOM_FEES_DENOM: &str = "stake";
