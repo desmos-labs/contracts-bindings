@@ -20,7 +20,17 @@ mod tests {
 
         // Setup a subspace and denom for testing
         let subspace = create_test_subspace(&contract_address);
-        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+
+        desmos_cli
+            .send_tokens(
+                &subspace.treasury,
+                Coin::new(
+                    TEST_CREATION_DENOM_FEES_AMOUNT,
+                    TEST_CREATION_DENOM_FEES_DENOM,
+                ),
+            )
+            .assert_success();
+
         let create_denom_msg = TokenfactoryMsg::create_denom(
             subspace.id,
             Addr::unchecked(&contract_address),

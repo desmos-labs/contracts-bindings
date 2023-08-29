@@ -1,4 +1,4 @@
-use cosmwasm_std::{Uint64, Coin, Uint128};
+use cosmwasm_std::Uint64;
 
 pub const GAS: Uint64 = Uint64::new(300000);
 

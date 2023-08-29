@@ -14,8 +14,17 @@ mod tests {
         let desmos_cli = DesmosCli::default();
         let contract_address = desmos_cli.get_contract_by_code(1);
 
+        // Setup subspace and deposit creation fees
         let subspace = create_test_subspace(&contract_address);
-        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+        desmos_cli
+            .send_tokens(
+                &subspace.treasury,
+                Coin::new(
+                    TEST_CREATION_DENOM_FEES_AMOUNT,
+                    TEST_CREATION_DENOM_FEES_DENOM,
+                ),
+            )
+            .assert_success();
 
         let msg = TokenfactoryMsg::create_denom(
             subspace.id,
@@ -33,8 +42,17 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
         let subdenom = "test_mint_burn";
 
+        // Setup subspace and deposit creation fees
         let subspace = create_test_subspace(&contract_address);
-        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+        desmos_cli
+            .send_tokens(
+                &subspace.treasury,
+                Coin::new(
+                    TEST_CREATION_DENOM_FEES_AMOUNT,
+                    TEST_CREATION_DENOM_FEES_DENOM,
+                ),
+            )
+            .assert_success();
 
         let create_denom_msg = TokenfactoryMsg::create_denom(
             subspace.id,
@@ -68,8 +86,17 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
         let subdenom = "test_set_metadata";
 
+        // Setup subspace and deposit creation fees
         let subspace = create_test_subspace(&contract_address);
-        desmos_cli.send_tokens(&subspace.treasury, Coin::new(TEST_CREATION_DENOM_FEES_AMOUNT, TEST_CREATION_DENOM_FEES_DENOM));
+        desmos_cli
+            .send_tokens(
+                &subspace.treasury,
+                Coin::new(
+                    TEST_CREATION_DENOM_FEES_AMOUNT,
+                    TEST_CREATION_DENOM_FEES_DENOM,
+                ),
+            )
+            .assert_success();
 
         let create_denom_msg = TokenfactoryMsg::create_denom(
             subspace.id,

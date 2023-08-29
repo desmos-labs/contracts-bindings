@@ -1,6 +1,6 @@
-use crate::consts::{GAS, USER1_KEY, USER1_ADDRESS};
+use crate::consts::{GAS, USER1_ADDRESS, USER1_KEY};
 use crate::models::{ListContractByCode, TxResponse, WasmQueryResponse};
-use cosmwasm_std::{CosmosMsg, Coin};
+use cosmwasm_std::{Coin, CosmosMsg};
 use desmos_bindings::subspaces::types::{
     QuerySubspaceResponse, QuerySubspacesResponse, QueryUserGroupMembersResponse,
     QueryUserGroupResponse, QueryUserGroupsResponse,
@@ -118,7 +118,13 @@ impl DesmosCli {
     /// * `receiver` - Address of the receiver.
     /// * `amount` - Amount of the tokens to be sent.
     pub fn send_tokens(&self, receiver: &str, amount: Coin) -> TxResponse {
-        self.execute_tx(vec!["bank", "send", USER1_ADDRESS, receiver, amount.to_string().as_str()])
+        self.execute_tx(vec![
+            "bank",
+            "send",
+            USER1_ADDRESS,
+            receiver,
+            amount.to_string().as_str(),
+        ])
     }
 
     /// Gets a contract address by it's id.
