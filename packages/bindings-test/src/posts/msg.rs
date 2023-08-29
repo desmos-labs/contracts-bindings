@@ -241,7 +241,7 @@ mod test {
         );
 
         desmos_cli
-            .execute_contract(&contract_address, [move_post_msg.into()])
+            .execute_contract(&contract_address, vec![move_post_msg.into()])
             .assert_success()
     }
 
@@ -268,7 +268,7 @@ mod test {
         desmos_cli
             .execute_contract(
                 &contract_address,
-                [
+                vec![
                     request_post_owner_transfer_msg.into(),
                     cancel_post_owner_transfer_request_msg.into(),
                 ],
@@ -291,7 +291,7 @@ mod test {
             Addr::unchecked(&contract_address),
         );
         desmos_cli
-            .execute_contract(&contract_address, [request_post_owner_transfer_msg.into()])
+            .execute_contract(&contract_address, vec![request_post_owner_transfer_msg.into()])
             .assert_success();
 
         // Receiver accepts a post owner transfer request
@@ -303,7 +303,7 @@ mod test {
         desmos_cli
             .execute_contract(
                 &receiver_contract_address,
-                [accept_post_owner_transfer_request_msg.into()],
+                vec![accept_post_owner_transfer_request_msg.into()],
             )
             .assert_success()
     }
@@ -323,7 +323,7 @@ mod test {
             Addr::unchecked(&contract_address),
         );
         desmos_cli
-            .execute_contract(&contract_address, [request_post_owner_transfer_msg.into()])
+            .execute_contract(&contract_address, vec![request_post_owner_transfer_msg.into()])
             .assert_success();
 
         // Receiver refuses a post owner transfer request
@@ -335,7 +335,7 @@ mod test {
         desmos_cli
             .execute_contract(
                 &receiver_contract_address,
-                [refuse_post_owner_transfer_request_msg.into()],
+                vec![refuse_post_owner_transfer_request_msg.into()],
             )
             .assert_success()
     }

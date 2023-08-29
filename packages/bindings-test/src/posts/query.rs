@@ -246,7 +246,7 @@ mod test {
         desmos_cli
             .execute_contract(
                 &contract_address,
-                [PostsMsg::request_post_owner_transfer(
+                vec![PostsMsg::request_post_owner_transfer(
                     TEST_SUBSPACE,
                     post.id,
                     Addr::unchecked(&receiver_contract_address),
