@@ -2,15 +2,11 @@
 mod tests {
     use crate::chain_communication::DesmosCli;
     use crate::subspaces::create_test_subspace;
+    use crate::tokenfactory::get_denom;
 
-    use cosmwasm_std::{Coin, Addr};
+    use cosmwasm_std::{Addr, Coin};
     use desmos_bindings::cosmos_types::{DenomUnit, Metadata};
-    use desmos_bindings::subspaces::types::Subspace;
     use desmos_bindings::tokenfactory::msg::TokenfactoryMsg;
-
-    fn get_denom(subspace: &Subspace, subdenom: &str) -> String {
-        format!("factory/{}/{}", subspace.treasury, subdenom)
-    }
 
     #[test]
     fn test_create_denom() {
@@ -18,7 +14,11 @@ mod tests {
         let contract_address = desmos_cli.get_contract_by_code(1);
 
         let subspace = create_test_subspace(&contract_address);
-        let msg = TokenfactoryMsg::create_denom(subspace.id, Addr::unchecked(&contract_address), "test_create");
+        let msg = TokenfactoryMsg::create_denom(
+            subspace.id,
+            Addr::unchecked(&contract_address),
+            "test_create",
+        );
         desmos_cli
             .wasm_execute(&contract_address, &msg)
             .assert_success();
@@ -31,8 +31,11 @@ mod tests {
         let subdenom = "test_mint_burn";
 
         let subspace = create_test_subspace(&contract_address);
-        let create_denom_msg =
-            TokenfactoryMsg::create_denom(subspace.id, Addr::unchecked(&contract_address), subdenom);
+        let create_denom_msg = TokenfactoryMsg::create_denom(
+            subspace.id,
+            Addr::unchecked(&contract_address),
+            subdenom,
+        );
 
         let mint_msg = TokenfactoryMsg::mint(
             subspace.id,
@@ -61,8 +64,11 @@ mod tests {
         let subdenom = "test_set_metadata";
 
         let subspace = create_test_subspace(&contract_address);
-        let create_denom_msg =
-            TokenfactoryMsg::create_denom(subspace.id, Addr::unchecked(&contract_address), subdenom);
+        let create_denom_msg = TokenfactoryMsg::create_denom(
+            subspace.id,
+            Addr::unchecked(&contract_address),
+            subdenom,
+        );
 
         let set_metadata_msg = TokenfactoryMsg::set_denom_metadata(
             subspace.id,

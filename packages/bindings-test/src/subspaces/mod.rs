@@ -15,8 +15,12 @@ use desmos_bindings::subspaces::types::{QuerySubspacesRequest, QuerySubspacesRes
 pub fn create_test_subspace(contract_address: &str) -> Subspace {
     let desmos_cli = DesmosCli::default();
 
-    let create_subspace =
-        SubspacesMsg::create_subspace("test", "test", Addr::unchecked(contract_address), Addr::unchecked(contract_address));
+    let create_subspace = SubspacesMsg::create_subspace(
+        "test",
+        "test",
+        Addr::unchecked(contract_address),
+        Addr::unchecked(contract_address),
+    );
 
     desmos_cli
         .execute_contract(contract_address, vec![create_subspace.into()])

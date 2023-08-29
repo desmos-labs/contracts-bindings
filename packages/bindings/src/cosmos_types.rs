@@ -2,7 +2,7 @@
 
 pub use crate::proto::cosmos::authz::v1beta1::{GenericAuthorization, Grant as AuthzGrant};
 
-pub use crate::proto::cosmos::bank::v1beta1::{Metadata, DenomUnit};
+pub use crate::proto::cosmos::bank::v1beta1::{DenomUnit, Metadata};
 
 pub use crate::proto::cosmos::base::query::v1beta1::PageRequest;
 
