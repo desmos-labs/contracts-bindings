@@ -42,10 +42,10 @@ sed -i -e 's/timeout_commit = "5s"/timeout_commit = "500ms"/g' "$DESMOS_HOME/con
 
 (echo "$USER1_MNEMONIC"; echo $KEYRING_PASS; echo $KEYRING_PASS) | desmos keys add "$USER1" --recover --keyring-backend=file
 (echo "$USER2_MNEMONIC"; echo $KEYRING_PASS; echo $KEYRING_PASS) | desmos keys add "$USER2" --recover --keyring-backend=file
-echo $KEYRING_PASS | desmos add-genesis-account $USER1 200000000000000stake --keyring-backend=file
-echo $KEYRING_PASS | desmos add-genesis-account $USER2 200000000000000stake --keyring-backend=file
-echo $KEYRING_PASS | desmos gentx $USER1 100000000000stake --amount 100000000000stake --chain-id=testchain --keyring-backend=file
-desmos collect-gentxs
+echo $KEYRING_PASS | desmos genesis add-genesis-account $USER1 200000000000000stake --keyring-backend=file
+echo $KEYRING_PASS | desmos genesis add-genesis-account $USER2 200000000000000stake --keyring-backend=file
+echo $KEYRING_PASS | desmos genesis gentx $USER1 100000000000stake --amount 100000000000stake --chain-id=testchain --keyring-backend=file
+desmos genesis collect-gentxs
 
 
 if [ $BACKGROUND = true ] ; then
