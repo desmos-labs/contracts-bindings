@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: desmos-labs/desmos
-          ref: v6.0.0
+          ref: v6.1.0
           path: ./desmos-src
   
       - name: Build desmos chain ⚙
