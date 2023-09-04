@@ -190,6 +190,42 @@ pub fn allow_serde_enum_as_custom_enum(s: ItemStruct) -> ItemStruct {
     syn::ItemStruct { fields, ..s }
 }
 
+/// Renames naming of `Result` struct into `ApplicationResult`
+pub fn rename_application_result_struct_name(s: ItemStruct) -> ItemStruct {
+    if s.ident != "Result" {
+        return s;
+    }
+
+    syn::ItemStruct {
+        ident: Ident::new("ApplicationResult", s.ident.span()),
+        ..s
+    }
+}
+
+/// Renames `result` type of `ApplicationLink` into `Option<ApplicationResult>` instead `Option<Result>`
+pub fn rename_application_link_result_type(s: ItemStruct) -> ItemStruct {
+    if s.ident != "ApplicationLink" {
+        return s;
+    }
+
+    let fields_vec = s
+        .fields
+        .into_iter()
+        .map(|mut field| {
+            if field.ty == parse_quote!(::core::option::Option<Result>) {
+                field.ty = parse_quote!(::core::option::Option<ApplicationResult>);
+            }
+            return field;
+        })
+        .collect::<Vec<syn::Field>>();
+
+    let fields_named: syn::FieldsNamed = parse_quote! {
+        { #(#fields_vec,)* }
+    };
+    let fields = syn::Fields::Named(fields_named);
+    syn::ItemStruct { fields, ..s }
+}
+
 /// Add custom serde methods to implementation for enum
 pub fn add_serde_impl_for_enum_impl(item_impl: &ItemImpl) -> ItemImpl {
     let mut item = item_impl.clone();
