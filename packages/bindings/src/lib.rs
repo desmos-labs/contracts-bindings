@@ -28,6 +28,9 @@ pub mod reports;
 #[cfg(feature = "subspaces")]
 pub mod subspaces;
 
+#[cfg(feature = "tokenfactory")]
+pub mod tokenfactory;
+
 pub mod cosmos_types;
 
 mod serde;

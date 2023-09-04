@@ -73,6 +73,7 @@ pub fn run() {
             "posts/v3".to_string(),
             "reactions/v1".to_string(),
             "reports/v1".to_string(),
+            "tokenfactory/v1".to_string(),
         ],
     };
 
@@ -91,6 +92,7 @@ pub fn run() {
             "tx/signing".to_string(),
             "upgrade/v1beta1/upgrade.proto".to_string(),
             "feegrant/v1beta1/feegrant.proto".to_string(),
+            "bank/v1beta1/bank.proto".to_string(),
         ],
     };
 

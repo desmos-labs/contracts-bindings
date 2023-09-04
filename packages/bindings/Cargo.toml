@@ -38,13 +38,14 @@ desmos-std-derive = {version = "2.0.1", path = "../std-derive"}
 cw-multi-test = { version = "0.16.5" }
 
 [features]
-default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions"]
+default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "tokenfactory"]
 profiles = []
 subspaces = []
 posts = []
 relationships = []
 reports = []
 reactions = []
+tokenfactory = []
 iterators = []
 # TODO: Enable backtraces feature when it becomes stable feature
 # backtraces = ["cosmwasm-std/backtraces"]

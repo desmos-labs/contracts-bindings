@@ -12,6 +12,7 @@ mod reactions;
 mod relationships;
 mod reports;
 mod subspaces;
+mod tokenfactory;
 
 fn main() {
     println!("Setup contract state start!");

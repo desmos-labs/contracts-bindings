@@ -311,4 +311,15 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
             MockSubspacesQueries::get_mocked_group_allowances_response(),
         );
     }
+
+    #[cfg(feature = "tokenfactory")]
+    {
+        use crate::tokenfactory::mocks::MockTokenfactoryQueries;
+        use crate::tokenfactory::types::QuerySubspaceDenomsRequest;
+
+        QuerySubspaceDenomsRequest::mock_response(
+            querier,
+            MockTokenfactoryQueries::get_mocked_subspace_denoms_response(),
+        );
+    }
 }
