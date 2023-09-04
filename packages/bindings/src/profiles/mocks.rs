@@ -6,12 +6,12 @@ use crate::profiles::types::{
     query_application_link_owners_response::ApplicationLinkOwnerDetails,
     query_chain_link_owners_response::ChainLinkOwnerDetails,
     result::{Success, Sum},
-    ApplicationLink, ApplicationLinkState, Bech32Address, ChainConfig, ChainLink,
-    DTagTransferRequest, Data, OracleRequest, Pictures, Profile, Proof,
+    ApplicationLink, ApplicationLinkState, ApplicationResult, Bech32Address, ChainConfig,
+    ChainLink, DTagTransferRequest, Data, OracleRequest, Pictures, Profile, Proof,
     QueryApplicationLinkByClientIdResponse, QueryApplicationLinkOwnersResponse,
     QueryApplicationLinksResponse, QueryChainLinkOwnersResponse, QueryChainLinksResponse,
     QueryDefaultExternalAddressesResponse, QueryIncomingDTagTransferRequestsResponse,
-    QueryProfileResponse, Result as AppResult, SignatureValueType, SingleSignature,
+    QueryProfileResponse, SignatureValueType, SingleSignature,
 };
 
 use chrono::DateTime;
@@ -129,7 +129,7 @@ impl MockProfilesQueries {
                 }),
                 client_id: MOCK_APPLICATION_LINK_CLIENT_ID.into(),
             }),
-            result: Some(AppResult {
+            result: Some(ApplicationResult {
                 sum: Some(Sum::Success(Success {
                     value: "4c756361675f5f2345423337".into(),
                     signature: "9690d734171298eb4cc9636c36d8507535264c1fdb136c9095a6a50c41ccffa"
