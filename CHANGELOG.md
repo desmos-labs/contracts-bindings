@@ -1,5 +1,33 @@
 # Changelog
 
+## Version 3.0.0
+
+### Breaking changes
+With this version, the following changes have been made:
+- `Post` structure now requires `owner` field
+
+### Features
+- ([\#303](https://github.com/desmos-labs/desmos-bindings.git/pull/303)) Supported `x/tokenfactory` feature
+
+### Dependencies
+- ([\#246](https://github.com/desmos-labs/desmos-bindings.git/pull/246)) Bumped strum_macros to 0.25.1 (#246) 
+- ([\#295](https://github.com/desmos-labs/desmos-bindings.git/pull/295)) Bumped quote to 1.0.33 (#295)
+- ([\#300](https://github.com/desmos-labs/desmos-bindings.git/pull/300)) Bumped proto to Desmos v6
+- ([\#307](https://github.com/desmos-labs/desmos-bindings.git/pull/307)) Bumped serde to 1.0.188 (#307)
+- ([\#309](https://github.com/desmos-labs/desmos-bindings.git/pull/309)) Bumped schemars to 0.8.13 (#309)
+- ([\#310](https://github.com/desmos-labs/desmos-bindings.git/pull/310)) Bumped chrono to 0.4.27 (#310)
+- ([\#315](https://github.com/desmos-labs/desmos-bindings.git/pull/315)) Bumped prost-types to 0.12.0
+- ([\#316](https://github.com/desmos-labs/desmos-bindings.git/pull/316)) Bumped prost to 0.12.0
+- ([\#317](https://github.com/desmos-labs/desmos-bindings.git/pull/317)) Bumped cosmwasm-std to v1.4.0
+- ([\#319](https://github.com/desmos-labs/desmos-bindings.git/pull/319)) Bumped cosmwasm-schema to v1.4.0
+- ([\#328](https://github.com/desmos-labs/desmos-bindings.git/pull/328)) Bumped syn to 2.0.32 (#328)
+- ([\#329](https://github.com/desmos-labs/desmos-bindings.git/pull/329)) Bumped base64 to 0.21.4 (#329)
+- ([\#331](https://github.com/desmos-labs/desmos-bindings.git/pull/331)) Bumped proc-macro2 1.0.66 to 1.0.67 (#331)
+
+### Other
+- ([\#291](https://github.com/desmos-labs/desmos-bindings.git/pull/291)) Used `parse_err` constructor instead of literal
+- ([\#296](https://github.com/desmos-labs/desmos-bindings.git/pull/296)) Disabled backtraces feature
+
 ## Version 2.0.1
 ### Dependencies
 - ([\#205](https://github.com/desmos-labs/desmos-bindings.git/pull/205)) Bump prettyplease from 0.2.5 to 0.2.6

@@ -22,7 +22,20 @@ jobs:
           override: true
           components: rustfmt, clippy
 
-      - name: Publish crates.io 📤
+      - name: Publish desmos-mock to crates.io 📤
         uses: katyo/publish-crates@v2
         with:
+          args: --package desmos-mock
+          registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Publish desmos-std-derive to crates.io 📤
+        uses: katyo/publish-crates@v2
+        with:
+          args: --package desmos-std-derive
+          registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+      - name: Publish desmos-bindings to crates.io 📤
+        uses: katyo/publish-crates@v2
+        with:
+          args: --package desmos-bindings
           registry-token: ${{ secrets.CARGO_REGISTRY_TOKEN }}
