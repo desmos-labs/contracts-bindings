@@ -32,7 +32,7 @@ desmos-mock = { version = "3.0.0", path = "../mock" }
 schemars = "0.8.15"
 strum_macros = "0.25.3"
 base64 = "0.21.5"
-desmos-std-derive = {version = "2.1.0", path = "../std-derive"}
+desmos-std-derive = {version = "3.0.0", path = "../std-derive"}
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 cw-multi-test = { version = "0.17.0" }
