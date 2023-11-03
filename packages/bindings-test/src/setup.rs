@@ -49,7 +49,7 @@ pub fn setup() {
     cli.execute_contract(
         &target_contract,
         vec![ProfilesMsg::save_profile(
-            Some("test_profile_posts"),
+            Some("target_test_profile_posts"),
             Some("contract_nick"),
             Some("test_bio"),
             Some("https://i.imgur.com/X2aK5Bq.jpeg"),
