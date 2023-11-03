@@ -138,8 +138,6 @@ impl DesmosCli {
             .arg("wasm")
             .arg("list-contract-by-code")
             .arg(id.to_string())
-            .arg(format!("--offset={}", offset))
-            .arg(format!("--limit=1"))
             .arg("--output=json");
 
         let output = DesmosCli::run_command(&mut cmd);
@@ -147,8 +145,8 @@ impl DesmosCli {
 
         result
             .contracts
-            .get(0)
-            .expect(&format!("can't find smart contract with id {}", id))
+            .get(offset)
+            .expect(&format!("can't find smart contract with id {} and offset {}", id, offset))
             .to_string()
     }
 

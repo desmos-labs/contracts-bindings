@@ -12,7 +12,7 @@ mod tests {
     #[test]
     fn test_create_denom() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Setup subspace and deposit creation fees
         let subspace = create_test_subspace(&contract_address);
@@ -39,7 +39,7 @@ mod tests {
     #[test]
     fn test_mint_then_burn() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subdenom = "test_mint_burn";
 
         // Setup subspace and deposit creation fees
@@ -83,7 +83,7 @@ mod tests {
     #[test]
     fn test_set_metadata() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subdenom = "test_set_metadata";
 
         // Setup subspace and deposit creation fees
