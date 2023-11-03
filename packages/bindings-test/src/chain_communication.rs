@@ -146,7 +146,10 @@ impl DesmosCli {
         result
             .contracts
             .get(offset)
-            .expect(&format!("can't find smart contract with id {} and offset {}", id, offset))
+            .expect(&format!(
+                "can't find smart contract with id {} and offset {}",
+                id, offset
+            ))
             .to_string()
     }
 
