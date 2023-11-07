@@ -35,7 +35,7 @@ base64 = "0.21.5"
 desmos-std-derive = {version = "2.0.1", path = "../std-derive"}
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-cw-multi-test = { version = "0.17.0" }
+cw-multi-test = { version = "0.18.0" }
 
 [features]
 default = ["profiles", "subspaces", "posts", "relationships", "reports", "reactions", "tokenfactory"]
