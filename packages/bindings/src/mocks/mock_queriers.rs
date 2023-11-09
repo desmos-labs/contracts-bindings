@@ -101,8 +101,9 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
     {
         use crate::posts::mocks::MockPostsQueries;
         use crate::posts::types::{
-            QueryPollAnswersRequest, QueryPostAttachmentsRequest, QueryPostRequest,
-            QuerySectionPostsRequest, QuerySubspacePostsRequest,
+            QueryIncomingPostOwnerTransferRequestsRequest, QueryPollAnswersRequest,
+            QueryPostAttachmentsRequest, QueryPostRequest, QuerySectionPostsRequest,
+            QuerySubspacePostsRequest,
         };
 
         QuerySubspacePostsRequest::mock_response(
@@ -124,6 +125,11 @@ fn register_default_mock_queries(querier: &mut MockDesmosQuerier) {
         QueryPollAnswersRequest::mock_response(
             querier,
             MockPostsQueries::get_mocked_poll_answers_response(),
+        );
+
+        QueryIncomingPostOwnerTransferRequestsRequest::mock_response(
+            querier,
+            MockPostsQueries::get_mocked_incoming_post_transfer_requests_response(),
         );
     }
     #[cfg(feature = "profiles")]

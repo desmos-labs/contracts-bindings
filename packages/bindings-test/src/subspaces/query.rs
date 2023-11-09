@@ -20,7 +20,7 @@ mod tests {
     #[test]
     fn test_query_all_subspaces() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QuerySubspacesRequest { pagination: None }.into(),
@@ -39,7 +39,7 @@ mod tests {
     #[test]
     fn test_query_subspace() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QuerySubspaceRequest {
@@ -61,7 +61,7 @@ mod tests {
     #[test]
     fn test_query_user_groups() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryUserGroupsRequest {
@@ -91,7 +91,7 @@ mod tests {
     #[test]
     fn test_query_user_group() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryUserGroupRequest {
@@ -120,7 +120,7 @@ mod tests {
     #[test]
     fn test_query_user_group_members() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryUserGroupMembersRequest {
@@ -144,7 +144,7 @@ mod tests {
     #[test]
     fn test_query_user_permissions() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryUserPermissionsRequest {
@@ -207,7 +207,7 @@ mod tests {
     #[test]
     fn test_query_user_allowances() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryUserAllowancesRequest {
@@ -245,7 +245,7 @@ mod tests {
     #[test]
     fn test_query_group_allowances() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let query = DesmosChain {
             request: QueryGroupAllowancesRequest {

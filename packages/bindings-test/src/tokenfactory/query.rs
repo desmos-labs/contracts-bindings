@@ -15,7 +15,7 @@ mod tests {
     #[test]
     fn test_query_subspace_denoms() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let subdenom = "test_query";
 
         // Setup a subspace and denom for testing

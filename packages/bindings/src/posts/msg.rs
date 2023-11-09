@@ -148,6 +148,95 @@ impl PostsMsg {
             signer: signer.into(),
         }
     }
+
+    /// Creates an instance of [`MsgMovePost`].
+    /// * `subspace_id` - Id of the subspace where the post is currently located.
+    /// * `post_id` - Id of the post to be moved.
+    /// * `target_subspace_id` - Id of the target subspace to which the post will be moved.
+    /// * `target_section_id` - Id of the target section to which the post will be moved.
+    /// * `owner` - Address of the post owner.
+    pub fn move_post(
+        subspace_id: u64,
+        post_id: u64,
+        target_subspace_id: u64,
+        target_section_id: u32,
+        owner: Addr,
+    ) -> MsgMovePost {
+        MsgMovePost {
+            subspace_id,
+            post_id,
+            target_subspace_id,
+            target_section_id,
+            owner: owner.into(),
+        }
+    }
+
+    /// Creates an instance of [`MsgRequestPostOwnerTransfer`].
+    /// * `subspace_id` - Id of the subspace that holds the post which ownership should be transferred.
+    /// * `post_id` - Id of the post which will be transferred.
+    /// * `receiver` - Address of the post ownership receiver.
+    /// * `sender` - Address of the sender who is creating a transfer request.
+    pub fn request_post_owner_transfer(
+        subspace_id: u64,
+        post_id: u64,
+        receiver: Addr,
+        sender: Addr,
+    ) -> MsgRequestPostOwnerTransfer {
+        MsgRequestPostOwnerTransfer {
+            subspace_id,
+            post_id,
+            receiver: receiver.into(),
+            sender: sender.into(),
+        }
+    }
+
+    /// Creates an instance of [`MsgCancelPostOwnerTransferRequest`].
+    /// * `subspace_id` - Id of the subspace that holds the post for which the request should be canceled.
+    /// * `post_id` - Id of the post for which the request will be cancelled.
+    /// * `sender` - Address of the transfer request sender.
+    pub fn cancel_post_owner_transfer_request(
+        subspace_id: u64,
+        post_id: u64,
+        sender: Addr,
+    ) -> MsgCancelPostOwnerTransferRequest {
+        MsgCancelPostOwnerTransferRequest {
+            subspace_id,
+            post_id,
+            sender: sender.into(),
+        }
+    }
+
+    /// Creates an instance of [`MsgAcceptPostOwnerTransferRequest`].
+    /// * `subspace_id` - Id of the subspace holding the post for which the request will be accepted.
+    /// * `post_id` - Id of the post for which the request will be accepted.
+    /// * `receiver` - Address of the request receiver.
+    pub fn accept_post_owner_transfer_request(
+        subspace_id: u64,
+        post_id: u64,
+        receiver: Addr,
+    ) -> MsgAcceptPostOwnerTransferRequest {
+        MsgAcceptPostOwnerTransferRequest {
+            subspace_id,
+            post_id,
+            receiver: receiver.into(),
+        }
+    }
+
+    /// Creates an instance of [`MsgRefusePostOwnerTransferRequest`].
+    /// * `subspace_id` - Id of the subspace holding the post for which the request will be refused.
+    /// * `post_id` - Id of the post for which the request will be refused.
+    /// * `receiver` - Address of the request receiver.
+    pub fn refuse_post_owner_transfer_request(
+        subspace_id: u64,
+        post_id: u64,
+        receiver: Addr,
+    ) -> MsgRefusePostOwnerTransferRequest {
+        MsgRefusePostOwnerTransferRequest {
+            subspace_id,
+            post_id,
+            receiver: receiver.into(),
+        }
+    }
 }
 
 #[cfg(test)]
@@ -331,6 +420,79 @@ mod tests {
             poll_id: 1,
             answers_indexes: vec![1],
             signer: "user".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_move_post() {
+        let msg = PostsMsg::move_post(1, 1, 2, 0, Addr::unchecked("user"));
+
+        let expected = MsgMovePost {
+            subspace_id: 1,
+            post_id: 1,
+            target_subspace_id: 2,
+            target_section_id: 0,
+            owner: "user".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_request_post_owner_transfer() {
+        let msg = PostsMsg::request_post_owner_transfer(
+            1,
+            1,
+            Addr::unchecked("receiver"),
+            Addr::unchecked("sender"),
+        );
+
+        let expected = MsgRequestPostOwnerTransfer {
+            subspace_id: 1,
+            post_id: 1,
+            receiver: "receiver".into(),
+            sender: "sender".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_cancel_post_owner_transfer_request() {
+        let msg = PostsMsg::cancel_post_owner_transfer_request(1, 1, Addr::unchecked("sender"));
+
+        let expected = MsgCancelPostOwnerTransferRequest {
+            subspace_id: 1,
+            post_id: 1,
+            sender: "sender".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_accept_post_owner_transfer_request() {
+        let msg = PostsMsg::accept_post_owner_transfer_request(1, 1, Addr::unchecked("receiver"));
+
+        let expected = MsgAcceptPostOwnerTransferRequest {
+            subspace_id: 1,
+            post_id: 1,
+            receiver: "receiver".into(),
+        };
+
+        assert_eq!(expected, msg)
+    }
+
+    #[test]
+    fn test_refuse_post_owner_transfer_request() {
+        let msg = PostsMsg::refuse_post_owner_transfer_request(1, 1, Addr::unchecked("receiver"));
+
+        let expected = MsgRefusePostOwnerTransferRequest {
+            subspace_id: 1,
+            post_id: 1,
+            receiver: "receiver".into(),
         };
 
         assert_eq!(expected, msg)

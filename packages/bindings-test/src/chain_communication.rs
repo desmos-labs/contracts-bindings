@@ -130,7 +130,8 @@ impl DesmosCli {
     /// Gets a contract address by it's id.
     ///
     /// * `id` - ID of the contract of interest.
-    pub fn get_contract_by_code(&self, id: u64) -> String {
+    /// * `offset` - Offset of the target contract.
+    pub fn get_contract_by_code(&self, id: u64, offset: usize) -> String {
         let mut cmd = self.desmos();
 
         cmd.arg("query")
@@ -144,8 +145,11 @@ impl DesmosCli {
 
         result
             .contracts
-            .get(0)
-            .expect(&format!("can't find smart contract with id {}", id))
+            .get(offset)
+            .expect(&format!(
+                "can't find smart contract with id {} and offset {}",
+                id, offset
+            ))
             .to_string()
     }
 

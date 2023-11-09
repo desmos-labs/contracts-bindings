@@ -25,7 +25,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let result: QueryProfileResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
@@ -56,7 +56,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let result: QueryIncomingDTagTransferRequestsResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
@@ -81,7 +81,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let result: QueryChainLinksResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
@@ -122,7 +122,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let result: QueryChainLinksResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
@@ -152,7 +152,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let result: QueryChainLinksResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
@@ -181,7 +181,7 @@ mod tests {
             .into(),
         };
 
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let result: QueryChainLinkOwnersResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();
@@ -206,7 +206,7 @@ mod tests {
             }
             .into(),
         };
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
         let result: QueryDefaultExternalAddressesResponse = desmos_cli
             .wasm_query(&contract_address, &query_msg)
             .to_object();

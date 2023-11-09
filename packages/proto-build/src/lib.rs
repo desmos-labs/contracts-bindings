@@ -10,7 +10,7 @@ mod transform;
 mod transformers;
 
 /// The desmos commit or tag to be cloned and used to build the proto files
-const DESMOS_REV: &str = "v6.0.0";
+const DESMOS_REV: &str = "v6.2.0";
 
 /// Directory where the desmos submodule is located
 const DESMOS_DIR: &str = "../../dependencies/desmos/";
@@ -22,7 +22,7 @@ const DESMOS_REPO_URL: &str = "https://github.com/desmos-labs/desmos.git";
 const COSMOS_SDK_DIR: &str = "../../dependencies/cosmos-sdk/";
 
 /// The Cosmos SDK commit or tag to be cloned and used to build the proto files
-const COSMOS_SDK_REV: &str = "v0.47.4-desmos";
+const COSMOS_SDK_REV: &str = "v0.47.5-desmos";
 
 /// URL where the Cosmos SDK repository is located
 const COSMOS_SDK_REPO_URL: &str = "https://github.com/desmos-labs/cosmos-sdk.git";
@@ -31,7 +31,7 @@ const COSMOS_SDK_REPO_URL: &str = "https://github.com/desmos-labs/cosmos-sdk.git
 const IBC_DIR: &str = "../../dependencies/ibc/";
 
 /// The IBC commit or tag to be cloned and used to build the proto files
-const IBC_REV: &str = "v7.2.0";
+const IBC_REV: &str = "v7.3.1";
 
 /// URL where the IBC repository is located
 const IBC_REPO_URL: &str = "https://github.com/cosmos/ibc-go.git";

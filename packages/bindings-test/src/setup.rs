@@ -27,7 +27,7 @@ use desmos_bindings::subspaces::{
 pub fn setup() {
     let cli = DesmosCli::default();
 
-    let contract = cli.get_contract_by_code(1);
+    let contract = cli.get_contract_by_code(1, 0);
 
     // Create a profile for the smart contract to allow the creation of posts
     cli.execute_contract(
@@ -39,6 +39,22 @@ pub fn setup() {
             Some("https://i.imgur.com/X2aK5Bq.jpeg"),
             Some("https://i.imgur.com/X2aK5Bq.jpeg"),
             Addr::unchecked(&contract),
+        )
+        .into()],
+    )
+    .assert_success();
+
+    // Create a profile for target contract
+    let target_contract = cli.get_contract_by_code(1, 1);
+    cli.execute_contract(
+        &target_contract,
+        vec![ProfilesMsg::save_profile(
+            Some("target_test_profile_posts"),
+            Some("contract_nick"),
+            Some("test_bio"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Some("https://i.imgur.com/X2aK5Bq.jpeg"),
+            Addr::unchecked(&target_contract),
         )
         .into()],
     )

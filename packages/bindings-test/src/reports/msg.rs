@@ -12,7 +12,7 @@ mod tests {
     #[test]
     fn test_create_report() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let create_report = ReportsMsg::create_report(
             TEST_SUBSPACE,
@@ -36,7 +36,7 @@ mod tests {
     #[test]
     fn test_delete_report() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let delete_report = ReportsMsg::delete_report(
             TEST_SUBSPACE,
@@ -56,7 +56,7 @@ mod tests {
     #[test]
     fn test_support_standard_reason() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let delete_report = ReportsMsg::support_standard_reason(
             TEST_SUBSPACE,
@@ -76,7 +76,7 @@ mod tests {
     #[test]
     fn test_add_reason() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let add_reason = ReportsMsg::add_reason(
             TEST_SUBSPACE,
@@ -97,7 +97,7 @@ mod tests {
     #[test]
     fn test_remove_reason() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let remove_reason = ReportsMsg::remove_reason(
             TEST_SUBSPACE,

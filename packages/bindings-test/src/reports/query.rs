@@ -16,7 +16,7 @@ mod tests {
     #[test]
     fn test_query_reports() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Query all
         let query = DesmosChain {
@@ -91,7 +91,7 @@ mod tests {
     #[test]
     fn test_query_report() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Query all
         let query = DesmosChain {
@@ -117,7 +117,7 @@ mod tests {
     #[test]
     fn test_query_reasons() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Query all
         let query = DesmosChain {
@@ -143,7 +143,7 @@ mod tests {
     #[test]
     fn test_query_reason() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Query all
         let query = DesmosChain {

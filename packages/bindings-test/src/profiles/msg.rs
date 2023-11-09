@@ -27,7 +27,7 @@ mod tests {
     #[test]
     fn test_create_profile() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let save_profile_msg = build_save_profile_msg(&contract_address);
 
@@ -39,7 +39,7 @@ mod tests {
     #[test]
     fn test_delete_profile() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let save_profile_msg = build_save_profile_msg(&contract_address);
 
@@ -61,7 +61,7 @@ mod tests {
     #[test]
     pub fn test_request_dtag_transfer() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let dtag_transfer_request = ProfilesMsg::request_dtag_transfer(
             Addr::unchecked(&contract_address),
@@ -93,7 +93,7 @@ mod tests {
     #[test]
     fn test_accept_dtag_transfer() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Create a profile for the smart contract
         let save_profile = ProfilesMsg::save_profile(
@@ -144,7 +144,7 @@ mod tests {
     #[test]
     fn test_refuse_dtag_transfer_request() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Create a profile for the smart contract
         let save_profile = ProfilesMsg::save_profile(
@@ -194,7 +194,7 @@ mod tests {
     #[test]
     fn test_link_unlink_chain_account() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Create a profile for the smart contract
         let save_profile = ProfilesMsg::save_profile(
@@ -249,7 +249,7 @@ mod tests {
     #[test]
     fn test_set_default_external_address() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         // Create a profile for the smart contract
         let save_profile = ProfilesMsg::save_profile(

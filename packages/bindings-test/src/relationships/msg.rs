@@ -9,7 +9,7 @@ mod tests {
     #[test]
     fn test_create_delete_relationship() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let create_relationship = RelationshipsMsg::create_relationship(
             Addr::unchecked(&contract_address),
@@ -43,7 +43,7 @@ mod tests {
     #[test]
     fn test_block_unblock_user() {
         let desmos_cli = DesmosCli::default();
-        let contract_address = desmos_cli.get_contract_by_code(1);
+        let contract_address = desmos_cli.get_contract_by_code(1, 0);
 
         let block_user = RelationshipsMsg::block_user(
             Addr::unchecked(&contract_address),
