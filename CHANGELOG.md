@@ -1,5 +1,37 @@
 # Changelog
 
+## Version 3.0.0
+
+### Breaking changes
+With this version, the following changes have been made:
+- `Post` structure now requires `owner` field
+
+### Features
+- ([\#303](https://github.com/desmos-labs/desmos-bindings.git/pull/303)) Supported `x/tokenfactory` feature
+
+### Dependencies
+- ([\#246](https://github.com/desmos-labs/desmos-bindings.git/pull/355)) Bumped strum_macros to 0.25.3 
+- ([\#295](https://github.com/desmos-labs/desmos-bindings.git/pull/295)) Bumped quote to 1.0.33
+- ([\#300](https://github.com/desmos-labs/desmos-bindings.git/pull/300)) Bumped proto to Desmos v6
+- ([\#307](https://github.com/desmos-labs/desmos-bindings.git/pull/366)) Bumped serde to 1.0.192
+- ([\#309](https://github.com/desmos-labs/desmos-bindings.git/pull/309)) Bumped schemars to 0.8.15
+- ([\#310](https://github.com/desmos-labs/desmos-bindings.git/pull/310)) Bumped chrono to 0.4.31
+- ([\#315](https://github.com/desmos-labs/desmos-bindings.git/pull/340)) Bumped prost-types to 0.12.1
+- ([\#316](https://github.com/desmos-labs/desmos-bindings.git/pull/316)) Bumped prost to 0.12.0
+- ([\#317](https://github.com/desmos-labs/desmos-bindings.git/pull/361)) Bumped cosmwasm-std to v1.5.0
+- ([\#319](https://github.com/desmos-labs/desmos-bindings.git/pull/360)) Bumped cosmwasm-schema to v1.5.0
+- ([\#328](https://github.com/desmos-labs/desmos-bindings.git/pull/364)) Bumped syn to 2.0.39
+- ([\#329](https://github.com/desmos-labs/desmos-bindings.git/pull/357)) Bumped base64 to 0.21.5
+- ([\#331](https://github.com/desmos-labs/desmos-bindings.git/pull/351)) Bumped proc-macro2 to 1.0.69
+- ([\#356](https://github.com/desmos-labs/desmos-bindings.git/pull/356)) Bumped thiserror to 1.0.50
+- ([\#352](https://github.com/desmos-labs/desmos-bindings.git/pull/352)) Bumped regex to 1.10.0
+- ([\#338](https://github.com/desmos-labs/desmos-bindings.git/pull/338)) Bumped trybuild to 1.0.85
+
+
+### Other
+- ([\#291](https://github.com/desmos-labs/desmos-bindings.git/pull/291)) Used `parse_err` constructor instead of literal
+- ([\#296](https://github.com/desmos-labs/desmos-bindings.git/pull/296)) Disabled backtraces feature
+
 ## Version 2.0.1
 ### Dependencies
 - ([\#205](https://github.com/desmos-labs/desmos-bindings.git/pull/205)) Bump prettyplease from 0.2.5 to 0.2.6

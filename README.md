@@ -10,6 +10,7 @@ Below the compatibility between the bindings and the Desmos chain
 
 | Bindings Version | Desmos Version |
 |------------------|----------------|
+| **v3.0.x**       | **v6.1.x**     |
 | **v2.0.x**       | **v5.0.x**     |
 | **v1.2.x**       | **v4.6.x**     |
 | **v1.1.x**       | **v4.3.x**     |

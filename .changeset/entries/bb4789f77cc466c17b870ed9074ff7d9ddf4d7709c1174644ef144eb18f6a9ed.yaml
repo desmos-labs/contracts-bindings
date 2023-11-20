@@ -1,6 +1,0 @@
-type: deps
-module: none
-pull_request: 300
-description: Update proto to Desmos v6.0.0
-backward_compatible: true
-date: 2023-08-23T09:34:30.497449342Z

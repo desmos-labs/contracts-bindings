@@ -430,7 +430,7 @@ dependencies = [
 
 [[package]]
 name = "desmos-bindings"
-version = "2.0.1"
+version = "3.0.0"
 dependencies = [
  "base64",
  "chrono",
@@ -449,14 +449,14 @@ dependencies = [
 
 [[package]]
 name = "desmos-mock"
-version = "2.0.1"
+version = "3.0.0"
 dependencies = [
  "cosmwasm-std",
 ]
 
 [[package]]
 name = "desmos-std-derive"
-version = "2.0.1"
+version = "3.0.0"
 dependencies = [
  "cosmwasm-std",
  "desmos-mock",
