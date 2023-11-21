@@ -1,6 +1,6 @@
-# Desmos Bindings
+# Contracts Bindings
 
-This repository contains the CosmWasm bindings packages that allows the interaction with the Desmos chain features from smart contracts.
+Desmos contracts bindings is a set of packages that allows you to create CosmWasm smart contracts that interacts directly with the Desmos Network custom modules.
 
 ![GitHub](https://img.shields.io/github/license/desmos-labs/desmos-bindings.svg) [![desmos-bindings on crates.io](https://img.shields.io/crates/v/desmos-bindings.svg)](https://crates.io/crates/desmos-bindings) [![codecov](https://codecov.io/gh/desmos-labs/desmos-bindings/branch/main/graph/badge.svg?token=TT3qCDd957)](https://codecov.io/gh/desmos-labs/desmos-bindings)
 
