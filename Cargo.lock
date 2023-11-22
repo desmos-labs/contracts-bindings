@@ -315,7 +315,7 @@ dependencies = [
  "cw-storage-plus",
  "cw-utils",
  "derivative",
- "itertools",
+ "itertools 0.11.0",
  "prost",
  "schemars",
  "serde",
@@ -460,7 +460,7 @@ version = "3.0.0"
 dependencies = [
  "cosmwasm-std",
  "desmos-mock",
- "itertools",
+ "itertools 0.12.0",
  "proc-macro2",
  "prost",
  "quote",
@@ -788,6 +788,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25db6b064527c5d482d0423354fcd07a89a2dfe07b67892e62411946db7f07b0"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -949,7 +958,7 @@ checksum = "8bdf592881d821b83d471f8af290226c8d51402259e9bb5be7f9f8bdebbb11ac"
 dependencies = [
  "bytes",
  "heck",
- "itertools",
+ "itertools 0.11.0",
  "log",
  "multimap",
  "once_cell",
@@ -970,7 +979,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "efb6c9a1dd1def8e2124d17e83a20af56f1570d6c2d2bd9e266ccb768df3840e"
 dependencies = [
  "anyhow",
- "itertools",
+ "itertools 0.11.0",
  "proc-macro2",
  "quote",
  "syn 2.0.39",
@@ -990,7 +999,7 @@ name = "proto-build"
 version = "0.1.0"
 dependencies = [
  "heck",
- "itertools",
+ "itertools 0.12.0",
  "log",
  "pretty_env_logger",
  "prettyplease",
