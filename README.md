@@ -1,12 +1,20 @@
 # Contracts Bindings
 
 <p align="center" width="100%">
-    <img height="90" src="github/logo.svg" />
+    <img height="90" src=".github/logo.svg" />
+</p>
+
+<p align="center" width="100%">
+  <img height="20" src="https://img.shields.io/github/license/desmos-labs/desmos-bindings.svg" />
+  <a href="https://crates.io/crates/desmos-bindings">
+    <img height="20" src="https://img.shields.io/crates/v/desmos-bindings.svg" />
+  </a>
+  <a href="https://codecov.io/gh/desmos-labs/desmos-bindings">
+    <img height="20" src="https://codecov.io/gh/desmos-labs/desmos-bindings/branch/main/graph/badge.svg?token=TT3qCDd957">
+  </a>
 </p>
 
 Desmos contracts bindings is a set of packages that allows you to create CosmWasm smart contracts that interacts directly with the Desmos Network custom modules.
-
-![GitHub](https://img.shields.io/github/license/desmos-labs/desmos-bindings.svg) [![desmos-bindings on crates.io](https://img.shields.io/crates/v/desmos-bindings.svg)](https://crates.io/crates/desmos-bindings) [![codecov](https://codecov.io/gh/desmos-labs/desmos-bindings/branch/main/graph/badge.svg?token=TT3qCDd957)](https://codecov.io/gh/desmos-labs/desmos-bindings)
 
 # Compatibility
 
