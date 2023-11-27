@@ -306,16 +306,16 @@ dependencies = [
 
 [[package]]
 name = "cw-multi-test"
-version = "0.18.0"
+version = "0.18.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "579e2c2f2c0877b839c5cad85e67811074e854a50c1ff3085eb8290b1c27809c"
+checksum = "6a710459f7cd15dc322db4ecd7ab6c8fda6ffbe06faf1843cc63023f9c190b76"
 dependencies = [
  "anyhow",
  "cosmwasm-std",
  "cw-storage-plus",
  "cw-utils",
  "derivative",
- "itertools 0.11.0",
+ "itertools 0.12.0",
  "prost",
  "schemars",
  "serde",
@@ -325,9 +325,9 @@ dependencies = [
 
 [[package]]
 name = "cw-storage-plus"
-version = "1.1.0"
+version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3f0e92a069d62067f3472c62e30adedb4cab1754725c0f2a682b3128d2bf3c79"
+checksum = "d5ff29294ee99373e2cd5fd21786a3c0ced99a52fec2ca347d565489c61b723c"
 dependencies = [
  "cosmwasm-std",
  "schemars",
@@ -336,9 +336,9 @@ dependencies = [
 
 [[package]]
 name = "cw-utils"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1b9f351a4e4d81ef7c890e44d903f8c0bdcdc00f094fd3a181eaf70c0eec7a3a"
+checksum = "1c4a657e5caacc3a0d00ee96ca8618745d050b8f757c709babafb81208d4239c"
 dependencies = [
  "cosmwasm-schema",
  "cosmwasm-std",
