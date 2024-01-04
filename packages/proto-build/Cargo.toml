@@ -17,4 +17,4 @@ quote = "1.0.33"
 regex = "1"
 syn = {version = "2.0.43", features = ["full", "parsing", "extra-traits"]}
 walkdir = "2"
-proc-macro2 = "1.0.71"
+proc-macro2 = "1.0.74"
