@@ -31,7 +31,7 @@ serde-cw-value = "0.7.0"
 desmos-mock = { version = "3.0.0", path = "../mock" }
 schemars = "0.8.16"
 strum_macros = "0.25.3"
-base64 = "0.21.5"
+base64 = "0.21.6"
 desmos-std-derive = {version = "3.0.0", path = "../std-derive"}
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
