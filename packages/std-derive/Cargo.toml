@@ -19,6 +19,6 @@ syn = "2.0.43"
 [dev-dependencies]
 cosmwasm-std = {version = "1.5.0", features = ["stargate"]}
 prost = "0.12"
-serde = "1.0.194"
+serde = "1.0.195"
 trybuild = {version = "1.0.86", features = ["diff"]}
 desmos-mock = { version = "3.0.0", path = "../mock" }
