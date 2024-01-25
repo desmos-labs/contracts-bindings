@@ -21,7 +21,7 @@ crate-type = ["cdylib", "rlib"]
 all-features = true
 
 [dependencies]
-chrono = {version = "0.4.31", default-features = false}
+chrono = {version = "0.4.33", default-features = false}
 cosmwasm-std = { version = "1.5.2", features = ["stargate"]}
 cosmwasm-schema = "1.5.2"
 serde = { version = "1.0.195", default-features = false, features = ["derive"] }
