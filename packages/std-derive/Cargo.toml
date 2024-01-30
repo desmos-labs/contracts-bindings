@@ -12,7 +12,7 @@ proc-macro = true
 
 [dependencies]
 itertools = "0.12.0"
-proc-macro2 = "1.0.76"
+proc-macro2 = "1.0.78"
 quote = "1.0.33"
 syn = "2.0.48"
 
@@ -20,5 +20,5 @@ syn = "2.0.48"
 cosmwasm-std = {version = "1.5.2", features = ["stargate"]}
 prost = "0.12"
 serde = "1.0.195"
-trybuild = {version = "1.0.86", features = ["diff"]}
+trybuild = {version = "1.0.89", features = ["diff"]}
 desmos-mock = { version = "3.0.0", path = "../mock" }
