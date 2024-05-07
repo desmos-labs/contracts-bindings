@@ -14,7 +14,7 @@ proc-macro = true
 itertools = "0.12.1"
 proc-macro2 = "1.0.82"
 quote = "1.0.33"
-syn = "2.0.52"
+syn = "2.0.61"
 
 [dev-dependencies]
 cosmwasm-std = {version = "1.5.4", features = ["stargate"]}

@@ -472,7 +472,7 @@ dependencies = [
  "prost",
  "quote",
  "serde",
- "syn 2.0.52",
+ "syn 2.0.61",
  "trybuild",
 ]
 
@@ -941,7 +941,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a41cf62165e97c7f814d2221421dbb9afcbcdb0a88068e5ea206e19951c2cbb5"
 dependencies = [
  "proc-macro2",
- "syn 2.0.52",
+ "syn 2.0.61",
 ]
 
 [[package]]
@@ -980,7 +980,7 @@ dependencies = [
  "prost",
  "prost-types",
  "regex",
- "syn 2.0.52",
+ "syn 2.0.61",
  "tempfile",
  "which",
 ]
@@ -995,7 +995,7 @@ dependencies = [
  "itertools 0.11.0",
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.61",
 ]
 
 [[package]]
@@ -1022,7 +1022,7 @@ dependencies = [
  "prost-types",
  "quote",
  "regex",
- "syn 2.0.52",
+ "syn 2.0.61",
  "walkdir",
 ]
 
@@ -1232,7 +1232,7 @@ checksum = "7eb0b34b42edc17f6b7cac84a52a1c5f0e1bb2227e997ca9011ea3dd34e8610b"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.61",
 ]
 
 [[package]]
@@ -1317,7 +1317,7 @@ dependencies = [
  "proc-macro2",
  "quote",
  "rustversion",
- "syn 2.0.52",
+ "syn 2.0.61",
 ]
 
 [[package]]
@@ -1339,9 +1339,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.52"
+version = "2.0.61"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b699d15b36d1f02c3e7c69f8ffef53de37aefae075d8488d4ba1a7788d574a07"
+checksum = "c993ed8ccba56ae856363b1845da7266a7cb78e1d146c8a32d54b45a8b831fc9"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1398,7 +1398,7 @@ checksum = "d1cd413b5d558b4c5bf3680e324a6fa5014e7b7c067a51e69dbdf47eb7148b66"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.52",
+ "syn 2.0.61",
 ]
 
 [[package]]
