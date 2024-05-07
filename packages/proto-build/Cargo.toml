@@ -13,7 +13,7 @@ prettyplease = "0.2.16"
 prost = "0.12.3"
 prost-build = "0.12.3"
 prost-types = "0.12.3"
-quote = "1.0.33"
+quote = "1.0.36"
 regex = "1"
 syn = {version = "2.0.52", features = ["full", "parsing", "extra-traits"]}
 walkdir = "2"
