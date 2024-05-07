@@ -21,7 +21,7 @@ crate-type = ["cdylib", "rlib"]
 all-features = true
 
 [dependencies]
-chrono = {version = "0.4.34", default-features = false}
+chrono = {version = "0.4.38", default-features = false}
 cosmwasm-std = { version = "1.5.4", features = ["stargate"]}
 cosmwasm-schema = "1.5.3"
 serde = { version = "1.0.197", default-features = false, features = ["derive"] }
@@ -30,7 +30,7 @@ prost-types = {version = "0.12.3", default-features = false}
 serde-cw-value = "0.7.0"
 desmos-mock = { version = "3.0.0", path = "../mock" }
 schemars = "0.8.16"
-strum_macros = "0.26.1"
+strum_macros = "0.26.2"
 base64 = "0.21.7"
 desmos-std-derive = {version = "3.0.0", path = "../std-derive"}
 
