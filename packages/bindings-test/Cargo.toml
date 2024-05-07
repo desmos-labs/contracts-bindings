@@ -12,6 +12,6 @@ desmos-bindings = { path = "../bindings", version = "3.0.0" }
 test-contract = { path = "../../contracts/test-contract", version = "1.0.0" }
 serde = "1.0.197"
 serde_json = "1.0.116"
-base64 = "0.21.7"
+base64 = "0.22.1"
 chrono = "0.4.38"
 
