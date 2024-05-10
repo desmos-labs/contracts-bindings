@@ -222,11 +222,24 @@ dependencies = [
 
 [[package]]
 name = "cosmwasm-schema"
-version = "1.5.3"
+version = "1.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ac3e3a2136e2a60e8b6582f5dffca5d1a683ed77bf38537d330bc1dfccd69010"
+checksum = "7879036156092ad1c22fe0d7316efc5a5eceec2bc3906462a2560215f2a2f929"
 dependencies = [
- "cosmwasm-schema-derive",
+ "cosmwasm-schema-derive 1.5.5",
+ "schemars",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "cosmwasm-schema"
+version = "2.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d403dea1175a5b20fd2d29dda180fa9f1391dd46f354a8639391d1e549a99e5e"
+dependencies = [
+ "cosmwasm-schema-derive 2.0.3",
  "schemars",
  "serde",
  "serde_json",
@@ -235,9 +248,20 @@ dependencies = [
 
 [[package]]
 name = "cosmwasm-schema-derive"
-version = "1.5.3"
+version = "1.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f5d803bea6bd9ed61bd1ee0b4a2eb09ee20dbb539cc6e0b8795614d20952ebb1"
+checksum = "0bb57855fbfc83327f8445ae0d413b1a05ac0d68c396ab4d122b2abd7bb82cb6"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 1.0.109",
+]
+
+[[package]]
+name = "cosmwasm-schema-derive"
+version = "2.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e3c3153038e91080ded2e2554689e802be2a34a24c6e49c039ae94810c99a680"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -347,7 +371,7 @@ version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1c4a657e5caacc3a0d00ee96ca8618745d050b8f757c709babafb81208d4239c"
 dependencies = [
- "cosmwasm-schema",
+ "cosmwasm-schema 1.5.5",
  "cosmwasm-std",
  "cw2",
  "schemars",
@@ -362,7 +386,7 @@ version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9431d14f64f49e41c6ef5561ed11a5391c417d0cb16455dea8cdcb9037a8d197"
 dependencies = [
- "cosmwasm-schema",
+ "cosmwasm-schema 1.5.5",
  "cosmwasm-std",
  "cw-storage-plus",
  "schemars",
@@ -441,7 +465,7 @@ version = "3.0.0"
 dependencies = [
  "base64 0.22.1",
  "chrono",
- "cosmwasm-schema",
+ "cosmwasm-schema 2.0.3",
  "cosmwasm-std",
  "cw-multi-test",
  "desmos-mock",
@@ -1374,7 +1398,7 @@ dependencies = [
 name = "test-contract"
 version = "1.0.0"
 dependencies = [
- "cosmwasm-schema",
+ "cosmwasm-schema 2.0.3",
  "cosmwasm-std",
  "cw2",
  "desmos-bindings",
